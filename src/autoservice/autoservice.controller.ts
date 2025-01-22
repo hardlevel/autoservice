@@ -5,12 +5,71 @@ import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 
 @Controller('autoservice')
 export class AutoserviceController {
-  constructor(private readonly autoserviceService: AutoserviceService) {}
+  constructor(private readonly autoserviceService: AutoserviceService) { }
 
-  // @Get()
-  // teste() {
-  //   this.autoserviceService.addJob({ teste: 'aaa' })
-  // }
+  @Get('teste')
+  teste() {
+    const data = {
+      nome_do_cliente: "OMAR ANGEL AZAD BORGES",
+      endereco: "AVE DOM VICENTE SCHERER",
+      fonte_pagadora: 1,
+      numero_da_nota_fiscal: "020247143",
+      serie_da_nota_fiscal: "M",
+      data_e_hora_da_emissao_da_nota_fiscal: "2024-12-10T17:09:00",
+      numero_da_os: "0024296",
+      data_e_hora_da_abertura_da_os: "2024-12-10T11:18:00",
+      valor_total_liquido_das_pecas_na_nota_fiscal: 722.67,
+      valor_total_liquido_da_mao_de_obra_na_nota_fiscal: 611.33,
+      numero_do_dn: "130",
+      data_e_hora_do_fechamento_da_os: "2024-12-10T17:09:00",
+      CK7002: {
+        indicador: "F",
+        cpf_cnpj: "70469888202",
+        numero: "499",
+        complemento: "201",
+        bairro: "CENTRO",
+        cidade: "TAPES",
+        uf: "RS",
+        cep: "96760000",
+        telefones: [
+          {
+            numero: "51-993407360",
+            descricao: "celular",
+            autoriza_pesquisa: true,
+            autoriza_contato: true
+          }
+        ],
+        emails: [
+          {
+            email: "junior.azadb@gmail.com",
+            descricao: "pessoal",
+            autoriza_pesquisa: true,
+            autoriza_contato: true
+          }
+        ]
+      },
+    }
+    const fields = ["data_e_hora_da_abertura_da_os", "valor_total_liquido_das_pecas_na_nota_fiscal", "nome_do_cliente", "endereco", "fonte_pagadora", "numero_da_nota_fiscal", "serie_da_nota_fiscal"];
+
+    const newData = this.autoserviceService.extractData(data,fields);
+    console.log(newData);
+    // this.autoserviceService.addJob({ teste: 'aaa' })
+  }
+
+  @Get('token')
+  getToken() {
+    this.autoserviceService.getToken();
+  }
+
+  @Get('start')
+  start() {
+    this.autoserviceService.getData();
+  }
+
+  @Get('mock')
+  async mock() {
+    return this.autoserviceService.mockData('CK3001');
+  }
 
   @Post()
   create(@Body() createAutoserviceDto: CreateAutoserviceDto) {
