@@ -8,6 +8,7 @@ import { Message } from "@aws-sdk/client-sqs";
 import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/nestjs-sqs";
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { AllExceptionsFilter } from '../all.exceptions';
 @Injectable()
 export class AutoserviceService {
   constructor(
@@ -84,8 +85,8 @@ export class AutoserviceService {
       url = new URL('findByPeriod', this.config.get('API_URL'));
       // url.searchParams.append('dataInicio', this.getCurrentDate(1));
       // url.searchParams.append('dataFim', this.getCurrentDate());
-      url.searchParams.append('dataInicio', '2025-01-15T00:41:37');
-      url.searchParams.append('dataFim', '2025-01-15T23:41:37');
+      url.searchParams.append('dataInicio', '2025-01-02T00:41:37');
+      url.searchParams.append('dataFim', '2025-01-03T23:41:37');
       token = await this.getToken();
     } catch (error) {
       console.log('Falha ao obter o token:', error);
@@ -113,8 +114,14 @@ export class AutoserviceService {
   }
 
   async addJob(data: any) {
-    await this.autoserviceQueue.add('process-autoservice-job', data);
-    console.log('Job added to queue:', data);
+    try {
+      await this.autoserviceQueue.add('process-autoservice-job', data);
+      console.log('Job added to queue:', data);
+    } catch (error) {
+      console.log(error);
+      // throw new AllExceptionsFilter();
+    }
+
   }
 
   create(createAutoserviceDto: CreateAutoserviceDto) {
@@ -135,127 +142,6 @@ export class AutoserviceService {
 
   remove(id: number) {
     return `This action removes a #${id} autoservice`;
-  }
-
-  // async ck3(data: any) {
-  //   try {
-  //     return this.prisma.ck3001.upsert({
-  //       where: {
-  //         numero_da_nota_fiscal: data.numero_da_nota_fiscal
-  //       },
-  //       update: {
-  //         numero_da_nota_fiscal: data.numero_da_nota_fiscal,
-  //         serie_da_nota_fiscal: data.serie_da_nota_fiscal,
-  //         fonte_pagadora: data.fonte_pagadora,
-  //         valor_total_liquido_das_pecas_na_nota_fiscal: data.valor_total_liquido_das_pecas_na_nota_fiscal,
-  //         indicador: data.indicador,
-  //         data_e_hora_da_emissao_da_nota_fiscal: new Date(data.data_e_hora_da_emissao_da_nota_fiscal),
-  //         numero: data.numero,
-  //         endereco: data.endereco,
-  //         complemento: data.complemento,
-  //         ck3002: {
-  //           update: {
-  //             where: {
-  //               id: data.CK3002.id
-  //             },
-  //             data: {
-  //               bairro: data.CK3002.bairro,
-  //               cidade: data.CK3002.cidade,
-  //               uf: data.CK3002.uf,
-  //               cep: data.CK3002.cep,
-  //               telefones: {
-  //                 update: data.ck3002.telefones.map(phone => ({
-  //                   where: { numero: phone.numero },
-  //                   data: {
-  //                     descricao: phone.descricao,
-  //                     autoriza_contato: phone.autoriza_contato,
-  //                     autoriza_pesquisa: phone.autoriza_pesquisa
-  //                   },
-  //                   create: {
-  //                     numero: phone.numero,
-  //                     descricao: phone.descricao,
-  //                     autoriza_contato: phone.autoriza_contato,
-  //                     autoriza_pesquisa: phone.autoriza_pesquisa
-  //                   }
-  //                 }))
-  //               },
-  //               emails: {
-  //                 update: data.ck3002.emails.map(email => ({
-  //                   where: { email: email.email },
-  //                   data: {
-  //                     descricao: email.descricao,
-  //                     autoriza_contato: email.autoriza_contato,
-  //                     autoriza_pesquisa: email.autoriza_pesquisa
-  //                   },
-  //                   create: {
-  //                     email: email.email,
-  //                     descricao: email.descricao,
-  //                     autoriza_contato: email.autoriza_contato,
-  //                     autoriza_pesquisa: email.autoriza_pesquisa
-  //                   }
-  //                 }))
-  //               }
-  //             }
-  //           }
-  //         }
-  //       },
-  //       create: {
-  //         numero_do_dn: data.numero_do_dn,
-  //         numero_da_nota_fiscal: data.numero_da_nota_fiscal,
-  //         serie_da_nota_fiscal: data.serie_da_nota_fiscal,
-  //         fonte_pagadora: data.fonte_pagadora,
-  //         valor_total_liquido_das_pecas_na_nota_fiscal: data.valor_total_liquido_das_pecas_na_nota_fiscal,
-  //         indicador: data.indicador,
-  //         data_e_hora_da_emissao_da_nota_fiscal: new Date(data.data_e_hora_da_emissao_da_nota_fiscal),
-  //         numero: data.numero,
-  //         endereco: data.endereco,
-  //         complemento: data.complemento,
-  //         ck3002: {
-  //           create: {
-  //             cidade: data.CK3002.cidade,
-  //             bairro: data.CK3002.bairro,
-  //             uf: data.CK3002.uf,
-  //             cep: data.CK3002.cep,
-  //             telefones: {
-  //               create: data.CK3002.telefones.map(phone => ({
-  //                 numero: phone.numero,
-  //                 descricao: phone.descricao,
-  //                 autoriza_contato: phone.autoriza_contato,
-  //                 autoriza_pesquisa: phone.autoriza_pesquisa
-  //               }))
-  //             },
-  //             emails: {
-  //               create: data.CK3002.emails.map(email => ({
-  //                 email: email.email,
-  //                 descricao: email.descricao,
-  //                 autoriza_contato: email.autoriza_contato,
-  //                 autoriza_pesquisa: email.autoriza_pesquisa
-  //               }))
-  //             }
-  //           }
-  //         }
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.log('Erro ao salvar CK3', error, data);
-  //   }
-  // }
-
-
-  async ck4(data) {
-    // console.log(data);
-  }
-
-  async ck5(data) {
-    // console.log(data);
-  }
-
-  async ck6(data) {
-    // console.log(data);
-  }
-
-  async ck7(data) {
-    // console.log(data);
   }
 
   prepareData(fields, data) {

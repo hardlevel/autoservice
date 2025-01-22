@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { AutoserviceService } from './autoservice.service';
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
@@ -52,7 +52,12 @@ export class AutoserviceController {
     const fields = ["data_e_hora_da_abertura_da_os", "valor_total_liquido_das_pecas_na_nota_fiscal", "nome_do_cliente", "endereco", "fonte_pagadora", "numero_da_nota_fiscal", "serie_da_nota_fiscal"];
 
     const newData = this.autoserviceService.extractData(data,fields);
-    console.log(newData);
+    // console.log(newData);
+
+      // // Lançando uma exceção para testar o filtro
+      // throw new HttpException('Erro personalizado no controller!', HttpStatus.BAD_REQUEST);
+
+
     // this.autoserviceService.addJob({ teste: 'aaa' })
   }
 
@@ -63,7 +68,11 @@ export class AutoserviceController {
 
   @Get('start')
   start() {
-    this.autoserviceService.getData();
+    try {
+      this.autoserviceService.getData();
+    } catch(error) {
+      throw new Error('Erro ao processar arquivos');
+    }
   }
 
   @Get('mock')

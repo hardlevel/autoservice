@@ -5,6 +5,8 @@ import { AutoserviceModule } from './autoservice/autoservice.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
 import { PrismaModule } from './prisma/prisma.module';
+import { APP_FILTER } from '@nestjs/core';
+import { GlobalErrorHandler } from './error.listenner';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,6 +27,9 @@ import { PrismaModule } from './prisma/prisma.module';
     PrismaModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    GlobalErrorHandler
+  ],
 })
 export class AppModule {}
