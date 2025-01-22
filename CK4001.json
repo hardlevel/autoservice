@@ -1,0 +1,314 @@
+[
+  {
+    "CK4001": [
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "4054A",
+        "numero_da_nota_fiscal": "75313",
+        "serie_da_nota_fiscal": "001",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-11-29T15:26:00",
+        "data_do_cancelamento_do_documento": "2024-12-02T15:26:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "4054",
+        "numero_da_nota_fiscal": "75313",
+        "serie_da_nota_fiscal": "001",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-11-29T15:26:00",
+        "data_do_cancelamento_do_documento": "2024-12-02T15:26:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1261",
+        "numero_da_nota_fiscal": "78388",
+        "serie_da_nota_fiscal": "001",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-30T17:30:00",
+        "data_do_cancelamento_do_documento": "2024-12-31T17:30:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1261",
+        "numero_da_nota_fiscal": "46768",
+        "serie_da_nota_fiscal": "E",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-30T17:30:00",
+        "data_do_cancelamento_do_documento": "2024-12-31T17:30:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1261",
+        "numero_da_nota_fiscal": "78283",
+        "serie_da_nota_fiscal": "001",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-19T16:57:00",
+        "data_do_cancelamento_do_documento": "2024-12-20T16:57:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1261",
+        "numero_da_nota_fiscal": "46702",
+        "serie_da_nota_fiscal": "E",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-19T16:57:00",
+        "data_do_cancelamento_do_documento": "2024-12-20T16:57:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1261",
+        "numero_da_nota_fiscal": "46575",
+        "serie_da_nota_fiscal": "E",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-05T17:21:00",
+        "data_do_cancelamento_do_documento": "2024-12-06T17:21:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1261",
+        "numero_da_nota_fiscal": "78123",
+        "serie_da_nota_fiscal": "001",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-05T17:21:00",
+        "data_do_cancelamento_do_documento": "2024-12-06T17:21:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NB",
+        "numero_do_dn": "1261",
+        "numero_da_nota_fiscal": "78078",
+        "serie_da_nota_fiscal": "001",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-02T17:34:00",
+        "data_do_cancelamento_do_documento": "2024-12-03T17:34:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1151",
+        "numero_da_nota_fiscal": "49021",
+        "serie_da_nota_fiscal": "001",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-18T14:05:00",
+        "data_do_cancelamento_do_documento": "2024-12-19T14:05:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "1151",
+        "numero_da_nota_fiscal": "23874",
+        "serie_da_nota_fiscal": "F",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-18T14:05:00",
+        "data_do_cancelamento_do_documento": "2024-12-19T14:05:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "OS",
+        "numero_do_dn": "7878",
+        "numero_da_nota_fiscal": "",
+        "serie_da_nota_fiscal": "",
+        "data_e_hora_da_emissao_da_nota_fiscal": "",
+        "data_do_cancelamento_do_documento": "2022-06-01T13:54:00",
+        "numero_da_os": "123456",
+        "data_e_hora_da_abertura_da_os": "2022-05-31T13:54:00",
+        "data_e_hora_do_fechamento_da_os": "2022-06-01T13:54:00"
+      },
+      {
+        "tipo_do_cancelamento": "OS",
+        "numero_do_dn": "4054",
+        "numero_da_nota_fiscal": "",
+        "serie_da_nota_fiscal": "",
+        "data_e_hora_da_emissao_da_nota_fiscal": "",
+        "data_do_cancelamento_do_documento": "2024-12-02T15:26:00",
+        "numero_da_os": "082453",
+        "data_e_hora_da_abertura_da_os": "2024-11-04T14:53:00",
+        "data_e_hora_do_fechamento_da_os": "2024-12-02T08:45:00"
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "580185",
+        "serie_da_nota_fiscal": "UN",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-30T14:29:00",
+        "data_do_cancelamento_do_documento": "2024-12-30T15:38:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "696916",
+        "serie_da_nota_fiscal": "06",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-30T14:29:00",
+        "data_do_cancelamento_do_documento": "2024-12-30T15:38:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "580112",
+        "serie_da_nota_fiscal": "UN",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-24T11:13:00",
+        "data_do_cancelamento_do_documento": "2024-12-24T12:01:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "696637",
+        "serie_da_nota_fiscal": "06",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-24T11:13:00",
+        "data_do_cancelamento_do_documento": "2024-12-24T12:01:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "580082",
+        "serie_da_nota_fiscal": "UN",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-23T15:58:00",
+        "data_do_cancelamento_do_documento": "2024-12-23T16:05:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "696567",
+        "serie_da_nota_fiscal": "06",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-23T15:04:00",
+        "data_do_cancelamento_do_documento": "2024-12-23T16:05:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "580085",
+        "serie_da_nota_fiscal": "UN",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-23T15:41:00",
+        "data_do_cancelamento_do_documento": "2024-12-23T15:42:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "696572",
+        "serie_da_nota_fiscal": "06",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-23T15:28:00",
+        "data_do_cancelamento_do_documento": "2024-12-23T15:42:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "696415",
+        "serie_da_nota_fiscal": "06",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-20T10:23:00",
+        "data_do_cancelamento_do_documento": "2024-12-20T14:03:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "579793",
+        "serie_da_nota_fiscal": "UN",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-10T17:09:00",
+        "data_do_cancelamento_do_documento": "2024-12-10T17:38:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "695663",
+        "serie_da_nota_fiscal": "06",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-10T17:09:00",
+        "data_do_cancelamento_do_documento": "2024-12-10T17:38:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "579693",
+        "serie_da_nota_fiscal": "UN",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-05T13:04:00",
+        "data_do_cancelamento_do_documento": "2024-12-05T18:00:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "0841C",
+        "numero_da_nota_fiscal": "695338",
+        "serie_da_nota_fiscal": "06",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2024-12-05T13:04:00",
+        "data_do_cancelamento_do_documento": "2024-12-05T18:00:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      },
+      {
+        "tipo_do_cancelamento": "OS",
+        "numero_do_dn": "99999",
+        "numero_da_nota_fiscal": "",
+        "serie_da_nota_fiscal": "",
+        "data_e_hora_da_emissao_da_nota_fiscal": "",
+        "data_do_cancelamento_do_documento": "2022-06-17T00:00:00",
+        "numero_da_os": "042365",
+        "data_e_hora_da_abertura_da_os": "2022-05-31T13:54:00",
+        "data_e_hora_do_fechamento_da_os": "2022-05-31T13:54:00"
+      },
+      {
+        "tipo_do_cancelamento": "NS",
+        "numero_do_dn": "99999",
+        "numero_da_nota_fiscal": "082598000",
+        "serie_da_nota_fiscal": "002A",
+        "data_e_hora_da_emissao_da_nota_fiscal": "2022-05-31T13:54:00",
+        "data_do_cancelamento_do_documento": "2022-06-17T00:00:00",
+        "numero_da_os": "",
+        "data_e_hora_da_abertura_da_os": "",
+        "data_e_hora_do_fechamento_da_os": ""
+      }
+    ]
+  }
+]
