@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AutoserviceModule } from './autoservice/autoservice.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
+import { PrismaModule } from './prisma/prisma.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,7 +21,8 @@ import { BullModule } from '@nestjs/bullmq';
       }),
       inject: [ConfigService],
     }),
-    AutoserviceModule
+    AutoserviceModule,
+    PrismaModule
   ],
   controllers: [AppController],
   providers: [AppService],
