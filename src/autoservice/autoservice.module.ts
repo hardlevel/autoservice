@@ -10,6 +10,9 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { Ck3Service } from './ck3.service';
 import { Ck4Service } from './ck4.service';
 import { Ck7Service } from './ck7.service';
+import { Ck5Service } from './ck5.service';
+import { Ck6Service } from './ck6.service';
+import { GlobalErrorHandler } from '../error.listenner';
 
 @Module({
   controllers: [AutoserviceController],
@@ -17,8 +20,11 @@ import { Ck7Service } from './ck7.service';
     AutoserviceService,
     ConfigModule,
     AutoserviceProcessor,
+    GlobalErrorHandler,
     Ck3Service,
     Ck4Service,
+    Ck5Service,
+    Ck6Service,
     Ck7Service
   ],
   imports: [
