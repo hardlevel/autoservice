@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "LastSearch" ALTER COLUMN "id" SET DEFAULT 1,
+ALTER COLUMN "id" DROP DEFAULT;
+DROP SEQUENCE "LastSearch_id_seq";

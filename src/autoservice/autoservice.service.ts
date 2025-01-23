@@ -9,6 +9,7 @@ import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/ne
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AllExceptionsFilter } from '../all.exceptions';
+import * as moment from 'moment';
 @Injectable()
 export class AutoserviceService {
   constructor(
@@ -34,21 +35,114 @@ export class AutoserviceService {
     }
   }
 
-  getCurrentDate(hoursToSubtract = 0) {
-    const now = new Date();
+  // getCurrentDate(hoursToSubtract = 0) {
+  //   const now = new Date();
 
-    if (typeof hoursToSubtract === 'number') {
-      now.setHours(now.getHours() - hoursToSubtract);
+  //   if (typeof hoursToSubtract === 'number') {
+  //     now.setHours(now.getHours() - hoursToSubtract);
+  //   }
+
+  //   const year = now.getFullYear();
+  //   const month = String(now.getMonth() + 1).padStart(2, '0');
+  //   const day = String(now.getDate()).padStart(2, '0');
+  //   const hours = String(now.getHours()).padStart(2, '0');
+  //   const minutes = String(now.getMinutes()).padStart(2, '0');
+  //   const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  //   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+  // }
+  getCurrentDate(interval: number) {
+    const date = moment();
+    const endDate = date.format();
+    const startDate = date.subtract(interval, 'hours').format();
+    return {
+      endDate,
+      startDate,
+      endDateShort: date.format('YYYY-MM-DDTHH:mm:ss'),
+      startDateShort: date.subtract(interval, 'hours').format('YYYY-MM-DDTHH:mm:ss'),
     }
+  }
 
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+  convertDate(date) {
+    const now = moment().local();
+    const local = moment(date).local();
+    return {
+      original: date,
+      originalJs: new Date(date),
+      moment: local,
+      local,
+      br: local.toLocaleString(),
+      momentFormat: local.format(),
+      momentSimple: local.format('YYYY-MM-DDTHH:mm:ss'),
+      timestampM: local.unix(),
+      timestampS: local.valueOf(),
+      now: moment().format(),
+      diff: now.diff(local, 'hours')
+    }
+  }
 
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+  getDate(
+    year: number,
+    month: number,
+    day: number,
+    hour = 1,
+    minutes = 0,
+    interval = 1,
+    unit: 'hour' | 'hours' | 'minute' | 'minutes' | 'day' | 'days' = 'hours'
+  ) {
+    const timezone = 'America/Sao_Paulo';
+    const date = moment.tz({ year, month: month - 1, day, hour, minutes }, timezone);
+    const dateJs = new Date();
+    const tz = dateJs.getTimezoneOffset() / -60;
+
+    return {
+      now: moment().format(),
+      nowJs: dateJs,
+      nowJsString: Date(),
+      nowEpochMillis: dateJs.getTime(),
+      nowEpchSecs: Math.floor(dateJs.getTime() / 1000),
+      tzOffset: dateJs.getTimezoneOffset(),
+      tz,
+      nowDateBr: dateJs.toLocaleDateString(),
+      nowTimeBr: dateJs.toLocaleTimeString(),
+      momentUtc: moment().utc().format(),
+      moment: date,
+      date: date.format(),
+      dateJs: new Date(year, month, hour, minutes, 0),
+      timestamp: date.format('YYYY-MM-DDTHH:mm:ss'),
+      timestampz: date.format(),
+      timestampzFixed: date.subtract('hour', 3).format(),
+      epoch: date.unix(),
+      epochSecs: date.valueOf(),
+      day: date.date(),
+      dayOfWeek: date.day(),
+      dayOfWeekStr: date.weekday(),
+      dayOfYear: date.dayOfYear(),
+      daysInMonth: date.daysInMonth(),
+      month: date.month(),
+      monthParsed: date.month() + 1,
+      year: date.year(),
+      hour: date.hour(),
+      minutes: date.minute()
+    };
+  }
+
+
+  getDates(
+    year: number,
+    month: number,
+    day: number,
+    hour = 1,
+    minutes = 0,
+    interval = 1,
+    unit: 'hour' | 'hours' | 'minute' | 'minutes' | 'day' | 'days' = 'hours'
+  ) {
+    //'YYYY-MM-DDThh:mm:ss'
+    const endDate = moment({ year, month: month - 1, day })
+      .hour(hour)
+      .minutes(minutes)
+    const startDate = moment(endDate).subtract(interval, unit).format();
+    return { endDate: endDate.format(), startDate };
   }
 
   getToken() {
@@ -78,15 +172,25 @@ export class AutoserviceService {
       });
   }
 
-  async getData() {
+  async getData(dataInicio = null, dataFim = null) {
     let token, url;
-
+    console.log('solicitado dados para o intervalo entre: ', dataInicio, dataFim);
     try {
       url = new URL('findByPeriod', this.config.get('API_URL'));
       // url.searchParams.append('dataInicio', this.getCurrentDate(1));
       // url.searchParams.append('dataFim', this.getCurrentDate());
-      url.searchParams.append('dataInicio', '2025-01-02T00:41:37');
-      url.searchParams.append('dataFim', '2025-01-03T23:41:37');
+      // url.searchParams.append('dataInicio', '2025-01-02T00:41:37');
+      // url.searchParams.append('dataFim', '2025-01-03T23:41:37');
+      if (dataInicio && dataFim) {
+        url.searchParams.append(dataInicio);
+        url.searchParams.append(dataFim);
+      } else {
+        const date = this.getCurrentDate(1);
+        console.log(date);
+        url.searchParams.append('dataInicio', encodeURIComponent(date.startDateShort));
+        url.searchParams.append('dataFim', encodeURIComponent(date.endDateShort));
+      }
+      console.log(url);
       token = await this.getToken();
     } catch (error) {
       console.log('Falha ao obter o token:', error);
@@ -186,9 +290,9 @@ export class AutoserviceService {
     const newData = fields.reduce((acc, field) => {
       if (data[field] != null && data[field] !== '') {
         if (field.startsWith('data_')) {
-          acc[field] = new Date(data[field]);
-        // } else if (field.startsWith('valor_')) {
-        //   acc[field] = data[field].toLocaleString('pt-BR');
+          acc[field] = this.convertDate(data[field]).local;
+          // } else if (field.startsWith('valor_')) {
+          //   acc[field] = data[field].toLocaleString('pt-BR');
         } else {
           acc[field] = data[field];
         }
@@ -204,5 +308,59 @@ export class AutoserviceService {
       style: "currency",
       currency: "BRL",
     }).format(value);
+  }
+
+  async pastData(month) {
+    const startMonth = moment().month(month).startOf('month');
+    const endMonth = moment().month(month).endOf('month');
+    const days = moment().month(month).daysInMonth();
+    for (let i = 1; i <= days; i++) {
+      const year = moment().year();
+      const date = moment({ year, month, day: i });
+      for (let h = 0; h < 24; h++) {
+        const time = date.clone().add(h, 'hours');
+        console.log(await this.autoserviceQueue.getActiveCount());
+      }
+    }
+  }
+
+  async retro(year, month, day, hour, status = false) {
+    // console.log(this.getCurrentDate(1));
+    // console.log(this.getDates(2025, 1, 23, 11))
+    // const end = moment().month(month -1).set(day).set(hour);
+    // const start = end.clone().subtract(1, 'hour');
+    const date = this.getDate(2025, 1, 23, 12, 30);
+    const endDate = this.getDate(2025, 1, 23, 13, 0);
+
+    const dates = this.getDates(year, month, day, hour);
+    const data = {
+      endDate: endDate.date,
+      startDate: date.date,
+      status
+    }
+    console.log(date);
+    console.log(data);
+    const lastSearch = await this.prisma.lastSearch.upsert({
+      where: {
+        id: 1
+      },
+      create: data,
+      update: data,
+      select: {
+        id: true,
+        status: true,
+        endDate: true,
+        startDate: true
+      }
+    })
+
+    const teste = await this.prisma.lastSearch.findFirst({
+      where: {
+        id: 1
+      }
+    })
+
+    console.log(this.convertDate(teste.startDate));
+    // return this.getData(end, start);
   }
 }

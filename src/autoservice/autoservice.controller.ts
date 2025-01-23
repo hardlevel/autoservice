@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { AutoserviceService } from './autoservice.service';
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
@@ -59,6 +59,11 @@ export class AutoserviceController {
 
 
     // this.autoserviceService.addJob({ teste: 'aaa' })
+  }
+
+  @Get('date')
+  processDate() {
+    return this.autoserviceService.retro(2025, 1, 23, 11);
   }
 
   @Get('token')
