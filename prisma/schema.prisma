@@ -24,6 +24,14 @@ model Autoservice {
   processedAt DateTime?
 }
 
+model LastSearch {
+  id Int @id @default(1)
+  startDate DateTime
+  endDate DateTime
+  status Boolean
+  created_at DateTime @updatedAt
+}
+
 model Ck3001 {
   id                                           Int      @id @default(autoincrement())
   numero_do_dn                                 String
@@ -224,7 +232,7 @@ model Ck6041 {
   id                       Int      @id @default(autoincrement())
   quilometragem_do_veiculo Int      @default(0)
   indicador                String
-  chassi_do_veiculo        String
+  chassi_do_veiculo        String?
   placa_do_veiculo         String?
   nome_do_cliente          String
   cpf_cnpj                 String
@@ -238,7 +246,7 @@ model Ck6041 {
   modified_at              DateTime @updatedAt
   Ck6042                   Ck6042[]
 
-  @@unique(name: "ck6041_cod", [chassi_do_veiculo, ck6011_id])
+  // @@unique(name: "ck6041_cod", [chassi_do_veiculo, ck6011_id])
 }
 
 model Ck6042 {

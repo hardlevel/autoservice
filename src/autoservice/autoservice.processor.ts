@@ -98,6 +98,12 @@ export class AutoserviceProcessor extends WorkerHost {
     @OnWorkerEvent('completed')
     onCompleted(job: Job) {
         console.log(`Job ${job.id} completed.`);
+        const last = this.prisma.lastSearch.findFirst({
+            where: {
+                id: 1
+            }
+        });
+        console.log('ultima pesquisa', last);
     }
 
     @OnWorkerEvent('failed')

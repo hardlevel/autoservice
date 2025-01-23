@@ -8,11 +8,12 @@ import { DatePipe } from './pipes/date.pipe';
 import { AllExceptionsFilter } from './all.exceptions';
 import { ErrorsInterceptor } from './error.interceptor';
 import { PrismaClientExceptionFilter } from './prisma.exceptions';
+import * as moment from 'moment-timezone';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-
+  // moment().zone("-03:00");
+  moment.tz.setDefault('Ameriza/Sao_Paulo');
   // app.useGlobalFilters(new AllExceptionsFilter({ httpAdapter: app.getHttpAdapter() }));
 
   // app.useGlobalFilters(new AllExceptionsFilter());
