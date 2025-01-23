@@ -61,7 +61,7 @@ export class Ck7Service {
             })
             await this.ck7002(ck.id, ck7001.CK7002);
         } catch (error) {
-            console.log(error);
+            console.error('Erro ao salvar dados no CK7001', ck7001, error);
         }
     }
 
@@ -97,7 +97,7 @@ export class Ck7Service {
             const phones = await this.phones(ck.id, ck7002.telefones);
             const emails = await this.emails(ck.id, ck7002.emails);
         } catch (error) {
-            console.log('Erro ao salvar ck7002', data, error);
+            console.error('Erro ao salvar dados no CK7002', ck7002, error);
         }
     }
 

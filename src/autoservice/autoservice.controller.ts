@@ -61,6 +61,26 @@ export class AutoserviceController {
     // this.autoserviceService.addJob({ teste: 'aaa' })
   }
 
+  @Get('past')
+  async pastData() {
+    return this.autoserviceService.pastData(0);
+  }
+
+  @Get('find')
+  async find() {
+    return await this.autoserviceService.findOne(0);
+  }
+
+  @Get('findAll')
+  async findAll() {
+    return await this.autoserviceService.findAll('ck6011');
+  }
+
+  @Get('findmany')
+  async findMany() {
+    return await this.autoserviceService.findMany('ck6011', 1, 50, 'numero_da_os', '689485');
+  }
+
   @Get('date')
   processDate() {
     return this.autoserviceService.retro(2025, 1, 23, 11);
@@ -74,7 +94,7 @@ export class AutoserviceController {
   @Get('start')
   start() {
     try {
-      this.autoserviceService.getData();
+      this.autoserviceService.getData('2025-01-23T00:41:37', '2025-01-23T23:41:37');
     } catch(error) {
       throw new Error('Erro ao processar arquivos');
     }
@@ -88,11 +108,6 @@ export class AutoserviceController {
   @Post()
   create(@Body() createAutoserviceDto: CreateAutoserviceDto) {
     return this.autoserviceService.create(createAutoserviceDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.autoserviceService.findAll();
   }
 
   @Get(':id')

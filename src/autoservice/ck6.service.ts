@@ -142,22 +142,50 @@ export class Ck6Service {
         ];
 
         const data = { ...this.autoservice.extractData(ck6041, fields), ck6011_id: id }
+        const searchConditions = {
+            id: null,
+            field: '',
+            value: '',
+            table: 'ck6041'
+        };
 
+        if (data.chassi_do_veiculo) {
+            searchConditions.field = 'chassi_do_veiculo';
+            searchConditions.value = data.chassi_do_veiculo;
+        } else if (data.placa_do_veiculo) {
+            searchConditions.field = 'placa_do_veiculo';
+            searchConditions.value = data.placa_do_veiculo;
+        } else {
+            return;
+        }
+
+        console.log(searchConditions);
         try {
-            const ck = await this.prisma.ck6041.upsert({
-                where: {
-                    ck6041_cod: {
-                        chassi_do_veiculo: data.chassi_do_veiculo,
-                        ck6011_id: data.ck6011_id
-                    }
-                },
-                create: data,
-                update: data,
-                select: {
-                    id: true
-                }
-            });
-            await this.ck6042(ck.id, ck6041.CK6042);
+            const ck = await this.prisma.findOne(
+                searchConditions.id,
+                searchConditions.table,
+                searchConditions.field,
+                searchConditions.value
+            );
+            console.log(ck);
+            // const ck = await this.prisma.ck6041.upsert({
+            //     where: {
+            //         OR: [
+            //             {
+            //                 chassi_do_veiculo: data.chassi_do_veiculo
+            //             },
+            //             {
+            //                 placa_do_veiculo: data.placa_do_veiculo
+            //             }
+            //         ]
+            //     },
+            //     create: data,
+            //     update: data,
+            //     select: {
+            //         id: true
+            //     }
+            // });
+            // await this.ck6042(ck.id, ck6041.CK6042);
         } catch (error) {
             console.error('Erro ao salvar CK6041', data, error);
             throw new HttpException('Erro ao salvar CK6041', HttpStatus.BAD_REQUEST);

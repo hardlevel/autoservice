@@ -298,7 +298,7 @@ model Ck7002 {
   cidade      String
   uf          String
   bairro      String
-  numero      String
+  numero      String @default("Não informado")
   complemento String?
   cpf_cnpj    String
   cep         String
