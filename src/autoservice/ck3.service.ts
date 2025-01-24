@@ -3,13 +3,15 @@ import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class Ck3Service {
     constructor(
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
-        private readonly autoservice: AutoserviceService
+        private readonly autoservice: AutoserviceService,
+        @InjectPinoLogger(Ck3Service.name) private readonly logger: PinoLogger
     ) { }
 
     async ck3001(ck3001) {
@@ -46,7 +48,8 @@ export class Ck3Service {
             await this.ck3002(ck.id, ck3001.CK3002);
             await this.ck3003(ck.id, ck3001.CK3003);
         } catch (error) {
-            console.log(error);
+            console.error('Erro ao salvar CK3001', error);
+            this.logger.error('Erro ao salvar CK3001', error);
         }
     }
 
@@ -80,7 +83,8 @@ export class Ck3Service {
             await this.phones(ck.id, ck3002.telefones);
             await this.emails(ck.id, ck3002.emails);
         } catch (error) {
-            console.log(error);
+            console.error('Erro ao salvar CK3002', error);
+            this.logger.error('Erro ao salvar CK3002', error);
         }
     }
 
@@ -106,7 +110,8 @@ export class Ck3Service {
                     })
                 }
             } catch (error) {
-                console.log(error, phones)
+                console.error('Erro ao salvar telefones do CK3001', error, phones);
+                this.logger.error('Erro ao salvar telefones do CK3001', error, phones);
             }
         }
     }
@@ -133,7 +138,8 @@ export class Ck3Service {
                     })
                 }
             } catch (error) {
-                console.log(error, emails)
+                console.error('Erro ao salvar emails do CK3001', error, emails)
+                this.logger.error('Erro ao salvar emails do CK3001', error, emails)
             }
         }
     }
@@ -162,7 +168,8 @@ export class Ck3Service {
                     update: data
                 })
             } catch (error) {
-                console.log('erro ao salvar ck3003', data, error);
+                console.error('erro ao salvar ck3003', data, error);
+                this.logger.error('erro ao salvar ck3003', data, error);
             }
         }
     }

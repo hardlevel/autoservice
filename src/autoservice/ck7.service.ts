@@ -4,13 +4,15 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
 import { tryCatch } from 'bullmq';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class Ck7Service {
     constructor(
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
-        private readonly autoservice: AutoserviceService
+        private readonly autoservice: AutoserviceService,
+        @InjectPinoLogger(Ck7Service.name) private readonly logger: PinoLogger
     ) { }
 
     async ck7001(ck7001) {
@@ -48,6 +50,7 @@ export class Ck7Service {
             await this.ck7002(ck.id, ck7001.CK7002);
         } catch (error) {
             console.error('Erro ao salvar dados no CK7001', ck7001, error);
+            this.logger.error('Erro ao salvar dados no CK7001', ck7001, error);
         }
     }
 
@@ -84,6 +87,7 @@ export class Ck7Service {
             const emails = await this.emails(ck.id, ck7002.emails);
         } catch (error) {
             console.error('Erro ao salvar dados no CK7002', ck7002, error);
+            this.logger.error('Erro ao salvar dados no CK7002', ck7002, error);
         }
     }
 
@@ -109,7 +113,8 @@ export class Ck7Service {
                     }
                 })
             } catch (error) {
-                console.log('Erro ao salvar telefones do CK7002', data, error)
+                console.error('Erro ao salvar telefones do CK7002', data, error)
+                this.logger.error('Erro ao salvar telefones do CK7002', data, error)
             }
         }
     }
@@ -137,7 +142,8 @@ export class Ck7Service {
                     }
                 })
             } catch (error) {
-                console.log('Erro ao salvar emails do CK7002', data, error)
+                console.error('Erro ao salvar emails do CK7002', data, error)
+                this.logger.error('Erro ao salvar emails do CK7002', data, error)
             }
         }
     }
@@ -169,7 +175,8 @@ export class Ck7Service {
                     }
                 });
             } catch (error) {
-                console.log('Erro ao salvar CK7003', data, error)
+                console.error('Erro ao salvar CK7003', data, error);
+                this.logger.error('Erro ao salvar CK7003', data, error);
             }
         }
     }
@@ -207,7 +214,8 @@ export class Ck7Service {
                     }
                 });
             } catch (error) {
-                console.log('Erro ao salvar CK7004', data, error)
+                console.error('Erro ao salvar CK7004', data, error)
+                this.logger.error('Erro ao salvar CK7004', data, error)
             }
         }
     }

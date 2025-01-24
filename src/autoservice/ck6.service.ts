@@ -4,13 +4,15 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
 import { AllExceptionsFilter } from '../all.exceptions';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class Ck6Service {
     constructor(
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
-        private readonly autoservice: AutoserviceService
+        private readonly autoservice: AutoserviceService,
+        @InjectPinoLogger(Ck6Service.name) private readonly logger: PinoLogger
     ) { }
 
     async ck6011(ck6011) {
@@ -45,6 +47,7 @@ export class Ck6Service {
             await this.ck6041(ck.id, ck6011.CK6041);
         } catch (error) {
             console.error('Erro ao salvar ck6011', data, error);
+            this.logger.error('Erro ao salvar ck6011', data, error);
         }
     }
 
@@ -76,6 +79,7 @@ export class Ck6Service {
                 });
             } catch (error) {
                 console.error('Erro ao salvar ck6021', data, error);
+                this.logger.error('Erro ao salvar ck6021', data, error);
                 throw new Error('Erro ao salvar CK6021');
             }
         }
@@ -109,6 +113,7 @@ export class Ck6Service {
                 });
             } catch (error) {
                 console.error('Erro ao salvar ck6031', data, error);
+                this.logger.error('Erro ao salvar ck6031', data, error);
                 throw new Error('Erro ao salvar CK6031');
             }
         }
@@ -170,6 +175,7 @@ export class Ck6Service {
             await this.ck6042(ck.id, ck6041.CK6042);
         } catch (error) {
             console.error('Erro ao salvar CK6041', data, error);
+            this.logger.error('Erro ao salvar CK6041', data, error);
             throw new HttpException('Erro ao salvar CK6041', HttpStatus.BAD_REQUEST);
 
         }
@@ -204,6 +210,7 @@ export class Ck6Service {
             await this.emails(ck.id, ck6042.emails);
         } catch (error) {
             console.error('Erro ao salvar ck6042', data, error);
+            this.logger.error('Erro ao salvar ck6042', data, error);
             // throw new HttpException('Erro personalizado no controller!', HttpStatus.BAD_REQUEST);
             throw new Error('Erro ao salvar CK6042');
         }
@@ -233,6 +240,7 @@ export class Ck6Service {
                 });
             } catch (error) {
                 console.error('Erro ao salvar telefones do ck6011', data, error);
+                this.logger.error('Erro ao salvar telefones do ck6011', data, error);
                 throw new Error('Erro ao salvar telefones do CK6011');
             }
         }
@@ -262,6 +270,7 @@ export class Ck6Service {
                 });
             } catch (error) {
                 console.error('Erro ao salvar emails do ck6011', data, error);
+                this.logger.error('Erro ao salvar emails do ck6011', data, error);
                 throw new Error('Erro ao salvar emails do CK6011');
                 // throw new HttpException('Erro ao salvar e-mails para CK6011', HttpStatus.BAD_GATEWAY)
             }

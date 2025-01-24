@@ -124,4 +124,11 @@ export class AutoserviceController {
   remove(@Param('id') id: string) {
     return this.autoserviceService.remove(+id);
   }
+
+  @Get('prismatest')
+  async healthCheck() {
+    const test = await this.autoserviceService.healthCheck();
+    console.log(test);
+    return test;
+  }
 }

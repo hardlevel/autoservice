@@ -96,6 +96,7 @@ export class AutoserviceProcessor extends WorkerHost {
         //         this.ck3Service.ck3001(file);
         //     })
         // })
+
         try {
             if (ck == 'CK3001') {
                 console.log('ck3001 idendificado! Total de registros:', data[ck].length);
@@ -106,6 +107,7 @@ export class AutoserviceProcessor extends WorkerHost {
                     this.ckLog.jobId = parseInt(job.id);
                     this.ckLog.status = 'OK';
                     this.ckLog.category = ck;
+                    this.ckLog.qtd = data[ck].length
                     await this.ck3Service.ck3001(item);
                     await this.prisma.ckLogs.create({
                         data: this.ckLog
@@ -121,6 +123,7 @@ export class AutoserviceProcessor extends WorkerHost {
                     this.ckLog.jobId = parseInt(job.id);
                     this.ckLog.status = 'OK';
                     this.ckLog.category = ck;
+                    this.ckLog.qtd = data[ck].length
                     await this.ck4service.ck4001(item);
                     await this.prisma.ckLogs.create({
                         data: this.ckLog
@@ -137,6 +140,7 @@ export class AutoserviceProcessor extends WorkerHost {
                     this.ckLog.jobId = parseInt(job.id);
                     this.ckLog.status = 'OK';
                     this.ckLog.category = ck;
+                    this.ckLog.qtd = data[ck].length
                     await this.ck5service.ck5001(item);
                     await this.prisma.ckLogs.create({
                         data: this.ckLog
@@ -152,6 +156,7 @@ export class AutoserviceProcessor extends WorkerHost {
                     this.ckLog.jobId = parseInt(job.id);
                     this.ckLog.status = 'OK';
                     this.ckLog.category = ck;
+                    this.ckLog.qtd = data[ck].length
                     await this.ck6service.ck6011(item);
                     await this.prisma.ckLogs.create({
                         data: this.ckLog
@@ -167,6 +172,7 @@ export class AutoserviceProcessor extends WorkerHost {
                     this.ckLog.jobId = parseInt(job.id);
                     this.ckLog.status = 'OK';
                     this.ckLog.category = ck;
+                    this.ckLog.qtd = data[ck].length
                     await this.ck7service.ck7001(item);
                     await this.prisma.ckLogs.create({
                         data: this.ckLog

@@ -3,13 +3,15 @@ import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class Ck5Service {
     constructor(
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
-        private readonly autoservice: AutoserviceService
+        private readonly autoservice: AutoserviceService,
+        @InjectPinoLogger(Ck5Service.name) private readonly logger: PinoLogger
     ) { }
 
     async ck5001(ck5001) {
@@ -67,7 +69,8 @@ export class Ck5Service {
                 }
             })
         } catch (error) {
-            console.log(error);
+            console.error('Erro ao salvar CK5001', error);
+            this.logger.error('Erro ao salvar CK5001', error);
         }
     }
 }
