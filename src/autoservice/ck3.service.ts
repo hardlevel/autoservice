@@ -13,20 +13,22 @@ export class Ck3Service {
     ) { }
 
     async ck3001(ck3001) {
-        const data = {
-            nome_do_cliente: ck3001.nome_do_cliente,
-            cpf_cnpj: ck3001.cpf_cnpj,
-            endereco: ck3001.endereco,
-            complemento: ck3001.complemento,
-            numero: ck3001.numero,
-            numero_da_nota_fiscal: ck3001.numero_da_nota_fiscal,
-            numero_do_dn: ck3001.numero_do_dn,
-            serie_da_nota_fiscal: ck3001.serie_da_nota_fiscal,
-            data_e_hora_da_emissao_da_nota_fiscal: new Date(ck3001.data_e_hora_da_emissao_da_nota_fiscal),
-            fonte_pagadora: ck3001.fonte_pagadora,
-            valor_total_liquido_das_pecas_na_nota_fiscal: ck3001.valor_total_liquido_das_pecas_na_nota_fiscal,
-            indicador: ck3001.indicador,
-        }
+        const fields = [
+            'nome_do_cliente',
+            'cpf_cnpj',
+            'endereco',
+            'complemento',
+            'numero',
+            'numero_da_nota_fiscal',
+            'numero_do_dn',
+            'serie_da_nota_fiscal',
+            'data_e_hora_da_emissao_da_nota_fiscal',
+            'fonte_pagadora',
+            'valor_total_liquido_das_pecas_na_nota_fiscal',
+            'indicador',
+        ]
+
+        const data = this.autoservice.extractData(ck3001, fields);
         try {
             const ck = await this.prisma.ck3001.upsert({
                 where: {
@@ -49,13 +51,14 @@ export class Ck3Service {
     }
 
     async ck3002(id, ck3002) {
-        const data = {
-            cidade: ck3002.cidade,
-            bairro: ck3002.bairro,
-            uf: ck3002.uf,
-            cep: ck3002.cep,
-            ck3001_id: id
-        }
+        const fields = [
+            'cidade',
+            'bairro',
+            'uf',
+            'cep',
+        ]
+
+        const data = {...this.autoservice.extractData(ck3002, fields), ck3001_id: id}
 
         try {
             const ck = await this.prisma.ck3002.upsert({
@@ -83,13 +86,14 @@ export class Ck3Service {
 
     async phones(id, phones) {
         for (const phone of phones) {
-            const data = {
-                numero: phone.numero,
-                descricao: phone.descricao,
-                autoriza_contato: phone.autoriza_contato,
-                autoriza_pesquisa: phone.autoriza_pesquisa,
-                ck3002_id: id
-            }
+            const fields = [
+                'numero',
+                'descricao',
+                'autoriza_contato',
+                'autoriza_pesquisa',
+            ]
+
+            const data = {...this.autoservice.extractData(phone, fields), ck3002_id: id}
 
             try {
                 if (data.numero) {
@@ -109,13 +113,14 @@ export class Ck3Service {
 
     async emails(id, emails) {
         for (const email of emails) {
-            const data = {
-                email: email.email,
-                descricao: email.descricao,
-                autoriza_contato: email.autoriza_contato,
-                autoriza_pesquisa: email.autoriza_pesquisa,
-                ck3002_id: id
-            }
+            const fields = [
+                'email',
+                'descricao',
+                'autoriza_contato',
+                'autoriza_pesquisa'
+            ]
+
+            const data = {...this.autoservice.extractData(email, fields), ck3002_id: id}
 
             try {
                 if (data.email) {
@@ -135,20 +140,21 @@ export class Ck3Service {
 
     async ck3003(id, ck3003) {
         for (const item of ck3003) {
-            const data = {
-                ck3001_id: id,
-                codigo_da_peca: item.codigo_da_peca,
-                descricao_da_peca: item.descricao_da_peca,
-                valor_total_liquido_da_peca: item.valor_total_liquido_da_peca,
-                codigo_promocional: item.codigo_promocional,
-                quantidade_da_peca: item.quantidade_da_peca
-            }
+            const fields = [
+                'codigo_da_peca',
+                'descricao_da_peca',
+                'valor_total_liquido_da_peca',
+                'codigo_promocional',
+                'quantidade_da_peca'
+            ]
+
+            const data = {...this.autoservice.extractData(item, fields), ck3001_id: id}
 
             try {
                 const ck = await this.prisma.ck3003.upsert({
                     where: {
                         ck3003_cod: {
-                            codigo_da_peca: item.codigo_da_peca,
+                            codigo_da_peca: data.codigo_da_peca,
                             ck3001_id: id
                         }
                     },

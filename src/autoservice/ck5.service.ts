@@ -12,37 +12,52 @@ export class Ck5Service {
         private readonly autoservice: AutoserviceService
     ) { }
 
-    async ck4001(ck4001) {
+    async ck5001(ck5001) {
         const fields = [
-            'tipo_do_cancelamento',
             'numero_do_dn',
-            'numero_da_nota_fiscal',
-            'numero_da_os',
-            'serie_da_nota_fiscal',
-            'data_e_hora_da_emissao_da_nota_fiscal',
-            'data_do_cancelamento_do_documento',
-            'data_e_hora_da_abertura_da_os',
-            'data_e_hora_do_fechamento_da_os',
+            'tempo_remunerado',
+            'tempo_disponivel_servicos_gerais_produtivos',
+            'tempo_disponivel_servicos_rapido_produtivos',
+            'tempo_disponivel_servicos_carroceria_produtivos_funileiros',
+            'tempo_disponivel_servicos_carroceria_produtivos_pintores',
+            'taxa_de_mao_de_obra_publico',
+            'servicos_gerente',
+            'servicos_chefe_de_oficina',
+            'servicos_consultor_tecnico',
+            'servicos_aprendiz',
+            'servicos_suporte',
+            'servicos_gerais_produtivos',
+            'servicos_rapido_produtivos',
+            'servicos_carroceria_produtivos_funileiros',
+            'servicos_carroceria_produtivos_pintores',
+            'servicos_lavadores_lubrificadores',
+            'servicos_terceiros',
+            'pecas_gerente',
+            'pecas_suporte',
+            'pecas_balconista_varejo',
+            'pecas_balconista_oficina',
+            'pecas_vendedor_atacado',
+            'pecas_vendedor_acessorios',
+            'locais_de_trabalho_servicos_gerais',
+            'locais_de_trabalho_servico_rapido',
+            'locais_de_trabalho_servicos_de_funilaria',
+            'locais_de_trabalho_servicos_de_pintura',
+            'locais_de_trabalho_lavagem_e_lubrificacao',
+            'locais_de_trabalho_utilizados_por_terceiros',
+            'mes_e_ano_de_referencia',
+            'ano_de_referencia',
+            'mes_de_referencia',
         ];
 
-        const data = this.autoservice.extractData(ck4001, fields);
-        // const data = {
-        //     tipo_do_cancelamento: ck4001.tipo_do_cancelamento,
-        //     numero_do_dn: ck4001.numero_do_dn,
-        //     numero_da_nota_fiscal: ck4001.numero_da_nota_fiscal,
-        //     numero_da_os: ck4001.numero_da_os,
-        //     serie_da_nota_fiscal: ck4001.serie_da_nota_fiscal,
-        //     data_e_hora_da_emissao_da_nota_fiscal: new Date(ck4001.data_e_hora_da_emissao_da_nota_fiscal),
-        //     data_do_cancelamento_do_documento: new Date(ck4001.data_do_cancelamento_do_documento),
-        //     data_e_hora_da_abertura_da_os: new Date(ck4001.data_e_hora_da_abertura_da_os),
-        //     data_e_hora_do_fechamento_da_os: new Date(ck4001.data_e_hora_do_fechamento_da_os)
-        // }
+        const data = this.autoservice.extractData(ck5001, fields);
+
         try {
-            const ck = await this.prisma.ck4001.upsert({
+            const ck = await this.prisma.ck5001.upsert({
                 where: {
-                    ck4001_cod: {
+                    ck5001_cod: {
                         numero_do_dn: data.numero_do_dn,
-                        numero_da_nota_fiscal: data.numero_da_nota_fiscal
+                        ano_de_referencia: data.ano_de_referencia,
+                        mes_de_referencia: data.mes_de_referencia
                     }
                 },
                 create: data,
@@ -51,7 +66,6 @@ export class Ck5Service {
                     id: true
                 }
             })
-
         } catch (error) {
             console.log(error);
         }

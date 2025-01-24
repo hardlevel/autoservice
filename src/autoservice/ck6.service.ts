@@ -44,18 +44,7 @@ export class Ck6Service {
             await this.ck6031(ck.id, ck6011.CK6031);
             await this.ck6041(ck.id, ck6011.CK6041);
         } catch (error) {
-            // console.error('Erro ao salvar ck6011', data, error);
-            // console.error('Erro ao salvar ck6011', error);
-            // throw new Error('Erro ao salvar CK6011');
-            // throw new AllExceptionsFilter()
-            // throw new HttpException('Erro personalizado no controller!', HttpStatus.BAD_REQUEST);
-            // throw new HttpException(
-            //     {
-            //         statusCode: HttpStatus.BAD_REQUEST,
-            //         message: error.message || 'Erro ao processar a requisição',
-            //     },
-            //     HttpStatus.BAD_REQUEST,
-            // );
+            console.error('Erro ao salvar ck6011', data, error);
         }
     }
 
@@ -86,8 +75,7 @@ export class Ck6Service {
                     }
                 });
             } catch (error) {
-                // console.error('Erro ao salvar ck6021', data, error);
-                // throw new HttpException('Erro personalizado no controller!', HttpStatus.BAD_REQUEST);
+                console.error('Erro ao salvar ck6021', data, error);
                 throw new Error('Erro ao salvar CK6021');
             }
         }
@@ -120,14 +108,15 @@ export class Ck6Service {
                     }
                 });
             } catch (error) {
-                // console.error('Erro ao salvar ck6031', data, error);
+                console.error('Erro ao salvar ck6031', data, error);
                 throw new Error('Erro ao salvar CK6031');
-                // throw new HttpException('Erro personalizado no controller!', HttpStatus.BAD_REQUEST);
             }
         }
     }
 
     async ck6041(id, ck6041) {
+        //os campos chassi e placa são opcionais, portanto não podem ser usados como identificadores
+        //então deve-se primeiro tentar localizar o veiculo, caso exista atualizar, caso não exista, adicionar
         const fields = [
             'chassi_do_veiculo',
             'placa_do_veiculo',
@@ -142,21 +131,42 @@ export class Ck6Service {
         ];
 
         const data = { ...this.autoservice.extractData(ck6041, fields), ck6011_id: id }
+        const searchConditions = {
+            id: null,
+            field: '',
+            value: '',
+            table: 'ck6041'
+        };
 
+        if (data.chassi_do_veiculo) {
+            searchConditions.field = 'chassi_do_veiculo';
+            searchConditions.value = data.chassi_do_veiculo;
+        } else if (data.placa_do_veiculo) {
+            searchConditions.field = 'placa_do_veiculo';
+            searchConditions.value = data.placa_do_veiculo;
+        } else {
+            return;
+        }
+
+        console.log(searchConditions);
         try {
-            const ck = await this.prisma.ck6041.upsert({
-                where: {
-                    ck6041_cod: {
-                        chassi_do_veiculo: data.chassi_do_veiculo,
-                        ck6011_id: data.ck6011_id
-                    }
-                },
-                create: data,
-                update: data,
-                select: {
-                    id: true
-                }
-            });
+            let ck = await this.prisma.findOne(
+                searchConditions.id,
+                searchConditions.table,
+                searchConditions.field,
+                searchConditions.value
+            );
+
+            if (ck) {
+                await this.prisma.ck6041.update({
+                    where: {
+                        id: ck.id
+                    },
+                    data
+                })
+            } else {
+                ck = await this.prisma.ck6041.create(data);
+            }
             await this.ck6042(ck.id, ck6041.CK6042);
         } catch (error) {
             console.error('Erro ao salvar CK6041', data, error);

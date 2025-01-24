@@ -63,7 +63,6 @@ import { GlobalErrorHandler } from '../error.listenner';
       },
       inject: [ConfigService],
     }),
-
     BullModule.registerQueueAsync({
       name: 'autoservice'
     })

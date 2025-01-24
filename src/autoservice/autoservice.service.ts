@@ -12,19 +12,26 @@ import { AllExceptionsFilter } from '../all.exceptions';
 import * as moment from 'moment';
 @Injectable()
 export class AutoserviceService {
+  startDate
+  endDate
+
   constructor(
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
     private readonly config: ConfigService,
     private readonly sqsService: SqsService,
     private readonly prisma: PrismaService
-  ) { }
+  ) {}
 
   @SqsMessageHandler('autoservice', false)
   async handleMessage(message: Message) {
     // console.log(this.config.get('SQS_URL'))
     // console.log(message);
     const msgBody = JSON.parse(message.Body);
-    if (msgBody) console.log('mensagem recebida');
+    if (msgBody) {
+      console.log('mensagem recebida')
+      msgBody.startDate = this.startDate;
+      msgBody.endDate = this.endDate;
+    };
     try {
       const job = await this.autoserviceQueue.add('autoservice', msgBody, {
         delay: 2000,
@@ -174,7 +181,8 @@ export class AutoserviceService {
 
   async getData(dataInicio = null, dataFim = null) {
     let token, url;
-    console.log('solicitado dados para o intervalo entre: ', dataInicio, dataFim);
+    console.log(dataInicio, dataFim);
+    // console.log('solicitado dados para o intervalo entre: ', dataInicio, dataFim);
     try {
       url = new URL('findByPeriod', this.config.get('API_URL'));
       // url.searchParams.append('dataInicio', this.getCurrentDate(1));
@@ -182,15 +190,17 @@ export class AutoserviceService {
       // url.searchParams.append('dataInicio', '2025-01-02T00:41:37');
       // url.searchParams.append('dataFim', '2025-01-03T23:41:37');
       if (dataInicio && dataFim) {
-        url.searchParams.append(dataInicio);
-        url.searchParams.append(dataFim);
+        url.searchParams.append('dataInicio', dataInicio);
+        url.searchParams.append('dataFim', dataFim);
+        this.startDate = dataInicio;
+        this.endDate = dataFim;
       } else {
         const date = this.getCurrentDate(1);
-        console.log(date);
-        url.searchParams.append('dataInicio', encodeURIComponent(date.startDateShort));
-        url.searchParams.append('dataFim', encodeURIComponent(date.endDateShort));
+        url.searchParams.append('dataInicio', date.startDateShort);
+        url.searchParams.append('dataFim', date.endDateShort);
+        this.startDate = date.startDateShort;
+        this.endDate = date.endDateShort;
       }
-      console.log(url);
       token = await this.getToken();
     } catch (error) {
       console.log('Falha ao obter o token:', error);
@@ -232,12 +242,33 @@ export class AutoserviceService {
     return 'This action adds a new autoservice';
   }
 
-  findAll() {
-    return `This action returns all autoservice`;
+  async findAll(table: string, skip: number = 1, take: number = 50) {
+    const total = await this.prisma.count(table);
+    const data = await this.prisma.findAll(table, (skip - 1), take);
+    console.log(data);
+    return {
+      total,
+      take,
+      page: skip,
+      data
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} autoservice`;
+  async findMany(table: string, skip: number = 1, take: number = 50, field: string, value: number | string | boolean) {
+    const total = await this.prisma.countFilter(table, field, value);
+    const data = await this.prisma.findMany(table, (skip - 1), take, field, value);
+    return {
+      total,
+      take,
+      page: skip,
+      data
+    };
+  }
+
+  async findOne(id: number) {
+    // const data = await this.prisma.findOne(null, 'chassi_do_veiculo', '9BWAH5BZ8ST646285', 'ck6041');
+    // console.log(data);
+    // return data;
   }
 
   update(id: number, updateAutoserviceDto: UpdateAutoserviceDto) {
@@ -310,16 +341,28 @@ export class AutoserviceService {
     }).format(value);
   }
 
-  async pastData(month) {
-    const startMonth = moment().month(month).startOf('month');
+  async pastData(year, month, day = null) {
+    let startMonth;
+    if (day) {
+      startMonth = moment().month(month).year(year).date(day);
+    } else {
+      startMonth = moment().month(month).year(year).startOf('month');
+    }
     const endMonth = moment().month(month).endOf('month');
     const days = moment().month(month).daysInMonth();
-    for (let i = 1; i <= days; i++) {
-      const year = moment().year();
-      const date = moment({ year, month, day: i });
+    const startDay = day ?? 1;
+    for (let i = startDay; i <= days; i++) {
+      const date = startMonth.clone().date(i).startOf('day');
       for (let h = 0; h < 24; h++) {
-        const time = date.clone().add(h, 'hours');
-        console.log(await this.autoserviceQueue.getActiveCount());
+        const endDate = date.clone().add(h + 1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+        const startDate = date.clone().add(h, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+        console.info('solicitando dados retroativos: ', startDate, endDate);
+        // const isActive = await this.autoserviceQueue.getActive();
+        // if (!isActive) {
+        await this.getData(startDate, endDate);
+        // }
+        // }, 30 * 60 * 1000)
+        await new Promise(resolve => setTimeout(resolve, 60000));
       }
     }
   }
