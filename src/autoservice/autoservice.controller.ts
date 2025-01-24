@@ -63,7 +63,7 @@ export class AutoserviceController {
 
   @Get('past')
   async pastData() {
-    return this.autoserviceService.pastData(0);
+    return this.autoserviceService.pastData(2024, 0, 10);
   }
 
   @Get('find')
@@ -94,7 +94,7 @@ export class AutoserviceController {
   @Get('start')
   start() {
     try {
-      this.autoserviceService.getData('2025-01-23T00:41:37', '2025-01-23T23:41:37');
+      this.autoserviceService.getData('2024-01-10T00:00:00', '2024-01-10T23:59:00');
     } catch(error) {
       throw new Error('Erro ao processar arquivos');
     }

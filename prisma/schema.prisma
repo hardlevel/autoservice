@@ -13,6 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model CkLogs {
+  id Int @id @default(autoincrement())
+  created_at DateTime @default(now())
+  startDate String
+  endDate String
+  category String
+  data String?
+  qtd Int?
+  status String
+  message String?
+  jobId Int
+}
+
+model JobLogs {
+  id Int @id @default(autoincrement())
+  jobId Int
+  created_at DateTime @default(now())
+  started_at DateTime
+  ended_at DateTime
+  startDate String?
+  endDate String?
+  status String
+  message String?
+  data String?
+}
+
 model Autoservice {
   id          Int       @id @default(autoincrement())
   body        String
@@ -80,7 +106,7 @@ model Emails {
   ck7002            Ck7002?  @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
   ck7002_id         Int?
   email             String   @unique
-  descricao         String
+  descricao         String @default("pessoal")
   autoriza_contato  Boolean
   autoriza_pesquisa Boolean
   created_at        DateTime @default(now())
@@ -96,7 +122,7 @@ model Telefones {
   ck7002            Ck7002?  @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
   ck7002_id         Int?
   numero            String   @unique
-  descricao         String
+  descricao         String @default("Residencial")
   autoriza_contato  Boolean
   autoriza_pesquisa Boolean
   created_at        DateTime @default(now())
@@ -176,6 +202,7 @@ model Ck5001 {
   modified_at                                                DateTime @updatedAt
 
   @@index([numero_do_dn], type: Hash)
+  @@unique(name: "ck5001_cod", [numero_do_dn, ano_de_referencia, mes_de_referencia])
 }
 
 model Ck6011 {

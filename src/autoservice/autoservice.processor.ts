@@ -6,19 +6,64 @@ import { AutoserviceService } from './autoservice.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { Ck3Service } from './ck3.service';
 import { Ck4Service } from './ck4.service';
-// import { Ck5Service } from './ck5.service';
+import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
 import { Ck7Service } from './ck7.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { AllExceptionsFilter } from '../all.exceptions';
+
+interface JobLog {
+    jobId: number;
+    started_at: Date;
+    ended_at: Date | null;
+    startDate: string;
+    endDate: string;
+    status: string;
+    message: string;
+    data: string;
+}
+
+interface CkLog {
+    startDate: string;
+    endDate: string;
+    category: string;
+    data?: string;
+    qtd?: number;
+    status: string;
+    message?: string;
+    jobId: number
+}
 @Processor('autoservice')
 export class AutoserviceProcessor extends WorkerHost {
+    category;
+    ckLog: CkLog = {
+        startDate: '',
+        endDate: '',
+        category: '',
+        // data: '',
+        // qtd: 0,
+        status: 'OK',
+        // message: 'OK',
+        jobId: 0
+    };
+
+    jobLog: JobLog = {
+        jobId: 0,
+        started_at: new Date(),
+        ended_at: null,
+        startDate: '',
+        endDate: '',
+        status: '',
+        message: '',
+        data: '',
+    };
+
     constructor(
         private readonly autoservice: AutoserviceService,
         private readonly prisma: PrismaService,
         private readonly ck3Service: Ck3Service,
         private readonly ck4service: Ck4Service,
-        // private readonly ck5service: Ck5Service,
+        private readonly ck5service: Ck5Service,
         private readonly ck6service: Ck6Service,
         private readonly ck7service: Ck7Service,
     ) {
@@ -29,6 +74,16 @@ export class AutoserviceProcessor extends WorkerHost {
         // console.log('Processing job:', job.id, job.data);
         const data = job.data;
         const ck = Object.keys(data)[0];
+        this.jobLog = {
+            jobId: parseInt(job.id),
+            started_at: new Date(),
+            ended_at: new Date(),
+            startDate: job.data.startDate,
+            endDate: job.data.endDate,
+            status: 'OK',
+            message: 'OK',
+            data: 'OK'
+        }
         // const filePath = path.join(process.cwd(), `${ck}.json`);
         // console.log(ck, filePath);
         // console.log(ck);
@@ -44,38 +99,80 @@ export class AutoserviceProcessor extends WorkerHost {
         try {
             if (ck == 'CK3001') {
                 console.log('ck3001 idendificado! Total de registros:', data[ck].length);
+                this.category = ck;
                 for (const item of data[ck]) {
-                    this.ck3Service.ck3001(item);
+                    this.ckLog.startDate = data.startDate;
+                    this.ckLog.endDate = data.endDate;
+                    this.ckLog.jobId = parseInt(job.id);
+                    this.ckLog.status = 'OK';
+                    this.ckLog.category = ck;
+                    await this.ck3Service.ck3001(item);
+                    await this.prisma.ckLogs.create({
+                        data: this.ckLog
+                    })
                 }
             }
 
             if (ck == 'CK4001') {
                 console.log('ck4001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
+                    this.ckLog.startDate = data.startDate;
+                    this.ckLog.endDate = data.endDate;
+                    this.ckLog.jobId = parseInt(job.id);
+                    this.ckLog.status = 'OK';
+                    this.ckLog.category = ck;
                     await this.ck4service.ck4001(item);
+                    await this.prisma.ckLogs.create({
+                        data: this.ckLog
+                    })
                 }
             }
 
             if (ck == 'CK5001') {
                 console.log('ck5001 idendificado! Total de registros:', data[ck].length);
                 console.log(data[ck]);
-                // await this.autoservice.ck5(data);
+                for (const item of data[ck]) {
+                    this.ckLog.startDate = data.startDate;
+                    this.ckLog.endDate = data.endDate;
+                    this.ckLog.jobId = parseInt(job.id);
+                    this.ckLog.status = 'OK';
+                    this.ckLog.category = ck;
+                    await this.ck5service.ck5001(item);
+                    await this.prisma.ckLogs.create({
+                        data: this.ckLog
+                    })
+                }
             }
 
             if (ck == 'CK6011') {
                 console.log('ck6011 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
+                    this.ckLog.startDate = data.startDate;
+                    this.ckLog.endDate = data.endDate;
+                    this.ckLog.jobId = parseInt(job.id);
+                    this.ckLog.status = 'OK';
+                    this.ckLog.category = ck;
                     await this.ck6service.ck6011(item);
+                    await this.prisma.ckLogs.create({
+                        data: this.ckLog
+                    })
                 }
             }
 
             if (ck == 'CK7001') {
                 console.log('ck7001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
+                    this.ckLog.startDate = data.startDate;
+                    this.ckLog.endDate = data.endDate;
+                    this.ckLog.jobId = parseInt(job.id);
+                    this.ckLog.status = 'OK';
+                    this.ckLog.category = ck;
                     await this.ck7service.ck7001(item);
+                    await this.prisma.ckLogs.create({
+                        data: this.ckLog
+                    })
                 }
             }
-
 
             return { success: true };
         } catch (error) {
@@ -103,12 +200,19 @@ export class AutoserviceProcessor extends WorkerHost {
     }
 
     @OnWorkerEvent('failed')
-    onFailed(job: Job, error: Error) {
+    async onFailed(job: Job, error: Error) {
         console.error(`Job ${job.id} failed.`, error.message);
         console.log(error);
-        throw new HttpException('Erro ao processar dados', HttpStatus.BAD_REQUEST);
-        // throw new HttpException(error, HttpStatus.BAD_REQUEST);
-        // throw new HttpException('Erro personalizado', HttpStatus.BAD_REQUEST);
+        this.jobLog.ended_at = new Date();
+        this.jobLog.status = "FAILED";
+        this.jobLog.message = error.message;
+        this.jobLog.data = job.data;
+        this.jobLog.startDate = job.data.startDate;
+        this.jobLog.endDate = job.data.endDate;
+
+        await this.prisma.jobLogs.create({
+            data: this.jobLog
+        })
     }
 
     addOrCreateJsonFile(filePath, newData) {

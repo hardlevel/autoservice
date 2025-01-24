@@ -13,7 +13,6 @@ export class Ck7Service {
         private readonly autoservice: AutoserviceService
     ) { }
 
-
     async ck7001(ck7001) {
         const fields = [
             "nome_do_cliente",
@@ -31,20 +30,7 @@ export class Ck7Service {
         ]
 
         const data = this.autoservice.extractData(ck7001, fields);
-        // const data = {
-        //     nome_do_cliente: ck7001.nome_do_cliente,
-        //     endereco: ck7001.endereco,
-        //     fonte_pagadora: ck7001.fonte_pagadora,
-        //     numero_do_dn: ck7001.numero_do_dn,
-        //     numero_da_nota_fiscal: ck7001.numero_da_nota_fiscal,
-        //     numero_da_os: ck7001.numero_da_os,
-        //     serie_da_nota_fiscal: ck7001.serie_da_nota_fiscal,
-        //     valor_total_liquido_das_pecas_na_nota_fiscal: ck7001.valor_total_liquido_das_pecas_na_nota_fiscal,
-        //     valor_total_liquido_da_mao_de_obra_na_nota_fiscal: ck7001.valor_total_liquido_da_mao_de_obra_na_nota_fiscal,
-        //     data_e_hora_da_abertura_da_os: new Date(ck7001.data_e_hora_da_abertura_da_os),
-        //     data_e_hora_do_fechamento_da_os: new Date(ck7001.data_e_hora_do_fechamento_da_os),
-        //     data_e_hora_da_emissao_da_nota_fiscal: new Date(ck7001.data_e_hora_da_emissao_da_nota_fiscal)
-        // }
+
         try {
             const ck = await this.prisma.ck7001.upsert({
                 where: {
@@ -77,7 +63,7 @@ export class Ck7Service {
             'cep',
         ];
         const data = { ...this.autoservice.extractData(ck7002, fields), ck7001_id: id };
-        // console.log(data);
+
         try {
             const ck = await this.prisma.ck7002.upsert({
                 where: {
@@ -110,13 +96,7 @@ export class Ck7Service {
                 'autoriza_contato'
             ];
             const data = { ...this.autoservice.extractData(phone, fields), ck7002_id: id };
-            // const data = {
-            //     numero: phone.numero,
-            //     descricao: phone.descricao,
-            //     autoriza_pesquisa: phone.autoriza_pesquisa,
-            //     autoriza_contato: phone.autoriza_contato,
-            //     ck7002_id: id
-            // }
+
             try {
                 const ckPhone = await this.prisma.telefones.upsert({
                     where: {
@@ -144,13 +124,7 @@ export class Ck7Service {
             ];
 
             const data = { ...this.autoservice.extractData(email, fields), ck7002_id: id };
-            // const data = {
-            //     email: email.email,
-            //     descricao: email.descricao,
-            //     autoriza_pesquisa: email.autoriza_pesquisa,
-            //     autoriza_contato: email.autoriza_contato,
-            //     ck7002_id: id
-            // }
+
             try {
                 const ckPhone = await this.prisma.emails.upsert({
                     where: {
@@ -179,14 +153,6 @@ export class Ck7Service {
             ]
 
             const data = { ...this.autoservice.extractData(item, fields), ck7001_id: id };
-            // const data = {
-            //     codigo_da_peca: item.codigo_da_peca,
-            //     descricao_da_peca: item.descricao_da_peca,
-            //     quantidade_da_peca: item.quantidade_da_peca,
-            //     valor_total_liquido_da_peca: item.valor_total_liquido_da_peca,
-            //     codigo_promocional: item.codigo_promocional,
-            //     ck7001_id: id
-            // }
 
             try {
                 const ck = await this.prisma.ck7003.upsert({

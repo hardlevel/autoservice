@@ -26,17 +26,7 @@ export class Ck4Service {
         ];
 
         const data = this.autoservice.extractData(ck4001, fields);
-        // const data = {
-        //     tipo_do_cancelamento: ck4001.tipo_do_cancelamento,
-        //     numero_do_dn: ck4001.numero_do_dn,
-        //     numero_da_nota_fiscal: ck4001.numero_da_nota_fiscal,
-        //     numero_da_os: ck4001.numero_da_os,
-        //     serie_da_nota_fiscal: ck4001.serie_da_nota_fiscal,
-        //     data_e_hora_da_emissao_da_nota_fiscal: new Date(ck4001.data_e_hora_da_emissao_da_nota_fiscal),
-        //     data_do_cancelamento_do_documento: new Date(ck4001.data_do_cancelamento_do_documento),
-        //     data_e_hora_da_abertura_da_os: new Date(ck4001.data_e_hora_da_abertura_da_os),
-        //     data_e_hora_do_fechamento_da_os: new Date(ck4001.data_e_hora_do_fechamento_da_os)
-        // }
+
         try {
             const ck = await this.prisma.ck4001.upsert({
                 where: {
