@@ -12,7 +12,7 @@ import { AllExceptionsFilter } from '../all.exceptions';
 import * as moment from 'moment';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 @Injectable()
-export class AutoserviceService {
+export class AssobravService {
   startDate
   endDate
 

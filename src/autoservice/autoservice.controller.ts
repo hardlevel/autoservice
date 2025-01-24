@@ -57,13 +57,23 @@ export class AutoserviceController {
       // // Lançando uma exceção para testar o filtro
       // throw new HttpException('Erro personalizado no controller!', HttpStatus.BAD_REQUEST);
 
-
+    console.log(this.autoserviceService.convertDate('2024-12-16T11:06:00-03:00'))
     // this.autoserviceService.addJob({ teste: 'aaa' })
+    return 'ok';
+  }
+
+  @Get('monitor')
+  async teste2() {
+    const teste = await this.autoserviceService.updateData();
+    console.log('atualizando...');
+    return 'teste';
+    // return this.autoserviceService.updateData();
   }
 
   @Get('past')
   async pastData() {
-    return this.autoserviceService.pastData(2024, 0, 10);
+    return this.autoserviceService.parseYear(2024);
+    // return this.autoserviceService.pastData(2024, 0);
   }
 
   @Get('find')
@@ -78,7 +88,7 @@ export class AutoserviceController {
 
   @Get('findmany')
   async findMany() {
-    return await this.autoserviceService.findMany('ck6011', 1, 50, 'numero_da_os', '689485');
+    return await this.autoserviceService.findMany('ck6011', 'numero_da_os', '689485');
   }
 
   @Get('date')
@@ -123,12 +133,5 @@ export class AutoserviceController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.autoserviceService.remove(+id);
-  }
-
-  @Get('prismatest')
-  async healthCheck() {
-    const test = await this.autoserviceService.healthCheck();
-    console.log(test);
-    return test;
   }
 }

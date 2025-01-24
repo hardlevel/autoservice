@@ -217,7 +217,7 @@ model Ck6011 {
   ck6021                                   Ck6021[]
   ck6031                                   Ck6031[]
   ck6041                                   Ck6041[]
-  ck6042                                   Ck6042[]
+  // ck6042                                   Ck6042[]
   created_at                               DateTime  @default(now())
   modified_at                              DateTime  @updatedAt
 
@@ -287,8 +287,8 @@ model Ck6042 {
   modified_at DateTime    @updatedAt
   telefones   Telefones[]
   emails      Emails[]
-  Ck6011      Ck6011?     @relation(fields: [ck6011Id], references: [id])
-  ck6011Id    Int?
+  // Ck6011      Ck6011?     @relation(fields: [ck6011Id], references: [id])
+  // ck6011Id    Int?
 
   @@unique(name: "ck6042_cod", [cidade, uf, cep, ck6041_id])
 }
