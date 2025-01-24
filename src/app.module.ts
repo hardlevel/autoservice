@@ -7,6 +7,9 @@ import { BullModule } from '@nestjs/bullmq';
 import { PrismaModule } from './prisma/prisma.module';
 import { APP_FILTER } from '@nestjs/core';
 import { GlobalErrorHandler } from './error.listenner';
+import { HealthModule } from './health/health.module';
+import { LoggerModule } from 'nestjs-pino';
+import pino from 'pino';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,7 +27,21 @@ import { GlobalErrorHandler } from './error.listenner';
       inject: [ConfigService],
     }),
     AutoserviceModule,
-    PrismaModule
+    PrismaModule,
+    HealthModule,
+    LoggerModule.forRoot({
+      pinoHttp: {
+        name: 'Autoservice',
+        transport: {
+          target: 'pino-pretty'
+        },
+        stream: pino.destination({
+          dest: './logs/autoservice.log',
+          minLength: 4096,
+          sync: false
+        })
+      }
+    })
   ],
   controllers: [AppController],
   providers: [

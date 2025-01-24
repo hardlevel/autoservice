@@ -1,6 +1,7 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
+import { Logger } from 'nestjs-pino';
 import { MoneyPipe } from './pipes/money.pipe';
 import { DatePipe } from './pipes/date.pipe';
 // import { HttpExceptionFilter } from './http.exceptions';
@@ -11,7 +12,8 @@ import { PrismaClientExceptionFilter } from './prisma.exceptions';
 import * as moment from 'moment-timezone';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  app.useLogger(app.get(Logger));
   // moment().zone("-03:00");
   moment.tz.setDefault('Ameriza/Sao_Paulo');
   // app.useGlobalFilters(new AllExceptionsFilter({ httpAdapter: app.getHttpAdapter() }));
@@ -25,8 +27,8 @@ async function bootstrap() {
   // app.useGlobalInterceptors(new ErrorsInterceptor());
   app.useGlobalPipes(
     new ValidationPipe(),
-    new MoneyPipe(),
-    new DatePipe()
+    // new MoneyPipe(),
+    // new DatePipe()
   );
 
   // const { httpAdapter } = app.get(HttpAdapterHost);

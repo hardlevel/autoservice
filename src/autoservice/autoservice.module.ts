@@ -13,6 +13,7 @@ import { Ck7Service } from './ck7.service';
 import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
 import { GlobalErrorHandler } from '../error.listenner';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   controllers: [AutoserviceController],
@@ -28,6 +29,7 @@ import { GlobalErrorHandler } from '../error.listenner';
     Ck7Service
   ],
   imports: [
+    LoggerModule,
     PrismaModule,
     SqsModule.registerAsync({
       imports: [ConfigModule],

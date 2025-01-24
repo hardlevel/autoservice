@@ -10,6 +10,7 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AllExceptionsFilter } from '../all.exceptions';
 import * as moment from 'moment';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 @Injectable()
 export class AutoserviceService {
   startDate
@@ -19,7 +20,8 @@ export class AutoserviceService {
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
     private readonly config: ConfigService,
     private readonly sqsService: SqsService,
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
+    @InjectPinoLogger(AutoserviceService.name) private readonly logger: PinoLogger
   ) {}
 
   @SqsMessageHandler('autoservice', false)
@@ -42,22 +44,6 @@ export class AutoserviceService {
     }
   }
 
-  // getCurrentDate(hoursToSubtract = 0) {
-  //   const now = new Date();
-
-  //   if (typeof hoursToSubtract === 'number') {
-  //     now.setHours(now.getHours() - hoursToSubtract);
-  //   }
-
-  //   const year = now.getFullYear();
-  //   const month = String(now.getMonth() + 1).padStart(2, '0');
-  //   const day = String(now.getDate()).padStart(2, '0');
-  //   const hours = String(now.getHours()).padStart(2, '0');
-  //   const minutes = String(now.getMinutes()).padStart(2, '0');
-  //   const seconds = String(now.getSeconds()).padStart(2, '0');
-
-  //   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-  // }
   getCurrentDate(interval: number) {
     const date = moment();
     const endDate = date.format();
@@ -227,17 +213,6 @@ export class AutoserviceService {
       });
   }
 
-  async addJob(data: any) {
-    try {
-      await this.autoserviceQueue.add('process-autoservice-job', data);
-      console.log('Job added to queue:', data);
-    } catch (error) {
-      console.log(error);
-      // throw new AllExceptionsFilter();
-    }
-
-  }
-
   create(createAutoserviceDto: CreateAutoserviceDto) {
     return 'This action adds a new autoservice';
   }
@@ -277,25 +252,6 @@ export class AutoserviceService {
 
   remove(id: number) {
     return `This action removes a #${id} autoservice`;
-  }
-
-  prepareData(fields, data) {
-    // console.log('Fields:', fields);  // Verifique os campos a serem processados
-    // console.log('Data:', data);      // Verifique os dados completos
-    return fields.reduce((acc, field) => {
-      if (data[field] !== undefined) {
-        // Verifique o valor de data[field] para garantir que ele não é undefined
-        console.log(`Processando campo: ${field} -> ${data[field]}`);
-        acc[field] = field.includes('data_') ? new Date(data[field]) : data[field];
-      }
-      return acc;
-    }, {});
-  }
-
-  extractFieldNames(obj) {
-    return Object.keys(obj).filter(key => {
-      return !(typeof obj[key] === 'string' && obj[key].startsWith('CK'));
-    });
   }
 
   async mockData(format) {
@@ -405,5 +361,16 @@ export class AutoserviceService {
 
     console.log(this.convertDate(teste.startDate));
     // return this.getData(end, start);
+  }
+
+  async healthCheck() {
+    try {
+      const test = await this.prisma.$queryRaw`SELECT 1`;
+      console.log(test);
+      return { status: 'ok', database: 'healthy' }; // Resposta válida
+    } catch (error) {
+      console.error('Database connection failed:', error);
+      return { status: 'error', database: 'unhealthy', error: error.message };
+    }
   }
 }
