@@ -117,7 +117,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         console.error('sem nf!')
       }
     }
-    console.log('validando nf', originalData.numero_da_nota_fiscal)
+    // console.log('validando nf', originalData.numero_da_nota_fiscal)
     const data = this.util.extractData(originalData, fields);
     const where = this.util.extractUnique(data, uniqueFields, table);
 

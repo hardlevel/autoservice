@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { CustomError } from '../common/errors/custom-error';
 import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 interface RequestOptions {
@@ -26,17 +27,35 @@ export class AutoserviceService {
   startDate
   endDate
   status: boolean;
-
+  queueStatus: boolean;
 
   constructor(
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
     private readonly config: ConfigService,
     private readonly sqsService: SqsService,
     private readonly prisma: PrismaService,
-    private readonly util: UtilService
+    private readonly util: UtilService,
+    private readonly eventEmitter: EventEmitter2
     // //@InjectPinoLogger(AutoserviceService.name) private readonly logger: PinoLogger
     // private readonly logger = new Logger(AutoserviceService.name)
   ) { }
+
+  @OnEvent('autoservice.*')
+  handleOrderEvents(payload) {
+    console.log(payload);
+    // handle and process an event
+  }
+
+  @OnEvent('autoservice.working')
+  handleWorking(payload) {
+    this.queueStatus = true;
+  }
+
+  @OnEvent('autoservice.complete')
+  handleComplete(payload) {
+    console.log('fila concluida', payload);
+    this.queueStatus = false;
+  }
 
   @SqsMessageHandler('autoservice', false)
   async handleMessage(message: Message) {
@@ -66,7 +85,7 @@ export class AutoserviceService {
       method,
       headers: {
         "Content-Type": "application/json",
-        ...(token ? { "Authorization": `Bearer ${token}`} : {})
+        ...(token ? { "Authorization": `Bearer ${token}` } : {})
       },
     };
 
@@ -83,30 +102,34 @@ export class AutoserviceService {
     const request = new Request(path, requestOptions);
 
     return fetch(request)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      return data;
-    })
-    .catch(async (error) => {
-      await this.prisma.errorLog.create({
-        data: {
-          time: new Date(),
-          category,
-          message: error.message,
-          code: error.code,
-          params: JSON.stringify(params),
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
         }
+        return response.json();
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(async (error) => {
+        await this.prisma.errorLog.create({
+          data: {
+            time: new Date(),
+            category,
+            message: error.message,
+            code: error.code,
+            params: JSON.stringify(params),
+          }
+        });
+        throw error;
       });
-      throw error;
-    });
   }
 
   async getData(startDate = null, endDate = null) {
+    while(this.queueStatus == false) {
+      this.util.delay(30000);
+    }
+
     let category = 'token';
     const tokenConfig = this.config.get('token');
     const tokenParams = {
@@ -181,6 +204,10 @@ export class AutoserviceService {
   //   return newData;
   // };
 
+  async getQueueStatus() {
+    const teste = this.autoserviceQueue;
+  }
+
   async pastData(year, month, day = null) {
     let startMonth;
     if (day) {
@@ -204,6 +231,7 @@ export class AutoserviceService {
         // }
         // }, 30 * 60 * 1000)
         // await new Promise(resolve => setTimeout(resolve, 30000));
+        // console.log(this.queueStatus())
         await new Promise(resolve => setTimeout(resolve, 100000));
       }
     }
