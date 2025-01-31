@@ -9,7 +9,7 @@ import { ValidationPipe } from '@nestjs/common';
 // import { AllExceptionsFilter } from './all.exceptions';
 // import { ErrorsInterceptor } from './error.interceptor';
 // import { PrismaClientExceptionFilter } from './prisma.exceptions';
-import * as moment from 'moment-timezone';
+// import * as moment from 'moment-timezone';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule, { bufferLogs: true });

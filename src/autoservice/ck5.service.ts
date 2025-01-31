@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
+import { UtilService } from '../util/util.service';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
@@ -11,6 +12,7 @@ export class Ck5Service {
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
+        private readonly util: UtilService
         //@InjectPinoLogger(Ck5Service.name) private readonly logger: PinoLogger
     ) { }
 
@@ -51,7 +53,7 @@ export class Ck5Service {
             'mes_de_referencia',
         ];
 
-        const data = this.autoservice.extractData(ck5001, fields);
+        const data = this.util.extractData(ck5001, fields);
 
         try {
             const ck = await this.prisma.ck5001.upsert({

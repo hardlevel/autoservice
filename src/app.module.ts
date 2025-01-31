@@ -6,14 +6,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
 import { PrismaModule } from './prisma/prisma.module';
 // import { APP_FILTER } from '@nestjs/core';
-import { GlobalErrorHandler } from './error.listenner';
+// import { GlobalErrorHandler } from './error.listenner';
 import { HealthModule } from './health/health.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ErrorInterceptor } from './common/errors/error.interceptor';
+import autoserviceConfig from './autoservice/config/autoservice.config';
 // import { LoggerModule } from 'nestjs-pino';
+import { UtilService } from './util/util.service';
+import { UtilModule } from './util/util.module';
 // import pino from 'pino';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
+      load: [autoserviceConfig]
     }),
     BullModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,6 +35,7 @@ import { HealthModule } from './health/health.module';
     AutoserviceModule,
     PrismaModule,
     HealthModule,
+    UtilModule,
     // LoggerModule.forRoot({
     //   pinoHttp: {
     //     name: 'Autoservice',
@@ -46,7 +53,12 @@ import { HealthModule } from './health/health.module';
   controllers: [AppController],
   providers: [
     AppService,
-    GlobalErrorHandler
+    // GlobalErrorHandler
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ErrorInterceptor,
+    },
+    UtilService,
   ],
 })
 export class AppModule {}

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
+import { UtilService } from '../util/util.service';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
@@ -11,6 +12,7 @@ export class Ck3Service {
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
+        private readonly util: UtilService
         //@InjectPinoLogger(Ck3Service.name) private readonly logger: PinoLogger
     ) { }
 
@@ -29,28 +31,30 @@ export class Ck3Service {
             'valor_total_liquido_das_pecas_na_nota_fiscal',
             'indicador',
         ]
+        const uniqueFields = ['cpf_cnpj', 'numero_da_nota_fiscal'];
+        const data = await this.prisma.proccessCk('ck3001', ck3001, fields, uniqueFields);
+        // const data = this.util.extractData(ck3001, fields);
 
-        const data = this.autoservice.extractData(ck3001, fields);
-        try {
-            const ck = await this.prisma.ck3001.upsert({
-                where: {
-                    ck3001_cod: {
-                        cpf_cnpj: data.cpf_cnpj,
-                        numero_da_nota_fiscal: data.numero_da_nota_fiscal
-                    }
-                },
-                create: data,
-                update: data,
-                select: {
-                    id: true
-                }
-            })
-            await this.ck3002(ck.id, ck3001.CK3002);
-            await this.ck3003(ck.id, ck3001.CK3003);
-        } catch (error) {
-            console.error('Erro ao salvar CK3001', error);
-            //this.logger.error('Erro ao salvar CK3001', error);
-        }
+        // try {
+        //     const ck = await this.prisma.ck3001.upsert({
+        //         where: {
+        //             ck3001_cod: {
+        //                 cpf_cnpj: data.cpf_cnpj,
+        //                 numero_da_nota_fiscal: data.numero_da_nota_fiscal
+        //             }
+        //         },
+        //         create: data,
+        //         update: data,
+        //         select: {
+        //             id: true
+        //         }
+        //     })
+        //     await this.ck3002(ck.id, ck3001.CK3002);
+        //     await this.ck3003(ck.id, ck3001.CK3003);
+        // } catch (error) {
+        //     console.error('Erro ao salvar CK3001', error, ck3001);
+        //     //this.logger.error('Erro ao salvar CK3001', error);
+        // }
     }
 
     async ck3002(id, ck3002) {
@@ -61,7 +65,7 @@ export class Ck3Service {
             'cep',
         ]
 
-        const data = {...this.autoservice.extractData(ck3002, fields), ck3001_id: id}
+        const data = {...this.util.extractData(ck3002, fields), ck3001_id: id}
 
         try {
             const ck = await this.prisma.ck3002.upsert({
@@ -97,7 +101,7 @@ export class Ck3Service {
                 'autoriza_pesquisa',
             ]
 
-            const data = {...this.autoservice.extractData(phone, fields), ck3002_id: id}
+            const data = {...this.util.extractData(phone, fields), ck3002_id: id}
 
             try {
                 if (data.numero) {
@@ -125,7 +129,7 @@ export class Ck3Service {
                 'autoriza_pesquisa'
             ]
 
-            const data = {...this.autoservice.extractData(email, fields), ck3002_id: id}
+            const data = {...this.util.extractData(email, fields), ck3002_id: id}
 
             try {
                 if (data.email) {
@@ -154,7 +158,7 @@ export class Ck3Service {
                 'quantidade_da_peca'
             ]
 
-            const data = {...this.autoservice.extractData(item, fields), ck3001_id: id}
+            const data = {...this.util.extractData(item, fields), ck3001_id: id}
 
             try {
                 const ck = await this.prisma.ck3003.upsert({

@@ -3,7 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
-import { AllExceptionsFilter } from '../all.exceptions';
+import { AllExceptionsFilter } from '../common/errors/all.exceptions';
+import { UtilService } from '../util/util.service';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
@@ -12,6 +13,7 @@ export class Ck6Service {
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
+        private readonly util: UtilService
         //@InjectPinoLogger(Ck6Service.name) private readonly logger: PinoLogger
     ) { }
 
@@ -26,29 +28,32 @@ export class Ck6Service {
             'valor_total_liquido_da_mao_de_obra_na_os'
         ];
 
-        const data = this.autoservice.extractData(ck6011, fields);
+        const uniqueFields = ['numero_do_dn', 'numero_da_os'];
 
-        try {
-            const ck = await this.prisma.ck6011.upsert({
-                where: {
-                    ck6011_cod: {
-                        numero_do_dn: data.numero_do_dn,
-                        numero_da_os: data.numero_da_os
-                    }
-                },
-                create: data,
-                update: data,
-                select: {
-                    id: true
-                }
-            })
-            if (ck6011.CK6021.length) await this.ck6021(ck.id, ck6011.CK6021);
-            if (ck6011.CK6031.length) await this.ck6031(ck.id, ck6011.CK6031);
-            if (ck6011.CK6041.length) await this.ck6041(ck.id, ck6011.CK6041);
-        } catch (error) {
-            console.error('Erro ao salvar ck6011', ck6011, data, error);
-            //this.logger.error('Erro ao salvar ck6011', data, error);
-        }
+        const data = await this.prisma.proccessCk('ck6011', ck6011, fields, uniqueFields);
+
+        // if (data) console.log('ck6011 salvo!', data);
+        // try {
+        //     const ck = await this.prisma.ck6011.upsert({
+        //         where: {
+        //             ck6011_cod: {
+        //                 numero_do_dn: data.numero_do_dn,
+        //                 numero_da_os: data.numero_da_os
+        //             }
+        //         },
+        //         create: data,
+        //         update: data,
+        //         select: {
+        //             id: true
+        //         }
+        //     })
+        //     if (ck6011.CK6021.length) await this.ck6021(ck.id, ck6011.CK6021);
+        //     if (ck6011.CK6031.length) await this.ck6031(ck.id, ck6011.CK6031);
+        //     if (ck6011.CK6041.length) await this.ck6041(ck.id, ck6011.CK6041);
+        // } catch (error) {
+        //     console.error('Erro ao salvar ck6011', ck6011, data, error);
+        //     //this.logger.error('Erro ao salvar ck6011', data, error);
+        // }
     }
 
     async ck6021(id, ck6021) {
@@ -61,7 +66,7 @@ export class Ck6Service {
         ];
 
         for (const peca of ck6021) {
-            const data = { ...this.autoservice.extractData(peca, fields), ck6011_id: id }
+            const data = { ...this.util.extractData(peca, fields), ck6011_id: id }
 
             try {
                 const ck = await this.prisma.ck6021.upsert({
@@ -95,7 +100,7 @@ export class Ck6Service {
         ];
 
         for (const servico of ck6031) {
-            const data = { ...this.autoservice.extractData(servico, fields), ck6011_id: id }
+            const data = { ...this.util.extractData(servico, fields), ck6011_id: id }
 
             try {
                 const ck = await this.prisma.ck6031.upsert({
@@ -135,7 +140,7 @@ export class Ck6Service {
             'bairro',
         ];
 
-        const data = { ...this.autoservice.extractData(ck6041, fields), ck6011_id: id }
+        const data = { ...this.util.extractData(ck6041, fields), ck6011_id: id }
         const searchConditions = {
             id: null,
             field: '',
@@ -188,7 +193,7 @@ export class Ck6Service {
             'cep',
         ];
 
-        const data = { ...this.autoservice.extractData(ck6042, fields), ck6041_id: id }
+        const data = { ...this.util.extractData(ck6042, fields), ck6041_id: id }
 
         try {
             const ck = await this.prisma.ck6042.upsert({
@@ -225,7 +230,7 @@ export class Ck6Service {
         ];
 
         for (const phone of phones) {
-            const data = { ...this.autoservice.extractData(phone, fields), ck6042_id: id }
+            const data = { ...this.util.extractData(phone, fields), ck6042_id: id }
 
             try {
                 const ck = await this.prisma.telefones.upsert({
@@ -255,7 +260,7 @@ export class Ck6Service {
         ];
 
         for (const email of emails) {
-            const data = { ...this.autoservice.extractData(email, fields), ck6042_id: id }
+            const data = { ...this.util.extractData(email, fields), ck6042_id: id }
 
             try {
                 const ck = await this.prisma.emails.upsert({

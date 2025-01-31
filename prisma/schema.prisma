@@ -13,30 +13,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model CkLogs {
-  id Int @id @default(autoincrement())
+model ErrorLog {
+  id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
-  startDate String
-  endDate String
-  category String
-  data String?
-  qtd Int?
-  status String
-  message String?
-  jobId Int
+  time       DateTime @default(now())
+  category   String?
+  message    String?
+  code       String?
+  params     String?
+
+  // @@unique(name: "error_log", [category, message])
+}
+
+model CkLogs {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  startDate  String
+  endDate    String
+  category   String
+  data       String?
+  qtd        Int?
+  status     String
+  message    String?
+  jobId      Int
 }
 
 model JobLogs {
-  id Int @id @default(autoincrement())
-  jobId Int
+  id         Int      @id @default(autoincrement())
+  jobId      Int
   created_at DateTime @default(now())
   started_at DateTime
-  ended_at DateTime
-  startDate String?
-  endDate String?
-  status String
-  message String?
-  data String?
+  ended_at   DateTime
+  startDate  String?
+  endDate    String?
+  status     String
+  message    String?
+  data       String?
 }
 
 model Autoservice {
@@ -51,17 +63,17 @@ model Autoservice {
 }
 
 model LastSearch {
-  id Int @id @default(1)
-  startDate DateTime
-  endDate DateTime
-  status Boolean
+  id         Int      @id @default(1)
+  startDate  DateTime
+  endDate    DateTime
+  status     Boolean
   created_at DateTime @updatedAt
 }
 
 model Ck3001 {
   id                                           Int      @id @default(autoincrement())
   numero_do_dn                                 String
-  numero_da_nota_fiscal                        String   @unique
+  numero_da_nota_fiscal                        String //@unique
   serie_da_nota_fiscal                         String
   fonte_pagadora                               Int
   valor_total_liquido_das_pecas_na_nota_fiscal Decimal  @default(0)
@@ -106,7 +118,7 @@ model Emails {
   ck7002            Ck7002?  @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
   ck7002_id         Int?
   email             String   @unique
-  descricao         String @default("pessoal")
+  descricao         String   @default("pessoal")
   autoriza_contato  Boolean
   autoriza_pesquisa Boolean
   created_at        DateTime @default(now())
@@ -122,7 +134,7 @@ model Telefones {
   ck7002            Ck7002?  @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
   ck7002_id         Int?
   numero            String   @unique
-  descricao         String @default("Residencial")
+  descricao         String   @default("Residencial")
   autoriza_contato  Boolean
   autoriza_pesquisa Boolean
   created_at        DateTime @default(now())
@@ -149,8 +161,8 @@ model Ck4001 {
   id                                    Int       @id @default(autoincrement())
   tipo_do_cancelamento                  String
   numero_do_dn                          String
-  numero_da_nota_fiscal                 String?   @unique
-  numero_da_os                          String?   @unique
+  numero_da_nota_fiscal                 String? //@unique
+  numero_da_os                          String? //@unique
   serie_da_nota_fiscal                  String?
   data_e_hora_da_emissao_da_nota_fiscal DateTime?
   data_do_cancelamento_do_documento     DateTime
@@ -165,7 +177,7 @@ model Ck4001 {
 
 model Ck5001 {
   id                                                         Int      @id @default(autoincrement())
-  numero_do_dn                                               String   @unique
+  numero_do_dn                                               String //@unique
   tempo_remunerado                                           Float?
   tempo_disponivel_servicos_gerais_produtivos                Float?
   tempo_disponivel_servicos_rapido_produtivos                Float?
@@ -201,14 +213,14 @@ model Ck5001 {
   created_at                                                 DateTime @default(now())
   modified_at                                                DateTime @updatedAt
 
-  @@index([numero_do_dn], type: Hash)
   @@unique(name: "ck5001_cod", [numero_do_dn, ano_de_referencia, mes_de_referencia])
+  @@index([numero_do_dn], type: Hash)
 }
 
 model Ck6011 {
   id                                       Int       @id @default(autoincrement())
   numero_do_dn                             String
-  numero_da_os                             String    @unique
+  numero_da_os                             String //@unique
   data_e_hora_da_abertura_da_os            DateTime
   data_e_hora_do_fechamento_da_os          DateTime?
   fonte_pagadora                           Int
@@ -271,7 +283,7 @@ model Ck6041 {
   ck6011                   Ck6011   @relation(fields: [ck6011_id], references: [id], onDelete: Cascade)
   created_at               DateTime @default(now())
   modified_at              DateTime @updatedAt
-  Ck6042                   Ck6042[]
+  ck6042                   Ck6042[]
 
   // @@unique(name: "ck6041_cod", [chassi_do_veiculo, ck6011_id])
 }
@@ -280,7 +292,7 @@ model Ck6042 {
   id          Int         @id @default(autoincrement())
   cidade      String
   uf          String
-  cep          String
+  cep         String
   ck6041_id   Int
   ck6041      Ck6041      @relation(fields: [ck6041_id], references: [id])
   created_at  DateTime    @default(now())
@@ -325,7 +337,7 @@ model Ck7002 {
   cidade      String
   uf          String
   bairro      String
-  numero      String @default("Não informado")
+  numero      String      @default("Não informado")
   complemento String?
   cpf_cnpj    String
   cep         String
