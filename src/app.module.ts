@@ -14,6 +14,7 @@ import autoserviceConfig from './autoservice/config/autoservice.config';
 // import { LoggerModule } from 'nestjs-pino';
 import { UtilService } from './util/util.service';
 import { UtilModule } from './util/util.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 // import pino from 'pino';
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UtilModule } from './util/util.module';
       }),
       inject: [ConfigService],
     }),
+    EventEmitterModule.forRoot(),
     AutoserviceModule,
     PrismaModule,
     HealthModule,

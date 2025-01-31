@@ -11,6 +11,7 @@ import { Ck6Service } from './ck6.service';
 import { Ck7Service } from './ck7.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { AllExceptionsFilter } from '../common/errors/all.exceptions';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 interface JobLog {
     jobId: number;
@@ -61,6 +62,7 @@ export class AutoserviceProcessor extends WorkerHost {
     constructor(
         private readonly autoservice: AutoserviceService,
         private readonly prisma: PrismaService,
+        private readonly eventEmitter: EventEmitter2,
         private readonly ck3Service: Ck3Service,
         private readonly ck4service: Ck4Service,
         private readonly ck5service: Ck5Service,
@@ -83,6 +85,10 @@ export class AutoserviceProcessor extends WorkerHost {
             status: 'OK',
             message: 'OK',
             data: 'OK'
+        }
+
+        if (data) {
+            this.eventEmitter.emit('autoservice.working', { id: job.id, status: true });
         }
         // const filePath = path.join(process.cwd(), `${ck}.json`);
         // console.log(ck, filePath);
@@ -212,8 +218,9 @@ export class AutoserviceProcessor extends WorkerHost {
     @OnWorkerEvent('completed')
     async onCompleted(job: Job) {
         console.log(`Job ${job.id} completed.`);
-        const last = await this.prisma.findOne(1, 'lastSearch');
-        console.log('ultima pesquisa', last);
+        // const last = await this.prisma.findOne(1, 'lastSearch');
+        // console.log('ultima pesquisa', last);
+        this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
     }
 
     @OnWorkerEvent('failed')
