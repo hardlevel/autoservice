@@ -10,7 +10,7 @@ import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
 import { Ck7Service } from './ck7.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { AllExceptionsFilter } from '../all.exceptions';
+import { AllExceptionsFilter } from '../common/errors/all.exceptions';
 
 interface JobLog {
     jobId: number;
@@ -102,88 +102,99 @@ export class AutoserviceProcessor extends WorkerHost {
                 console.log('ck3001 idendificado! Total de registros:', data[ck].length);
                 this.category = ck;
                 for (const item of data[ck]) {
-                    this.ckLog.startDate = data.startDate;
-                    this.ckLog.endDate = data.endDate;
-                    this.ckLog.jobId = parseInt(job.id);
-                    this.ckLog.status = 'OK';
-                    this.ckLog.category = ck;
-                    this.ckLog.qtd = data[ck].length
                     await this.ck3Service.ck3001(item);
-                    await this.prisma.ckLogs.create({
-                        data: this.ckLog
-                    })
                 }
+                this.ckLog.startDate = data.startDate;
+                this.ckLog.endDate = data.endDate;
+                this.ckLog.jobId = parseInt(job.id);
+                this.ckLog.status = 'OK';
+                this.ckLog.category = ck;
+                this.ckLog.qtd = data[ck].length
+                // await this.prisma.ckLogs.create({
+                //     data: this.ckLog
+                // })
             }
 
             if (ck == 'CK4001') {
                 console.log('ck4001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    this.ckLog.startDate = data.startDate;
-                    this.ckLog.endDate = data.endDate;
-                    this.ckLog.jobId = parseInt(job.id);
-                    this.ckLog.status = 'OK';
-                    this.ckLog.category = ck;
-                    this.ckLog.qtd = data[ck].length
                     await this.ck4service.ck4001(item);
-                    await this.prisma.ckLogs.create({
-                        data: this.ckLog
-                    })
                 }
+                this.ckLog.startDate = data.startDate;
+                this.ckLog.endDate = data.endDate;
+                this.ckLog.jobId = parseInt(job.id);
+                this.ckLog.status = 'OK';
+                this.ckLog.category = ck;
+                this.ckLog.qtd = data[ck].length
+                // await this.prisma.ckLogs.create({
+                //     data: this.ckLog
+                // })
             }
 
             if (ck == 'CK5001') {
                 console.log('ck5001 idendificado! Total de registros:', data[ck].length);
                 console.log(data[ck]);
                 for (const item of data[ck]) {
-                    this.ckLog.startDate = data.startDate;
-                    this.ckLog.endDate = data.endDate;
-                    this.ckLog.jobId = parseInt(job.id);
-                    this.ckLog.status = 'OK';
-                    this.ckLog.category = ck;
-                    this.ckLog.qtd = data[ck].length
                     await this.ck5service.ck5001(item);
-                    await this.prisma.ckLogs.create({
-                        data: this.ckLog
-                    })
                 }
+                this.ckLog.startDate = data.startDate;
+                this.ckLog.endDate = data.endDate;
+                this.ckLog.jobId = parseInt(job.id);
+                this.ckLog.status = 'OK';
+                this.ckLog.category = ck;
+                this.ckLog.qtd = data[ck].length
+                // await this.prisma.ckLogs.create({
+                //     data: this.ckLog
+                // })
             }
 
             if (ck == 'CK6011') {
                 console.log('ck6011 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    this.ckLog.startDate = data.startDate;
-                    this.ckLog.endDate = data.endDate;
-                    this.ckLog.jobId = parseInt(job.id);
-                    this.ckLog.status = 'OK';
-                    this.ckLog.category = ck;
-                    this.ckLog.qtd = data[ck].length
                     await this.ck6service.ck6011(item);
-                    await this.prisma.ckLogs.create({
-                        data: this.ckLog
-                    })
                 }
+                this.ckLog.startDate = data.startDate;
+                this.ckLog.endDate = data.endDate;
+                this.ckLog.jobId = parseInt(job.id);
+                this.ckLog.status = 'OK';
+                this.ckLog.category = ck;
+                this.ckLog.qtd = data[ck].length
+                // await this.prisma.ckLogs.create({
+                //     data: this.ckLog
+                // })
             }
 
             if (ck == 'CK7001') {
                 console.log('ck7001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    this.ckLog.startDate = data.startDate;
-                    this.ckLog.endDate = data.endDate;
-                    this.ckLog.jobId = parseInt(job.id);
-                    this.ckLog.status = 'OK';
-                    this.ckLog.category = ck;
-                    this.ckLog.qtd = data[ck].length
+                    if (item.numero_da_nota_fiscal == null) {
+                        debugger
+                    }
+                    if (item.numero_da_nota_fiscal == undefined) {
+                        debugger
+                    }
+
+                    if (item.numero_da_nota_fiscal == '') {
+                        debugger
+                    }
                     await this.ck7service.ck7001(item);
-                    await this.prisma.ckLogs.create({
-                        data: this.ckLog
-                    })
                 }
+                this.ckLog.startDate = data.startDate;
+                this.ckLog.endDate = data.endDate;
+                this.ckLog.jobId = parseInt(job.id);
+                this.ckLog.status = 'OK';
+                this.ckLog.category = ck;
+                this.ckLog.qtd = data[ck].length
+                // await this.prisma.ckLogs.create({
+                //     data: this.ckLog
+                // })
             }
 
             return { success: true };
         } catch (error) {
-            console.log('Erro ao processar arquivos', error);
+            console.error('Erro ao processar arquivos', error, 'dados: ');
             // throw new AllExceptionsFilter();
+            throw new Error(error.message);
         }
     }
 
@@ -216,9 +227,9 @@ export class AutoserviceProcessor extends WorkerHost {
         this.jobLog.startDate = job.data.startDate;
         this.jobLog.endDate = job.data.endDate;
 
-        await this.prisma.jobLogs.create({
-            data: this.jobLog
-        })
+        // await this.prisma.jobLogs.create({
+        //     data: this.jobLog
+        // })
     }
 
     addOrCreateJsonFile(filePath, newData) {

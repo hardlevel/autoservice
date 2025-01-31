@@ -3,7 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
-import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { UtilService } from '../util/util.service';
+//import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class Ck5Service {
@@ -11,7 +12,8 @@ export class Ck5Service {
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
-        @InjectPinoLogger(Ck5Service.name) private readonly logger: PinoLogger
+        private readonly util: UtilService
+        //@InjectPinoLogger(Ck5Service.name) private readonly logger: PinoLogger
     ) { }
 
     async ck5001(ck5001) {
@@ -51,7 +53,7 @@ export class Ck5Service {
             'mes_de_referencia',
         ];
 
-        const data = this.autoservice.extractData(ck5001, fields);
+        const data = this.util.extractData(ck5001, fields);
 
         try {
             const ck = await this.prisma.ck5001.upsert({
@@ -70,7 +72,7 @@ export class Ck5Service {
             })
         } catch (error) {
             console.error('Erro ao salvar CK5001', error);
-            this.logger.error('Erro ao salvar CK5001', error);
+            //this.logger.error('Erro ao salvar CK5001', error);
         }
     }
 }

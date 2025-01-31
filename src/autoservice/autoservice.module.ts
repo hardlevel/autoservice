@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AutoserviceService } from './autoservice.service';
 import { AutoserviceController } from './autoservice.controller';
 import { SqsModule } from '@ssut/nestjs-sqs';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
 import { SQSClient } from '@aws-sdk/client-sqs';
 import { AutoserviceProcessor } from './autoservice.processor';
@@ -12,8 +12,9 @@ import { Ck4Service } from './ck4.service';
 import { Ck7Service } from './ck7.service';
 import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
-import { GlobalErrorHandler } from '../error.listenner';
-import { LoggerModule } from 'nestjs-pino';
+import { AssobravService } from './assobrav.service';
+import { UtilModule } from '../util/util.module';
+// import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   controllers: [AutoserviceController],
@@ -21,7 +22,8 @@ import { LoggerModule } from 'nestjs-pino';
     AutoserviceService,
     ConfigModule,
     AutoserviceProcessor,
-    GlobalErrorHandler,
+    // GlobalErrorHandler,
+    AssobravService,
     Ck3Service,
     Ck4Service,
     Ck5Service,
@@ -29,15 +31,15 @@ import { LoggerModule } from 'nestjs-pino';
     Ck7Service
   ],
   imports: [
-    LoggerModule,
+    // LoggerModule,
+    UtilModule,
+    ConfigModule,
     PrismaModule,
     SqsModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
-        const accessKeyId: string = configService.get('SQS_ID');
-        const secretAccessKey: string = configService.get('SQS_SECRET');
-        const queueUrl: string = configService.get('SQS_URL');
-        const region: string = 'us-east-2';
+      // imports: [ConfigModule.forFeature(autoserviceConfig)],
+      useFactory: async (configuration: ConfigService) => {
+        const sqs = configuration.get('sqs');
+        const { accessKeyId, secretAccessKey, queueUrl, region } = sqs;
         return {
           consumers: [
             {
