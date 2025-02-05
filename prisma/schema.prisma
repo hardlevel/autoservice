@@ -402,23 +402,39 @@ model Ck7004 {
   @@unique(name: "ck7004_cod", [ck7001_id, cos])
 }
 
+//notas fiscam podem vir do ck3 e do ck7?
+
+model tb_cad_cadastro_os {
+  id               Int                                   @id @default(autoincrement())
+  os               String                                @unique //ck6031 por que dois campos de id? mudei de int para string pois os valors que vem da api são string
+  id_status_os     Int? //ck6031 de onde vem? *
+  nfs              tb_cad_cadastro_os_nfs[]
+  servicos         tb_cad_cadastro_os_servicos[]
+  clientes         tb_cad_cadastro_os_clientes[]
+  chassis          tb_cad_cadastro_os_chassis[]
+  fontes_pagadoras tb_cad_cadastro_os_fontes_pagadoras[]
+  pecas            tb_cad_cadastro_os_pecas[]
+}
+
 model tb_cad_cadastro_os_pecas {
-  id_cadastro             Int
-  id_os                   Int //ck6011
+  id                      Int                @id @default(autoincrement())
   descricao               String //ck6021
   id_fonte_pagadora       Int //ck6011
   id_seq_peca             Int? //desconsiderar
   qtd                     Int //ck6021
-  id_peca                 Int     @id
-  valor_unitario          Decimal @default(0) //ck6021 nao vem *
-  valor_total_com_imposto Decimal @default(0) //de onde vem? *  - não serão enviados
-  desconto                Decimal @default(0) //ck6021 não vem * - não serão enviados
-  valor_total_liquido     Decimal @default(0) //ck6011 ok
+  id_peca                 String?
+  valor_unitario          Decimal            @default(0) //ck6021 nao vem *
+  valor_total_com_imposto Decimal?           @default(0) //de onde vem? *  - não serão enviados
+  desconto                Decimal?           @default(0) //ck6021 não vem * - não serão enviados
+  valor_total_liquido     Decimal            @default(0) //ck6011 ok
+  os_id                   Int
+  os                      tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+  @@unique(name: "pecas_os", [os_id, id_peca])
 }
 
 model tb_cad_cadastro_os_clientes {
-  id_cadastro       Int     @id
-  id_os             Int //ck6011
+  id                Int                @id @default(autoincrement())
   id_fonte_pagadora Int //ck6011
   nome              String? //não tem, verificar se deve vir -> ck6041 tem o nome
   endereco          String //ck6042 -> ck6041
@@ -433,63 +449,74 @@ model tb_cad_cadastro_os_clientes {
   tel_res           String? //ck6042 ok
   tel_com           String? //ck6042 ok
   tel_cel           String? //ck6042 ok
-  email             String //ck6042 ok
+  email             String? //ck6042 ok
+  os_id             Int
+  os                tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+  @@unique(name: "clientes_os", [nome, cpf_cnpj])
 }
 
 model tb_cad_cadastro_os_fontes_pagadoras {
-  id_cadastro          Int       @id
-  id_os                Int
+  id                   Int                @id @default(autoincrement())
   id_fonte_pagadora    Int
   data_abertura_os     DateTime
   data_fechamento_os   DateTime?
-  total_os             Decimal   @default(0)
-  total_orcamento      Decimal   @default(0)
-  total_mo_os          Decimal   @default(0)
-  total_peca_orcamento Decimal   @default(0)
-  total_mo_orcamento   Decimal   @default(0)
-  geral_nf             String
-  nr_orcamento         String
-  data_orcamento       DateTime
+  total_os             Decimal?           @default(0)
+  total_orcamento      Decimal?           @default(0) //não tem valores de orçamento, apenas valores totais
+  total_mo_os          Decimal?           @default(0)
+  total_peca_os        Decimal?           @default(0)
+  total_peca_orcamento Decimal?           @default(0)
+  total_mo_orcamento   Decimal?           @default(0)
+  gera_nf              String? //o que é?
+  nr_orcamento         String?
+  data_orcamento       DateTime?
   chassis              String
-  placa                String
-  certificacao         String
-  km                   Int
+  placa                String?
+  certificacao         String? //o que é?
+  km                   Int?
+  os_id                Int
+  os                   tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+  @@unique(name: "fp_os", [os_id, id_fonte_pagadora])
 }
 
 model tb_cad_cadastro_os_chassis {
-  id_cadastro Int    @id
-  chassis     String
-  id_os       Int
-}
+  id      Int                @id @default(autoincrement())
+  chassis String
+  os_id   Int
+  os      tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
 
-model tb_cad_cadastro_os {
-  id_cadastro  Int  @id
-  id_os        Int //ck6031
-  id_status_os Int? //ck6031 de onde vem? *
+  @@unique(name: "chassis_os", [chassis, os_id])
 }
 
 model tb_cad_cadastro_os_nfs {
-  id_cadastro       Int    @id
+  id                Int                @id @default(autoincrement())
   id_nf             Int //ck
   serie_nf          String //ck6011
-  id_os             Int
   id_fonte_pagadora Int? //ck6011 ok
   id_seq_nf         Int? //desconsiderar
+  os_id             Int
+  os                tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+  @@unique(name: "nfs_os", [id_nf, os_id])
 }
 
 model tb_cad_cadastro_os_servicos {
-  id_cadastro         Int     @id
-  id_os               Int //ck70??
+  id                  Int                @id @default(autoincrement())
   id_seq_servico      Int? //desconsiderar
   id_fonte_pagadora   Int? //ck7001
-  id_cos              Int //ck7004
+  id_cos              String //ck7004 o que é extamente? tem uma tabela especifica?
   desc_cos            String //ck7004
   hora_vendida        Float //ck7004
-  valor_total         Decimal @default(0) //de onde vem? *
-  desconto            Decimal @default(0) //de onde vem? *
-  valor_total_liquido Decimal @default(0) //ck7004 -> verificar (valor total liquido da mao de obra?)
-  aliquota_iss        Decimal @default(0) //de onde vem? - não sera enviado
-  id_tipo_servico     Int //ck7004 ? verificar se é este
+  valor_total         Decimal?           @default(0) //de onde vem? *
+  desconto            Decimal?           @default(0) //de onde vem? *
+  valor_total_liquido Decimal            @default(0) //ck7004 -> verificar (valor total liquido da mao de obra?)
+  aliquota_iss        Decimal?           @default(0) //de onde vem? - não sera enviado
+  id_tipo_servico     Int? //ck7004 ? verificar se é este
+  os_id               Int
+  os                  tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+  @@unique(name: "servicos_os", [os_id, id_cos])
 }
 
 model tb_cad_cadastro_nfs_os_cancelamento {
@@ -515,7 +542,7 @@ model tb_cad_cadastro_nfs_os_cancelamento {
 }
 
 model tb_cad_cadastro_nfs_clientes_classificacao {
-  id_cadastro    Int    @id
+  id_cadastro    Int    @id @default(autoincrement())
   id_nf          Int
   serie_nf       String
   id_cla_cliente Int
@@ -523,7 +550,7 @@ model tb_cad_cadastro_nfs_clientes_classificacao {
 }
 
 model tb_cad_cadastro_nfs_cliente {
-  id_cadastro Int     @id
+  id_cadastro Int     @id @default(autoincrement())
   id_nf       Int //ck7002
   serie_nf    String //ck7001
   nome        String? //ck7001 ok
@@ -544,7 +571,7 @@ model tb_cad_cadastro_nfs_cliente {
 }
 
 model tb_cad_cadastro_nfs {
-  id_cadastro          Int       @id
+  id_cadastro          Int       @id @default(autoincrement())
   id_nf                Int //ck3001 e 7001
   serie_nf             String //ck3001 e 7001
   id_status_nf         Int? //de onde vem?
@@ -563,7 +590,7 @@ model tb_cad_cadastro_nfs {
 }
 
 model tb_cad_cadastro_nfs_clientes_fontes_pagadoras {
-  id_cadastro       Int    @id
+  id_cadastro       Int    @id @default(autoincrement())
   id_nf             Int
   serie_nf          String
   id_fonte_pagadora Int
@@ -572,7 +599,7 @@ model tb_cad_cadastro_nfs_clientes_fontes_pagadoras {
 }
 
 model tb_cad_cadastro_nfs_pecas {
-  id_cadastro             Int     @id
+  id_cadastro             Int     @id @default(autoincrement())
   id_nf                   Int //ck3001
   serie_nf                String //ck3001
   id_seq                  Int? //desconsiderar
@@ -589,7 +616,7 @@ model tb_cad_cadastro_nfs_pecas {
 }
 
 model tb_cad_cadastro_nfs_servicos {
-  id_cadastro         Int     @id
+  id_cadastro         Int     @id @default(autoincrement())
   id_nf               Int //ck7001
   serie_nf            String //ck7001
   id_seq_nf           Int? //desconsiderar
@@ -602,4 +629,15 @@ model tb_cad_cadastro_nfs_servicos {
   valor_total_liquido Decimal @default(0) //ck7004
   aliquota_iss        Decimal @default(0) //ck7004 nao vem *
   aliquota_pis_cofins Decimal @default(0) //ck7004 nao vem *
+}
+
+model tb_cki_fontes_pagadoras {
+  id                  Int     @id @unique
+  desc_fonte_pagadora String
+  obs_fonte_pagadora  String?
+}
+
+model tb_cki_agrupamento_fontes_pagadoras {
+  id               Int    @id @default(autoincrement())
+  desc_agrupamento String
 }

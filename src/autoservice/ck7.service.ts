@@ -68,9 +68,9 @@ export class Ck7Service {
                 await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7001', 1);
             }
 
-            if (ck7001.CK7002.length) await this.ck7002(ck.id, ck7001.CK7002);
-            if (ck7001.CK7003.length) await this.ck7003(ck.id, ck7001.CK7003);
-            if (ck7001.CK7004.length) await this.ck7004(ck.id, ck7001.CK7004);
+            if (ck7001.CK7002) await this.ck7002(ck.id, ck7001.CK7002);
+            if (ck7001.CK7003) await this.ck7003(ck.id, ck7001.CK7003);
+            if (ck7001.CK7004) await this.ck7004(ck.id, ck7001.CK7004);
         } catch (error) {
             await this.prisma.logError({
                 category: 'ck7001',
@@ -103,7 +103,7 @@ export class Ck7Service {
                     cidade: ck7002.cidade,
                     uf: ck7002.uf,
                     indicador: ck7002.indicador,
-
+                    ck7001_id: data.ck7001_id
                 }
             })
 
@@ -139,12 +139,12 @@ export class Ck7Service {
                 'autoriza_pesquisa',
                 'autoriza_contato'
             ];
-            const data = { ...this.util.extractData(phones, fields), ck7002_id: id };
+            const data = { ...this.util.extractData(phone, fields), ck7002_id: id };
 
             try {
                 const ckPhone = await this.prisma.telefones.upsert({
                     where: {
-                        numero: data.numero
+                        numero: data.numero,
                     },
                     create: data,
                     update: data,
