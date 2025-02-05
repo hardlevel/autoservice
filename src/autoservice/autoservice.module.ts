@@ -12,7 +12,6 @@ import { Ck4Service } from './ck4.service';
 import { Ck7Service } from './ck7.service';
 import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
-import { AssobravService } from './assobrav.service';
 import { UtilModule } from '../util/util.module';
 // import { LoggerModule } from 'nestjs-pino';
 
@@ -23,7 +22,6 @@ import { UtilModule } from '../util/util.module';
     ConfigModule,
     AutoserviceProcessor,
     // GlobalErrorHandler,
-    AssobravService,
     Ck3Service,
     Ck4Service,
     Ck5Service,

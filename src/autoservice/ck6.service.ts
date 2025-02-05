@@ -9,6 +9,9 @@ import { UtilService } from '../util/util.service';
 
 @Injectable()
 export class Ck6Service {
+
+    originalData: any;
+
     constructor(
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
@@ -18,6 +21,8 @@ export class Ck6Service {
     ) { }
 
     async ck6011(ck6011) {
+        this.originalData = ck6011;
+
         const fields = [
             'numero_do_dn',
             'numero_da_os',
@@ -28,32 +33,36 @@ export class Ck6Service {
             'valor_total_liquido_da_mao_de_obra_na_os'
         ];
 
-        const uniqueFields = ['numero_do_dn', 'numero_da_os'];
+        const data = await this.util.extractData(ck6011, fields);
 
-        const data = await this.prisma.proccessCk('ck6011', ck6011, fields, uniqueFields);
+        try {
+            const ck = await this.prisma.ck6011.upsert({
+                where: {
+                    ck6011_cod: {
+                        numero_do_dn: data.numero_do_dn,
+                        numero_da_os: data.numero_da_os
+                    }
+                },
+                create: data,
+                update: data,
+                select: {
+                    id: true
+                }
+            })
 
-        // if (data) console.log('ck6011 salvo!', data);
-        // try {
-        //     const ck = await this.prisma.ck6011.upsert({
-        //         where: {
-        //             ck6011_cod: {
-        //                 numero_do_dn: data.numero_do_dn,
-        //                 numero_da_os: data.numero_da_os
-        //             }
-        //         },
-        //         create: data,
-        //         update: data,
-        //         select: {
-        //             id: true
-        //         }
-        //     })
-        //     if (ck6011.CK6021.length) await this.ck6021(ck.id, ck6011.CK6021);
-        //     if (ck6011.CK6031.length) await this.ck6031(ck.id, ck6011.CK6031);
-        //     if (ck6011.CK6041.length) await this.ck6041(ck.id, ck6011.CK6041);
-        // } catch (error) {
-        //     console.error('Erro ao salvar ck6011', ck6011, data, error);
-        //     //this.logger.error('Erro ao salvar ck6011', data, error);
-        // }
+            if (ck6011.CK6021) await this.ck6021(ck.id, ck6011.CK6021);
+            if (ck6011.CK6031) await this.ck6031(ck.id, ck6011.CK6031);
+            if (ck6011.CK6041) await this.ck6041(ck.id, ck6011.CK6041);
+        } catch (error) {
+            await this.prisma.logError({
+                category: 'ck6011',
+                message: error.message,
+                code: error.code,
+                params: data,
+                cause: error.cause,
+                originalData: this.originalData
+            });
+        }
     }
 
     async ck6021(id, ck6021) {
@@ -83,9 +92,14 @@ export class Ck6Service {
                     }
                 });
             } catch (error) {
-                console.error('Erro ao salvar ck6021', data, error);
-                //this.logger.error('Erro ao salvar ck6021', data, error);
-                throw new Error('Erro ao salvar CK6021');
+                await this.prisma.logError({
+                    category: 'ck6021',
+                    message: error.message,
+                    code: error.code,
+                    params: data,
+                    cause: error.cause,
+                    originalData: this.originalData
+                });
             }
         }
     }
@@ -117,9 +131,14 @@ export class Ck6Service {
                     }
                 });
             } catch (error) {
-                console.error('Erro ao salvar ck6031', data, error);
-                //this.logger.error('Erro ao salvar ck6031', data, error);
-                throw new Error('Erro ao salvar CK6031');
+                await this.prisma.logError({
+                    category: 'ck6031',
+                    message: error.message,
+                    code: error.code,
+                    params: data,
+                    cause: error.cause,
+                    originalData: this.originalData
+                });
             }
         }
     }
@@ -160,29 +179,47 @@ export class Ck6Service {
 
         console.log(searchConditions);
         try {
-            let ck = await this.prisma.findOne(
-                searchConditions.id,
-                searchConditions.table,
-                searchConditions.field,
-                searchConditions.value
-            );
+            // let ck = await this.prisma.ck6041.findUnique({
+            //     where: {
+            //         ck6041_cod: {
+            //             nome_do_cliente: data.nome_do_cliente,
+            //             chassi_do_veiculo: data.chassi_do_veiculo,
+            //             ck6011_id: id
+            //         }
+            //     }
+            // })
 
-            if (ck) {
-                await this.prisma.ck6041.update({
-                    where: {
-                        id: ck.id
+            // if (ck) {
+            //     await this.prisma.ck6041.update({
+            //         where: {
+            //             id: ck.id
+            //         },
+            //         data
+            //     });
+            // } else {
+            //     ck = await this.prisma.ck6041.create({ data });
+            // }
+            const ck = await this.prisma.ck6041.upsert({
+                where: {
+                    ck6041_cod: {
+                        nome_do_cliente: data.nome_do_cliente,
+                        chassi_do_veiculo: data.chassi_do_veiculo,
+                        ck6011_id: id
                     },
-                    data
-                })
-            } else {
-                ck = await this.prisma.ck6041.create({data});
-            }
+                },
+                create: data,
+                update: data
+            });
             await this.ck6042(ck.id, ck6041.CK6042);
         } catch (error) {
-            console.error('Erro ao salvar CK6041', data, error);
-            //this.logger.error('Erro ao salvar CK6041', data, error);
-            throw new HttpException('Erro ao salvar CK6041', HttpStatus.BAD_REQUEST);
-
+            await this.prisma.logError({
+                category: 'ck6041',
+                message: error.message,
+                code: error.code,
+                params: data,
+                cause: error.cause,
+                originalData: this.originalData
+            });
         }
     }
 
@@ -214,10 +251,14 @@ export class Ck6Service {
             await this.phones(ck.id, ck6042.telefones);
             await this.emails(ck.id, ck6042.emails);
         } catch (error) {
-            console.error('Erro ao salvar ck6042', data, error);
-            //this.logger.error('Erro ao salvar ck6042', data, error);
-            // throw new HttpException('Erro personalizado no controller!', HttpStatus.BAD_REQUEST);
-            throw new Error('Erro ao salvar CK6042');
+            await this.prisma.logError({
+                category: 'ck6042',
+                message: error.message,
+                code: error.code,
+                params: data,
+                cause: error.cause,
+                originalData: this.originalData
+            });
         }
     }
 
@@ -244,9 +285,14 @@ export class Ck6Service {
                     }
                 });
             } catch (error) {
-                console.error('Erro ao salvar telefones do ck6011', data, error);
-                //this.logger.error('Erro ao salvar telefones do ck6011', data, error);
-                throw new Error('Erro ao salvar telefones do CK6011');
+                await this.prisma.logError({
+                    category: 'ck6042',
+                    message: error.message,
+                    code: error.code,
+                    params: data,
+                    cause: error.cause,
+                    originalData: this.originalData
+                });
             }
         }
     }
@@ -274,10 +320,14 @@ export class Ck6Service {
                     }
                 });
             } catch (error) {
-                console.error('Erro ao salvar emails do ck6011', data, error);
-                //this.logger.error('Erro ao salvar emails do ck6011', data, error);
-                throw new Error('Erro ao salvar emails do CK6011');
-                // throw new HttpException('Erro ao salvar e-mails para CK6011', HttpStatus.BAD_GATEWAY)
+                await this.prisma.logError({
+                    category: 'ck6042',
+                    message: error.message,
+                    code: error.code,
+                    params: data,
+                    cause: error.cause,
+                    originalData: this.originalData
+                });
             }
         }
     }

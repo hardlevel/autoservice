@@ -13,15 +13,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model ErrorLog {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  time       DateTime @default(now())
-  category   String?
-  message    String?
-  code       String?
-  params     String?
-
+model ErrorLogger {
+  id           Int      @id @default(autoincrement())
+  created_at   DateTime @default(now())
+  time         DateTime @default(now())
+  category     String?
+  message      String?
+  code         String?
+  params       String?
+  originalData String?
   // @@unique(name: "error_log", [category, message])
 }
 
@@ -49,6 +49,29 @@ model JobLogs {
   status     String
   message    String?
   data       String?
+}
+
+model DailyCk {
+  id     Int  @id @default(autoincrement())
+  day    Int
+  month  Int
+  year   Int
+  ck3001 Int?
+  ck3002 Int?
+  ck3003 Int?
+  ck4001 Int?
+  ck5001 Int?
+  ck6011 Int?
+  ck6021 Int?
+  ck6031 Int?
+  ck6041 Int?
+  ck6042 Int?
+  ck7001 Int?
+  ck7002 Int?
+  ck7003 Int?
+  ck7004 Int?
+
+  @@unique(name: "daily", [day, month, year])
 }
 
 model Autoservice {
@@ -171,7 +194,7 @@ model Ck4001 {
   created_at                            DateTime  @default(now())
   modified_at                           DateTime  @updatedAt
 
-  @@unique(name: "ck4001_cod", [numero_do_dn, numero_da_nota_fiscal])
+  @@unique(name: "ck4001_cod", [numero_do_dn, data_do_cancelamento_do_documento])
   @@index([numero_da_nota_fiscal], type: Hash)
 }
 
@@ -256,7 +279,7 @@ model Ck6031 {
   id                                 Int      @id @default(autoincrement())
   cos                                String
   descricao_do_servico               String
-  tipo_de_servico                    Int
+  tipo_de_servico                    Int?
   hora_vendida                       Float
   valor_total_liquido_da_mao_de_obra Decimal  @default(0)
   ck6011_id                          Int
@@ -285,7 +308,7 @@ model Ck6041 {
   modified_at              DateTime @updatedAt
   ck6042                   Ck6042[]
 
-  // @@unique(name: "ck6041_cod", [chassi_do_veiculo, ck6011_id])
+  @@unique(name: "ck6041_cod", [nome_do_cliente, chassi_do_veiculo, ck6011_id])
 }
 
 model Ck6042 {
@@ -310,7 +333,7 @@ model Ck7001 {
   nome_do_cliente                                   String
   endereco                                          String
   numero_do_dn                                      String
-  numero_da_nota_fiscal                             String    @unique
+  numero_da_nota_fiscal                             String //@unique
   numero_da_os                                      String
   serie_da_nota_fiscal                              String
   fonte_pagadora                                    Int

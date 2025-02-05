@@ -8,6 +8,9 @@ import { UtilService } from '../util/util.service';
 
 @Injectable()
 export class Ck5Service {
+
+    originalData: any;
+
     constructor(
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
@@ -17,6 +20,8 @@ export class Ck5Service {
     ) { }
 
     async ck5001(ck5001) {
+        this.originalData = ck5001;
+
         const fields = [
             'numero_do_dn',
             'tempo_remunerado',
@@ -71,8 +76,14 @@ export class Ck5Service {
                 }
             })
         } catch (error) {
-            console.error('Erro ao salvar CK5001', error);
-            //this.logger.error('Erro ao salvar CK5001', error);
+            await this.prisma.logError({
+                category: 'ck5001',
+                message: error.message,
+                code: error.code,
+                params: data,
+                cause: error.cause,
+                originalData: this.originalData
+            });
         }
     }
 }
