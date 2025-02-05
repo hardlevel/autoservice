@@ -160,45 +160,8 @@ export class Ck6Service {
         ];
 
         const data = { ...this.util.extractData(ck6041, fields), ck6011_id: id }
-        const searchConditions = {
-            id: null,
-            field: '',
-            value: '',
-            table: 'ck6041'
-        };
 
-        if (data.chassi_do_veiculo) {
-            searchConditions.field = 'chassi_do_veiculo';
-            searchConditions.value = data.chassi_do_veiculo;
-        } else if (data.placa_do_veiculo) {
-            searchConditions.field = 'placa_do_veiculo';
-            searchConditions.value = data.placa_do_veiculo;
-        } else {
-            return;
-        }
-
-        console.log(searchConditions);
         try {
-            // let ck = await this.prisma.ck6041.findUnique({
-            //     where: {
-            //         ck6041_cod: {
-            //             nome_do_cliente: data.nome_do_cliente,
-            //             chassi_do_veiculo: data.chassi_do_veiculo,
-            //             ck6011_id: id
-            //         }
-            //     }
-            // })
-
-            // if (ck) {
-            //     await this.prisma.ck6041.update({
-            //         where: {
-            //             id: ck.id
-            //         },
-            //         data
-            //     });
-            // } else {
-            //     ck = await this.prisma.ck6041.create({ data });
-            // }
             const ck = await this.prisma.ck6041.upsert({
                 where: {
                     ck6041_cod: {

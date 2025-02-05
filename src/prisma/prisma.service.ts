@@ -55,8 +55,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       page: skip,
       items: data.length,
       data,
-      ...(take < totalPages && { next: take + 1 }),
-      ...(skip > 1 && { previous: skip - 1 }),
+      next: skip < totalPages ? skip + 1 : null,
+      previous: skip > 1 ? skip - 1 : null,
     }
   }
 
@@ -75,8 +75,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       page: skip,
       items: data.length,
       data,
-      ...(skip < totalPages && { next: skip + 1 }),
-      ...(skip > 1 && { previous: skip - 1 }),
+      next: skip < totalPages ? skip + 1 : null,
+      previous: skip > 1 ? skip - 1 : null,
     }
   }
 

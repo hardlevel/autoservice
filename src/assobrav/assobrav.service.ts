@@ -1,55 +1,106 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { OsService } from './os.service';
+import { NfsService } from './nfs.service';
 
 @Injectable()
 export class AssobravService {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly os: OsService,
+        private readonly nfs: NfsService
+    ) {
 
-
-
-    //fontes pagadoras
-    // id_cadastro          Int       @id
-    // id_os                Int
-    // id_fonte_pagadora    Int
-    // data_abertura_os     DateTime
-    // data_fechamento_os   DateTime?
-    // total_os             Decimal   @default(0)
-    // total_orcamento      Decimal   @default(0)
-    // total_mo_os          Decimal   @default(0)
-    // total_peca_orcamento Decimal   @default(0)
-    // total_mo_orcamento   Decimal   @default(0)
-    // geral_nf             String
-    // nr_orcamento         String
-    // data_orcamento       DateTime
-    // chassis              String
-    // placa                String
-    // certificacao         String
-    // km                   Int
-
-    async start() {
-        const cks = await this.prisma.findAll('ck6011');
-        // console.log(cks);
-
-        //clientes
-        // id_cadastro       Int     @id
-        // id_os             Int //ck6011
-        // id_fonte_pagadora Int //ck6011
-        // nome              String? ck6041
-        // endereco          String //ck6042 -> ck6041
-        // numero            String //ck6042 -> ck6041
-        // complemento       String? //ck6042 -> ck6041
-        // bairro            String //ck6042 -> ck6041
-        // municipio         String //ck6042 cidade
-        // uf                String //ck6042
-        // cep               String //ck6042 ok
-        // cpf_cnpj          String //ck6042 -> ck6041
-        // indicador         String //ck6041 -> ck6041
-        // tel_res           String? //ck6042 ok
-        // tel_com           String? //ck6042 ok
-        // tel_cel           String? //ck6042 ok
-        // email             String //ck6042 ok
-        for (const ck of cks.data) {
-            console.log(ck)
-        }
     }
+
+    //ck3 notas fiscais de peças no balcão
+    //ck4 cancelamento da nf ou os
+    //ck5 estrutura fisica do dn
+    //ck6 ordem de serviços de peças e serviços na oficina
+    //ck7 notas fiscais de peças e serviços na oficina
+
+    async createFP() {
+        await this.prisma.tb_cki_fontes_pagadoras.createMany({
+            data:
+                [
+                    {
+                        id: 1,
+                        desc_fonte_pagadora: 'Cliente',
+                        obs_fonte_pagadora: 'Vendas de Peças, Acessórios e Serviços para clientes PF e PJ, exceto revisões, promoções e Seguro'
+                    },
+                    {
+                        id: 2,
+                        desc_fonte_pagadora: 'Internos',
+                        obs_fonte_pagadora: 'Serviços executados nos veículos de propriedade do DN'
+                    },
+                    {
+                        id: 3,
+                        desc_fonte_pagadora: 'Usados',
+                        obs_fonte_pagadora: 'Serviços de manutenção e revisão realizados em veículos usados ou de troca na venda de um zero km'
+                    },
+                    {
+                        id: 4,
+                        desc_fonte_pagadora: 'Lojas de Peças',
+                        obs_fonte_pagadora: 'Vendas de peças e acessórios para lojistas'
+                    },
+                    {
+                        id: 5,
+                        desc_fonte_pagadora: 'Governo',
+                        obs_fonte_pagadora: 'Vendas de peças e acessórios ou serviços realizados para clientes Governo / Licitações'
+                    },
+                    {
+                        id: 7,
+                        desc_fonte_pagadora: 'Oficinas Independentes',
+                        obs_fonte_pagadora: 'Vendas de peças e acessórios ou serviços realizados para oficinas independentes'
+                    },
+                    {
+                        id: 8,
+                        desc_fonte_pagadora: 'Garantia',
+                        obs_fonte_pagadora: 'Serviços realizados em garantia, exceto 1a revisão (Usar fonte 14 para 1o Revisão e Revisões de série)'
+                    },
+                    {
+                        id: 9,
+                        desc_fonte_pagadora: 'Concessionárias da Rede',
+                        obs_fonte_pagadora: 'Vendas de peças e acessórios ou serviços realizados para outras concessionárias da rede'
+                    },
+                    {
+                        id: 10,
+                        desc_fonte_pagadora: 'Seguro',
+                        obs_fonte_pagadora: 'Vendas de Peças e Acessórios ou Serviços realizados para empresas de seguros'
+                    },
+                    {
+                        id: 11,
+                        desc_fonte_pagadora: 'Promoções',
+                        obs_fonte_pagadora: 'Promoções de vendas de peças e acessórios ou serviços'
+                    },
+                    {
+                        id: 13,
+                        desc_fonte_pagadora: 'Revisão de Entrega',
+                        obs_fonte_pagadora: 'Revisão de entrega do veículo novo, revisão interna do DN antes da entrega para o Cliente'
+                    },
+                    {
+                        id: 14,
+                        desc_fonte_pagadora: 'Revisão Garantia/Série',
+                        obs_fonte_pagadora: 'Mão de obra da primeira revisão do Veículo / Revisão de Série'
+                    },
+                    {
+                        id: 15,
+                        desc_fonte_pagadora: 'Revisão Normal',
+                        obs_fonte_pagadora: 'Demais Revisões pagas pelo cliente e itens obrigatórios da revisão'
+                    },
+                    {
+                        id: 16,
+                        desc_fonte_pagadora: 'Frotista / Locadoras / Contratos',
+                        obs_fonte_pagadora: 'Serviços realizados para clientes Frotistas, locadoras de veículos, contratos ou comodatos (desde que não sejam Governo ou CPF)'
+                    },
+                    {
+                        id: 17,
+                        desc_fonte_pagadora: 'E-Commerce',
+                        obs_fonte_pagadora: 'Venda Online ou através da loja virtual VW'
+                    },
+                ],
+            skipDuplicates: true
+        })
+    }
+
 }

@@ -53,8 +53,8 @@ export class Ck3Service {
                     id: true
                 }
             })
-            await this.ck3002(ck.id, ck3001.CK3002);
-            await this.ck3003(ck.id, ck3001.CK3003);
+            if (ck3001.CK3002) await this.ck3002(ck.id, ck3001.CK3002);
+            if (ck3001.CK3003) await this.ck3003(ck.id, ck3001.CK3003);
         } catch (error) {
             await this.prisma.logError({
                 category: 'ck3001',
