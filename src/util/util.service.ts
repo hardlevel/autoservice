@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
+import { PrismaService } from '../prisma/prisma.service';
+import { CustomError } from '../common/errors/custom-error';
 
 @Injectable()
 export class UtilService {
@@ -62,5 +64,15 @@ export class UtilService {
                 return acc;
             }, {})
         };
+    }
+
+    getDate() {
+        const date = moment();
+        return {
+            date,
+            day: date.date(),
+            month: date.month(),
+            year: date.year()
+        }
     }
 }

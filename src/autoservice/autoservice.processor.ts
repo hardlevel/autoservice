@@ -12,7 +12,7 @@ import { Ck7Service } from './ck7.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { AllExceptionsFilter } from '../common/errors/all.exceptions';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-
+import * as moment from 'moment';
 interface JobLog {
     jobId: number;
     started_at: Date;
@@ -76,6 +76,11 @@ export class AutoserviceProcessor extends WorkerHost {
         // console.log('Processing job:', job.id, job.data);
         const data = job.data;
         const ck = Object.keys(data)[0];
+        const date = moment();
+        const day = date.date();
+        const month = date.month();
+        const year = date.year();
+
         this.jobLog = {
             jobId: parseInt(job.id),
             started_at: new Date(),
@@ -119,6 +124,7 @@ export class AutoserviceProcessor extends WorkerHost {
                 // await this.prisma.ckLogs.create({
                 //     data: this.ckLog
                 // })
+                // await this.recordDaily(year, month, day, 'ck3001', data[ck].length);
             }
 
             if (ck == 'CK4001') {
@@ -135,6 +141,7 @@ export class AutoserviceProcessor extends WorkerHost {
                 // await this.prisma.ckLogs.create({
                 //     data: this.ckLog
                 // })
+                // await this.recordDaily(year, month, day, 'ck4001', data[ck].length);
             }
 
             if (ck == 'CK5001') {
@@ -152,6 +159,7 @@ export class AutoserviceProcessor extends WorkerHost {
                 // await this.prisma.ckLogs.create({
                 //     data: this.ckLog
                 // })
+                // await this.recordDaily(year, month, day, 'ck5001', data[ck].length);
             }
 
             if (ck == 'CK6011') {
@@ -168,21 +176,12 @@ export class AutoserviceProcessor extends WorkerHost {
                 // await this.prisma.ckLogs.create({
                 //     data: this.ckLog
                 // })
+                // await this.recordDaily(year, month, day, 'ck6011', data[ck].length);
             }
 
             if (ck == 'CK7001') {
                 console.log('ck7001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    if (item.numero_da_nota_fiscal == null) {
-                        debugger
-                    }
-                    if (item.numero_da_nota_fiscal == undefined) {
-                        debugger
-                    }
-
-                    if (item.numero_da_nota_fiscal == '') {
-                        debugger
-                    }
                     await this.ck7service.ck7001(item);
                 }
                 this.ckLog.startDate = data.startDate;
@@ -194,6 +193,7 @@ export class AutoserviceProcessor extends WorkerHost {
                 // await this.prisma.ckLogs.create({
                 //     data: this.ckLog
                 // })
+                // await this.recordDaily(year, month, day, 'ck7001', data[ck].length);
             }
 
             return { success: true };

@@ -2,27 +2,24 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpS
 import { AutoserviceService } from './autoservice.service';
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
-import { AssobravService } from './assobrav.service';
 import { UtilService } from '../util/util.service';
 
 @Controller('autoservice')
 export class AutoserviceController {
   constructor(
     private readonly autoserviceService: AutoserviceService,
-    private readonly assobravService: AssobravService,
     private readonly util: UtilService
   ) { }
+
+  // @Get('teste')
+  // async test() {
+  //   return this.autoserviceService.teste();
+  // }
 
   @Get('past')
   async pastData() {
     // return this.autoserviceService.parseYear(2024);
     return this.autoserviceService.pastData(2024, 11, 12);
-  }
-
-  @Get('clients')
-  async () {
-    return this.assobravService.cadastroClientes();
-    // return this.autoserviceService.pastData(2024, 0);
   }
 
   @Get('start')

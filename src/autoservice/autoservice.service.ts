@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, ServiceUnavailableException } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 import { InjectQueue } from '@nestjs/bullmq';
@@ -23,11 +23,11 @@ interface RequestOptions {
 }
 
 @Injectable()
-export class AutoserviceService {
+export class AutoserviceService implements OnModuleInit {
   startDate
   endDate
   status: boolean;
-  queueStatus: boolean;
+  isBusy: boolean;
 
   constructor(
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
@@ -40,6 +40,11 @@ export class AutoserviceService {
     // private readonly logger = new Logger(AutoserviceService.name)
   ) { }
 
+  onModuleInit() {
+    this.isBusy = false;
+    this.autoserviceQueue.drain();
+  }
+
   @OnEvent('autoservice.*')
   handleOrderEvents(payload) {
     console.log(payload);
@@ -48,13 +53,13 @@ export class AutoserviceService {
 
   @OnEvent('autoservice.working')
   handleWorking(payload) {
-    this.queueStatus = true;
+    this.isBusy = true;
   }
 
   @OnEvent('autoservice.complete')
   handleComplete(payload) {
     console.log('fila concluida', payload);
-    this.queueStatus = false;
+    this.isBusy = false;
   }
 
   @SqsMessageHandler('autoservice', false)
@@ -69,11 +74,13 @@ export class AutoserviceService {
     };
     try {
       const job = await this.autoserviceQueue.add('autoservice', msgBody, {
-        delay: 2000,
+        delay: 5000,
         attempts: 10,
+        backoff: 3,
+        removeOnComplete: true
       });
     } catch (error) {
-      console.log('consumer error', JSON.stringify(error));
+      console.error('consumer error', JSON.stringify(error));
       //this.logger.error('Erro ao processar mensagem do SQS', error);
     }
   }
@@ -112,23 +119,20 @@ export class AutoserviceService {
         return data;
       })
       .catch(async (error) => {
-        await this.prisma.errorLog.create({
-          data: {
-            time: new Date(),
-            category,
-            message: error.message,
-            code: error.code,
-            params: JSON.stringify(params),
-          }
+        await this.prisma.logError({
+          category,
+          message: error.message,
+          code: error.code,
+          params: JSON.stringify(params),
         });
-        throw error;
       });
   }
 
   async getData(startDate = null, endDate = null) {
-    while(this.queueStatus == false) {
-      this.util.delay(30000);
-    }
+    // while(this.queueStatus == false) {
+    //   this.util.delay(30000);
+    // }
+    //TODO melhorar o gerenciamento da fila, não permitir que uma nova consulta seja feita ate a fila ser concluida
 
     let category = 'token';
     const tokenConfig = this.config.get('token');
@@ -138,7 +142,14 @@ export class AutoserviceService {
       grant_type: 'client_credentials',
     }
     const { access_token } = await this.fetch(tokenConfig.url, tokenParams, 'POST', null, category);
-
+    if (!access_token) {
+      await this.prisma.logError({
+        category: 'ck7003',
+        message: 'Não foi possível obter token',
+        code: '500',
+        params: tokenParams,
+      });
+    }
     if (startDate && endDate) {
       category = 'api-vw';
       const dates = {
@@ -148,13 +159,16 @@ export class AutoserviceService {
       const apiConfig = this.config.get('api');
       const api = await this.fetch(apiConfig.url, dates, 'GET', 'findByPeriod', 'api-vw', access_token);
     } else {
-      // this.start(startDate, endDate);
-      throw new CustomError(
-        ErrorMessages.DATE_MISSING,
-        500,
-        'Campos startDate e endDate não informados na chamada da api',
-        category
-      )
+      await this.prisma.logError({
+        category: 'ck7003',
+        message: 'Não foi possível obter dados da api',
+        code: '500',
+        params: { startDate, endDate },
+      });
+      setTimeout(() => {
+        console.error('Falha ao acessar API, aguardando para tentar novamente...');
+        this.getData(startDate, endDate);
+      }, 10000);
     }
   }
 
@@ -204,9 +218,35 @@ export class AutoserviceService {
   //   return newData;
   // };
 
-  async getQueueStatus() {
-    const teste = this.autoserviceQueue;
+  async checkQueueStatus() {
+    const activeJobs = await this.autoserviceQueue.getActiveCount();
+    const waitingJobs = await this.autoserviceQueue.getWaitingCount();
+
+    console.log(`Jobs Ativos: ${activeJobs}, Jobs Aguardando: ${waitingJobs}`);
+
+    if (activeJobs === 0 && waitingJobs === 0) {
+      console.log('Fila está vazia! Executando ação...');
+    }
   }
+
+  // async waitForQueueToBeEmpty() {
+  //   while (true) {
+  //     const activeJobs = await this.autoserviceQueue.getActiveCount();
+  //     const waitingJobs = await this.autoserviceQueue.getWaitingCount();
+  //     console.log('estado da fila, ocupada?', this.isBusy);
+  //     if (this.isBusy == false) {
+  //       console.log('✅ Fila vazia, continuando...');
+  //       break; // Sai do loop e continua a execução
+  //     }
+  //     // if (activeJobs === 0 && waitingJobs === 0) {
+  //     //   // console.log('✅ Fila vazia, continuando...');
+  //     //   break; // Sai do loop e continua a execução
+  //     // }
+
+  //     console.log(`⏳ Fila ocupada (Ativos: ${activeJobs}, Aguardando: ${waitingJobs})... aguardando...`);
+  //     await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos antes de checar novamente
+  //   }
+  // }
 
   async pastData(year, month, day = null) {
     let startMonth;
@@ -223,16 +263,26 @@ export class AutoserviceService {
       for (let h = 0; h < 24; h++) {
         const endDate = date.clone().add(h + 1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
         const startDate = date.clone().add(h, 'hours').format('YYYY-MM-DDTHH:mm:ss');
-        console.info('solicitando dados retroativos: ', startDate, endDate);
+        console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
         // const isActive = await this.autoserviceQueue.getActive();
         // if (!isActive) {
         // await this.getData(startDate, endDate);
+        // await this.waitForQueueToBeEmpty();
+        // while(this.isBusy) {
+        //   setInterval(()=> {
+        //     console.log('estado:', this.isBusy);
+        //   }, 500);
+        // }
+        while (this.isBusy == true) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        // console.log('ocupado?', this.isBusy)
         await this.getData(startDate, endDate);
         // }
         // }, 30 * 60 * 1000)
         // await new Promise(resolve => setTimeout(resolve, 30000));
         // console.log(this.queueStatus())
-        await new Promise(resolve => setTimeout(resolve, 100000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
       }
     }
   }

@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { UtilService } from '../util/util.service';
+import { CustomError } from '../common/errors/custom-error';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -110,7 +111,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     table: string,
     originalData: any,
     fields: any,
-    uniqueFields: any
+    uniqueFields: any,
+    id: any = null,
+    parent: any = null
   ) {
     if (table == 'ck7001') {
       if (!originalData.numero_da_nota_fiscal) {
@@ -118,21 +121,22 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       }
     }
     // console.log('validando nf', originalData.numero_da_nota_fiscal)
-    const data = this.util.extractData(originalData, fields);
+
+    const data = { ...this.util.extractData(originalData, fields), ...(id && parent ? [parent] : id) };
     const where = this.util.extractUnique(data, uniqueFields, table);
 
     const ck = await this.findUnique(table, where);
 
-    if (ck) {
-      if (table == 'ck7001') console.log('existe', ck.numero_da_nota_fiscal)
-      return this[table].update({ where, data }).catch(error => {
-        console.error(`erro ao salvar ${table}`, error, 'dados: ', data)
-      });
-    } else {
-      if (table == 'ck7001') console.log('existe', ck.numero_da_nota_fiscal)
-      return this[table].create({ data }).catch(error => {
-        console.error(`erro ao salvar ${table}`, error, 'dados: ', data, originalData[table])
-      });
+    try {
+      if (ck) {
+        // if (table == 'ck7001') console.log('existe', ck.numero_da_nota_fiscal)
+        return this[table].update({ where, data });
+      } else {
+        // if (table == 'ck7001') console.log('existe', ck.numero_da_nota_fiscal)
+        return this[table].create({ data })
+      }
+    } catch (error) {
+      console.error(`Erro ao salvar ${table}`, data);
     }
   }
 
@@ -165,5 +169,49 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     //   create: payload,
     //   update: payload
     // })
+  }
+
+  async logError(data) {
+    const { category, message, code, params, cause, originalData } = data;
+
+    await this.errorLogger.create({
+      data: {
+        time: new Date(),
+        category,
+        message,
+        code,
+        params: JSON.stringify(params),
+        originalData: JSON.stringify(originalData)
+      }
+    })
+
+    debugger
+    throw new CustomError(
+      message,
+      code,
+      category,
+      new Date().toString(),
+      data,
+      cause
+    )
+  }
+
+  async recordDaily(year: number, month: number, day: number, field: any, value: any) {
+    return this.dailyCk.upsert({
+      where: {
+        daily: {
+          day, month, year
+        }
+      },
+      create: {
+        day, month, year,
+        [field]: value
+      },
+      update: {
+        [field]: {
+          increment: value
+        }
+      }
+    })
   }
 }

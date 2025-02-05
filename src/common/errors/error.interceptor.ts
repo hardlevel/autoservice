@@ -27,7 +27,7 @@ export class ErrorInterceptor implements NestInterceptor {
                             endDate: err.endDate
                         }));
                     } else {
-                        console.error('Erro não tratado:', err);
+                        console.error('Erro não tratado interceptor:', err);
                         return throwError(() => err);
                     }
                 }),

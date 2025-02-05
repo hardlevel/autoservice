@@ -4,10 +4,14 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
 import { UtilService } from '../util/util.service';
+import { CustomError } from '../common/errors/custom-error';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class Ck4Service {
+
+    originalData: any;
+
     constructor(
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
@@ -17,6 +21,8 @@ export class Ck4Service {
     ) { }
 
     async ck4001(ck4001) {
+        this.originalData = ck4001;
+
         const fields = [
             'tipo_do_cancelamento',
             'numero_do_dn',
@@ -36,7 +42,7 @@ export class Ck4Service {
                 where: {
                     ck4001_cod: {
                         numero_do_dn: data.numero_do_dn,
-                        numero_da_nota_fiscal: data.numero_da_nota_fiscal
+                        data_do_cancelamento_do_documento: data.data_do_cancelamento_do_documento
                     }
                 },
                 create: data,
@@ -45,10 +51,15 @@ export class Ck4Service {
                     id: true
                 }
             })
-
         } catch (error) {
-            console.error('Erro ao salvar CK4001', error);
-            //this.logger.error('Erro ao salvar CK4001', error);
+            await this.prisma.logError({
+                category: 'ck4001',
+                message: error.message,
+                code: error.code,
+                params: data,
+                cause: error.cause,
+                originalData: this.originalData
+            });
         }
     }
 }
