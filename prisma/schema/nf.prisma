@@ -1,0 +1,25 @@
+model tb_cad_cadastro_nfs {
+    id                   Int                                             @id @default(autoincrement())
+    id_nf                String                                          @unique //ck3001 e 7001
+    serie_nf             String //ck3001 e 7001
+    id_status_nf         Int? //de onde vem?
+    id_seq_nf            Int? //desconsiderar
+    valor_total          Decimal?                                        @default(0) //ck3001 e 7001
+    valor_total_mo       Decimal?                                        @default(0)
+    valor_total_pecas    Decimal?                                        @default(0)
+    desconto_geral_pecas Decimal?                                        @default(0)
+    desconto_geral_mo    Decimal?                                        @default(0) //o que é?
+    servico_veiculo_novo String? //o que é e de onde vem?
+    data_emissao         DateTime //ck3001 e 7001
+    data_emissao_os      DateTime?
+    id_lote              Int? //o que é e de onde vem?
+    id_os                String?
+    id_fonte_pagadora    Int? //de onde vem?
+    id_tipo_nf           Int? //de onde vem?
+    clientes             tb_cad_cadastro_nfs_cliente[]
+    fontes_pagadoras     tb_cad_cadastro_nfs_clientes_fontes_pagadoras[]
+    pecas                tb_cad_cadastro_nfs_pecas[]
+    servicos             tb_cad_cadastro_nfs_servicos[]
+    cancelamentos        tb_cad_cadastro_nfs_os_cancelamento[]
+    os_nfs               tb_cad_cadastro_os_nfs[]
+}

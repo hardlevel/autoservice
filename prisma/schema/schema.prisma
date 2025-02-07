@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Autoservice {
+  id          Int       @id @default(autoincrement())
+  body        String
+  receivedAt  String
+  createdAt   DateTime  @default(now())
+  bodyMd5     String
+  messageId   String
+  receipt     String
+  processedAt DateTime?
+}
+
+model LastSearch {
+  id         Int      @id @default(1)
+  startDate  DateTime
+  endDate    DateTime
+  status     Boolean
+  created_at DateTime @updatedAt
+}
+
+/**
+ * verificar:
+ * . onde tem os dados de fontes pagadores com as descrições - fontes que não constam na documentação: 6, 12
+ * . é necessário agrupar as fontes pagadoras?
+ * . o que fazer com o ck5001?
+ */

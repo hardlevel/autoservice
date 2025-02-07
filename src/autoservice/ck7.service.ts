@@ -148,9 +148,6 @@ export class Ck7Service {
                     },
                     create: data,
                     update: data,
-                    select: {
-                        id: true
-                    }
                 })
             } catch (error) {
                 await this.prisma.logError({
@@ -177,15 +174,12 @@ export class Ck7Service {
             const data = { ...this.util.extractData(email, fields), ck7002_id: id };
 
             try {
-                const ckPhone = await this.prisma.emails.upsert({
+                const ckEmails = await this.prisma.emails.upsert({
                     where: {
                         email: data.email
                     },
                     create: data,
                     update: data,
-                    select: {
-                        id: true
-                    }
                 })
             } catch (error) {
                 await this.prisma.logError({

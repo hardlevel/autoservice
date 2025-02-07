@@ -1,0 +1,17 @@
+model Ck4001 {
+    id                                    Int       @id @default(autoincrement())
+    tipo_do_cancelamento                  String
+    numero_do_dn                          String
+    numero_da_nota_fiscal                 String? //@unique
+    numero_da_os                          String? //@unique
+    serie_da_nota_fiscal                  String?
+    data_e_hora_da_emissao_da_nota_fiscal DateTime?
+    data_do_cancelamento_do_documento     DateTime
+    data_e_hora_da_abertura_da_os         DateTime?
+    data_e_hora_do_fechamento_da_os       DateTime?
+    created_at                            DateTime  @default(now())
+    modified_at                           DateTime  @updatedAt
+
+    @@unique(name: "ck4001_cod", [numero_do_dn, data_do_cancelamento_do_documento])
+    @@index([numero_da_nota_fiscal], type: Hash)
+}

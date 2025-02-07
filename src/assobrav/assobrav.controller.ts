@@ -9,11 +9,13 @@ export class AssobravController {
         private readonly assobrav: AssobravService,
         private readonly os: OsService,
         private readonly nfs: NfsService
-    ) {}
+    ) { }
 
     @Get()
     async start() {
         // await this.os.proccessCk();
-        await this.nfs.start();
+        // await this.nfs.start();
+        await this.assobrav.proccessData();
+        return 'concluido!';
     }
 }
