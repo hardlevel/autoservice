@@ -1,7 +1,7 @@
 model Clientes {
-    id          Int         @id @default(autoincrement())
+    id          Int     @id @default(autoincrement())
     nome        String
-    cpf_cnpj    String
+    cpf_cnpj    String  @unique
     endereco    String
     numero      String
     bairro      String
@@ -9,86 +9,126 @@ model Clientes {
     uf          String
     cep         String
     complemento String?
-    telefones   Telefones[]
-    emails      Emails[]
-    Os          Os?         @relation(fields: [osId], references: [id])
-    osId        Int?
+
+    telefones        Telefones[]
+    emails           Emails[]
+    ordem_de_servico OrdemDeServico[]
+    nota_fiscal      NotaFiscal[]
 }
 
-model Os {
-    id              Int             @id @default(autoincrement())
-    numero_os       String          @unique
+model OrdemDeServico {
+    id              Int       @id @default(autoincrement())
+    numero          String    @unique
     data_abertura   DateTime
     data_fechamento DateTime?
-    valor_total     Decimal         @default(0)
-    servicos        Servicos[]
-    pecas           Pecas[]
-    clientes        Clientes[]
-    veiculos        Veiculos[]
-    cancelamento    Cancelamentos[]
-    id_nf           Int
-    nf              NotaFiscal?     @relation(fields: [id_nf], references: [id])
+    valor_total     Decimal   @default(0)
+
+    servicos     Servicos[]
+    pecas        Pecas[]
+    veiculos     Veiculos[]
+    cancelamento Cancelamentos[]
+
+    nf_id       Int
+    nota_fiscal NotaFiscal? @relation(fields: [nf_id], references: [id])
+
+    dealer_id Int?
+    dealer    Dealers? @relation(fields: [dealer_id], references: [id])
+
+    clientes    Clientes? @relation(fields: [clientes_id], references: [id])
+    clientes_id Int?
 }
 
 model NotaFiscal {
-    id             Int               @id @default(autoincrement())
-    numero_nf      String
-    data_emissao   DateTime
-    valor_total    Decimal
-    fonte_pagadora FontesPagadoras[]
-    os             Os[]
-    cancelamentos  Cancelamentos[]
-    pecas          Pecas[]
+    id                Int      @id @default(autoincrement())
+    numero            String   @unique
+    data_emissao      DateTime
+    valor_total       Decimal?
+    valor_total_pecas Decimal?
+    valor_total_mo    Decimal?
+    serie             String
+    indicador         String
+
+    dealer_id Int?
+    dealer    Dealers? @relation(fields: [dealer_id], references: [id])
+
+    cliente_id Int?
+    cliente    Clientes? @relation(fields: [cliente_id], references: [id])
+
+    fonte_pagadora_id Int?
+    fonte_pagadora    FontesPagadoras? @relation(fields: [fonte_pagadora_id], references: [id])
+
+    ordem_de_servico OrdemDeServico[]
+    pecas            Pecas[]
+    cancelamentos    Cancelamentos[]
 }
 
 model Pecas {
-    id           Int         @id @default(autoincrement())
-    Os           Os?         @relation(fields: [osId], references: [id])
-    osId         Int?
-    NotaFiscal   NotaFiscal? @relation(fields: [notaFiscalId], references: [id])
-    notaFiscalId Int?
+    id             Int     @id @default(autoincrement())
+    descricao      String
+    qtd            Int
+    valor_unitario Decimal
+    valor_total    Decimal
+    codigo         String
+
+    nota_fiscal NotaFiscal? @relation(fields: [nf_id], references: [id])
+    nf_id       Int?
+
+    ordem_de_servico OrdemDeServico? @relation(fields: [os_id], references: [id])
+    os_id            Int?
+
+    @@unique(name: "peca_nf", [nf_id, codigo])
+    @@unique(name: "peca_os", [os_id, codigo])
 }
 
 model Servicos {
-    id   Int  @id @default(autoincrement())
-    Os   Os?  @relation(fields: [osId], references: [id])
-    osId Int?
+    id               Int             @id @default(autoincrement())
+    os_id            Int?
+    ordem_de_servico OrdemDeServico? @relation(fields: [os_id], references: [id])
 }
 
 model Veiculos {
-    id   Int  @id @default(autoincrement())
-    Os   Os?  @relation(fields: [osId], references: [id])
-    osId Int?
+    id               Int             @id @default(autoincrement())
+    os_id            Int?
+    ordem_de_servico OrdemDeServico? @relation(fields: [os_id], references: [id])
 }
 
 model Cancelamentos {
-    id                Int         @id @default(autoincrement())
-    Os                Os?         @relation(fields: [osId], references: [id])
-    osId              Int?
-    NotaFiscal        NotaFiscal? @relation(fields: [notaFiscalId], references: [id])
-    notaFiscalId      Int?
+    id                Int             @id @default(autoincrement())
+    os_id             Int?
+    ordem_de_servico  OrdemDeServico? @relation(fields: [os_id], references: [id])
+    nf_id             Int?
+    nota_fiscal       NotaFiscal?     @relation(fields: [nf_id], references: [id])
     data_cancelamento DateTime
 }
 
 model FontesPagadoras {
-    id             Int         @id @default(autoincrement())
+    id             Int          @id @default(autoincrement())
     fonte_pagadora Int
     descricao      String?
-    NotaFiscal     NotaFiscal? @relation(fields: [notaFiscalId], references: [id])
-    notaFiscalId   Int?
+    observacao     String?
+    nf_id          Int?
+    nota_fiscal    NotaFiscal[]
 }
 
 model Dealers {
-    id          Int     @id @default(autoincrement())
-    dn          String
-    nome        String?
-    cnpj        String?
-    endereco    String?
-    numero      String?
-    complemento String?
-    cidade      String?
-    uf          String?
-    cep         String?
-    telefone    String?
-    status      String?
+    id               Int              @id @default(autoincrement())
+    dn               String           @unique
+    nome             String?
+    cnpj             String?
+    endereco         String?
+    numero           String?
+    complemento      String?
+    cidade           String?
+    uf               String?
+    cep              String?
+    telefone         String?
+    status           String?
+    ordem_de_servico OrdemDeServico[]
+    nota_fiscal      NotaFiscal[]
 }
+
+/**
+ * entender fluxo
+ * 1 - toda OS tem uma NF?
+ * 2 - se sim, uma os pode ter mais de uma nf? e uma nf pode ter mais de uma os?
+ */

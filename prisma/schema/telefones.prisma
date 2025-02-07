@@ -6,11 +6,11 @@ model Telefones {
     ck7002            Ck7002?   @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
     ck7002_id         Int?
     numero            String    @unique
-    descricao         String    @default("Residencial")
+    descricao         String    @default("residencial")
     autoriza_contato  Boolean
     autoriza_pesquisa Boolean
     created_at        DateTime  @default(now())
     modified_at       DateTime  @updatedAt
-    clientes          Clientes? @relation(fields: [clientesId], references: [id])
-    clientesId        Int?
+    cliente           Clientes? @relation(fields: [cliente_id], references: [id])
+    cliente_id        Int?
 }
