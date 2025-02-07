@@ -1,0 +1,61 @@
+model tb_cad_cadastro_os_fontes_pagadoras {
+    id                   Int                     @id @default(autoincrement())
+    data_abertura_os     DateTime
+    data_fechamento_os   DateTime?
+    total_os             Decimal?                @default(0)
+    total_orcamento      Decimal?                @default(0) //não tem valores de orçamento, apenas valores totais
+    total_mo_os          Decimal?                @default(0)
+    total_peca_os        Decimal?                @default(0)
+    total_peca_orcamento Decimal?                @default(0)
+    total_mo_orcamento   Decimal?                @default(0)
+    gera_nf              String? //o que é?
+    nr_orcamento         String?
+    data_orcamento       DateTime?
+    chassis              String
+    placa                String?
+    certificacao         String? //o que é?
+    km                   Int?
+    // os                   tb_cad_cadastro_os                    @relation(fields: [os_id], references: [id])
+    fonte_pagadora_id    Int
+    fonte_pagadora       tb_cki_fontes_pagadoras @relation(fields: [fonte_pagadora_id], references: [id])
+
+    os_id Int
+    os    tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+    cancelamentos tb_cad_cadastro_nfs_os_cancelamento[]
+
+    @@unique(name: "fp_os", [os_id, fonte_pagadora_id])
+}
+
+model tb_cad_cadastro_nfs_clientes_fontes_pagadoras {
+    id Int @id @default(autoincrement())
+
+    id_nf Int?
+    // nf    tb_cad_cadastro_nfs? @relation(fields: [id_nf], references: [id])
+
+    serie_nf                            String
+    id_seq_nf                           Int?
+    id_os                               Int
+    tb_cad_cadastro_nfs                 tb_cad_cadastro_nfs?                  @relation(fields: [tb_cad_cadastro_nfsId], references: [id])
+    tb_cad_cadastro_nfsId               Int?
+    id_fonte_pagadora                   Int?
+    // fonte_pagadora        tb_cki_fontes_pagadoras? @relation(fields: [id_fonte_pagadora], references: [id])
+    fonte_pagadora                      tb_cki_fontes_pagadoras?              @relation(fields: [id_fonte_pagadora], references: [id], onDelete: SetNull)
+    tb_cad_cadastro_nfs_os_cancelamento tb_cad_cadastro_nfs_os_cancelamento[]
+    tb_cad_cadastro_os_nfs              tb_cad_cadastro_os_nfs[]
+
+    @@unique(name: "fp_nfs", [tb_cad_cadastro_nfsId, id_os, id_fonte_pagadora])
+}
+
+model tb_cki_fontes_pagadoras {
+    id                                            Int                                             @id @unique
+    desc_fonte_pagadora                           String
+    obs_fonte_pagadora                            String?
+    tb_cad_cadastro_nfs_clientes_fontes_pagadoras tb_cad_cadastro_nfs_clientes_fontes_pagadoras[]
+    tb_cad_cadastro_os_fontes_pagadoras           tb_cad_cadastro_os_fontes_pagadoras[]
+}
+
+model tb_cki_agrupamento_fontes_pagadoras {
+    id               Int    @id @default(autoincrement())
+    desc_agrupamento String
+}

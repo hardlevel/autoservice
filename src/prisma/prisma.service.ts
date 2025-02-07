@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { UtilService } from '../util/util.service';
 import { CustomError } from '../common/errors/custom-error';
+import { UtilService } from '../util/util.service';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -43,11 +43,14 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async findAll(table: string, skip: number = 1, take: number = 50) {
+  async findAll(table: string, skip: number = 1, take: number = 50, ...relations) {
+    if (skip == 0) skip++;
+
     const total = await this.count(table);
     const data = await this[table].findMany({
       skip: (skip - 1) * take,
       take,
+      include: relations && relations.length > 0 ? Object.fromEntries(relations.map(relation => [relation, true])) : undefined
     });
     const totalPages = Math.ceil(total / take);
     return {
@@ -60,14 +63,17 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     }
   }
 
-  async findMany(table: string, field: string, value: string | number | boolean, skip: number = 1, take: number = 50) {
+  async findMany(table: string, field: string, value: string | number | boolean, skip: number = 1, take: number = 50, ...relations) {
+    if (skip == 0) skip++;
+
     const total = await this.countFilter(table, field, value);
     const data = this[table].findMany({
       skip: (skip - 1) * take,
       take,
       where: {
         [field]: value
-      }
+      },
+      include: relations && relations.length > 0 ? Object.fromEntries(relations.map(relation => [relation, true])) : undefined
     });
     const totalPages = Math.ceil(total / take);
     return {

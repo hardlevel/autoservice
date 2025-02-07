@@ -1,0 +1,60 @@
+model ErrorLogger {
+    id           Int      @id @default(autoincrement())
+    created_at   DateTime @default(now())
+    time         DateTime @default(now())
+    category     String?
+    message      String?
+    code         String?
+    params       String?
+    originalData String?
+    // @@unique(name: "error_log", [category, message])
+}
+
+model CkLogs {
+    id         Int      @id @default(autoincrement())
+    created_at DateTime @default(now())
+    startDate  String
+    endDate    String
+    category   String
+    data       String?
+    qtd        Int?
+    status     String
+    message    String?
+    jobId      Int
+}
+
+model JobLogs {
+    id         Int      @id @default(autoincrement())
+    jobId      Int
+    created_at DateTime @default(now())
+    started_at DateTime
+    ended_at   DateTime
+    startDate  String?
+    endDate    String?
+    status     String
+    message    String?
+    data       String?
+}
+
+model DailyCk {
+    id     Int  @id @default(autoincrement())
+    day    Int
+    month  Int
+    year   Int
+    ck3001 Int?
+    ck3002 Int?
+    ck3003 Int?
+    ck4001 Int?
+    ck5001 Int?
+    ck6011 Int?
+    ck6021 Int?
+    ck6031 Int?
+    ck6041 Int?
+    ck6042 Int?
+    ck7001 Int?
+    ck7002 Int?
+    ck7003 Int?
+    ck7004 Int?
+
+    @@unique(name: "daily", [day, month, year])
+}

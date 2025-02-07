@@ -1,0 +1,54 @@
+model Ck3001 {
+    id                                           Int      @id @default(autoincrement())
+    numero_do_dn                                 String
+    numero_da_nota_fiscal                        String //@unique
+    serie_da_nota_fiscal                         String
+    fonte_pagadora                               Int
+    valor_total_liquido_das_pecas_na_nota_fiscal Decimal  @default(0)
+    indicador                                    String
+    data_e_hora_da_emissao_da_nota_fiscal        DateTime
+    numero                                       String
+    endereco                                     String
+    complemento                                  String?
+    nome_do_cliente                              String
+    cpf_cnpj                                     String
+    ck3002                                       Ck3002[]
+    ck3003                                       Ck3003[]
+    created_at                                   DateTime @default(now())
+    modified_at                                  DateTime @updatedAt
+
+    @@unique(name: "ck3001_cod", [cpf_cnpj, numero_da_nota_fiscal])
+    @@index([numero_da_nota_fiscal], type: Hash)
+}
+
+model Ck3002 {
+    id          Int         @id @default(autoincrement())
+    cidade      String
+    bairro      String
+    uf          String
+    cep         String
+    ck3001      Ck3001      @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
+    ck3001_id   Int
+    emails      Emails[]
+    telefones   Telefones[]
+    created_at  DateTime    @default(now())
+    modified_at DateTime    @updatedAt
+
+    @@unique(name: "ck3002_cod", [cidade, bairro, uf, cep, ck3001_id])
+}
+
+model Ck3003 {
+    id                          Int      @id @default(autoincrement())
+    codigo_da_peca              String
+    descricao_da_peca           String
+    quantidade_da_peca          Int
+    valor_total_liquido_da_peca Decimal  @default(0)
+    codigo_promocional          String?
+    ck3001                      Ck3001   @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
+    ck3001_id                   Int
+    created_at                  DateTime @default(now())
+    modified_at                 DateTime @updatedAt
+
+    @@unique(name: "ck3003_cod", [codigo_da_peca, ck3001_id])
+    @@index([codigo_da_peca], type: Hash)
+}

@@ -1,0 +1,41 @@
+model Ck5001 {
+    id                                                         Int      @id @default(autoincrement())
+    numero_do_dn                                               String //@unique
+    tempo_remunerado                                           Float?
+    tempo_disponivel_servicos_gerais_produtivos                Float?
+    tempo_disponivel_servicos_rapido_produtivos                Float?
+    tempo_disponivel_servicos_carroceria_produtivos_funileiros Float?
+    tempo_disponivel_servicos_carroceria_produtivos_pintores   Float?
+    taxa_de_mao_de_obra_publico                                Float?
+    servicos_gerente                                           Int?
+    servicos_chefe_de_oficina                                  Int?
+    servicos_consultor_tecnico                                 Int?
+    servicos_aprendiz                                          Int?
+    servicos_suporte                                           Int?
+    servicos_gerais_produtivos                                 Int?
+    servicos_rapido_produtivos                                 Int?
+    servicos_carroceria_produtivos_funileiros                  Int?
+    servicos_carroceria_produtivos_pintores                    Int?
+    servicos_lavadores_lubrificadores                          Int?
+    servicos_terceiros                                         Int?
+    pecas_gerente                                              Int?
+    pecas_suporte                                              Int?
+    pecas_balconista_varejo                                    Int?
+    pecas_balconista_oficina                                   Int?
+    pecas_vendedor_atacado                                     Int?
+    pecas_vendedor_acessorios                                  Int?
+    locais_de_trabalho_servicos_gerais                         Int?
+    locais_de_trabalho_servico_rapido                          Int?
+    locais_de_trabalho_servicos_de_funilaria                   Int?
+    locais_de_trabalho_servicos_de_pintura                     Int?
+    locais_de_trabalho_lavagem_e_lubrificacao                  Int?
+    locais_de_trabalho_utilizados_por_terceiros                Int?
+    mes_e_ano_de_referencia                                    String?
+    ano_de_referencia                                          Int
+    mes_de_referencia                                          Int
+    created_at                                                 DateTime @default(now())
+    modified_at                                                DateTime @updatedAt
+
+    @@unique(name: "ck5001_cod", [numero_do_dn, ano_de_referencia, mes_de_referencia])
+    @@index([numero_do_dn], type: Hash)
+}

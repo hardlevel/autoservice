@@ -94,8 +94,8 @@ export class Ck3Service {
                     id: true
                 }
             })
-            await this.phones(ck.id, ck3002.telefones);
-            await this.emails(ck.id, ck3002.emails);
+            if (ck3002.telefones) await this.phones(ck.id, ck3002.telefones);
+            if (ck3002.emails) await this.emails(ck.id, ck3002.emails);
         } catch (error) {
             await this.prisma.logError({
                 category: 'ck3002',
@@ -118,6 +118,8 @@ export class Ck3Service {
             ]
 
             const data = { ...this.util.extractData(phone, fields), ck3002_id: id }
+
+            if (!phone.numero) return;
 
             try {
                 if (data.numero) {
@@ -152,6 +154,8 @@ export class Ck3Service {
             ]
 
             const data = { ...this.util.extractData(email, fields), ck3002_id: id }
+
+            if (!email.email) return;
 
             try {
                 if (data.email) {

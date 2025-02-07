@@ -236,6 +236,8 @@ export class Ck6Service {
         for (const phone of phones) {
             const data = { ...this.util.extractData(phone, fields), ck6042_id: id }
 
+            if (!phone.numero) return;
+
             try {
                 const ck = await this.prisma.telefones.upsert({
                     where: {
@@ -243,9 +245,6 @@ export class Ck6Service {
                     },
                     create: data,
                     update: data,
-                    select: {
-                        id: true
-                    }
                 });
             } catch (error) {
                 await this.prisma.logError({
@@ -271,6 +270,8 @@ export class Ck6Service {
         for (const email of emails) {
             const data = { ...this.util.extractData(email, fields), ck6042_id: id }
 
+            if (!email.email) return;
+
             try {
                 const ck = await this.prisma.emails.upsert({
                     where: {
@@ -278,9 +279,6 @@ export class Ck6Service {
                     },
                     create: data,
                     update: data,
-                    select: {
-                        id: true
-                    }
                 });
             } catch (error) {
                 await this.prisma.logError({

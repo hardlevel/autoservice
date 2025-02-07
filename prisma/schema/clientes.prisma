@@ -1,0 +1,55 @@
+model tb_cad_cadastro_nfs_cliente {
+    id                    Int                  @id @default(autoincrement())
+    id_nf                 Int? //ck7002 remover, usar relacionamento
+    serie_nf              String //ck7001
+    nome                  String //ck7001 ok
+    id_seq_nf             Int? //desconsiderar
+    endereco              String //ck702
+    numero                String //ck7002
+    complemento           String? //ck7002 ok
+    bairro                String //ck7002 ok
+    municipio             String //ck7002 -> cidade
+    uf                    String //ck7002
+    cep                   String //ck7002 ok
+    cpf_cnpj              String //ck7002 ok
+    indicador             String? //ck7002
+    tel_res               String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
+    tel_com               String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
+    tel_cel               String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
+    email                 String? //ck7002 ok
+    tb_cad_cadastro_nfs   tb_cad_cadastro_nfs? @relation(fields: [tb_cad_cadastro_nfsId], references: [id])
+    tb_cad_cadastro_nfsId Int?
+
+    @@unique(name: "clientes_nfs", [nome, cpf_cnpj])
+}
+
+model tb_cad_cadastro_os_clientes {
+    id                Int                @id @default(autoincrement())
+    id_fonte_pagadora Int //ck6011
+    nome              String //ck6041 tem o nome
+    endereco          String //ck6042 -> ck6041
+    numero            String //ck6042 -> ck6041
+    complemento       String? //ck6042 -> ck6041
+    bairro            String //ck6042 -> ck6041
+    municipio         String //ck6042 cidade
+    uf                String //ck6042
+    cep               String //ck6042 ok
+    cpf_cnpj          String //ck6042 -> ck6041
+    indicador         String //ck6041 -> ck6041
+    tel_res           String? //ck6042 ok
+    tel_com           String? //ck6042 ok
+    tel_cel           String? //ck6042 ok
+    email             String? //ck6042 ok
+    os_id             Int
+    os                tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+    @@unique(name: "clientes_os", [nome, cpf_cnpj])
+}
+
+model tb_cad_cadastro_nfs_clientes_classificacao {
+    id             Int    @id @default(autoincrement())
+    id_nf          Int
+    serie_nf       String
+    id_cla_cliente Int //de onde vem?
+    id_seq_nf      Int
+}

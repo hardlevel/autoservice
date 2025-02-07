@@ -1,0 +1,37 @@
+model tb_cad_cadastro_nfs_pecas {
+    id                      Int                  @id @default(autoincrement())
+    id_nf                   Int? //ck3001
+    serie_nf                String //ck3001
+    id_seq                  Int? //desconsiderar
+    id_peca                 String //ck3003
+    id_seq_nf               Int? //desconsiderar
+    descricao               String //ck3003
+    qtd                     Int //ck3003
+    valor_unitario          Decimal              @default(0) //ck3003 nao vem *
+    valor_total_com_imposto Decimal?             @default(0) //ck3003 nao vem *
+    desconto                Decimal?             @default(0) //ck3003 nao vem, codigo_promocional? *
+    valor_total_liquido     Decimal              @default(0) //ck3003
+    aliquota_icms           Decimal?             @default(0) //ck3003 nao vem *
+    aliquota_pis_cofins     Decimal?             @default(0) //ck3003 nao vem *
+    tb_cad_cadastro_nfs     tb_cad_cadastro_nfs? @relation(fields: [tb_cad_cadastro_nfsId], references: [id])
+    tb_cad_cadastro_nfsId   Int?
+
+    @@unique(name: "pecas_nfs", [tb_cad_cadastro_nfsId, id_peca])
+}
+
+model tb_cad_cadastro_os_pecas {
+    id                      Int                @id @default(autoincrement())
+    descricao               String //ck6021
+    id_fonte_pagadora       Int //ck6011
+    id_seq_peca             Int? //desconsiderar
+    qtd                     Int //ck6021
+    id_peca                 String?
+    valor_unitario          Decimal            @default(0) //ck6021 nao vem *
+    valor_total_com_imposto Decimal?           @default(0) //de onde vem? *  - não serão enviados
+    desconto                Decimal?           @default(0) //ck6021 não vem * - não serão enviados
+    valor_total_liquido     Decimal            @default(0) //ck6011 ok
+    os_id                   Int
+    os                      tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+    @@unique(name: "pecas_os", [os_id, id_peca])
+}

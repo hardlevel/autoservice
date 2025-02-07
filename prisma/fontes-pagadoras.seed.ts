@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    // Inserindo dados no modelo `User`
+    // Inserindo dados no modelo `cki_fontes_pagadoras`
     await prisma.tb_cki_fontes_pagadoras.createMany({
         data: [
             {
@@ -32,6 +32,11 @@ async function main() {
                 obs_fonte_pagadora: 'Vendas de peças e acessórios ou serviços realizados para clientes Governo / Licitações'
             },
             {
+                id: 6,
+                desc_fonte_pagadora: 'n/a',
+                obs_fonte_pagadora: 'desconhecido'
+            },
+            {
                 id: 7,
                 desc_fonte_pagadora: 'Oficinas Independentes',
                 obs_fonte_pagadora: 'Vendas de peças e acessórios ou serviços realizados para oficinas independentes'
@@ -55,6 +60,11 @@ async function main() {
                 id: 11,
                 desc_fonte_pagadora: 'Promoções',
                 obs_fonte_pagadora: 'Promoções de vendas de peças e acessórios ou serviços'
+            },
+            {
+                id: 12,
+                desc_fonte_pagadora: 'Não informado',
+                obs_fonte_pagadora: 'desconhecido'
             },
             {
                 id: 13,
@@ -82,16 +92,17 @@ async function main() {
                 obs_fonte_pagadora: 'Venda Online ou através da loja virtual VW'
             },
         ],
+        skipDuplicates: true
     });
 
     console.log('Seed de dados inserido com sucesso!');
 }
 main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    .then(async () => {
+        await prisma.$disconnect()
+    })
+    .catch(async (e) => {
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
+    })

@@ -1,0 +1,94 @@
+model Clientes {
+    id          Int         @id @default(autoincrement())
+    nome        String
+    cpf_cnpj    String
+    endereco    String
+    numero      String
+    bairro      String
+    cidade      String
+    uf          String
+    cep         String
+    complemento String?
+    telefones   Telefones[]
+    emails      Emails[]
+    Os          Os?         @relation(fields: [osId], references: [id])
+    osId        Int?
+}
+
+model Os {
+    id              Int             @id @default(autoincrement())
+    numero_os       String          @unique
+    data_abertura   DateTime
+    data_fechamento DateTime?
+    valor_total     Decimal         @default(0)
+    servicos        Servicos[]
+    pecas           Pecas[]
+    clientes        Clientes[]
+    veiculos        Veiculos[]
+    cancelamento    Cancelamentos[]
+    id_nf           Int
+    nf              NotaFiscal?     @relation(fields: [id_nf], references: [id])
+}
+
+model NotaFiscal {
+    id             Int               @id @default(autoincrement())
+    numero_nf      String
+    data_emissao   DateTime
+    valor_total    Decimal
+    fonte_pagadora FontesPagadoras[]
+    os             Os[]
+    cancelamentos  Cancelamentos[]
+    pecas          Pecas[]
+}
+
+model Pecas {
+    id           Int         @id @default(autoincrement())
+    Os           Os?         @relation(fields: [osId], references: [id])
+    osId         Int?
+    NotaFiscal   NotaFiscal? @relation(fields: [notaFiscalId], references: [id])
+    notaFiscalId Int?
+}
+
+model Servicos {
+    id   Int  @id @default(autoincrement())
+    Os   Os?  @relation(fields: [osId], references: [id])
+    osId Int?
+}
+
+model Veiculos {
+    id   Int  @id @default(autoincrement())
+    Os   Os?  @relation(fields: [osId], references: [id])
+    osId Int?
+}
+
+model Cancelamentos {
+    id                Int         @id @default(autoincrement())
+    Os                Os?         @relation(fields: [osId], references: [id])
+    osId              Int?
+    NotaFiscal        NotaFiscal? @relation(fields: [notaFiscalId], references: [id])
+    notaFiscalId      Int?
+    data_cancelamento DateTime
+}
+
+model FontesPagadoras {
+    id             Int         @id @default(autoincrement())
+    fonte_pagadora Int
+    descricao      String?
+    NotaFiscal     NotaFiscal? @relation(fields: [notaFiscalId], references: [id])
+    notaFiscalId   Int?
+}
+
+model Dealers {
+    id          Int     @id @default(autoincrement())
+    dn          String
+    nome        String?
+    cnpj        String?
+    endereco    String?
+    numero      String?
+    complemento String?
+    cidade      String?
+    uf          String?
+    cep         String?
+    telefone    String?
+    status      String?
+}

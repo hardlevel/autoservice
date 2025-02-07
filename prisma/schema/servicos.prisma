@@ -1,0 +1,35 @@
+model tb_cad_cadastro_nfs_servicos {
+    id                    Int                  @id @default(autoincrement())
+    id_nf                 Int? //ck7001
+    serie_nf              String //ck7001
+    id_seq_nf             Int? //desconsiderar
+    hora_vendida          Float //ck7004
+    id_seq_servico        Int? //desconsiderar
+    id_cos                String               @unique //ck7004 relaciona com tb_cad_cadastro_os_servicos? verificar se é unico
+    valor_total           Decimal?             @default(0) //ck7004 nao vem *
+    desconto              Decimal?             @default(0) //ck7004 nao vem /
+    des_cos               String //ck7004 (descricao_do_servico)
+    valor_total_liquido   Decimal?             @default(0) //ck7004
+    aliquota_iss          Decimal?             @default(0) //ck7004 nao vem *
+    aliquota_pis_cofins   Decimal?             @default(0) //ck7004 nao vem *
+    tb_cad_cadastro_nfs   tb_cad_cadastro_nfs? @relation(fields: [tb_cad_cadastro_nfsId], references: [id])
+    tb_cad_cadastro_nfsId Int?
+}
+
+model tb_cad_cadastro_os_servicos {
+    id                  Int                @id @default(autoincrement())
+    id_seq_servico      Int? //desconsiderar
+    id_fonte_pagadora   Int? //ck7001
+    id_cos              String //ck7004 o que é extamente? tem @relation(fields: [tb_cad_cadastro_osId], references: [id])
+    desc_cos            String
+    hora_vendida        Int                @default(0)
+    valor_total         Decimal?           @default(0) //de onde vem? *
+    desconto            Decimal?           @default(0) //de onde vem? *
+    valor_total_liquido Decimal            @default(0) //ck7004 -> verificar (valor total liquido da mao de obra?)
+    aliquota_iss        Decimal?           @default(0) //de onde vem? - não sera enviado
+    id_tipo_servico     Int? //ck7004 ? verificar se é este
+    os_id               Int
+    os                  tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
+
+    @@unique(name: "servicos_os", [os_id, id_cos])
+}

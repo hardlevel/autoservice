@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "prisma": {
-    "seed": "ts-node prisma/fontes-pagadoras.seed.ts"
+    "seed": "ts-node --transpile-only prisma/fontes-pagadoras.seed.ts"
   },
   "scripts": {
     "build": "nest build",

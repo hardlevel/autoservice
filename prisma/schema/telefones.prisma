@@ -1,0 +1,16 @@
+model Telefones {
+    ck3002            Ck3002?   @relation(fields: [ck3002_id], references: [id], onDelete: Cascade)
+    ck3002_id         Int?
+    ck6042            Ck6042?   @relation(fields: [ck6042_id], references: [id], onDelete: Cascade)
+    ck6042_id         Int?
+    ck7002            Ck7002?   @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
+    ck7002_id         Int?
+    numero            String    @unique
+    descricao         String    @default("Residencial")
+    autoriza_contato  Boolean
+    autoriza_pesquisa Boolean
+    created_at        DateTime  @default(now())
+    modified_at       DateTime  @updatedAt
+    clientes          Clientes? @relation(fields: [clientesId], references: [id])
+    clientesId        Int?
+}
