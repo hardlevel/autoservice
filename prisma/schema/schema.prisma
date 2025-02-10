@@ -14,25 +14,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Autoservice {
-  id          Int       @id @default(autoincrement())
-  body        String
-  receivedAt  String
-  createdAt   DateTime  @default(now())
-  bodyMd5     String
-  messageId   String
-  receipt     String
-  processedAt DateTime?
-}
-
-model LastSearch {
-  id         Int      @id @default(1)
-  startDate  DateTime
-  endDate    DateTime
-  status     Boolean
-  created_at DateTime @updatedAt
-}
-
 /**
  * verificar:
  * . onde tem os dados de fontes pagadores com as descrições - fontes que não constam na documentação: 6, 12

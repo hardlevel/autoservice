@@ -22,7 +22,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate": "pnpx prisma migrate dev --name init"
+    "migrate": "pnpx prisma migrate dev --name init",
+    "reset": "npx prisma migrate reset"
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.731.1",

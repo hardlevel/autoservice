@@ -299,7 +299,7 @@ export class NfsService {
                 return this.prisma.tb_cad_cadastro_nfs_pecas.upsert({
                     where: {
                         pecas_nfs: {
-                            tb_cad_cadastro_nfsId: id,
+                            tb_cad_cadastro_nfs_id: id,
                             id_peca: data.id_peca
                         }
                     },
@@ -331,7 +331,7 @@ export class NfsService {
                 where: {
                     fp_nfs: {
                         id_os,
-                        tb_cad_cadastro_nfsId: id,
+                        tb_cad_cadastro_nfs_id: id,
                         id_fonte_pagadora: ck7.fonte_pagadora
                     }
                 },

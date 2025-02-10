@@ -1,7 +1,7 @@
 model tb_cad_cadastro_os_chassis {
-    id      Int                @id @default(autoincrement())
+    id      BigInt             @id @default(autoincrement()) @db.BigInt
     chassis String
-    os_id   Int
+    os_id   BigInt
     os      tb_cad_cadastro_os @relation(fields: [os_id], references: [id])
 
     @@unique(name: "chassis_os", [chassis, os_id])

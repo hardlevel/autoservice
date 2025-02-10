@@ -14,8 +14,8 @@ export class AssobravController {
     @Get()
     async start() {
         // await this.os.proccessCk();
-        // await this.nfs.start();
-        await this.assobrav.proccessData();
+        await this.nfs.start();
+        // await this.assobrav.proccessData();
         return 'concluido!';
     }
 }

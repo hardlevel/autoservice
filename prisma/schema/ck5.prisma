@@ -1,5 +1,5 @@
 model Ck5001 {
-    id                                                         Int      @id @default(autoincrement())
+    id                                                         BigInt   @id @default(autoincrement()) @db.BigInt
     numero_do_dn                                               String //@unique
     tempo_remunerado                                           Float?
     tempo_disponivel_servicos_gerais_produtivos                Float?

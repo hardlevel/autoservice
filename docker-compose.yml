@@ -1,4 +1,4 @@
-version: "3"
+name: "autoservice"
 services:
   redis:
     image: redis:alpine
@@ -7,7 +7,7 @@ services:
       - 6379:6379
     command: redis-server --requirepass "UNe#76iNR0gLaJEl" --bind 0.0.0.0 --protected-mode no
   db:
-    image: postgres
+    image: postgres:17.2-alpine
     restart: "no"
     # restart: always
     # set shared memory limit when using docker-compose

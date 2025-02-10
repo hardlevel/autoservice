@@ -1,0 +1,52 @@
+view servicos_view {
+    id                                 BigInt  @unique
+    cos                                String
+    descricao_do_servico               String
+    hora_vendida                       Float
+    valor_total_liquido_da_mao_de_obra Decimal @db.Decimal(10, 2)
+    parent                             String
+    parent_id                          BigInt
+}
+
+view pecas_view {
+    id                          BigInt  @unique
+    codigo_da_peca              String
+    descricao_da_peca           String
+    quantidade_da_peca          Int
+    valor_total_liquido_da_peca Decimal @db.Decimal(10, 2)
+    parent                      String
+    parent_id                   BigInt
+}
+
+view clientes_view {
+    id              BigInt  @unique
+    nome_do_cliente String
+    cpf_cnpj        String
+    endereco        String
+    numero          String
+    complemento     String?
+    bairro          String
+    cidade          String
+    uf              String
+    cep             String
+    tel_res         String?
+    tel_cel         String?
+    tel_com         String?
+    email_res       String?
+    email_com       String?
+    parent          String
+    parent_id       BigInt
+}
+
+view nf_view {
+    id                                                BigInt    @unique
+    numero_da_nota_fiscal                             String
+    serie_da_nota_fiscal                              String
+    fonte_pagadora                                    Int
+    valor_total_liquido_das_pecas_na_nota_fiscal      Decimal?  @default(0.00) @db.Decimal(10, 2)
+    valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal?  @default(0.00) @db.Decimal(10, 2)
+    data_e_hora_da_abertura_da_os                     DateTime?
+    data_e_hora_do_fechamento_da_os                   DateTime?
+    data_e_hora_da_emissao_da_nota_fiscal             DateTime
+    categoria                                         String
+}

@@ -1,16 +1,16 @@
 model Emails {
-    ck3002            Ck3002?   @relation(fields: [ck3002_id], references: [id], onDelete: Cascade)
-    ck3002_id         Int?
-    ck6042            Ck6042?   @relation(fields: [ck6042_id], references: [id], onDelete: Cascade)
-    ck6042_id         Int?
-    ck7002            Ck7002?   @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
-    ck7002_id         Int?
     email             String    @unique
     descricao         String    @default("pessoal")
     autoriza_contato  Boolean
     autoriza_pesquisa Boolean
     created_at        DateTime  @default(now())
     modified_at       DateTime  @updatedAt
+    ck3002            Ck3002?   @relation(fields: [ck3002_id], references: [id], onDelete: Cascade)
+    ck3002_id         BigInt?
+    ck6042            Ck6042?   @relation(fields: [ck6042_id], references: [id], onDelete: Cascade)
+    ck6042_id         BigInt?
+    ck7002            Ck7002?   @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
+    ck7002_id         BigInt?
     cliente           Clientes? @relation(fields: [cliente_id], references: [id])
-    cliente_id        Int?
+    cliente_id        BigInt?
 }
