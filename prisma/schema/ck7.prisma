@@ -1,5 +1,5 @@
 model Ck7001 {
-    id                                                Int       @id @default(autoincrement())
+    id                                                BigInt    @id @default(autoincrement()) @db.BigInt
     nome_do_cliente                                   String
     endereco                                          String
     numero_do_dn                                      String
@@ -7,8 +7,8 @@ model Ck7001 {
     numero_da_os                                      String
     serie_da_nota_fiscal                              String
     fonte_pagadora                                    Int
-    valor_total_liquido_das_pecas_na_nota_fiscal      Decimal   @default(0)
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal   @default(0)
+    valor_total_liquido_das_pecas_na_nota_fiscal      Decimal   @default(0) @db.Decimal(10, 2)
+    valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal   @default(0) @db.Decimal(10, 2)
     data_e_hora_da_abertura_da_os                     DateTime
     data_e_hora_da_emissao_da_nota_fiscal             DateTime
     data_e_hora_do_fechamento_da_os                   DateTime?
@@ -23,8 +23,8 @@ model Ck7001 {
 }
 
 model Ck7002 {
-    id          Int         @id @default(autoincrement())
-    ck7001_id   Int
+    id          BigInt      @id @default(autoincrement()) @db.BigInt
+    ck7001_id   BigInt
     ck7001      Ck7001      @relation(fields: [ck7001_id], references: [id])
     indicador   String
     cidade      String
@@ -43,13 +43,13 @@ model Ck7002 {
 }
 
 model Ck7003 {
-    id                          Int      @id @default(autoincrement())
-    ck7001_id                   Int
+    id                          BigInt   @id @default(autoincrement()) @db.BigInt
+    ck7001_id                   BigInt
     ck7001                      Ck7001   @relation(fields: [ck7001_id], references: [id])
     codigo_da_peca              String
     descricao_da_peca           String
     quantidade_da_peca          Int
-    valor_total_liquido_da_peca Decimal  @default(0)
+    valor_total_liquido_da_peca Decimal  @default(0) @db.Decimal(10, 2)
     codigo_promocional          String?
     created_at                  DateTime @default(now())
     modified_at                 DateTime @updatedAt
@@ -58,13 +58,13 @@ model Ck7003 {
 }
 
 model Ck7004 {
-    id                                 Int      @id @default(autoincrement())
-    ck7001_id                          Int
+    id                                 BigInt   @id @default(autoincrement()) @db.BigInt
+    ck7001_id                          BigInt
     ck7001                             Ck7001   @relation(fields: [ck7001_id], references: [id])
     cos                                String
     descricao_do_servico               String
     hora_vendida                       Float
-    valor_total_liquido_da_mao_de_obra Decimal  @default(0)
+    valor_total_liquido_da_mao_de_obra Decimal  @default(0) @db.Decimal(10, 2)
     tipo_de_servico                    Int?
     created_at                         DateTime @default(now())
     modified_at                        DateTime @updatedAt

@@ -1,5 +1,5 @@
 model Ck4001 {
-    id                                    Int       @id @default(autoincrement())
+    id                                    BigInt    @id @default(autoincrement()) @db.BigInt
     tipo_do_cancelamento                  String
     numero_do_dn                          String
     numero_da_nota_fiscal                 String? //@unique

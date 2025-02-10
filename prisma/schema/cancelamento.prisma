@@ -1,14 +1,14 @@
 // model tb_cad_cadastro_nfs_os_cancelamento {
-//     id                   Int                                            @id @default(autoincrement())
+//     id                   Int                                            @id @default(autoincrement()) @db.BigInt
 //     id_seq               Int? //o que é e de onde vem?
 //     tipo_cancelamento    String //ck4001
 //     nf_id                Int?                                           @unique //ck4001
 //     nf                   tb_cad_cadastro_nfs?                           @relation(fields: [nf_id], references: [id])
 //     os_id                Int?                                           @unique //ck4001
 //     os                   tb_cad_cadastro_os?                            @relation(fields: [os_id], references: [id])
-//     nf_fonte_pagadora_id Int? //de onde vem? *
+//     nf_fonte_pagadora_id BigInt? //de onde vem? *
 //     fonte_pagadora_nf    tb_cad_cadastro_nfs_clientes_fontes_pagadoras? @relation(fields: [nf_fonte_pagadora_id], references: [id])
-//     os_fonte_pagadora_id Int?
+//     os_fonte_pagadora_id BigInt?
 //     fonte_pagadora_os    tb_cad_cadastro_os_fontes_pagadoras?           @relation(fields: [os_fonte_pagadora_id], references: [id])
 //     id_lote              Int? //de onde vem? *
 //     id_linha             Int? //de onde vem? *
@@ -28,20 +28,20 @@
 //     // tb_cad_cadastro_os_fontes_pagadoras             tb_cad_cadastro_os_fontes_pagadoras?           @relation(fields: [tb_cad_cadastro_os_fontes_pagadorasId], references: [id])
 //     // tb_cad_cadastro_os_fontes_pagadorasId           Int?
 //     // tb_cad_cadastro_nfs_clientes_fontes_pagadoras   tb_cad_cadastro_nfs_clientes_fontes_pagadoras? @relation(fields: [tb_cad_cadastro_nfs_clientes_fontes_pagadorasId], references: [id])
-//     // tb_cad_cadastro_nfs_clientes_fontes_pagadorasId Int?
+//     // tb_cad_cadastro_nfs_clientes_fontes_pagadorasid BigInt?
 // }
 
 model tb_cad_cadastro_nfs_os_cancelamento {
-    id                   Int                                            @id @default(autoincrement())
+    id                   BigInt                                         @id @default(autoincrement()) @db.BigInt
     id_seq               Int?
     tipo_cancelamento    String
-    nf_id                Int?
+    nf_id                BigInt?
     nf                   tb_cad_cadastro_nfs?                           @relation(fields: [nf_id], references: [id])
-    os_id                Int
+    os_id                BigInt
     os                   tb_cad_cadastro_os                             @relation(fields: [os_id], references: [id]) // Relacionamento com a OS
-    nf_fonte_pagadora_id Int?
+    nf_fonte_pagadora_id BigInt?
     fonte_pagadora_nf    tb_cad_cadastro_nfs_clientes_fontes_pagadoras? @relation(fields: [nf_fonte_pagadora_id], references: [id])
-    os_fonte_pagadora_id Int?
+    os_fonte_pagadora_id BigInt?
     fonte_pagadora_os    tb_cad_cadastro_os_fontes_pagadoras?           @relation(fields: [os_fonte_pagadora_id], references: [id])
     id_lote              Int?
     id_linha             Int?

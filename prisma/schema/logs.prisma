@@ -1,5 +1,5 @@
 model ErrorLogger {
-    id           Int      @id @default(autoincrement())
+    id           BigInt   @id @default(autoincrement()) @db.BigInt
     created_at   DateTime @default(now())
     time         DateTime @default(now())
     category     String?
@@ -11,7 +11,7 @@ model ErrorLogger {
 }
 
 model CkLogs {
-    id         Int      @id @default(autoincrement())
+    id         BigInt   @id @default(autoincrement()) @db.BigInt
     created_at DateTime @default(now())
     startDate  String
     endDate    String
@@ -20,12 +20,12 @@ model CkLogs {
     qtd        Int?
     status     String
     message    String?
-    jobId      Int
+    jobId      BigInt
 }
 
 model JobLogs {
-    id         Int      @id @default(autoincrement())
-    jobId      Int
+    id         BigInt   @id @default(autoincrement()) @db.BigInt
+    jobId      BigInt
     created_at DateTime @default(now())
     started_at DateTime
     ended_at   DateTime
@@ -37,7 +37,7 @@ model JobLogs {
 }
 
 model DailyCk {
-    id     Int  @id @default(autoincrement())
+    id     BigInt @id @default(autoincrement()) @db.BigInt
     day    Int
     month  Int
     year   Int
