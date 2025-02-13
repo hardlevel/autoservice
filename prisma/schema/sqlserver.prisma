@@ -1,0 +1,11 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder", "views", "multiSchema"]
+  output          = "../prisma-clients/sqlserver"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL_SQLSERVER")
+  schemas  = ["assobrav"]
+}

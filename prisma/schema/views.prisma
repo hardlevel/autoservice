@@ -4,6 +4,9 @@ view servicos_view {
     descricao_do_servico               String
     hora_vendida                       Float
     valor_total_liquido_da_mao_de_obra Decimal @db.Decimal(10, 2)
+    numero_da_os                       String?
+    numero_do_dn                       String?
+    fonte_pagadora                     Int?
     parent                             String
     parent_id                          BigInt
 }
@@ -36,6 +39,8 @@ view clientes_view {
     email_com       String?
     parent          String
     parent_id       BigInt
+    indicador       String
+    fonte_pagadora  Int
 }
 
 view nf_view {
@@ -49,4 +54,21 @@ view nf_view {
     data_e_hora_do_fechamento_da_os                   DateTime?
     data_e_hora_da_emissao_da_nota_fiscal             DateTime
     categoria                                         String
+}
+
+view fontes_pagadoras_view {
+    id                    BigInt
+    numero_da_nota_fiscal String? @unique
+    serie_da_nota_fiscal  String?
+    nota_fiscal_id        BigInt?
+    numero_da_os          String? @unique
+    os_id                 BigInt?
+    numero_do_dn          String
+    fonte_pagadora        Int
+    fonte_pagadora_id     BigInt
+    indicador             String?
+    parent                String
+    parent_id             BigInt
+
+    @@unique(name: "fp_view", [parent, parent_id, numero_do_dn])
 }

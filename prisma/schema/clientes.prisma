@@ -1,30 +1,30 @@
 model tb_cad_cadastro_nfs_cliente {
-    id                     BigInt               @id @default(autoincrement()) @db.BigInt
-    id_nf                  BigInt? //ck7002 remover, usar relacionamento
-    serie_nf               String //ck7001
-    nome                   String //ck7001 ok
-    id_seq_nf              BigInt? //desconsiderar
-    endereco               String //ck702
-    numero                 String //ck7002
-    complemento            String? //ck7002 ok
-    bairro                 String //ck7002 ok
-    municipio              String //ck7002 -> cidade
-    uf                     String //ck7002
-    cep                    String //ck7002 ok
-    cpf_cnpj               String //ck7002 ok
-    indicador              String? //ck7002
-    tel_res                String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
-    tel_com                String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
-    tel_cel                String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
-    email                  String? //ck7002 ok
-    tb_cad_cadastro_nfs    tb_cad_cadastro_nfs? @relation(fields: [tb_cad_cadastro_nfs_id], references: [id])
-    tb_cad_cadastro_nfs_id BigInt?
+    id_cadastro BigInt?
+    id          BigInt               @id @default(autoincrement()) @db.BigInt
+    id_nf       BigInt? //ck7002 remover, usar relacionamento
+    serie_nf    String //ck7001
+    nome        String //ck7001 ok
+    id_seq_nf   BigInt? //desconsiderar
+    endereco    String //ck702
+    numero      String //ck7002
+    complemento String? //ck7002 ok
+    bairro      String //ck7002 ok
+    municipio   String //ck7002 -> cidade
+    uf          String //ck7002
+    cep         String //ck7002 ok
+    cpf_cnpj    String //ck7002 ok
+    indicador   String? //ck7002
+    tel_res     String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
+    tel_com     String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
+    tel_cel     String? //ck7002 ok -> usar campo descrição para diferenciar o tipo de telefone
+    email       String? //ck7002 ok
+    nota_fiscal tb_cad_cadastro_nfs? @relation(fields: [id_nf], references: [id_nf])
 
     @@unique(name: "clientes_nfs", [nome, cpf_cnpj])
 }
 
 model tb_cad_cadastro_os_clientes {
-    id                BigInt             @id @default(autoincrement()) @db.BigInt
+    id_cadastro       BigInt             @id @default(autoincrement()) @db.BigInt
     id_fonte_pagadora BigInt //ck6011
     nome              String //ck6041 tem o nome
     endereco          String //ck6042 -> ck6041
@@ -47,9 +47,18 @@ model tb_cad_cadastro_os_clientes {
 }
 
 model tb_cad_cadastro_nfs_clientes_classificacao {
-    id             BigInt @id @default(autoincrement()) @db.BigInt
+    id_cadastro    BigInt                   @id @default(autoincrement()) @db.BigInt
     id_nf          BigInt
     serie_nf       String
-    id_cla_cliente BigInt //de onde vem?
-    id_seq_nf      BigInt
+    id_cla_cliente BigInt?
+    classificacao  tb_cki_classif_clientes? @relation(fields: [id_cla_cliente], references: [id_cla_cliente])
+    id_seq_nf      BigInt?
+
+    @@unique(name: "cli_class", [id_nf, id_cla_cliente])
+}
+
+model tb_cki_classif_clientes {
+    id_cla_cliente   BigInt                                       @id @unique
+    desc_cla_cliente String
+    classificacao    tb_cad_cadastro_nfs_clientes_classificacao[]
 }

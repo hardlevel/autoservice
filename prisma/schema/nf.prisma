@@ -1,6 +1,6 @@
 model tb_cad_cadastro_nfs {
-    id                   BigInt                                          @id @default(autoincrement()) @db.BigInt
-    id_nf                String                                          @unique //ck3001 e 7001
+    id_cadastro          BigInt?
+    id_nf                BigInt                                          @id @default(autoincrement()) @db.BigInt
     serie_nf             String //ck3001 e 7001
     id_status_nf         BigInt? //de onde vem?
     id_seq_nf            BigInt? //desconsiderar
@@ -13,7 +13,7 @@ model tb_cad_cadastro_nfs {
     data_emissao         DateTime //ck3001 e 7001
     data_emissao_os      DateTime?
     id_lote              BigInt? //o que é e de onde vem?
-    id_os                String?
+    id_os                BigInt?
     id_fonte_pagadora    BigInt? //de onde vem?
     id_tipo_nf           BigInt? //de onde vem?
     clientes             tb_cad_cadastro_nfs_cliente[]
@@ -22,4 +22,16 @@ model tb_cad_cadastro_nfs {
     servicos             tb_cad_cadastro_nfs_servicos[]
     cancelamentos        tb_cad_cadastro_nfs_os_cancelamento[]
     os_nfs               tb_cad_cadastro_os_nfs[]
+}
+
+model tb_cki_status {
+    id_status_nf   BigInt @id @default(autoincrement()) @db.BigInt
+    desc_status_nf String
+}
+
+model tb_cki_lotes {
+    id_lote_nf  BigInt   @id @default(autoincrement()) @db.BigInt
+    arq_entrada String
+    data_lote   DateTime
+    processado  Boolean
 }

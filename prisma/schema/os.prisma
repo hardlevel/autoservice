@@ -1,5 +1,5 @@
 model tb_cad_cadastro_os {
-    id               BigInt                                @id @default(autoincrement()) @db.BigInt
+    id_cadastro      BigInt                                @id @default(autoincrement()) @db.BigInt
     os               String                                @unique //ck6031 por que dois campos de id? mudei de int para string pois os valors que vem da api são string
     id_status_os     BigInt? //ck6031 de onde vem? *
     nfs              tb_cad_cadastro_os_nfs[]
@@ -12,15 +12,17 @@ model tb_cad_cadastro_os {
 }
 
 model tb_cad_cadastro_os_nfs {
-    id                BigInt                                         @id @default(autoincrement()) @db.BigInt
-    id_nf             BigInt //ck
-    nf                tb_cad_cadastro_nfs                            @relation(fields: [id_nf], references: [id])
-    serie_nf          String //ck6011
-    id_fonte_pagadora BigInt? //ck6011 ok
-    fonte_pagadora    tb_cad_cadastro_nfs_clientes_fontes_pagadoras? @relation(fields: [id_fonte_pagadora], references: [id])
-    id_seq_nf         BigInt? //desconsiderar
-    os_id             BigInt
-    os                tb_cad_cadastro_os                             @relation(fields: [os_id], references: [id])
+    id_cadastro BigInt?
+    id                                              BigInt                                         @id @default(autoincrement()) @db.BigInt
+    id_nf                                           BigInt //ck
+    nf                                              tb_cad_cadastro_nfs                            @relation(fields: [id_nf], references: [id])
+    serie_nf                                        String //ck6011
+    id_fonte_pagadora                               BigInt? @db.BigInt //ck6011 ok
+    fonte_pagadora                                  tb_cad_cadastro_os_fontes_pagadoras?           @relation(fields: [id_fonte_pagadora], references: [id])
+    id_seq_nf                                       BigInt? @db.BigInt//desconsiderar
+    id_os                                           BigInt @db.BigInt
+    os                                              tb_cad_cadastro_os                             @relation(fields: [id_os], references: [id])
+    tb_cad_cadastro_nfs_clientes_fontes_pagadoras   tb_cad_cadastro_nfs_clientes_fontes_pagadoras? @relation(fields: [id_fonte_pagadora], references: [id_fonte_pagadora])
 
     @@unique(name: "nfs_os", [id_nf, os_id])
 }
