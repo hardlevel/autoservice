@@ -150,23 +150,33 @@ export class AutoserviceService implements OnModuleInit {
         params: tokenParams,
       });
     }
-    if (startDate && endDate) {
-      category = 'api-vw';
-      const dates = {
-        dataInicio: moment(startDate).format(this.config.get('DATE_FORMAT')),
-        dataFim: moment(endDate).format(this.config.get('DATE_FORMAT')),
+    try {
+      if (startDate && endDate) {
+        category = 'api-vw';
+        const dates = {
+          dataInicio: moment(startDate).format(this.config.get('DATE_FORMAT')),
+          dataFim: moment(endDate).format(this.config.get('DATE_FORMAT')),
+        }
+        const apiConfig = this.config.get('api');
+        const api = await this.fetch(apiConfig.url, dates, 'GET', 'findByPeriod', 'api-vw', access_token);
+      } else {
+        await this.prisma.logError({
+          category: 'ck7003',
+          message: 'Campos de datas não informados',
+          code: '500',
+          params: { startDate, endDate },
+        });
       }
-      const apiConfig = this.config.get('api');
-      const api = await this.fetch(apiConfig.url, dates, 'GET', 'findByPeriod', 'api-vw', access_token);
-    } else {
-      await this.prisma.logError({
-        category: 'ck7003',
-        message: 'Não foi possível obter dados da api',
-        code: '500',
-        params: { startDate, endDate },
-      });
+    } catch (error) {
+      // await this.prisma.logError({
+      //   category: 'ck7003',
+      //   message: 'Não foi possível obter dados da api',
+      //   code: '500',
+      //   params: { startDate, endDate },
+      // });
       setTimeout(() => {
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
+        this.isBusy = true;
         this.getData(startDate, endDate);
       }, 10000);
     }

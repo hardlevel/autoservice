@@ -1,16 +1,16 @@
 model Telefones {
-    ck3002            Ck3002?   @relation(fields: [ck3002_id], references: [id], onDelete: Cascade)
+    ck3002            Ck3002?  @relation(fields: [ck3002_id], references: [id], onDelete: Cascade)
     ck3002_id         BigInt?
-    ck6042            Ck6042?   @relation(fields: [ck6042_id], references: [id], onDelete: Cascade)
+    ck6042            Ck6042?  @relation(fields: [ck6042_id], references: [id], onDelete: Cascade)
     ck6042_id         BigInt?
-    ck7002            Ck7002?   @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
+    ck7002            Ck7002?  @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
     ck7002_id         BigInt?
-    numero            String    @unique
-    descricao         String    @default("residencial")
+    numero            String   @unique
+    descricao         String   @default("residencial")
     autoriza_contato  Boolean
     autoriza_pesquisa Boolean
-    created_at        DateTime  @default(now())
-    modified_at       DateTime  @updatedAt
-    cliente           Clientes? @relation(fields: [cliente_id], references: [id])
-    cliente_id        BigInt?
+    created_at        DateTime @default(now())
+    modified_at       DateTime @updatedAt
+    // cliente           Clientes? @relation(fields: [cliente_id], references: [id])
+    // cliente_id        BigInt?
 }

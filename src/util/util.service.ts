@@ -5,6 +5,8 @@ import { CustomError } from '../common/errors/custom-error';
 
 @Injectable()
 export class UtilService {
+    constructor() { }
+
     delay(ms: number): Promise<void> {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -74,5 +76,12 @@ export class UtilService {
             month: date.month(),
             year: date.year()
         }
+    }
+
+    serialize(data) {
+        return JSON.stringify(
+            this,
+            (key, value) => (typeof value === 'bigint' ? value.toString() : value)
+        );
     }
 }

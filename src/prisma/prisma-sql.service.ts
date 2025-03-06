@@ -6,7 +6,7 @@ import { UtilService } from '../util/util.service';
 @Injectable()
 export class PrismaSqlService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly util: UtilService) {
-    super();
+    super()
   }
 
   async onModuleInit() {

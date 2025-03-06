@@ -1,0 +1,33 @@
+model tb_cad_cadastro_os {
+    id_cadastro      BigInt?                               @db.BigInt
+    id               BigInt                                @id @default(autoincrement()) @db.BigInt
+    os               String                                @unique //ck6031 por que dois campos de id? mudei de int para string pois os valors que vem da api são string
+    id_status_os     BigInt? //ck6031 de onde vem? *
+    nfs              tb_cad_cadastro_os_nfs[]
+    servicos         tb_cad_cadastro_os_servicos[]
+    clientes         tb_cad_cadastro_os_clientes[]
+    chassis          tb_cad_cadastro_os_chassis[]
+    fontes_pagadoras tb_cad_cadastro_os_fontes_pagadoras[]
+    pecas            tb_cad_cadastro_os_pecas[]
+    cancelamentos    tb_cad_cadastro_nfs_os_cancelamento[]
+
+    @@schema("assobrav")
+}
+
+model tb_cad_cadastro_os_nfs {
+    id_cadastro          BigInt?                                        @db.BigInt
+    id                   BigInt                                         @id @default(autoincrement()) @db.BigInt
+    id_nf                BigInt //ck
+    nf                   tb_cad_cadastro_nfs                            @relation(fields: [id_nf], references: [id_nf])
+    serie_nf             String //ck6011
+    id_fonte_pagadora_os BigInt?                                        @db.BigInt //ck6011 ok
+    fonte_pagadora_os    tb_cad_cadastro_os_fontes_pagadoras?           @relation(fields: [id_fonte_pagadora_os], references: [id])
+    id_seq_nf            BigInt?                                        @db.BigInt //desconsiderar
+    id_os                BigInt                                         @db.BigInt
+    os                   tb_cad_cadastro_os                             @relation(fields: [id_os], references: [id])
+    if_fonte_pagadora_nf BigInt?                                        @db.BigInt
+    fonte_pagadora_nf    tb_cad_cadastro_nfs_clientes_fontes_pagadoras? @relation(fields: [if_fonte_pagadora_nf], references: [id])
+
+    @@unique(name: "nfs_os", [id_nf, id_os])
+    @@schema("assobrav")
+}

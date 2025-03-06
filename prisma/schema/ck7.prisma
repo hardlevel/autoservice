@@ -5,10 +5,10 @@ model Ck7001 {
     numero_do_dn                                      String
     numero_da_nota_fiscal                             String //@unique
     numero_da_os                                      String
-    serie_da_nota_fiscal                              String
+    serie_da_nota_fiscal                              String?
     fonte_pagadora                                    Int
-    valor_total_liquido_das_pecas_na_nota_fiscal      Decimal   @default(0) @db.Decimal(10, 2)
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal   @default(0) @db.Decimal(10, 2)
+    valor_total_liquido_das_pecas_na_nota_fiscal      Decimal?  @default(0) @db.Decimal(10, 2)
+    valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal?  @default(0) @db.Decimal(10, 2)
     data_e_hora_da_abertura_da_os                     DateTime
     data_e_hora_da_emissao_da_nota_fiscal             DateTime
     data_e_hora_do_fechamento_da_os                   DateTime?
@@ -29,8 +29,8 @@ model Ck7002 {
     indicador   String
     cidade      String
     uf          String
-    bairro      String
-    numero      String      @default("Não informado")
+    bairro      String?
+    numero      String?     @default("Não informado")
     complemento String?
     cpf_cnpj    String
     cep         String
@@ -47,9 +47,9 @@ model Ck7003 {
     ck7001_id                   BigInt
     ck7001                      Ck7001   @relation(fields: [ck7001_id], references: [id])
     codigo_da_peca              String
-    descricao_da_peca           String
+    descricao_da_peca           String?
     quantidade_da_peca          Int
-    valor_total_liquido_da_peca Decimal  @default(0) @db.Decimal(10, 2)
+    valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
     codigo_promocional          String?
     created_at                  DateTime @default(now())
     modified_at                 DateTime @updatedAt
@@ -61,10 +61,10 @@ model Ck7004 {
     id                                 BigInt   @id @default(autoincrement()) @db.BigInt
     ck7001_id                          BigInt
     ck7001                             Ck7001   @relation(fields: [ck7001_id], references: [id])
-    cos                                String
+    cos                                String?
     descricao_do_servico               String
-    hora_vendida                       Float
-    valor_total_liquido_da_mao_de_obra Decimal  @default(0) @db.Decimal(10, 2)
+    hora_vendida                       Float?
+    valor_total_liquido_da_mao_de_obra Decimal? @default(0) @db.Decimal(10, 2)
     tipo_de_servico                    Int?
     created_at                         DateTime @default(now())
     modified_at                        DateTime @updatedAt

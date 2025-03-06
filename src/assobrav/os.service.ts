@@ -26,286 +26,286 @@ export class OsService {
         ck7004 - dados de serviços
     */
 
-    async start() {
-        let page = 1;
+    // async start() {
+    //     let page = 1;
 
-        while (true) {
-            const cks = await this.getServicesCk();
+    //     while (true) {
+    //         const cks = await this.getServicesCk();
 
-            for (const os of cks) {
-                const assobravOs = await this.saveOs(os);
-                const nfs = await this.saveNf(os, assobravOs);
-                const chassi = await this.saveChassis(os.ck6041[0], assobravOs);
-                //TODO fazer uma forma de conectar nas fontes pagadoras existentes
-                const fonte_pagadora = await this.saveFontePagadora(os, assobravOs, chassi);
+    //         for (const os of cks) {
+    //             const assobravOs = await this.saveOs(os);
+    //             const nfs = await this.saveNf(os, assobravOs);
+    //             const chassi = await this.saveChassis(os.ck6041[0], assobravOs);
+    //             //TODO fazer uma forma de conectar nas fontes pagadoras existentes
+    //             const fonte_pagadora = await this.saveFontePagadora(os, assobravOs, chassi);
 
-                const pecas = await this.savePecas(os.ck6021, assobravOs, fonte_pagadora.id);
-                const servicos = await this.saveServicos(os.ck6031, assobravOs, fonte_pagadora.id);
-                const clientes = await this.saveClientes(os.ck6041[0], assobravOs, fonte_pagadora.id);
-                //TODO clientes, os-nfs, cancelamentos, rever fonte pagadora e outras funções, refatorar
-                // minimizar a quantidade de consultas no banco
-                //rever tambem nfs
-            }
+    //             const pecas = await this.savePecas(os.ck6021, assobravOs, fonte_pagadora.id);
+    //             const servicos = await this.saveServicos(os.ck6031, assobravOs, fonte_pagadora.id);
+    //             const clientes = await this.saveClientes(os.ck6041[0], assobravOs, fonte_pagadora.id);
+    //             //TODO clientes, os-nfs, cancelamentos, rever fonte pagadora e outras funções, refatorar
+    //             // minimizar a quantidade de consultas no banco
+    //             //rever tambem nfs
+    //         }
 
-            page++;
-        }
-    }
+    //         page++;
+    //     }
+    // }
 
-    async getServicesCk(page = 1) {
-        return this.prisma.ck6011.findMany({
-            take: 50,
-            skip: (page - 1) * 50,
-            include: {
-                ck6021: true,
-                ck6031: true,
-                ck6041: {
-                    include: {
-                        ck6042: {
-                            include: {
-                                telefones: true,
-                                emails: true
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
+    // async getServicesCk(page = 1) {
+    //     return this.prisma.ck6011.findMany({
+    //         take: 50,
+    //         skip: (page - 1) * 50,
+    //         include: {
+    //             ck6021: true,
+    //             ck6031: true,
+    //             ck6041: {
+    //                 include: {
+    //                     ck6042: {
+    //                         include: {
+    //                             telefones: true,
+    //                             emails: true
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
 
-    async getServiceCk(numero_da_os) {
-        return this.prisma.ck6011.findFirst({
-            where: {
-                numero_da_os
-            },
-            include: {
-                ck6021: true,
-                ck6031: true,
-                ck6041: {
-                    include: {
-                        ck6042: {
-                            include: {
-                                telefones: true,
-                                emails: true
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
+    // async getServiceCk(numero_da_os) {
+    //     return this.prisma.ck6011.findFirst({
+    //         where: {
+    //             numero_da_os
+    //         },
+    //         include: {
+    //             ck6021: true,
+    //             ck6031: true,
+    //             ck6041: {
+    //                 include: {
+    //                     ck6042: {
+    //                         include: {
+    //                             telefones: true,
+    //                             emails: true
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
 
-    async getServiceAssobrav(os) {
-        return this.prisma.tb_cad_cadastro_os.findFirst({
-            where: { os },
-            include: {
-                servicos: true,
-                pecas: true,
-                clientes: true,
-                chassis: true,
-                fontes_pagadoras: true,
-                cancelamentos: true
-            }
-        });
-    }
+    // async getServiceAssobrav(os) {
+    //     return this.prisma.tb_cad_cadastro_os.findFirst({
+    //         where: { os },
+    //         include: {
+    //             servicos: true,
+    //             pecas: true,
+    //             clientes: true,
+    //             chassis: true,
+    //             fontes_pagadoras: true,
+    //             cancelamentos: true
+    //         }
+    //     });
+    // }
 
-    async saveOs(os) {
-        const data = { os: os.numero_da_os };
+    // async saveOs(os) {
+    //     const data = { os: os.numero_da_os };
 
-        return this.prisma.tb_cad_cadastro_os.upsert({
-            where: data,
-            create: data,
-            update: data,
-        });
-    }
+    //     return this.prisma.tb_cad_cadastro_os.upsert({
+    //         where: data,
+    //         create: data,
+    //         update: data,
+    //     });
+    // }
 
-    async saveFontePagadora(os, assobravOs, veiculo) {
-        const data = {
-            data_abertura_os: os.data_e_hora_da_abertura_da_os,
-            data_fechamento_os: os.data_e_hora_do_fechamento_da_os,
-            total_mo_os: os.valor_total_liquido_da_mao_de_obra_na_os,
-            total_peca_os: os.valor_total_liquido_das_pecas_na_os,
-            chassis: veiculo.chassis,
-            placa: veiculo.placa,
-            km: veiculo.km,
-            fonte_pagadora: {
-                connect: { id: os.fonte_pagadora }
-            },
-            os: {
-                connect: { id: assobravOs.id }
-            }
-        };
-        return this.prisma.tb_cad_cadastro_os_fontes_pagadoras.upsert({
-            where: {
-                fp_os: {
-                    os_id: assobravOs.id,
-                    fonte_pagadora_id: os.fonte_pagadora
-                }
-            },
-            create: data,
-            update: data
-        });
-    }
+    // async saveFontePagadora(os, assobravOs, veiculo) {
+    //     const data = {
+    //         data_abertura_os: os.data_e_hora_da_abertura_da_os,
+    //         data_fechamento_os: os.data_e_hora_do_fechamento_da_os,
+    //         total_mo_os: os.valor_total_liquido_da_mao_de_obra_na_os,
+    //         total_peca_os: os.valor_total_liquido_das_pecas_na_os,
+    //         chassis: veiculo.chassis,
+    //         placa: veiculo.placa,
+    //         km: veiculo.km,
+    //         fonte_pagadora: {
+    //             connect: { id: os.fonte_pagadora }
+    //         },
+    //         os: {
+    //             connect: { id: assobravOs.id }
+    //         }
+    //     };
+    //     return this.prisma.tb_cad_cadastro_os_fontes_pagadoras.upsert({
+    //         where: {
+    //             fp_os: {
+    //                 os_id: assobravOs.id,
+    //                 fonte_pagadora_id: os.fonte_pagadora
+    //             }
+    //         },
+    //         create: data,
+    //         update: data
+    //     });
+    // }
 
-    async getPecas(parent_id) {
-        return this.prisma.pecas_view.findMany({
-            where: {
-                AND: [
-                    { parent: 'Ck6011' },
-                    { parent_id }
-                ]
-            }
-        });
-    }
+    // async getPecas(parent_id) {
+    //     return this.prisma.pecas_view.findMany({
+    //         where: {
+    //             AND: [
+    //                 { parent: 'Ck6011' },
+    //                 { parent_id }
+    //             ]
+    //         }
+    //     });
+    // }
 
-    async savePecas(pecas, os, fp) {
-        for (const peca of pecas) {
-            const data = {
-                descricao: peca.descricao_da_peca,
-                id_fonte_pagadora: fp,
-                qtd: peca.quantidade_da_peca,
-                valor_unitario: peca.valor_total_liquido_da_peca,
-                valor_total_liquido: peca.valor_total_liquido_da_peca,
-                id_peca: peca.codigo_da_peca,
-                os: {
-                    connect: { id: os.id }
-                }
-            };
+    // async savePecas(pecas, os, fp) {
+    //     for (const peca of pecas) {
+    //         const data = {
+    //             descricao: peca.descricao_da_peca,
+    //             id_fonte_pagadora: fp,
+    //             qtd: peca.quantidade_da_peca,
+    //             valor_unitario: peca.valor_total_liquido_da_peca,
+    //             valor_total_liquido: peca.valor_total_liquido_da_peca,
+    //             id_peca: peca.codigo_da_peca,
+    //             os: {
+    //                 connect: { id: os.id }
+    //             }
+    //         };
 
-            await this.prisma.tb_cad_cadastro_os_pecas.upsert({
-                where: {
-                    pecas_os: {
-                        id_peca: peca.codigo_da_peca,
-                        os_id: os.id
-                    }
-                },
-                create: data,
-                update: data
-            });
-        }
-    }
+    //         await this.prisma.tb_cad_cadastro_os_pecas.upsert({
+    //             where: {
+    //                 pecas_os: {
+    //                     id_peca: peca.codigo_da_peca,
+    //                     os_id: os.id
+    //                 }
+    //             },
+    //             create: data,
+    //             update: data
+    //         });
+    //     }
+    // }
 
-    async getServicoAssobravOs(os_id, id_cos) {
-        return this.prisma.tb_cad_cadastro_os_servicos.findFirst({
-            where: {
-                AND: [
-                    { os_id },
-                    { id_cos }
-                ]
-            }
-        });
-    }
+    // async getServicoAssobravOs(os_id, id_cos) {
+    //     return this.prisma.tb_cad_cadastro_os_servicos.findFirst({
+    //         where: {
+    //             AND: [
+    //                 { os_id },
+    //                 { id_cos }
+    //             ]
+    //         }
+    //     });
+    // }
 
-    async getServicos(parent_id) {
-        return this.prisma.servicos_view.findMany({
-            where: {
-                AND: [
-                    { parent: 'Ck6011' },
-                    { parent_id }
-                ]
-            }
-        });
-    }
+    // async getServicos(parent_id) {
+    //     return this.prisma.servicos_view.findMany({
+    //         where: {
+    //             AND: [
+    //                 { parent: 'Ck6011' },
+    //                 { parent_id }
+    //             ]
+    //         }
+    //     });
+    // }
 
-    async saveServicos(os, assobravOs, fp) {
-        const servicos = await this.getServicos(os.id);
+    // async saveServicos(os, assobravOs, fp) {
+    //     const servicos = await this.getServicos(os.id);
 
-        for (const servico of servicos) {
-            const data = {
-                desc_cos: servico.descricao_do_servico,
-                id_fonte_pagadora: fp,
-                id_cos: servico.cos,
-                hora_vendida: servico.hora_vendida,
-                valor_total: servico.valor_total_liquido_da_mao_de_obra,
-                os: {
-                    connect: { id: assobravOs.id }
-                }
-            };
-            await this.prisma.tb_cad_cadastro_os_servicos.upsert({
-                where: {
-                    servicos_os: {
-                        id_cos: data.id_cos,
-                        os_id: assobravOs.id
-                    }
-                },
-                create: data,
-                update: data
-            });
-        }
-    }
+    //     for (const servico of servicos) {
+    //         const data = {
+    //             desc_cos: servico.descricao_do_servico,
+    //             id_fonte_pagadora: fp,
+    //             id_cos: servico.cos,
+    //             hora_vendida: servico.hora_vendida,
+    //             valor_total: servico.valor_total_liquido_da_mao_de_obra,
+    //             os: {
+    //                 connect: { id: assobravOs.id }
+    //             }
+    //         };
+    //         await this.prisma.tb_cad_cadastro_os_servicos.upsert({
+    //             where: {
+    //                 servicos_os: {
+    //                     id_cos: data.id_cos,
+    //                     os_id: assobravOs.id
+    //                 }
+    //             },
+    //             create: data,
+    //             update: data
+    //         });
+    //     }
+    // }
 
-    async saveServico(data) {
-        return this.prisma.tb_cad_cadastro_os_servicos.upsert({
-            where: {
-                servicos_os: {
-                    id_cos: data.id_cos,
-                    os_id: data.os_id
-                }
-            },
-            create: data,
-            update: data
-        });
-    }
+    // async saveServico(data) {
+    //     return this.prisma.tb_cad_cadastro_os_servicos.upsert({
+    //         where: {
+    //             servicos_os: {
+    //                 id_cos: data.id_cos,
+    //                 os_id: data.os_id
+    //             }
+    //         },
+    //         create: data,
+    //         update: data
+    //     });
+    // }
 
-    async getChassis(id) {
-        return this.prisma.ck6041.findFirst({
-            where: {
-                ck6011_id: id,
-            }
-        });
-    }
+    // async getChassis(id) {
+    //     return this.prisma.ck6041.findFirst({
+    //         where: {
+    //             ck6011_id: id,
+    //         }
+    //     });
+    // }
 
-    async saveChassis(os, assobravOs) {
-        const vehicle = await this.getChassis(os.id);
+    // async saveChassis(os, assobravOs) {
+    //     const vehicle = await this.getChassis(os.id);
 
-        if (!vehicle) {
-            return;
-        }
+    //     if (!vehicle) {
+    //         return;
+    //     }
 
-        const data = {
-            chassis: vehicle.chassi_do_veiculo,
-            os_id: assobravOs.id,
-        };
+    //     const data = {
+    //         chassis: vehicle.chassi_do_veiculo,
+    //         os_id: assobravOs.id,
+    //     };
 
-        const chassis = this.prisma.tb_cad_cadastro_os_chassis.upsert({
-            where: {
-                chassis_os: {
-                    chassis: vehicle.chassi_do_veiculo,
-                    os_id: assobravOs.id
-                }
-            },
-            create: data,
-            update: data,
-        });
+    //     const chassis = this.prisma.tb_cad_cadastro_os_chassis.upsert({
+    //         where: {
+    //             chassis_os: {
+    //                 chassis: vehicle.chassi_do_veiculo,
+    //                 os_id: assobravOs.id
+    //             }
+    //         },
+    //         create: data,
+    //         update: data,
+    //     });
 
-        return {
-            id: (await chassis).id,
-            chassis: vehicle.chassi_do_veiculo,
-            placa: vehicle.placa_do_veiculo,
-            km: vehicle.quilometragem_do_veiculo
-        }
-    }
+    //     return {
+    //         id: (await chassis).id,
+    //         chassis: vehicle.chassi_do_veiculo,
+    //         placa: vehicle.placa_do_veiculo,
+    //         km: vehicle.quilometragem_do_veiculo
+    //     }
+    // }
 
-    async getNfs(page = 1) {
-        return this.prisma.nf_view.findMany({
-            skip: (page - 1) * 50,
-            take: 50,
-        });
-    }
+    // async getNfs(page = 1) {
+    //     return this.prisma.nf_view.findMany({
+    //         skip: (page - 1) * 50,
+    //         take: 50,
+    //     });
+    // }
 
-    async getOsNf(id_nf, os_id) {
-        return this.prisma.tb_cad_cadastro_os_nfs.findUnique({
-            where: {
-                nfs_os: { id_nf, os_id }
-            }
-        })
-    }
+    // async getOsNf(id_nf, os_id) {
+    //     return this.prisma.tb_cad_cadastro_os_nfs.findUnique({
+    //         where: {
+    //             nfs_os: { id_nf, os_id }
+    //         }
+    //     })
+    // }
 
-    async saveCliente(cliente, os, id_fonte_pagadora) {
-        const data = {
-            id_fonte_pagadora,
-            nome: cliente.nome_do_cliente,
-        };
-    }
+    // async saveCliente(cliente, os, id_fonte_pagadora) {
+    //     const data = {
+    //         id_fonte_pagadora,
+    //         nome: cliente.nome_do_cliente,
+    //     };
+    // }
 
     async saveNf(os, assobravOs) {
         console.log(os)

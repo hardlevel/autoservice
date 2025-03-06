@@ -27,417 +27,403 @@ export class NfsService {
         ck7004 - dados de serviços
     */
 
-    nfs = {
+    // nfs = {
 
-    }
+    // }
 
-    async start() {
-        let page = 1;
+    // async start() {
+    //     let page = 1;
 
-        while (true) {
-            const nfs = await this.getNfs(page);
+    //     while (true) {
+    //         const nfs = await this.getNfs(page);
 
-            if (nfs.length === 0) {
-                break;
-            }
+    //         if (nfs.length === 0) {
+    //             break;
+    //         }
 
-            await this.saveNfs(nfs, async () => {
-                console.log(`Página ${page} processada!`);
-            });
+    //         await this.saveNfs(nfs, async () => {
+    //             console.log(`Página ${page} processada!`);
+    //         });
 
-            page++;
-        }
+    //         page++;
+    //     }
 
-        page = 1;
+    //     page = 1;
+    // }
 
-        // while (true) {
-        //     const clientes = await this.getClientes(page);
+    // async getNfs(page = 1) {
+    //     return this.prisma.nf_view.findMany({
+    //         skip: (page - 1) * 50,
+    //         take: 50,
+    //     });
+    // }
 
-        //     if (clientes.length === 0) {
-        //         break;
-        //     }
+    // async getNf(numero_nf) {
+    //     return this.prisma.tb_cad_cadastro_nfs.findFirst({
+    //         where: { id_nf: numero_nf }
+    //     })
+    // }
 
-        //     await this.saveClientes(clientes);
+    // async saveNfs(nfs, callback) {
+    //     // Processa os registros de NFs e faz o upsert
+    //     for (const nf of nfs) {
+    //         const data = {
+    //             id_nf: nf.numero_da_nota_fiscal,
+    //             serie_nf: nf.serie_da_nota_fiscal,
+    //             valor_total_mo: nf.valor_total_liquido_da_mao_de_obra_na_nota_fiscal,
+    //             valor_total_pecas: nf.valor_total_liquido_das_pecas_na_nota_fiscal,
+    //             data_emissao_os: nf.data_e_hora_da_abertura_da_os,
+    //             data_emissao: nf.data_e_hora_da_emissao_da_nota_fiscal,
+    //         };
 
-        //     page++;
-        // }
+    //         const response = await this.prisma.tb_cad_cadastro_nfs.upsert({
+    //             where: {
+    //                 id_nf: nf.numero_da_nota_fiscal
+    //             },
+    //             create: data,
+    //             update: data
+    //         });
 
-        // page = 1;
-    }
+    //         await this.getClient(nf, response);
+    //         await this.getPecas(nf, response);
+    //         await this.getServicos(nf, response);
+    //         await this.getFontePagadora(nf, response);
+    //         await this.getCancelamentos();
+    //     }
 
-    async getNfs(page = 1) {
-        return this.prisma.nf_view.findMany({
-            skip: (page - 1) * 50,
-            take: 50,
-        });
-    }
+    //     // Chama o callback após o processamento
+    //     if (callback) {
+    //         await callback();
+    //     }
+    // }
 
-    async getNf(numero_nf) {
-        return this.prisma.tb_cad_cadastro_nfs.findFirst({
-            where: { id_nf: numero_nf }
-        })
-    }
+    // async getCancelamentos(page = 1) {
+    //     const cancelamentos = await this.prisma.ck4001.findMany(
+    //         {
+    //             skip: (page - 1) * 50,
+    //             take: 50,
+    //         }
+    //     );
 
-    async saveNfs(nfs, callback) {
-        // Processa os registros de NFs e faz o upsert
-        for (const nf of nfs) {
-            const data = {
-                id_nf: nf.numero_da_nota_fiscal,
-                serie_nf: nf.serie_da_nota_fiscal,
-                valor_total_mo: nf.valor_total_liquido_da_mao_de_obra_na_nota_fiscal,
-                valor_total_pecas: nf.valor_total_liquido_das_pecas_na_nota_fiscal,
-                data_emissao_os: nf.data_e_hora_da_abertura_da_os,
-                data_emissao: nf.data_e_hora_da_emissao_da_nota_fiscal,
-            };
+    //     if (!cancelamentos) return;
 
-            const response = await this.prisma.tb_cad_cadastro_nfs.upsert({
-                where: {
-                    id_nf: nf.numero_da_nota_fiscal
-                },
-                create: data,
-                update: data
-            });
+    //     for (const ck4 of cancelamentos) {
+    //         await this.saveCancelamento(ck4);
+    //     }
 
-            await this.getClient(nf, response);
-            await this.getPecas(nf, response);
-            await this.getServicos(nf, response);
-            await this.getFontePagadora(nf, response);
-            await this.getCancelamentos();
-        }
+    //     if (cancelamentos.length > 0) {
+    //         return this.getCancelamentos(page + 1);
+    //     }
 
-        // Chama o callback após o processamento
-        if (callback) {
-            await callback();
-        }
-    }
+    //     return;
+    // }
 
-    async getCancelamentos(page = 1) {
-        const cancelamentos = await this.prisma.ck4001.findMany(
-            {
-                skip: (page - 1) * 50,
-                take: 50,
-            }
-        );
+    // async saveCancelamento(ck4) {
+    //     let fonte_pagadora;
+    //     let nfConnect;
+    //     let osConnect;
+    //     if (ck4.tipo_do_cancelamento == 'NS') {
 
-        if (!cancelamentos) return;
-
-        for (const ck4 of cancelamentos) {
-            await this.saveCancelamento(ck4);
-        }
-
-        if (cancelamentos.length > 0) {
-            return this.getCancelamentos(page + 1);
-        }
-
-        return;
-    }
-
-    async saveCancelamento(ck4) {
-        let fonte_pagadora;
-        let nfConnect;
-        let osConnect;
-        if (ck4.tipo_do_cancelamento == 'NS') {
-
-            const nf = await this.prisma.tb_cad_cadastro_nfs.findFirst({
-                where: {
-                    id_nf: ck4.numero_da_nota_fiscal,
-                }
-            });
-            if (nf) {
-                nfConnect = {
-                    connect: {
-                        id: nf.id
-                    }
-                }
+    //         const nf = await this.prisma.tb_cad_cadastro_nfs.findFirst({
+    //             where: {
+    //                 id_nf: ck4.numero_da_nota_fiscal,
+    //             }
+    //         });
+    //         if (nf) {
+    //             nfConnect = {
+    //                 connect: {
+    //                     id: nf.id
+    //                 }
+    //             }
 
 
-                const fp = await this.prisma.tb_cad_cadastro_nfs_clientes_fontes_pagadoras.findFirst({
-                    where: {
-                        id_nf: nf.id
-                    }
-                });
+    //             const fp = await this.prisma.tb_cad_cadastro_nfs_clientes_fontes_pagadoras.findFirst({
+    //                 where: {
+    //                     id_nf: nf.id
+    //                 }
+    //             });
 
-                fonte_pagadora = {
-                    fonte_pagadora_nf: {
-                        connect: {
-                            id: fp.id
-                        }
-                    }
-                }
-            }
-        }
+    //             fonte_pagadora = {
+    //                 fonte_pagadora_nf: {
+    //                     connect: {
+    //                         id: fp.id
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        if (ck4.tipo_do_cancelamento == 'OS') {
-            const os = await this.prisma.tb_cad_cadastro_os.findFirst({
-                where: {
-                    os: ck4.numero_da_os
-                }
-            });
+    //     if (ck4.tipo_do_cancelamento == 'OS') {
+    //         const os = await this.prisma.tb_cad_cadastro_os.findFirst({
+    //             where: {
+    //                 os: ck4.numero_da_os
+    //             }
+    //         });
 
-            if (os) {
-                osConnect = {
-                    connect: {
-                        id: os.id
-                    }
-                }
+    //         if (os) {
+    //             osConnect = {
+    //                 connect: {
+    //                     id: os.id
+    //                 }
+    //             }
 
 
-                const fp = await this.prisma.tb_cad_cadastro_os_fontes_pagadoras.findFirst({
-                    where: {
-                        os_id: os.id
-                    }
-                });
+    //             const fp = await this.prisma.tb_cad_cadastro_os_fontes_pagadoras.findFirst({
+    //                 where: {
+    //                     os_id: os.id
+    //                 }
+    //             });
 
-                fonte_pagadora = {
-                    fonte_pagadora_nf: {
-                        connect: {
-                            id: fp.id
-                        }
-                    }
-                }
-            }
-        }
+    //             fonte_pagadora = {
+    //                 fonte_pagadora_nf: {
+    //                     connect: {
+    //                         id: fp.id
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        const data = {
-            tipo_cancelamento: ck4.tipo_do_cancelamento,
-            nfConnect,
-            osConnect,
-            fonte_pagadora,
-            data_emissao: ck4.data_data_e_hora_da_emissao_da_nota_fiscal,
-            data_abertura_os: ck4.data_data_e_hora_da_abertura_da_os,
-            data_cancelamento: ck4.data_do_cancelamento_do_documento,
-            serie_nf: ck4.serie_da_nota_fiscal,
-            numero_dn: ck4.numero_do_dn,
-            numero_nf: ck4.numero_da_nota_fiscal,
-            numero_os: ck4.numero_da_os,
-        };
+    //     const data = {
+    //         tipo_cancelamento: ck4.tipo_do_cancelamento,
+    //         nfConnect,
+    //         osConnect,
+    //         fonte_pagadora,
+    //         data_emissao: ck4.data_data_e_hora_da_emissao_da_nota_fiscal,
+    //         data_abertura_os: ck4.data_data_e_hora_da_abertura_da_os,
+    //         data_cancelamento: ck4.data_do_cancelamento_do_documento,
+    //         serie_nf: ck4.serie_da_nota_fiscal,
+    //         numero_dn: ck4.numero_do_dn,
+    //         numero_nf: ck4.numero_da_nota_fiscal,
+    //         numero_os: ck4.numero_da_os,
+    //     };
 
-        try {
-            if (ck4.tipo_do_cancelamento == 'OS') {
-                return this.prisma.tb_cad_cadastro_nfs_os_cancelamento.upsert({
-                    where: {
-                        cancelamento_os: {
-                            numero_dn: data.numero_dn,
-                            numero_os: data.numero_os
-                        }
-                    },
-                    create: data,
-                    update: data
-                })
-            }
+    //     try {
+    //         if (ck4.tipo_do_cancelamento == 'OS') {
+    //             return this.prisma.tb_cad_cadastro_nfs_os_cancelamento.upsert({
+    //                 where: {
+    //                     cancelamento_os: {
+    //                         numero_dn: data.numero_dn,
+    //                         numero_os: data.numero_os
+    //                     }
+    //                 },
+    //                 create: data,
+    //                 update: data
+    //             })
+    //         }
 
-            if (ck4.tipo_do_cancelamento == 'NF') {
-                return this.prisma.tb_cad_cadastro_nfs_os_cancelamento.upsert({
-                    where: {
-                        cancelamento_nf: {
-                            numero_dn: data.numero_dn,
-                            numero_nf: data.numero_nf,
-                        }
-                    },
-                    create: data,
-                    update: data
-                })
-            }
-        } catch (error) {
-            console.error(error, ck4);
-        }
-    }
+    //         if (ck4.tipo_do_cancelamento == 'NF') {
+    //             return this.prisma.tb_cad_cadastro_nfs_os_cancelamento.upsert({
+    //                 where: {
+    //                     cancelamento_nf: {
+    //                         numero_dn: data.numero_dn,
+    //                         numero_nf: data.numero_nf,
+    //                     }
+    //                 },
+    //                 create: data,
+    //                 update: data
+    //             })
+    //         }
+    //     } catch (error) {
+    //         console.error(error, ck4);
+    //     }
+    // }
 
-    async getFontePagadora(nf_ck, nf_view) {
-        const fp = await this.prisma.fontes_pagadoras_view.findFirst({
-            where: {
-                numero_da_nota_fiscal: nf_ck.numero_da_nota_fiscal
-            }
-        });
+    // async getFontePagadora(nf_ck, nf_view) {
+    //     const fp = await this.prisma.fontes_pagadoras_view.findFirst({
+    //         where: {
+    //             numero_da_nota_fiscal: nf_ck.numero_da_nota_fiscal
+    //         }
+    //     });
 
-        if (!fp) return;
+    //     if (!fp) return;
 
-        const data = {
-            id_nf: fp.nota_fiscal_id,
-            serie_nf: fp.serie_da_nota_fiscal,
-            id_os: fp.os_id,
-            nota_fiscal_id: fp.nota_fiscal_id,
-            fonte_pagadora_id: fp.fonte_pagadora_id,
-        }
+    //     const data = {
+    //         id_nf: fp.nota_fiscal_id,
+    //         serie_nf: fp.serie_da_nota_fiscal,
+    //         id_os: fp.os_id,
+    //         nota_fiscal_id: fp.nota_fiscal_id,
+    //         fonte_pagadora_id: fp.fonte_pagadora_id,
+    //     }
 
-        return this.prisma.tb_cad_cadastro_nfs_clientes_fontes_pagadoras.upsert({
-            where: {
-                fp_nfs: {
-                    nota_fiscal_id: data.nota_fiscal_id,
-                    fonte_pagadora_id: data.fonte_pagadora_id
-                }
-            },
-            create: data,
-            update: data
-        });
-    }
+    //     return this.prisma.tb_cad_cadastro_nfs_clientes_fontes_pagadoras.upsert({
+    //         where: {
+    //             fp_nfs: {
+    //                 nota_fiscal_id: data.nota_fiscal_id,
+    //                 fonte_pagadora_id: data.fonte_pagadora_id
+    //             }
+    //         },
+    //         create: data,
+    //         update: data
+    //     });
+    // }
 
-    async getClient(nf, response) {
-        const client = await this.prisma.clientes_view.findFirst({
-            where: {
-                AND: [
-                    { parent: nf.categoria },
-                    { parent_id: nf.id }
-                ]
-            }
-        });
+    // async getClient(nf, response) {
+    //     const client = await this.prisma.clientes_view.findFirst({
+    //         where: {
+    //             AND: [
+    //                 { parent: nf.categoria },
+    //                 { parent_id: nf.id }
+    //             ]
+    //         }
+    //     });
 
-        if (!client) return;
+    //     if (!client) return;
 
-        const fonte_pagadora = await this.prisma.tb_cki_fontes_pagadoras.findUnique({
-            where: {
-                id: client.fonte_pagadora
-            }
-        })
+    //     const fonte_pagadora = await this.prisma.tb_cki_fontes_pagadoras.findUnique({
+    //         where: {
+    //             id: client.fonte_pagadora
+    //         }
+    //     })
 
-        if (fonte_pagadora) {
-            const classificacao = await this.saveClientClassificacao(fonte_pagadora, response)
-        }
+    //     if (fonte_pagadora) {
+    //         const classificacao = await this.saveClientClassificacao(fonte_pagadora, response)
+    //     }
 
-        return this.saveClient(client, response);
-    }
+    //     return this.saveClient(client, response);
+    // }
 
-    async getPecas(nf, response) {
-        const pecas = await this.prisma.pecas_view.findMany({
-            where: {
-                AND: [
-                    { parent: nf.categoria },
-                    { parent_id: nf.id }
-                ]
-            }
-        });
+    // async getPecas(nf, response) {
+    //     const pecas = await this.prisma.pecas_view.findMany({
+    //         where: {
+    //             AND: [
+    //                 { parent: nf.categoria },
+    //                 { parent_id: nf.id }
+    //             ]
+    //         }
+    //     });
 
-        if (pecas) {
-            for (const peca of pecas) {
-                const data = {
-                    id_nf: response.id,
-                    serie_nf: response.serie_nf,
-                    qtd: peca.quantidade_da_peca,
-                    valor_unitario: peca.valor_total_liquido_da_peca,
-                    descricao: peca.descricao_da_peca,
-                    valor_total_liquido: peca.valor_total_liquido_da_peca,
-                    id_peca: peca.codigo_da_peca
-                };
-                await this.prisma.tb_cad_cadastro_nfs_pecas.upsert({
-                    where: {
-                        pecas_nfs: {
-                            tb_cad_cadastro_nfs_id: response.id,
-                            id_peca: peca.codigo_da_peca
-                        }
-                    },
-                    create: data,
-                    update: data
-                })
-            }
-        }
-    }
+    //     if (pecas) {
+    //         for (const peca of pecas) {
+    //             const data = {
+    //                 id_nf: response.id,
+    //                 serie_nf: response.serie_nf,
+    //                 qtd: peca.quantidade_da_peca,
+    //                 valor_unitario: peca.valor_total_liquido_da_peca,
+    //                 descricao: peca.descricao_da_peca,
+    //                 valor_total_liquido: peca.valor_total_liquido_da_peca,
+    //                 id_peca: peca.codigo_da_peca
+    //             };
+    //             await this.prisma.tb_cad_cadastro_nfs_pecas.upsert({
+    //                 where: {
+    //                     pecas_nfs: {
+    //                         tb_cad_cadastro_nfs_id: response.id,
+    //                         id_peca: peca.codigo_da_peca
+    //                     }
+    //                 },
+    //                 create: data,
+    //                 update: data
+    //             })
+    //         }
+    //     }
+    // }
 
-    async getServicos(nf, response) {
-        const servicos = await this.prisma.servicos_view.findMany({
-            where: {
-                AND: [
-                    { parent: nf.categoria },
-                    { parent_id: nf.id }
-                ]
-            }
-        });
+    // async getServicos(nf, response) {
+    //     const servicos = await this.prisma.servicos_view.findMany({
+    //         where: {
+    //             AND: [
+    //                 { parent: nf.categoria },
+    //                 { parent_id: nf.id }
+    //             ]
+    //         }
+    //     });
 
-        if (servicos) {
-            for (const servico of servicos) {
-                const data = {
-                    id_nf: response.id,
-                    serie_nf: response.serie_nf,
-                    hora_vendida: servico.hora_vendida,
-                    id_cos: servico.cos,
-                    des_cos: servico.descricao_do_servico,
-                    valor_total_liquido: servico.valor_total_liquido_da_mao_de_obra,
-                };
-                await this.prisma.tb_cad_cadastro_nfs_servicos.upsert({
-                    where: {
-                        id_cos: servico.cos
-                    },
-                    create: data,
-                    update: data
-                })
-            }
-        }
-    }
+    //     if (servicos) {
+    //         for (const servico of servicos) {
+    //             const data = {
+    //                 id_nf: response.id,
+    //                 serie_nf: response.serie_nf,
+    //                 hora_vendida: servico.hora_vendida,
+    //                 id_cos: servico.cos,
+    //                 des_cos: servico.descricao_do_servico,
+    //                 valor_total_liquido: servico.valor_total_liquido_da_mao_de_obra,
+    //             };
+    //             await this.prisma.tb_cad_cadastro_nfs_servicos.upsert({
+    //                 where: {
+    //                     id_cos: servico.cos
+    //                 },
+    //                 create: data,
+    //                 update: data
+    //             })
+    //         }
+    //     }
+    // }
 
-    async getClientes(page = 1) {
-        return this.prisma.clientes_view.findMany({
-            skip: (page - 1) * 50,
-            take: 50,
-        })
-    }
+    // async getClientes(page = 1) {
+    //     return this.prisma.clientes_view.findMany({
+    //         skip: (page - 1) * 50,
+    //         take: 50,
+    //     })
+    // }
 
-    async saveClientClassificacao(classificacao, nf) {
-        const data = {
-            id_nf: nf.id,
-            serie_nf: nf.serie_nf,
-            classificacao: {
-                connectOrCreate: {
-                    where: {
-                        id_cla_cliente: classificacao.id
-                    },
-                    create: {
-                        id_cla_cliente: classificacao.id,
-                        desc_cla_cliente: classificacao.desc_fonte_pagadora
-                    }
-                }
-            }
-        };
-        try {
-            return this.prisma.tb_cad_cadastro_nfs_clientes_classificacao.upsert({
-                where: {
-                    cli_class: {
-                        id_nf: nf.id,
-                        id_cla_cliente: classificacao.id
-                    }
-                },
-                create: data,
-                update: data
-            });
-        } catch (error) {
-            console.error(error, data);
-        }
-    }
+    // async saveClientClassificacao(classificacao, nf) {
+    //     const data = {
+    //         id_nf: nf.id,
+    //         serie_nf: nf.serie_nf,
+    //         classificacao: {
+    //             connectOrCreate: {
+    //                 where: {
+    //                     id_cla_cliente: classificacao.id
+    //                 },
+    //                 create: {
+    //                     id_cla_cliente: classificacao.id,
+    //                     desc_cla_cliente: classificacao.desc_fonte_pagadora
+    //                 }
+    //             }
+    //         }
+    //     };
+    //     try {
+    //         return this.prisma.tb_cad_cadastro_nfs_clientes_classificacao.upsert({
+    //             where: {
+    //                 cli_class: {
+    //                     id_nf: nf.id,
+    //                     id_cla_cliente: classificacao.id
+    //                 }
+    //             },
+    //             create: data,
+    //             update: data
+    //         });
+    //     } catch (error) {
+    //         console.error(error, data);
+    //     }
+    // }
 
-    async saveClient(client, nf) {
-        const data = {
-            nome: client.nome_do_cliente,
-            cpf_cnpj: client.cpf_cnpj,
-            endereco: client.endereco,
-            numero: client.numero,
-            complemento: client.complemento,
-            bairro: client.bairro,
-            municipio: client.cidade,
-            uf: client.uf,
-            cep: client.cep,
-            indicador: nf.indicador,
-            tel_res: client.tel_res,
-            tel_cel: client.tel_cel,
-            tel_com: client.tel_com,
-            email: client.email_res ?? client.email_com,
-            serie_nf: nf.serie_nf,
-            id_nf: nf.id_nf,
-            tb_cad_cadastro_nfs: {
-                connect: {
-                    id: nf.id
-                }
-            }
-        };
+    // async saveClient(client, nf) {
+    //     const data = {
+    //         nome: client.nome_do_cliente,
+    //         cpf_cnpj: client.cpf_cnpj,
+    //         endereco: client.endereco,
+    //         numero: client.numero,
+    //         complemento: client.complemento,
+    //         bairro: client.bairro,
+    //         municipio: client.cidade,
+    //         uf: client.uf,
+    //         cep: client.cep,
+    //         indicador: nf.indicador,
+    //         tel_res: client.tel_res,
+    //         tel_cel: client.tel_cel,
+    //         tel_com: client.tel_com,
+    //         email: client.email_res ?? client.email_com,
+    //         serie_nf: nf.serie_nf,
+    //         id_nf: nf.id_nf,
+    //         tb_cad_cadastro_nfs: {
+    //             connect: {
+    //                 id: nf.id
+    //             }
+    //         }
+    //     };
 
-        return this.prisma.tb_cad_cadastro_nfs_cliente.upsert({
-            where: {
-                clientes_nfs: {
-                    nome: client.nome_do_cliente,
-                    cpf_cnpj: client.cpf_cnpj
-                }
-            },
-            create: data,
-            update: data
-        });
-    }
+    //     return this.prisma.tb_cad_cadastro_nfs_cliente.upsert({
+    //         where: {
+    //             clientes_nfs: {
+    //                 nome: client.nome_do_cliente,
+    //                 cpf_cnpj: client.cpf_cnpj
+    //             }
+    //         },
+    //         create: data,
+    //         update: data
+    //     });
+    // }
 
     async savePeca(peca, nf) {
 
