@@ -2,12 +2,12 @@ model Ck3001 {
     id                                           BigInt   @id @default(autoincrement()) @db.BigInt
     numero_do_dn                                 String
     numero_da_nota_fiscal                        String //@unique
-    serie_da_nota_fiscal                         String
+    serie_da_nota_fiscal                         String?
     fonte_pagadora                               Int
     valor_total_liquido_das_pecas_na_nota_fiscal Decimal  @default(0) @db.Decimal(10, 2)
     indicador                                    String
     data_e_hora_da_emissao_da_nota_fiscal        DateTime
-    numero                                       String
+    numero                                       String?
     endereco                                     String
     complemento                                  String?
     nome_do_cliente                              String
@@ -24,7 +24,7 @@ model Ck3001 {
 model Ck3002 {
     id          BigInt      @id @default(autoincrement()) @db.BigInt
     cidade      String
-    bairro      String
+    bairro      String?
     uf          String
     cep         String
     ck3001      Ck3001      @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
@@ -40,9 +40,9 @@ model Ck3002 {
 model Ck3003 {
     id                          BigInt   @id @default(autoincrement()) @db.BigInt
     codigo_da_peca              String
-    descricao_da_peca           String
+    descricao_da_peca           String?
     quantidade_da_peca          Int
-    valor_total_liquido_da_peca Decimal  @default(0) @db.Decimal(10, 2)
+    valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
     codigo_promocional          String?
     ck3001                      Ck3001   @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
     ck3001_id                   BigInt

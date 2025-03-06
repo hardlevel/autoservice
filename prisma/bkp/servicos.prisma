@@ -1,0 +1,38 @@
+model tb_cad_cadastro_nfs_servicos {
+    id_cadastro         BigInt?
+    id                  BigInt               @id @default(autoincrement()) @db.BigInt
+    id_nf               BigInt? //ck7001
+    serie_nf            String //ck7001
+    id_seq_nf           BigInt? //desconsiderar
+    hora_vendida        Float //ck7004
+    id_seq_servico      BigInt? //desconsiderar
+    id_cos              String               @unique //ck7004 relaciona com tb_cad_cadastro_os_servicos? verificar se é unico
+    valor_total         Decimal?             @default(0) @db.Decimal(10, 2) //ck7004 nao vem *
+    desconto            Decimal?             @default(0) @db.Decimal(10, 2) //ck7004 nao vem /
+    des_cos             String //ck7004 (descricao_do_servico)
+    valor_total_liquido Decimal?             @default(0) @db.Decimal(10, 2) //ck7004
+    aliquota_iss        Decimal?             @default(0) @db.Decimal(10, 2) //ck7004 nao vem *
+    aliquota_pis_cofins Decimal?             @default(0) @db.Decimal(10, 2) //ck7004 nao vem *
+    tb_cad_cadastro_nfs tb_cad_cadastro_nfs? @relation(fields: [id_nf], references: [id_nf])
+
+    @@schema("assobrav")
+}
+
+model tb_cad_cadastro_os_servicos {
+    id                  BigInt             @id @default(autoincrement()) @db.BigInt
+    id_seq_servico      BigInt? //desconsiderar
+    id_fonte_pagadora   BigInt? //ck7001
+    id_cos              String //ck7004 o que é extamente? tem @relation(fields: [tb_cad_cadastro_osId], references: [id])
+    desc_cos            String
+    hora_vendida        Int                @default(0)
+    valor_total         Decimal?           @default(0.00) @db.Decimal(10, 2) //de onde vem? *
+    desconto            Decimal?           @default(0.00) @db.Decimal(10, 2) //de onde vem? *
+    valor_total_liquido Decimal?           @default(0.00) @db.Decimal(10, 2) //ck7004 -> verificar (valor total liquido da mao de obra?)
+    aliquota_iss        Decimal?           @default(0) @db.Decimal(10, 2) //de onde vem? - não sera enviado
+    id_tipo_servico     BigInt? //ck7004 ? verificar se é este
+    id_os               BigInt
+    os                  tb_cad_cadastro_os @relation(fields: [id_os], references: [id])
+
+    @@unique(name: "servicos_os", [id_os, id_cos])
+    @@schema("assobrav")
+}

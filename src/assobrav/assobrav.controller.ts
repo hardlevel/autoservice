@@ -13,8 +13,10 @@ export class AssobravController {
 
     @Get()
     async start() {
+        // await this.assobrav.teste();
         // await this.os.proccessCk();
-        await this.nfs.start();
+        // await this.nfs.start();
+        // await this.os.start();
         // await this.assobrav.proccessData();
         return 'concluido!';
     }

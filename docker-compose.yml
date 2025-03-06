@@ -33,6 +33,18 @@ services:
     # restart: always
     ports:
       - 8080:8080
+  laravel:
+    restart: "no"
+    build:
+      dockerfile: Dockerfile.laravel
+      context: .
+      # target: dev
+    image: laravel
+    ports:
+      - 8888:8000
+    volumes:
+      # - laravel:/var/www/autoservice
+      - ./laravel:/var/www/autoservice
   # mongo:
   #   image: mongo
   #   restart: always
@@ -50,3 +62,10 @@ services:
   #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
   #     ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
   #     ME_CONFIG_BASICAUTH: false
+# volumes:
+#   laravel:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: /home/rafael/projects/autoservice/laravel/

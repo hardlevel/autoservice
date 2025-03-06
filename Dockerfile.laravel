@@ -1,0 +1,62 @@
+# FROM composer:2.2.25 AS deps
+# WORKDIR /var/www/
+# RUN composer create-project --prefer-dist laravel/laravel autoservice
+
+FROM node:23 AS dev
+COPY --from=deps /var/www/autoservice /var/www/laravel
+WORKDIR /var/www/laravel
+
+# # Garantir que os arquivos existem antes de instalar o npm
+# RUN ls -la /var/www/autoservice
+
+# # Instalar pacotes do Laravel (Node.js)
+RUN npm install
+
+CMD ["tail", "-f", "/dev/null"]
+# # Etapa 3: Imagem final de produção
+FROM php:8.4-fpm AS production
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+# COPY --from=deps /var/www/laravel /var/www/autoservice/
+# USER www-data
+WORKDIR /var/www/autoservice
+
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	libpng-dev \
+	libjpeg62-turbo-dev \
+	libfreetype6-dev \
+	locales \
+	libpq-dev \
+	zip \
+	jpegoptim optipng pngquant gifsicle \
+	vim \
+	unzip \
+	git \
+	curl \
+	libonig-dev \
+	libzip-dev \
+	libgd-dev
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# RUN pecl install redis-5.3.7 \
+# 	&& pecl install xdebug-3.2.1 \
+# 	&& docker-php-ext-enable redis xdebug
+
+RUN docker-php-ext-install pdo_pgsql mbstring zip exif pcntl
+RUN docker-php-ext-configure gd --with-external-gd
+RUN docker-php-ext-install gd
+# Copiar tudo da etapa anterior (Laravel com Composer e Node.js)
+# COPY --from=node_base /var/www/autoservice /var/www/autoservice
+
+# Garantir que os arquivos chegaram corretamente
+# RUN ls -la /var/www/autoservice
+
+# CMD ["php-fpm"]
+# CMD ["npm run dev"]
+# CMD ["/bin/sh", "-c", "npm run dev"]
+# CMD ["/bin/sh", "-c", "php artisan serve"]
+# CMD ["tail", "-f", "/dev/null"]
+# CMD ["php artisan serve"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

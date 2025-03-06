@@ -3,6 +3,18 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "assets": [
+      {
+        "include": "./src/prisma/postgres",
+        "outDir": "./dist/prisma/postgres",
+        "watchAssets": true
+      },
+      {
+        "include": "./src/prisma/sqlserver",
+        "outDir": "./dist/prisma/sqlserver",
+        "watchAssets": true
+      }
+    ]
   }
 }
