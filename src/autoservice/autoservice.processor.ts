@@ -80,7 +80,7 @@ export class AutoserviceProcessor extends WorkerHost {
         const day = date.date();
         const month = date.month();
         const year = date.year();
-
+        console.log(job.data.startDate, job.data.endDate);
         this.jobLog = {
             jobId: parseInt(job.id),
             started_at: new Date(),

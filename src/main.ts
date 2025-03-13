@@ -6,6 +6,7 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 // import { Logger } from 'nestjs-pino';
 // import { MoneyPipe } from './pipes/money.pipe';
 // import { DatePipe } from './pipes/date.pipe';
@@ -31,6 +32,16 @@ async function bootstrap() {
   //   new PrismaClientExceptionFilter(httpAdapter)
   // );
   // app.useGlobalInterceptors(new ErrorsInterceptor());
+
+  const config = new DocumentBuilder()
+    .setTitle('Autoservice')
+    .setDescription('Volkswagen Autoservice')
+    .setVersion('1.0')
+    .addTag('autoservice')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
+
   app.useGlobalPipes(
     new ValidationPipe(),
     // new MoneyPipe(),

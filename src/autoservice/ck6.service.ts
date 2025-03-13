@@ -144,6 +144,7 @@ export class Ck6Service {
     }
 
     async ck6041(id, ck6041) {
+        if (!ck6041.nome_do_cliente) return;
         //os campos chassi e placa são opcionais, portanto não podem ser usados como identificadores
         //então deve-se primeiro tentar localizar o veiculo, caso exista atualizar, caso não exista, adicionar
         const fields = [

@@ -68,7 +68,7 @@ export class AutoserviceService implements OnModuleInit {
     // console.log(message);
     const msgBody = JSON.parse(message.Body);
     if (msgBody) {
-      console.log('mensagem recebida')
+      console.log('mensagem recebida', this.startDate, this.endDate);
       msgBody.startDate = this.startDate;
       msgBody.endDate = this.endDate;
     };
@@ -178,7 +178,7 @@ export class AutoserviceService implements OnModuleInit {
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
         this.isBusy = true;
         this.getData(startDate, endDate);
-      }, 10000);
+      }, 60000);
     }
   }
 
@@ -273,6 +273,8 @@ export class AutoserviceService implements OnModuleInit {
       for (let h = 0; h < 24; h++) {
         const endDate = date.clone().add(h + 1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
         const startDate = date.clone().add(h, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+        this.startDate = startDate;
+        this.endDate = endDate;
         console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
         // const isActive = await this.autoserviceQueue.getActive();
         // if (!isActive) {
@@ -297,10 +299,204 @@ export class AutoserviceService implements OnModuleInit {
     }
   }
 
-  async parseYear(year) {
-    for (let m = 0; m <= 11; m++) {
+  async parseYear(year, month = 0) {
+    console.log('mês recebido', month);
+    // for (let m = 0; m <= 11; m++) {
+    for (let m = month; m <= 11; m++) {
+      console.log('mes atual sendo processado', m);
       await this.pastData(year, m);
     }
+  }
+
+  async getClients(page = 1) {
+    const [results, total] = await this.prisma.$transaction([
+      this.prisma.clientes_view.findMany({
+        skip: (page - 1) * 50,
+        take: 50
+      }),
+      this.prisma.clientes_view.count()
+    ]);
+    return {
+      results,
+      total,
+      page
+    };
+  }
+
+  async getNfs(page = 1) {
+    const [results, total] = await this.prisma.$transaction([
+      this.prisma.nf_view.findMany({
+        skip: (page - 1) * 50,
+        take: 50
+      }),
+      this.prisma.nf_view.count()
+    ]);
+    return {
+      results,
+      total,
+      page
+    };
+  }
+
+  async getPecas(page = 1) {
+    const [results, total] = await this.prisma.$transaction([
+      this.prisma.nf_view.findMany({
+        skip: (page - 1) * 50,
+        take: 50
+      }),
+      this.prisma.nf_view.count()
+    ]);
+    return {
+      results,
+      total,
+      page
+    };
+  }
+
+  async getServicos(page = 1, year: number = 2024, month: number = 1) {
+    const whereCondition: any = {};
+    console.log(year);
+    if (year) {
+      whereCondition.data_e_hora_da_abertura_da_os = {
+        gte: new Date(`${year}-${month.toString().padStart(2, "0")}-01`)
+      }
+    }
+
+    const [results, total] = await this.prisma.$transaction([
+      this.prisma.servicos_view.findMany({
+        skip: (page - 1) * 50,
+        take: 50,
+        where: whereCondition
+      }),
+      this.prisma.servicos_view.count()
+    ]);
+
+    return {
+      results,
+      total,
+      page
+    };
+  }
+
+  setYarMonth(year, month) {
+    const date = `${year}-${month}`;
+    const days = moment(date).daysInMonth();
+  }
+
+  async getServicosYear(year: number = 2024) {
+    const startDate = moment(year).startOf('year').toDate();
+    const endDate = moment(year).endOf('year').toDate();
+
+    const monthlyCount = await this.prisma.$queryRaw<{ month: number; total: number }[]>`
+      SELECT
+        EXTRACT(MONTH FROM data_e_hora_da_abertura_da_os) AS month,
+        COUNT(id) AS total
+      FROM servicos_view
+      WHERE data_e_hora_da_abertura_da_os >= ${startDate}
+        AND data_e_hora_da_abertura_da_os < ${endDate}
+      GROUP BY month
+      ORDER BY month;
+    `;
+
+    const monthlyData = monthlyCount.reduce((acc: { [key: number]: number }, curr: { month: number; total: number }) => {
+      acc[curr.month] = curr.total;
+      return acc;
+    }, {});
+
+    const total = await this.prisma.servicos_view.count({
+      where: {
+        data_e_hora_da_abertura_da_os: {
+          gte: startDate,
+          lt: endDate
+        }
+      }
+    });
+
+    return {
+      total,
+      monthly: monthlyData
+    };
+  }
+
+  async getServicosMonth(year: number = 2024, month: number = 1) {
+    const date = `${year}-${month.toString().padStart(2, '0')}`;
+    const startDate = moment(date).startOf('month').format();
+    const endDate = moment(date).endOf('month').format();
+
+    const whereCondition: any = {
+      data_e_hora_da_abertura_da_os: {
+        gte: new Date(startDate),
+        lt: new Date(endDate)
+      }
+    };
+
+    const [total, daily] = await this.prisma.$transaction([
+      this.prisma.servicos_view.count({
+        where: whereCondition
+      }),
+      this.prisma.$queryRaw`
+            SELECT
+                EXTRACT(DAY FROM data_e_hora_da_abertura_da_os) AS day,
+                COUNT(id) AS total
+            FROM servicos_view
+            WHERE data_e_hora_da_abertura_da_os >= ${whereCondition.data_e_hora_da_abertura_da_os.gte}
+            AND data_e_hora_da_abertura_da_os < ${whereCondition.data_e_hora_da_abertura_da_os.lt}
+            GROUP BY day
+            ORDER BY day ASC;
+        `
+    ]);
+
+    return {
+      total,
+      daily: (daily as { day: number; total: number }[]).reduce((acc, { day, total }) => {
+        acc[day] = total;
+        return acc;
+      }, {} as Record<number, number>)
+    };
+  }
+
+  async getServicesStateMonth(year: number = 2024, month: number = 1) {
+    const date = `${year}-${month.toString().padStart(2, '0')}`;
+    const startDate = moment(date).startOf('month').format();
+    const endDate = moment(date).endOf('month').format();
+
+    const whereCondition: any = {
+      data_e_hora_da_abertura_da_os: {
+        gte: new Date(startDate),
+        lt: new Date(endDate)
+      }
+    };
+
+    return this.prisma.servicos_view.groupBy({
+      by: ['uf'],
+      where: whereCondition,
+      _count: {
+        id: true
+      }
+    });
+  }
+
+  async getServicesStateYear(year: number = 2024) {
+    const startDate = moment(`${year}`).startOf('year').toDate();
+    const endDate = moment(`${year}`).endOf('year').toDate();
+
+    console.log(year, startDate, endDate);
+
+    const whereCondition: any = {
+      data_e_hora_da_abertura_da_os: {
+        gte: new Date(startDate),
+        lt: new Date(endDate)
+      }
+    };
+
+
+    return this.prisma.servicos_view.groupBy({
+      by: ['uf'],
+      where: whereCondition,
+      _count: {
+        id: true
+      }
+    });
   }
 
   // async retro(year, month, day, hour, status = false) {

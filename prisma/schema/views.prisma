@@ -1,14 +1,17 @@
 view servicos_view {
-    id                                 BigInt  @unique
-    cos                                String
-    descricao_do_servico               String
-    hora_vendida                       Float
-    valor_total_liquido_da_mao_de_obra Decimal @db.Decimal(10, 2)
-    numero_da_os                       String?
-    numero_do_dn                       String?
-    fonte_pagadora                     Int?
-    parent                             String
-    parent_id                          BigInt
+    id                                    BigInt    @unique
+    cos                                   String
+    descricao_do_servico                  String
+    hora_vendida                          Float
+    valor_total_liquido_da_mao_de_obra    Decimal   @db.Decimal(10, 2)
+    numero_da_os                          String?
+    numero_do_dn                          String?
+    fonte_pagadora                        Int?
+    data_e_hora_da_abertura_da_os         DateTime?
+    data_e_hora_da_emissao_da_nota_fiscal DateTime?
+    uf                                    String
+    parent                                String
+    parent_id                             BigInt
 }
 
 view pecas_view {
@@ -39,8 +42,8 @@ view clientes_view {
     email_com       String?
     parent          String
     parent_id       BigInt
-    indicador       String
-    fonte_pagadora  Int
+    // indicador       String
+    // fonte_pagadora  Int
 }
 
 view nf_view {
