@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
+import { Inject, Injectable, Logger, LoggerService, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 import { InjectQueue } from '@nestjs/bullmq';
@@ -35,7 +35,7 @@ export class AutoserviceService implements OnModuleInit {
     private readonly sqsService: SqsService,
     private readonly prisma: PrismaService,
     private readonly util: UtilService,
-    private readonly eventEmitter: EventEmitter2
+    private readonly eventEmitter: EventEmitter2,
     // //@InjectPinoLogger(AutoserviceService.name) private readonly logger: PinoLogger
     // private readonly logger = new Logger(AutoserviceService.name)
   ) { }
@@ -43,6 +43,7 @@ export class AutoserviceService implements OnModuleInit {
   onModuleInit() {
     this.isBusy = false;
     this.autoserviceQueue.drain();
+    this.setLog('error', 'teste', new Date().toString())
   }
 
   @OnEvent('autoservice.*')
@@ -60,6 +61,10 @@ export class AutoserviceService implements OnModuleInit {
   handleComplete(payload) {
     console.log('fila concluida', payload);
     this.isBusy = false;
+  }
+
+  setLog(level: string, message: string, error: string, startDate?: string | Date, endDate?: string | Date) {
+    return Logger[level](`message: ${message} \nErro: ${error} \nStartDate: ${startDate}, EndDate: ${endDate}`);
   }
 
   @SqsMessageHandler('autoservice', false)
@@ -183,33 +188,7 @@ export class AutoserviceService implements OnModuleInit {
   }
 
 
-  create(createAutoserviceDto: CreateAutoserviceDto) {
-    this.util.delay(30000);
-    return 'This action adds a new autoservice';
-  }
 
-  async findAll(table: string, skip: number = 1, take: number = 50) {
-    const total = await this.prisma.count(table);
-    const data = await this.prisma.findAll(table, (skip - 1), take);
-    console.log(data);
-    return {
-      total,
-      take,
-      page: skip,
-      data
-    };
-  }
-
-  async findMany(table: string, field: string, value: number | string | boolean | null, skip: number = 1, take: number = 50) {
-    const total = await this.prisma.countFilter(table, field, value);
-    const data = await this.prisma.findMany(table, field, value, (skip - 1), take);
-    return {
-      total,
-      take,
-      page: skip,
-      data
-    };
-  }
 
   // extractData(data, fields) {
   //   const newData = fields.reduce((acc, field) => {
@@ -238,25 +217,6 @@ export class AutoserviceService implements OnModuleInit {
       console.log('Fila está vazia! Executando ação...');
     }
   }
-
-  // async waitForQueueToBeEmpty() {
-  //   while (true) {
-  //     const activeJobs = await this.autoserviceQueue.getActiveCount();
-  //     const waitingJobs = await this.autoserviceQueue.getWaitingCount();
-  //     console.log('estado da fila, ocupada?', this.isBusy);
-  //     if (this.isBusy == false) {
-  //       console.log('✅ Fila vazia, continuando...');
-  //       break; // Sai do loop e continua a execução
-  //     }
-  //     // if (activeJobs === 0 && waitingJobs === 0) {
-  //     //   // console.log('✅ Fila vazia, continuando...');
-  //     //   break; // Sai do loop e continua a execução
-  //     // }
-
-  //     console.log(`⏳ Fila ocupada (Ativos: ${activeJobs}, Aguardando: ${waitingJobs})... aguardando...`);
-  //     await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos antes de checar novamente
-  //   }
-  // }
 
   async pastData(year, month, day = null) {
     let startMonth;
@@ -498,6 +458,53 @@ export class AutoserviceService implements OnModuleInit {
       }
     });
   }
+
+  create(createAutoserviceDto: CreateAutoserviceDto) {
+    this.util.delay(30000);
+    return 'This action adds a new autoservice';
+  }
+
+  async findAll(table: string, skip: number = 1, take: number = 50) {
+    const total = await this.prisma.count(table);
+    const data = await this.prisma.findAll(table, (skip - 1), take);
+    console.log(data);
+    return {
+      total,
+      take,
+      page: skip,
+      data
+    };
+  }
+
+  async findMany(table: string, field: string, value: number | string | boolean | null, skip: number = 1, take: number = 50) {
+    const total = await this.prisma.countFilter(table, field, value);
+    const data = await this.prisma.findMany(table, field, value, (skip - 1), take);
+    return {
+      total,
+      take,
+      page: skip,
+      data
+    };
+  }
+
+  // async waitForQueueToBeEmpty() {
+  //   while (true) {
+  //     const activeJobs = await this.autoserviceQueue.getActiveCount();
+  //     const waitingJobs = await this.autoserviceQueue.getWaitingCount();
+  //     console.log('estado da fila, ocupada?', this.isBusy);
+  //     if (this.isBusy == false) {
+  //       console.log('✅ Fila vazia, continuando...');
+  //       break; // Sai do loop e continua a execução
+  //     }
+  //     // if (activeJobs === 0 && waitingJobs === 0) {
+  //     //   // console.log('✅ Fila vazia, continuando...');
+  //     //   break; // Sai do loop e continua a execução
+  //     // }
+
+  //     console.log(`⏳ Fila ocupada (Ativos: ${activeJobs}, Aguardando: ${waitingJobs})... aguardando...`);
+  //     await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos antes de checar novamente
+  //   }
+  // }
 
   // async retro(year, month, day, hour, status = false) {
   //   // console.log(this.getCurrentDate(1));

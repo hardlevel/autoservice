@@ -8,7 +8,8 @@ import { CustomError } from '../common/errors/custom-error';
 
 @Injectable()
 export class Ck7Service {
-
+    startDate: string | Date;
+    endDate: string | Date;
     originalData: any;
     date: any;
 
@@ -22,9 +23,10 @@ export class Ck7Service {
         this.date = this.util.getDate();
     }
 
-    async ck7001(ck7001) {
-
+    async ck7001(ck7001, startDate, endDate) {
         this.originalData = ck7001;
+        this.startDate = startDate;
+        this.endDate = endDate;
 
         const fields = [
             "nome_do_cliente",
@@ -80,6 +82,8 @@ export class Ck7Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK7001', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 
@@ -128,6 +132,8 @@ export class Ck7Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 
@@ -158,6 +164,8 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
@@ -190,6 +198,8 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
@@ -229,8 +239,8 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                // debugger;
-                //this.logger.error('Erro ao salvar CK7003', data, error);
+                this.autoservice.setLog('error', 'Falha ao registrar CK7003', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
@@ -283,6 +293,8 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK7004', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }

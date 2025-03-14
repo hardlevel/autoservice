@@ -7,6 +7,7 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { CustomLogger } from './custom.logger';
 // import { Logger } from 'nestjs-pino';
 // import { MoneyPipe } from './pipes/money.pipe';
 // import { DatePipe } from './pipes/date.pipe';
@@ -19,7 +20,9 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule, { bufferLogs: true });
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new CustomLogger()
+  });
   // app.useLogger(app.get(Logger));
   // moment().zone("-03:00");
   // moment.tz.setDefault('Ameriza/Sao_Paulo');

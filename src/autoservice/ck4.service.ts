@@ -9,7 +9,8 @@ import { CustomError } from '../common/errors/custom-error';
 
 @Injectable()
 export class Ck4Service {
-
+    startDate: string | Date;
+    endDate: string | Date;
     originalData: any;
 
     constructor(
@@ -20,8 +21,10 @@ export class Ck4Service {
         //@InjectPinoLogger(Ck4Service.name) private readonly logger: PinoLogger
     ) { }
 
-    async ck4001(ck4001) {
+    async ck4001(ck4001, startDate, endDate) {
         this.originalData = ck4001;
+        this.startDate = startDate;
+        this.endDate = endDate;
 
         const fields = [
             'tipo_do_cancelamento',
@@ -60,6 +63,8 @@ export class Ck4Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK4001', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 }

@@ -8,7 +8,8 @@ import { UtilService } from '../util/util.service';
 
 @Injectable()
 export class Ck5Service {
-
+    startDate: string | Date;
+    endDate: string | Date;
     originalData: any;
 
     constructor(
@@ -19,8 +20,10 @@ export class Ck5Service {
         //@InjectPinoLogger(Ck5Service.name) private readonly logger: PinoLogger
     ) { }
 
-    async ck5001(ck5001) {
+    async ck5001(ck5001, startDate, endDate) {
         this.originalData = ck5001;
+        this.startDate = startDate;
+        this.endDate = endDate;
 
         const fields = [
             'numero_do_dn',
@@ -84,6 +87,8 @@ export class Ck5Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK5001', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 }
