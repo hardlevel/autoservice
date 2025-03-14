@@ -11,3 +11,5 @@ if [ -n "$PID" ]; then
 else
   echo "Nenhum processo rodando na porta $APP_PORT."
 fi
+
+exit 0
