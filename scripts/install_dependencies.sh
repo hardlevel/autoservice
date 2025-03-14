@@ -8,3 +8,4 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 mv composer.phar /usr/local/bin/composer
 cp /home/ubuntu/.env_prod /var/www/autoservice/.env
+chown -R ubuntu:ubuntu /var/www/autoservice
