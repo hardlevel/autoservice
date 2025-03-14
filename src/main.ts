@@ -6,6 +6,8 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { CustomLogger } from './custom.logger';
 // import { Logger } from 'nestjs-pino';
 // import { MoneyPipe } from './pipes/money.pipe';
 // import { DatePipe } from './pipes/date.pipe';
@@ -18,7 +20,9 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule, { bufferLogs: true });
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new CustomLogger()
+  });
   // app.useLogger(app.get(Logger));
   // moment().zone("-03:00");
   // moment.tz.setDefault('Ameriza/Sao_Paulo');
@@ -31,6 +35,16 @@ async function bootstrap() {
   //   new PrismaClientExceptionFilter(httpAdapter)
   // );
   // app.useGlobalInterceptors(new ErrorsInterceptor());
+
+  const config = new DocumentBuilder()
+    .setTitle('Autoservice')
+    .setDescription('Volkswagen Autoservice')
+    .setVersion('1.0')
+    .addTag('autoservice')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
+
   app.useGlobalPipes(
     new ValidationPipe(),
     // new MoneyPipe(),

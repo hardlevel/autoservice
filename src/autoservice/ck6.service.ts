@@ -9,7 +9,8 @@ import { UtilService } from '../util/util.service';
 
 @Injectable()
 export class Ck6Service {
-
+    startDate: string | Date;
+    endDate: string | Date;
     originalData: any;
 
     constructor(
@@ -20,8 +21,10 @@ export class Ck6Service {
         //@InjectPinoLogger(Ck6Service.name) private readonly logger: PinoLogger
     ) { }
 
-    async ck6011(ck6011) {
+    async ck6011(ck6011, startDate, endDate) {
         this.originalData = ck6011;
+        this.startDate = startDate;
+        this.endDate = endDate;
 
         const fields = [
             'numero_do_dn',
@@ -62,6 +65,8 @@ export class Ck6Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK6001', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 
@@ -100,6 +105,8 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK6021', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
@@ -139,11 +146,14 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK6031', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
 
     async ck6041(id, ck6041) {
+        if (!ck6041.nome_do_cliente) return;
         //os campos chassi e placa são opcionais, portanto não podem ser usados como identificadores
         //então deve-se primeiro tentar localizar o veiculo, caso exista atualizar, caso não exista, adicionar
         const fields = [
@@ -183,6 +193,8 @@ export class Ck6Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK6041', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 
@@ -222,6 +234,8 @@ export class Ck6Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK6041', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 
@@ -255,6 +269,8 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK6042', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
@@ -289,6 +305,8 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK6042', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }

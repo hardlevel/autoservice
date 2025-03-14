@@ -67,7 +67,10 @@ import { UtilModule } from '../util/util.module';
     }),
     BullModule.registerQueueAsync({
       name: 'autoservice'
-    })
+    }),
+    BullModule.registerQueueAsync({
+      name: 'autoservice-2024'
+    }),
   ]
 })
 export class AutoserviceModule { }

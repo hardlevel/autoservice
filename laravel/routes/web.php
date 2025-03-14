@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -13,8 +14,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+Route::get('admin', [DashboardController::class, 'index'])->name('admin.index');
+
+Route::get('year', [DashboardController::class, 'changeYear'])->name('admin.year');
+
+Route::get('month', [DashboardController::class, 'changeMonth'])->name('admin.month');
+
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
 
 Auth::routes();
 

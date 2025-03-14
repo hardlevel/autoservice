@@ -41,7 +41,8 @@ services:
       # target: dev
     image: laravel
     ports:
-      - 8888:8000
+      - 8888:8888
+    network_mode: "host"
     volumes:
       # - laravel:/var/www/autoservice
       - ./laravel:/var/www/autoservice

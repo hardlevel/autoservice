@@ -80,7 +80,7 @@ export class AutoserviceProcessor extends WorkerHost {
         const day = date.date();
         const month = date.month();
         const year = date.year();
-
+        console.log(job.data.startDate, job.data.endDate);
         this.jobLog = {
             jobId: parseInt(job.id),
             started_at: new Date(),
@@ -113,7 +113,7 @@ export class AutoserviceProcessor extends WorkerHost {
                 console.log('ck3001 idendificado! Total de registros:', data[ck].length);
                 this.category = ck;
                 for (const item of data[ck]) {
-                    await this.ck3Service.ck3001(item);
+                    await this.ck3Service.ck3001(item, data.startDate, data.endDate);
                 }
                 this.ckLog.startDate = data.startDate;
                 this.ckLog.endDate = data.endDate;
@@ -130,7 +130,7 @@ export class AutoserviceProcessor extends WorkerHost {
             if (ck == 'CK4001') {
                 console.log('ck4001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    await this.ck4service.ck4001(item);
+                    await this.ck4service.ck4001(item, data.startDate, data.endDate);
                 }
                 this.ckLog.startDate = data.startDate;
                 this.ckLog.endDate = data.endDate;
@@ -148,7 +148,7 @@ export class AutoserviceProcessor extends WorkerHost {
                 console.log('ck5001 idendificado! Total de registros:', data[ck].length);
                 console.log(data[ck]);
                 for (const item of data[ck]) {
-                    await this.ck5service.ck5001(item);
+                    await this.ck5service.ck5001(item, data.startDate, data.endDate);
                 }
                 this.ckLog.startDate = data.startDate;
                 this.ckLog.endDate = data.endDate;
@@ -165,7 +165,7 @@ export class AutoserviceProcessor extends WorkerHost {
             if (ck == 'CK6011') {
                 console.log('ck6011 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    await this.ck6service.ck6011(item);
+                    await this.ck6service.ck6011(item, data.startDate, data.endDate);
                 }
                 this.ckLog.startDate = data.startDate;
                 this.ckLog.endDate = data.endDate;
@@ -182,7 +182,7 @@ export class AutoserviceProcessor extends WorkerHost {
             if (ck == 'CK7001') {
                 console.log('ck7001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    await this.ck7service.ck7001(item);
+                    await this.ck7service.ck7001(item, data.startDate, data.endDate);
                 }
                 this.ckLog.startDate = data.startDate;
                 this.ckLog.endDate = data.endDate;

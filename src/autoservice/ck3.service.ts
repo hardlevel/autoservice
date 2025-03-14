@@ -8,7 +8,8 @@ import { UtilService } from '../util/util.service';
 
 @Injectable()
 export class Ck3Service {
-
+    startDate: string | Date;
+    endDate: string | Date;
     originalData: any;
 
     constructor(
@@ -19,8 +20,10 @@ export class Ck3Service {
         //@InjectPinoLogger(Ck3Service.name) private readonly logger: PinoLogger
     ) { }
 
-    async ck3001(ck3001) {
+    async ck3001(ck3001, startDate, endDate) {
         this.originalData = ck3001;
+        this.startDate = startDate;
+        this.endDate = endDate;
 
         const fields = [
             'nome_do_cliente',
@@ -64,6 +67,8 @@ export class Ck3Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK3001', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 
@@ -105,6 +110,8 @@ export class Ck3Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
+            this.autoservice.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
+            return;
         }
     }
 
@@ -140,6 +147,8 @@ export class Ck3Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
@@ -176,6 +185,8 @@ export class Ck3Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }
@@ -212,6 +223,8 @@ export class Ck3Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
+                this.autoservice.setLog('error', 'Falha ao registrar CK3003', error.message, this.startDate, this.endDate);
+                return;
             }
         }
     }

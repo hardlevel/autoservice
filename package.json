@@ -33,6 +33,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/schedule": "^5.0.0",
+    "@nestjs/swagger": "^11.0.6",
     "@nestjs/terminus": "^10.3.0",
     "@prisma/client": "6.2.1",
     "@ssut/nestjs-sqs": "^3.0.0",
