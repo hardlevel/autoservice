@@ -22,4 +22,5 @@ composer update
 cd ..
 
 # Inicia o aplicativo (comentado o comando anterior)
-pnpm run start:prod
+# pnpm run start:prod
+pm2 start ecosystem.config.js
