@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16 # Especifique a versão do Node.js que você deseja usar
+    commands:
+      # Instalar o pnpm
+      - npm install -g pnpm # Isso instala o pnpm globalmente
+  build:
+    commands:
+      # Rodar o build do projeto com pnpm
+      - pnpm install # Instala as dependências
+      - pnpm run build # Executa o comando de build do projeto
+  post_build:
+    commands:
+      # Pode adicionar comandos pós-build, como mover arquivos ou realizar outras ações
+      - echo "Build completed successfully"
+artifacts:
+  files:
+    - "**/*" # Arquivos a serem enviados para a próxima fase de deploy
