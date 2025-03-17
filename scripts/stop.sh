@@ -15,4 +15,4 @@ npm install -g pm2
 # fi
 
 # exit 0
-/home/ubuntu/.local/share/pnpm/pm2 stop all
+/home/ubuntu/.local/share/pnpm/pm2 stop all || true
