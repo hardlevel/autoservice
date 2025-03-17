@@ -134,11 +134,6 @@ export class AutoserviceService implements OnModuleInit {
   }
 
   async getData(startDate = null, endDate = null) {
-    // while(this.queueStatus == false) {
-    //   this.util.delay(30000);
-    // }
-    //TODO melhorar o gerenciamento da fila, não permitir que uma nova consulta seja feita ate a fila ser concluida
-
     let category = 'token';
     const tokenConfig = this.config.get('token');
     const tokenParams = {
