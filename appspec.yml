@@ -22,7 +22,7 @@ hooks:
       timeout: 300
       runas: ubuntu
   AfterInstall:
-    - location: script/after_install.sh
+    - location: scripts/after_install.sh
       timeout: 300
       runas: root
   ApplicationStart:
