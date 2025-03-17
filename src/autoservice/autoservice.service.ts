@@ -164,6 +164,7 @@ export class AutoserviceService implements OnModuleInit {
         }
         const apiConfig = this.config.get('api');
         const api = await this.fetch(apiConfig.url, dates, 'GET', 'findByPeriod', 'api-vw', access_token);
+        Logger.debug(`Processando dados no dia ${dates.dataInicio} - ${dates.dataFim}`);
       } else {
         await this.prisma.logError({
           category: 'ck7003',
@@ -180,6 +181,7 @@ export class AutoserviceService implements OnModuleInit {
       //   params: { startDate, endDate },
       // });
       setTimeout(() => {
+        Logger.error(`Erro ao solicitar dados da API da VW, ${this.startDate} - ${this.endDate}`);
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
         this.isBusy = true;
         this.getData(startDate, endDate);
