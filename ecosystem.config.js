@@ -1,16 +1,5 @@
 module.exports = {
   apps: [{
-    name: "autoservice",
-    script: "./dist/main.js",
-    env: {
-      NODE_ENV: "development",
-    },
-    env_production: {
-      NODE_ENV: "production",
-    }
-  }]
-}module.exports = {
-  apps: [{
     script: 'dist/main.js',
     watch: '.',
     ignore_watch: ["[\/\\]\./", "node modules", "logs"],
@@ -30,7 +19,7 @@ module.exports = {
       repo: 'git@github.com:hardlevel/autoservice.git',
       fetch: 'all',
       path: '/var/www/autoservice',
-      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
+      'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
 
     }
   }
