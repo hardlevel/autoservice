@@ -19,8 +19,8 @@ module.exports = {
       repo: 'git@github.com:hardlevel/autoservice.git',
       fetch: 'all',
       path: '/var/www/autoservice',
-      'post-deploy': 'pnpm install && pnpm run build && pm2 reload ecosystem.config.js --env production'
-
+      'pre-deploy': 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa',
+      'post-deploy': 'pnpm install && pnpm run build && pm2 reload ecosystem.config.js --env production'	 
     }
   }
 };
