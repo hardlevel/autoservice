@@ -18,8 +18,8 @@ cd /var/www/autoservice
 pnpm install
 pnpm run build
 cd /var/www/autoservice/laravel
-composer install
+composer update
 cd ..
 
 # Inicia o aplicativo (comentado o comando anterior)
-pnpm run start:prod || true
+pnpm run start:prod
