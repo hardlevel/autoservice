@@ -19,7 +19,7 @@ module.exports = {
       repo: 'git@github.com:hardlevel/autoservice.git',
       fetch: 'all',
       path: '/var/www/autoservice',
-      'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy': 'pnpm install && pnpm run build && pm2 reload ecosystem.config.js --env production'
 
     }
   }
