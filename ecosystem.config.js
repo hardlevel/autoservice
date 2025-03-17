@@ -12,18 +12,18 @@ module.exports = {
       GITHUB_TOKEN: process.env.GITHUB_TOKEN
     }
   }],
-  deploy: {
-    production: {
-      user: 'ubuntu',
-      host: '107.22.156.206',
-      ref: 'origin/master',
-      repo: 'https://github.com/hardlevel/autoservice.git',
-      fetch: 'all',
-      path: '/var/www/autoservice',
-      'post-deploy': 'pnpm install && pnpm run build && pm2 reload ecosystem.config.js --env production',
-      env: {
-        GITHUB_TOKEN: process.env.GITHUB_TOKEN
-      }
-    }
-  }
+  // deploy: {
+  //   production: {
+  //     user: 'ubuntu',
+  //     host: '107.22.156.206',
+  //     ref: 'origin/master',
+  //     repo: 'https://github.com/hardlevel/autoservice.git',
+  //     fetch: 'all',
+  //     path: '/var/www/autoservice',
+  //     'post-deploy': 'pnpm install && pnpm run build && pm2 reload ecosystem.config.js --env production',
+  //     env: {
+  //       GITHUB_TOKEN: process.env.GITHUB_TOKEN
+  //     }
+  //   }
+  // }
 };
