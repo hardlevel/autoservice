@@ -16,4 +16,4 @@ cd /var/www/autoservice
 # fi
 
 # exit 0
-pm2 stop all || true
+pm2 stop all
