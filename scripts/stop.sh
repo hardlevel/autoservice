@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo npm install -g pm2
+# sudo npm install -g pm2
+export PATH=$PATH:/home/ubuntu/.local/share/pnpm
 cd /var/www/autoservice
 # Garantir que pm2 esteja instalado globalmente
 
@@ -15,4 +16,4 @@ cd /var/www/autoservice
 # fi
 
 # exit 0
-pm2 stop all || true
+pm2 stop all
