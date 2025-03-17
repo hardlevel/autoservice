@@ -17,4 +17,8 @@ fi
 cd /var/www/autoservice
 
 # pm2 start ecosystem.config.js --no-daemon &
-pm2 start ecosystem.config.js --silent & disown
+# pm2 start ecosystem.config.js --silent & disown
+nohup pm2 start ecosystem.config.js --silent > /dev/null 2>&1 &
+
+echo "Aplicação iniciada com sucesso!"
+exit 0
