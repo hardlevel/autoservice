@@ -1,8 +1,8 @@
 #!/bin/bash
 sudo apt update
 sudo apt install -y nodejs npm php8.4-fpm
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-
+# curl -fsSL https://get.pnpm.io/install.sh | sh -
+npm install -g pnpm@latest-10
 # Adicionar ao PATH o diretório de instalação do pnpm
 export PATH=$HOME/.local/share/pnpm/global/5/.bin:$PATH
 

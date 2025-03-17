@@ -7,4 +7,5 @@ pnpm run build
 cd /var/www/autoservice/laravel
 composer install
 cd ..
+# pnpm run start:prod || true
 pnpm run start:prod || true
