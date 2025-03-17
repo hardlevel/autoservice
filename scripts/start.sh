@@ -15,11 +15,5 @@ fi
 
 # Continuando com o restante do script
 cd /var/www/autoservice
-pnpm install
-pnpm run build
-cd /var/www/autoservice/laravel
-composer update
-cd ..
 
-# Inicia o aplicativo (comentado o comando anterior)
-pnpm run start:prod
+pm2 start ecosystem.config.js

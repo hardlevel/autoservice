@@ -16,6 +16,15 @@ hooks:
     - location: scripts/install_dependencies.sh
       timeout: 300
       runas: root
+  Install:
+    - location: scripts/install_npm.sh
+    - location: scripts/install_composer.sh
+      timeout: 300
+      runas: ubuntu
+  AfterInstall:
+    - location: script/after_install.sh
+      timeout: 300
+      runas: root
   ApplicationStart:
     - location: scripts/start.sh
       timeout: 300
