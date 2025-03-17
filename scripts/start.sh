@@ -18,7 +18,15 @@ cd /var/www/autoservice
 
 # pm2 start ecosystem.config.js --no-daemon &
 # pm2 start ecosystem.config.js --silent & disown
-nohup pm2 start ecosystem.config.js --silent > /dev/null 2>&1 &
+nohup pm2 start ecosystem.config.js > /dev/null 2>&1 &
 
 echo "Aplicação iniciada com sucesso!"
 exit 0
+
+#dn
+#venda balcao
+#venda pela nf
+#venda de peça oficina
+#venda de mao de obra oficina
+#valor e quantidade, numero da peça
+#cada operacao por dn e regiao
