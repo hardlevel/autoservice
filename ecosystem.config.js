@@ -8,7 +8,8 @@ module.exports = {
       NODE_ENV: 'development'
     },
     env_production: {
-      NODE_ENV: 'production'
+      NODE_ENV: 'production',
+      GITHUB_TOKEN: process.env.GITHUB_TOKEN
     }
   }],
   deploy: {
@@ -16,11 +17,13 @@ module.exports = {
       user: 'ubuntu',
       host: '107.22.156.206',
       ref: 'origin/master',
-      repo: 'git@github.com:hardlevel/autoservice.git',
+      repo: 'https://github.com/hardlevel/autoservice.git',
       fetch: 'all',
       path: '/var/www/autoservice',
-      'pre-deploy': 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa',
-      'post-deploy': 'pnpm install && pnpm run build && pm2 reload ecosystem.config.js --env production'	 
+      'post-deploy': 'pnpm install && pnpm run build && pm2 reload ecosystem.config.js --env production',
+      env: {
+        GITHUB_TOKEN: process.env.GITHUB_TOKEN
+      }
     }
   }
 };
