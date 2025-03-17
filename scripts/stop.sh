@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /var/www/autoservice
 # Garantir que pm2 esteja instalado globalmente
-npm install -g pm2
+sudo npm install -g pm2
 
 # APP_PORT=3000
 # PID=$(lsof -t -i:$APP_PORT)
