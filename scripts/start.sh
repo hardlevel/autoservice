@@ -16,4 +16,5 @@ fi
 # Continuando com o restante do script
 cd /var/www/autoservice
 
-pm2 start ecosystem.config.js --no-daemon &
+# pm2 start ecosystem.config.js --no-daemon &
+pm2 start ecosystem.config.js --silent & disown
