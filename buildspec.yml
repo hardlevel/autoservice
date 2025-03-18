@@ -8,6 +8,7 @@ phases:
     commands:
       - npm install
       - npm run build
+      - ls -la
   post_build:
     commands:
       - echo "Build completed successfully"
