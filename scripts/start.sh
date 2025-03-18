@@ -30,3 +30,4 @@ exit 0
 #venda de mao de obra oficina
 #valor e quantidade, numero da peça
 #cada operacao por dn e regiao
+#numero da nota venda balcao, preco, quando clicar consulta do dia, ver o detalhe da nota
