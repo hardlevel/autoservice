@@ -19,5 +19,7 @@ artifacts:
     - "src/**/*"
     - "CK*"
     - "docker*"
+    - "entrypoint.sh"
+    - "Docker*"
     - "laravel/**/*"
     - "app/**/*"
