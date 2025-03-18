@@ -15,7 +15,7 @@ fi
 
 # Continuando com o restante do script
 cd /var/www/autoservice
-
+cp /home/ubuntu/.env_prod /var/www/autoservice/.env
 # pm2 start ecosystem.config.js --no-daemon &
 # pm2 start ecosystem.config.js --silent & disown
 nohup pm2 start ecosystem.config.js > /dev/null 2>&1 &
