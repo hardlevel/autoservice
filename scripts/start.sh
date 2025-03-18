@@ -6,6 +6,8 @@ if [ ! -d "/var/www/autoservice/" ]; then
   sudo mkdir -p /var/www/autoservice/
 fi
 
+sudo chown -R ubuntu:ubuntu /var/www/autoservice
+
 # Verifica se a pasta logs existe, se não, cria
 if [ ! -d "/var/www/autoservice/logs" ]; then
   echo "Criando diretório logs..."
