@@ -15,4 +15,9 @@ phases:
 artifacts:
   files:
     - "**/*"
-  base-directory: dist
+  exclude-paths:
+    - "src/**/*"
+    - "CK*"
+    - "docker*"
+    - "laravel/**/*"
+    - "app/**/*"
