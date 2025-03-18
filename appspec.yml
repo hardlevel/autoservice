@@ -18,7 +18,7 @@ hooks:
       runas: root
   Install:
     - location: scripts/install_npm.sh
-    - location: scripts/install_composer.sh
+      # - location: scripts/install_composer.sh
       timeout: 300
       runas: ubuntu
   AfterInstall:
