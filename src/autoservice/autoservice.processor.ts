@@ -9,7 +9,7 @@ import { Ck4Service } from './ck4.service';
 import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
 import { Ck7Service } from './ck7.service';
-import { HttpException, HttpStatus, LoggerService } from '@nestjs/common';
+import { HttpException, HttpStatus, Logger, LoggerService } from '@nestjs/common';
 import { AllExceptionsFilter } from '../common/errors/all.exceptions';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as moment from 'moment';
@@ -68,7 +68,6 @@ export class AutoserviceProcessor extends WorkerHost {
         private readonly ck5service: Ck5Service,
         private readonly ck6service: Ck6Service,
         private readonly ck7service: Ck7Service,
-        private readonly logger: LoggerService
     ) {
         super();
     }
@@ -200,7 +199,7 @@ export class AutoserviceProcessor extends WorkerHost {
         } catch (error) {
             console.error('Erro ao processar arquivos', error, 'dados: ');
             // throw new AllExceptionsFilter();
-            this.autoservice.setLog('error', 'Falha ao registrar', error.message, data.startDate, data.endDate);
+            Logger.debug(`Processando dados no dia ${data.dataInicio} - ${data.dataFim} \n dados: ${data}`);
             // throw new Error(error.message);
         }
     }
