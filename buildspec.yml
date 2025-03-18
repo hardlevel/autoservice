@@ -10,11 +10,9 @@ phases:
       - npm run build
   post_build:
     commands:
-      # Pode adicionar comandos pós-build, como mover arquivos ou realizar outras ações
       - echo "Build completed successfully"
 artifacts:
   files:
-    - "dist/**/*" # Enviar apenas arquivos de build
+    - "dist/**/*" # Incluir somente os arquivos da pasta dist
   discard-paths: yes # Evita incluir caminhos de diretório desnecessários
-  exclude:
-    - "node_modules/**/*" # Exclui explicitamente o diretório node_modules
+  base-directory: dist # Define o diretório base para os artefatos (isso pode ser útil para evitar confusão com arquivos de outras pastas)
