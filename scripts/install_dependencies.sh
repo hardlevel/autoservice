@@ -9,5 +9,5 @@ export PATH=$HOME/.local/share/pnpm/global/5/.bin:$PATH
 
 # Verificar se o pnpm foi instalado corretamente
 pnpm --version
-cp /home/ubuntu/.env_prod /var/www/autoservice/.env
+
 chown -R ubuntu:ubuntu /var/www/autoservice
