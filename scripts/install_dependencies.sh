@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt update
-sudo apt install -y nodejs npm php8.4-fpm
+sudo apt install -y nodejs npm
 # curl -fsSL https://get.pnpm.io/install.sh | sh -
 npm install -g pnpm@latest-10
 npm install -g pm2
