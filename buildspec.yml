@@ -14,6 +14,5 @@ phases:
       - echo "Build completed successfully"
 artifacts:
   files:
-    - "dist/**/*" # Incluir somente os arquivos da pasta dist
-  discard-paths: yes # Evita incluir caminhos de diretório desnecessários
-  base-directory: dist # Define o diretório base para os artefatos (isso pode ser útil para evitar confusão com arquivos de outras pastas)
+    - "**/*"
+  base-directory: dist
