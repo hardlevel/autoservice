@@ -43,7 +43,6 @@ export class AutoserviceService implements OnModuleInit {
   onModuleInit() {
     this.isBusy = false;
     this.autoserviceQueue.drain();
-    this.setLog('error', 'teste', new Date().toString())
   }
 
   @OnEvent('autoservice.*')
