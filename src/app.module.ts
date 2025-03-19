@@ -11,12 +11,12 @@ import { HealthModule } from './health/health.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ErrorInterceptor } from './common/errors/error.interceptor';
 import autoserviceConfig from './autoservice/config/autoservice.config';
-// import { LoggerModule } from 'nestjs-pino';
+import { LoggerModule } from 'nestjs-pino';
 import { UtilService } from './util/util.service';
 import { UtilModule } from './util/util.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AssobravModule } from './assobrav/assobrav.module';
-// import pino from 'pino';
+import pino from 'pino';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -42,15 +42,66 @@ import { AssobravModule } from './assobrav/assobrav.module';
     AssobravModule,
     // LoggerModule.forRoot({
     //   pinoHttp: {
-    //     name: 'Autoservice',
+    //     level: process.env.NODE_ENV == 'prod' ? 'info' : 'debug',
+    //     customLevels: { autoserviceError: 35 },
+    //     useOnlyCustomLevels: false,
     //     transport: {
-    //       target: 'pino-pretty'
+    //       target: 'pino/file',
+    //       options: { destination: 'logs/autoservice.log' },
     //     },
-    //     stream: pino.destination({
-    //       dest: './logs/autoservice.log',
-    //       minLength: 4096,
-    //       sync: false
-    //     })
+    //   },
+    // }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: process.env.NODE_ENV === 'prod' ? 'info' : 'debug',
+        customLevels: { autoserviceError: 35 },
+        useOnlyCustomLevels: false,
+        transport: {
+          targets: [
+            {
+              target: 'pino-pretty', // Para logs no terminal (com formatação bonita)
+              options: {
+                colorize: true,
+                translateTime: 'SYS:standard',
+                ignore: 'pid,hostname',
+              },
+            },
+            {
+              target: 'pino/file', // Para salvar logs em arquivo
+              options: {
+                destination: 'logs/autoservice.log', // Caminho do arquivo de log
+                mkdir: true, // Cria diretórios caso não existam
+              },
+            },
+          ],
+        },
+        genReqId: (req) => req.headers['x-request-id'] || req.id,
+        customProps: (req, res) => ({
+          context: 'HTTP',
+        }),
+        timestamp: () => `,"time":"${new Date().toISOString()}"`,
+        base: { service: 'autoservice-api', version: '1.0.0' },
+        messageKey: 'message',
+      },
+    })
+
+    // LoggerModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory: async (config: ConfigService) => {
+    //     return {
+    //       pinoHttp: {
+    //         name: 'Autoservice',
+    //         transport: {
+    //           target: 'pino-pretty'
+    //         },
+    //         stream: pino.destination({
+    //           dest: './logs/autoservice.log',
+    //           minLength: 4096,
+    //           sync: false
+    //         })
+    //       }
+    //     }
     //   }
     // })
   ],
@@ -65,4 +116,4 @@ import { AssobravModule } from './assobrav/assobrav.module';
     UtilService,
   ],
 })
-export class AppModule {}
+export class AppModule { }

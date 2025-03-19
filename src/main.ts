@@ -8,25 +8,24 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { CustomLogger } from './custom.logger';
-// import { Logger } from 'nestjs-pino';
-// import { MoneyPipe } from './pipes/money.pipe';
-// import { DatePipe } from './pipes/date.pipe';
-// import { HttpExceptionFilter } from './http.exceptions';
-// import { PrismaExceptionFilter } from './prisma.exceptions';
-// import { AllExceptionsFilter } from './all.exceptions';
-// import { ErrorsInterceptor } from './error.interceptor';
-// import { PrismaClientExceptionFilter } from './prisma.exceptions';
-// import * as moment from 'moment-timezone';
+import { PinoLogger } from 'nestjs-pino';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function bootstrap() {
+  const logDirectory = 'logs';
+
+  // Verifique se o diretório existe, se não, cria
+  if (!fs.existsSync(logDirectory)) {
+    fs.mkdirSync(logDirectory, { recursive: true });
+  }
+
   // const app = await NestFactory.create(AppModule, { bufferLogs: true });
-  const app = await NestFactory.create(AppModule, {
-    logger: new CustomLogger()
-  });
-  // app.useLogger(app.get(Logger));
-  // moment().zone("-03:00");
-  // moment.tz.setDefault('Ameriza/Sao_Paulo');
-  // app.useGlobalFilters(new AllExceptionsFilter({ httpAdapter: app.getHttpAdapter() }));
+  const app = await NestFactory.create(AppModule);
+
+  const pinoLogger = await app.resolve(PinoLogger);
+
+  app.useLogger(new CustomLogger(pinoLogger));
 
   // app.useGlobalFilters(new AllExceptionsFilter());
   const { httpAdapter } = app.get(HttpAdapterHost);
@@ -51,10 +50,6 @@ async function bootstrap() {
     // new DatePipe()
   );
 
-  // const { httpAdapter } = app.get(HttpAdapterHost);
-  // app.useGlobalFilters(new CatchEverythingFilter(httpAdapter));
-
-  // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   await app.listen(3000);
 }
 bootstrap();
