@@ -49,7 +49,6 @@ export class AutoserviceService implements OnModuleInit {
   @OnEvent('autoservice.*')
   handleOrderEvents(payload) {
     console.log(payload);
-    // handle and process an event
   }
 
   @OnEvent('autoservice.working')
@@ -69,8 +68,6 @@ export class AutoserviceService implements OnModuleInit {
 
   @SqsMessageHandler('autoservice', false)
   async handleMessage(message: Message) {
-    // console.log(this.config.get('SQS_URL'))
-    // console.log(message);
     const msgBody = JSON.parse(message.Body);
     if (msgBody) {
       console.log('mensagem recebida', this.startDate, this.endDate);
@@ -86,7 +83,7 @@ export class AutoserviceService implements OnModuleInit {
       });
     } catch (error) {
       console.error('consumer error', JSON.stringify(error));
-      //this.logger.error('Erro ao processar mensagem do SQS', error);
+      await this.setLog('error', 'Erro ao processar mensagem do SQS', error.message, this.startDate, this.endDate);
     }
   }
 
@@ -170,14 +167,9 @@ export class AutoserviceService implements OnModuleInit {
         });
       }
     } catch (error) {
-      // await this.prisma.logError({
-      //   category: 'ck7003',
-      //   message: 'Não foi possível obter dados da api',
-      //   code: '500',
-      //   params: { startDate, endDate },
-      // });
       setTimeout(() => {
-        Logger.error(`Erro ao solicitar dados da API da VW, ${this.startDate} - ${this.endDate}`);
+        // Logger.error(`Erro ao solicitar dados da API da VW, ${this.startDate} - ${this.endDate}`);
+        this.setLog('error', 'Erro ao solicitar dados da API da VW', error.message, this.startDate, this.endDate);
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
         this.isBusy = true;
         this.getData(startDate, endDate);

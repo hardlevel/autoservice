@@ -116,11 +116,8 @@ export class AutoserviceProcessor extends WorkerHost {
                 console.log('ck3001 idendificado! Total de registros:', data[ck].length);
                 this.category = ck;
                 for (const item of data[ck]) {
-                    await this.util.progressByValue('Salvando CK3001', data[ck].length, this.processados);
                     await this.ck3Service.ck3001(item, data.startDate, data.endDate);
-                    this.processados++;
                 }
-                this.processados = 0;
                 this.ckLog.startDate = data.startDate;
                 this.ckLog.endDate = data.endDate;
                 this.ckLog.jobId = parseInt(job.id);
@@ -136,9 +133,7 @@ export class AutoserviceProcessor extends WorkerHost {
             if (ck == 'CK4001') {
                 console.log('ck4001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    await this.util.progressByValue('Salvando CK3001', data[ck].length, this.processados);
                     await this.ck4service.ck4001(item, data.startDate, data.endDate);
-                    this.processados++;
                 }
                 this.processados = 0;
                 this.ckLog.startDate = data.startDate;
@@ -154,11 +149,8 @@ export class AutoserviceProcessor extends WorkerHost {
             }
 
             if (ck == 'CK5001') {
-                console.log('ck5001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    await this.util.progressByValue('Salvando CK3001', data[ck].length, this.processados);
                     await this.ck5service.ck5001(item, data.startDate, data.endDate);
-                    this.processados++;
                 }
                 this.processados = 0;
                 this.ckLog.startDate = data.startDate;
@@ -176,9 +168,7 @@ export class AutoserviceProcessor extends WorkerHost {
             if (ck == 'CK6011') {
                 console.log('ck6011 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    await this.util.progressByValue('Salvando CK3001', data[ck].length, this.processados);
                     await this.ck6service.ck6011(item, data.startDate, data.endDate);
-                    this.processados++;
                 }
                 this.processados = 0;
                 this.ckLog.startDate = data.startDate;
@@ -196,11 +186,8 @@ export class AutoserviceProcessor extends WorkerHost {
             if (ck == 'CK7001') {
                 console.log('ck7001 idendificado! Total de registros:', data[ck].length);
                 for (const item of data[ck]) {
-                    await this.util.progressByValue('Salvando CK3001', data[ck].length, this.processados);
                     await this.ck7service.ck7001(item, data.startDate, data.endDate);
-                    this.processados++;
                 }
-                this.processados = 0;
                 this.ckLog.startDate = data.startDate;
                 this.ckLog.endDate = data.endDate;
                 this.ckLog.jobId = parseInt(job.id);
