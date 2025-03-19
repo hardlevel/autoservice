@@ -22,10 +22,10 @@ export class AutoserviceController {
     // return this.autoserviceService.parseYear(2025);
     // return this.autoserviceService.pastData(2024, 0);
     await Promise.all([
-      // this.autoserviceService.pastData(2024, 0, 30),
-      // this.autoserviceService.pastData(2025, 0, 30)
-      this.autoserviceService.parseYear(2025),
-      this.autoserviceService.parseYear(2024)
+      this.autoserviceService.pastData(2024, 1, 30),
+      this.autoserviceService.pastData(2025, 1, 30)
+      // this.autoserviceService.parseYear(2025),
+      // this.autoserviceService.parseYear(2024)
     ]);
     return { message: 'Processamento concluído para 2025 e 2024.' };
   }
