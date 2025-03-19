@@ -325,9 +325,9 @@ export class AutoserviceService implements OnModuleInit {
 
     await this.saveLastParams(data);
     await this.util.remainingDays(startDate);
-    while (this.isBusy == true) {
-      await this.util.timer(3, "Fila ocupada, aguardando...");
-    }
+    // while (this.isBusy == true) {
+    //   await this.util.timer(3, "Fila ocupada, aguardando...");
+    // }
 
     await this.getData(startDate, endDate);
 
