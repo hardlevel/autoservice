@@ -59,7 +59,7 @@ import pino from 'pino';
         transport: {
           targets: [
             {
-              target: 'pino-pretty', // Para logs no terminal (com formatação bonita)
+              target: 'pino-pretty',
               options: {
                 colorize: true,
                 translateTime: 'SYS:standard',
@@ -67,10 +67,10 @@ import pino from 'pino';
               },
             },
             {
-              target: 'pino/file', // Para salvar logs em arquivo
+              target: 'pino/file',
               options: {
-                destination: 'logs/autoservice.log', // Caminho do arquivo de log
-                mkdir: true, // Cria diretórios caso não existam
+                destination: 'logs/autoservice.log',
+                mkdir: true,
               },
             },
           ],
