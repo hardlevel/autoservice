@@ -13,6 +13,7 @@ import { CustomError } from '../common/errors/custom-error';
 import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { last } from 'rxjs';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 interface RequestOptions {
@@ -158,6 +159,7 @@ export class AutoserviceService implements OnModuleInit {
         }
         const apiConfig = this.config.get('api');
         const api = await this.fetch(apiConfig.url, dates, 'GET', 'findByPeriod', 'api-vw', access_token);
+        await this.saveLastSearch(startDate, endDate);
         Logger.debug(`Processando dados no dia ${dates.dataInicio} - ${dates.dataFim}`);
       } else {
         await this.prisma.logError({
@@ -183,25 +185,41 @@ export class AutoserviceService implements OnModuleInit {
     }
   }
 
+  async saveLastSearch(startDate, endDate) {
+    return this.prisma.lastSearch.upsert({
+      where: { id: 1 },
+      create: {
+        id: 1, startDate, endDate
+      },
+      update: { startDate, endDate }
+    });
+  }
 
+  async getLastSearch() {
+    return this.prisma.lastSearch.findFirst({
+      where: { id: 1 }
+    });
+  }
 
+  async saveLastParams(data) {
+    return this.prisma.lastParams.upsert({
+      where: { year: parseInt(data.year) },
+      create: data,
+      update: data
+    });
+  }
 
-  // extractData(data, fields) {
-  //   const newData = fields.reduce((acc, field) => {
-  //     if (data[field] != null && data[field] !== '') {
-  //       if (field.startsWith('data_')) {
-  //         acc[field] = this.convertDate(data[field]).momentFormat;
-  //         // } else if (field.startsWith('valor_')) {
-  //         //   acc[field] = data[field].toLocaleString('pt-BR');
-  //       } else {
-  //         acc[field] = data[field];
-  //       }
-  //     }
-  //     return acc;
-  //   }, {});
+  async getLastParams(year) {
+    return this.prisma.lastParams.findFirst({
+      where: { year }
+    });
+  }
 
-  //   return newData;
-  // };
+  async clearLastParam(year) {
+    return this.prisma.lastParams.delete({
+      where: { year }
+    });
+  }
 
   async checkQueueStatus() {
     const activeJobs = await this.autoserviceQueue.getActiveCount();
@@ -215,6 +233,11 @@ export class AutoserviceService implements OnModuleInit {
   }
 
   async pastData(year, month, day = null) {
+    const lastSearch = await this.getLastSearch();
+    if (lastSearch) {
+      const date = moment(lastSearch.startDate);
+      console.log(date);
+    }
     let startMonth;
     if (day) {
       startMonth = moment().month(month).year(year).date(day);
@@ -224,44 +247,101 @@ export class AutoserviceService implements OnModuleInit {
     const endMonth = moment().month(month).endOf('month');
     const days = moment().month(month).daysInMonth();
     const startDay = day ?? 1;
-    for (let i = startDay; i <= days; i++) {
-      const date = startMonth.clone().date(i).startOf('day');
-      for (let h = 0; h < 24; h++) {
-        const endDate = date.clone().add(h + 1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
-        const startDate = date.clone().add(h, 'hours').format('YYYY-MM-DDTHH:mm:ss');
-        this.startDate = startDate;
-        this.endDate = endDate;
-        console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
-        // const isActive = await this.autoserviceQueue.getActive();
-        // if (!isActive) {
-        // await this.getData(startDate, endDate);
-        // await this.waitForQueueToBeEmpty();
-        // while(this.isBusy) {
-        //   setInterval(()=> {
-        //     console.log('estado:', this.isBusy);
-        //   }, 500);
-        // }
-        while (this.isBusy == true) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-        // console.log('ocupado?', this.isBusy)
-        await this.getData(startDate, endDate);
-        // }
-        // }, 30 * 60 * 1000)
-        // await new Promise(resolve => setTimeout(resolve, 30000));
-        // console.log(this.queueStatus())
-        await new Promise(resolve => setTimeout(resolve, 3000));
+    // for (let i = startDay; i <= days; i++) {
+    //   const date = startMonth.clone().date(i).startOf('day');
+    //   for (let h = 0; h < 24; h++) {
+    //     const endDate = date.clone().add(h + 1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+    //     const startDate = date.clone().add(h, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+    //     this.startDate = startDate;
+    //     this.endDate = endDate;
+    //     console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
+
+    //     while (this.isBusy == true) {
+    //       await new Promise(resolve => setTimeout(resolve, 1000));
+    //     }
+
+    //     await this.getData(startDate, endDate);
+
+    //     await new Promise(resolve => setTimeout(resolve, 3000));
+    //   }
+    // }
+  }
+
+  async startProcess(year = 2024, month = 1, day = 1, hour = 0, minutes = 0, interval = 1) {
+    const data = { year, month, day, hour, minutes, interval };
+
+    const lastParams = await this.getLastParams(year);
+
+    if (lastParams) {
+      const date1 = moment().year(year).month(month).date(day).hour(hour).minute(minutes).seconds(0);
+      const date2 = moment().year(lastParams.year).month(lastParams.month).date(lastParams.day).hour(lastParams.hour).minute(0).seconds(0);
+
+      if (date2.isAfter(date1)) {
+        data.year = lastParams.year;
+        data.month = lastParams.month;
+        data.day = lastParams.day;
+        data.hour = lastParams.hour;
+        data.minutes = minutes;
+        data.interval = interval;
       }
+    }
+
+    return this.parseYear(data);
+  }
+
+  async parseYear(data) {
+    console.log('Iniciando o ano:', data.year);
+    for (let m = data.month; m <= 12; m++) {
+      data.month = m;
+      await this.parseMonth(data);
     }
   }
 
-  async parseYear(year, month = 0) {
-    console.log('mês recebido', month);
-    // for (let m = 0; m <= 11; m++) {
-    for (let m = month; m <= 11; m++) {
-      console.log('mes atual sendo processado', m);
-      await this.pastData(year, m);
+  async parseMonth(data) {
+    const days = moment(`${data.year}-${data.month}`, "YYYY-MM").daysInMonth();
+    for (let d = data.day; d <= days; d++) {
+      data.day = d;
+      await this.parseDay(data);
     }
+    return this.clearLastParam(data.year);
+  }
+
+  async parseDay(data) {
+    const { year, month, day, hour, minutes, interval } = data;
+    const date = moment(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`);
+    const endOfDay = moment(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`).endOf('day');
+    while (date.isSameOrBefore(endOfDay)) {
+      await this.requestData(date, interval);
+      date.add(1, 'hour');
+    }
+  }
+
+  async requestData(date, interval) {
+    const startDate = moment(date).format("YYYY-MM-DDTHH:mm:ss");
+    const endDate = moment(date).add(interval, 'hour').format("YYYY-MM-DDTHH:mm:ss");
+    console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
+
+    this.startDate = startDate;
+    this.endDate = endDate;
+
+    const data = {
+      year: date.year(),
+      month: date.month() + 1,
+      day: date.date(),
+      hour: date.hour()
+    };
+
+    await this.saveLastParams(data);
+    await this.util.remainingDays(startDate);
+    while (this.isBusy == true) {
+      await this.util.timer(3, "Fila ocupada, aguardando...");
+    }
+
+    await this.getData(startDate, endDate);
+
+    await this.util.timer(10, "Aguardando para próxima chamada na API...");
+
+    return;
   }
 
   async getClients(page = 1) {
@@ -482,307 +562,4 @@ export class AutoserviceService implements OnModuleInit {
       data
     };
   }
-
-  // async waitForQueueToBeEmpty() {
-  //   while (true) {
-  //     const activeJobs = await this.autoserviceQueue.getActiveCount();
-  //     const waitingJobs = await this.autoserviceQueue.getWaitingCount();
-  //     console.log('estado da fila, ocupada?', this.isBusy);
-  //     if (this.isBusy == false) {
-  //       console.log('✅ Fila vazia, continuando...');
-  //       break; // Sai do loop e continua a execução
-  //     }
-  //     // if (activeJobs === 0 && waitingJobs === 0) {
-  //     //   // console.log('✅ Fila vazia, continuando...');
-  //     //   break; // Sai do loop e continua a execução
-  //     // }
-
-  //     console.log(`⏳ Fila ocupada (Ativos: ${activeJobs}, Aguardando: ${waitingJobs})... aguardando...`);
-  //     await new Promise(resolve => setTimeout(resolve, 5000)); // Espera 5 segundos antes de checar novamente
-  //   }
-  // }
-
-  // async retro(year, month, day, hour, status = false) {
-  //   // console.log(this.getCurrentDate(1));
-  //   // console.log(this.getDates(2025, 1, 23, 11))
-  //   // const end = moment().month(month -1).set(day).set(hour);
-  //   // const start = end.clone().subtract(1, 'hour');
-  //   const date = this.getDate(2025, 1, 23, 12, 30);
-  //   const endDate = this.getDate(2025, 1, 23, 13, 0);
-
-  //   const dates = this.getDates(year, month, day, hour);
-  //   const data = {
-  //     endDate: endDate.date,
-  //     startDate: date.date,
-  //     status
-  //   }
-  //   console.log(date);
-  //   console.log(data);
-  //   const lastSearch = await this.prisma.lastSearch.upsert({
-  //     where: {
-  //       id: 1
-  //     },
-  //     create: data,
-  //     update: data,
-  //     select: {
-  //       id: true,
-  //       status: true,
-  //       endDate: true,
-  //       startDate: true
-  //     }
-  //   })
-
-  //   const teste = await this.prisma.lastSearch.findFirst({
-  //     where: {
-  //       id: 1
-  //     }
-  //   })
-
-  //   console.log(this.convertDate(teste.startDate));
-  //   // return this.getData(end, start);
-  // }
-
-  // async updateData() {
-  //   console.log('Método updateData do serviço foi chamado');
-  //   try {
-  //     const data = await this.prisma.findMany('ck6011', 'data_e_hora_do_fechamento_da_os', null)
-  //     if (data.total > data.data.length) {
-  //       console.log('maior');
-  //     } else {
-  //       console.log('menor');
-  //     }
-  //     for (const item of data.data) {
-  //       const date = moment(item.data_e_hora_da_abertura_da_os);
-  //       const startDate = date.clone().subtract(1, 'hour');
-  //       const endDate = date.clone().add(1, 'hour');
-  //       console.log(startDate.format('YYYY-MM-DDTHH:mm:ss'), endDate.format('YYYY-MM-DDTHH:mm:ss'))
-  //       await this.getData(startDate.format('YYYY-MM-DDTHH:mm:ss'), endDate.format('YYYY-MM-DDTHH:mm:ss'));
-  //       await new Promise(resolve => setTimeout(resolve, 60000));
-  //     }
-  //     // const data = await this.prisma.ck6011.findMany({
-  //     //   where: {
-  //     //     data_e_hora_do_fechamento_da_os: null,
-  //     //   },
-  //     // });
-  //     console.log('Dados encontrados:', data);
-  //     return 'Dados atualizados com sucesso';
-  //   } catch (error) {
-  //     console.error('Erro ao buscar dados:', error);
-  //     throw new Error('Erro ao buscar dados');
-  //   }
-  // }
-
-  // getDate(
-  //   year: number,
-  //   month: number,
-  //   day: number,
-  //   hour = 1,
-  //   minutes = 0,
-  //   interval = 1,
-  //   unit: 'hour' | 'hours' | 'minute' | 'minutes' | 'day' | 'days' = 'hours'
-  // ) {
-  //   const timezone = 'America/Sao_Paulo';
-  //   const date = moment({ year, month: month - 1, day, hour, minutes });
-  //   const dateJs = new Date();
-  //   const tz = dateJs.getTimezoneOffset() / -60;
-
-  //   return {
-  //     now: moment().format(),
-  //     nowJs: dateJs,
-  //     nowJsString: Date(),
-  //     nowEpochMillis: dateJs.getTime(),
-  //     nowEpchSecs: Math.floor(dateJs.getTime() / 1000),
-  //     tzOffset: dateJs.getTimezoneOffset(),
-  //     tz,
-  //     nowDateBr: dateJs.toLocaleDateString(),
-  //     nowTimeBr: dateJs.toLocaleTimeString(),
-  //     momentUtc: moment().utc().format(),
-  //     moment: date,
-  //     date: date.format(),
-  //     dateJs: new Date(year, month, hour, minutes, 0),
-  //     timestamp: date.format('YYYY-MM-DDTHH:mm:ss'),
-  //     timestampz: date.format(),
-  //     timestampzFixed: date.subtract('hour', 3).format(),
-  //     epoch: date.unix(),
-  //     epochSecs: date.valueOf(),
-  //     day: date.date(),
-  //     dayOfWeek: date.day(),
-  //     dayOfWeekStr: date.weekday(),
-  //     dayOfYear: date.dayOfYear(),
-  //     daysInMonth: date.daysInMonth(),
-  //     month: date.month(),
-  //     monthParsed: date.month() + 1,
-  //     year: date.year(),
-  //     hour: date.hour(),
-  //     minutes: date.minute()
-  //   };
-  // }
-
-
-  // getDates(
-  //   year: number,
-  //   month: number,
-  //   day: number,
-  //   hour = 1,
-  //   minutes = 0,
-  //   interval = 1,
-  //   unit: 'hour' | 'hours' | 'minute' | 'minutes' | 'day' | 'days' = 'hours'
-  // ) {
-  //   //'YYYY-MM-DDThh:mm:ss'
-  //   const endDate = moment({ year, month: month - 1, day })
-  //     .hour(hour)
-  //     .minutes(minutes)
-  //   const startDate = moment(endDate).subtract(interval, unit).format();
-  //   return { endDate: endDate.format(), startDate };
-  // }
-
-  // getToken() {
-  //   return fetch(this.config.get('TOKEN_URL'), {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       client_id: this.config.get('API_ID'),
-  //       client_secret: this.config.get('API_SECRET'),
-  //       grant_type: 'client_credentials',
-  //     })
-  //   })
-  //     .then(async response => {
-  //       if (!response.ok) {
-  //         const errorData = await response.json();
-  //         throw new Error(`Error ${response.status}: ${errorData.error_description || errorData.error || 'Unknown error'}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     // .then(data => {
-  //     //   console.log("Token obtained:", data.access_token);
-  //     // })
-  //     .catch(async (error) => {
-  //       console.error("Falha ao obter token do Autoservice:", error.message);
-  //       // await this.prisma.errorLog.create({
-  //       //   data: {
-  //       //     category: "vw-token",
-  //       //     message: error.message,
-  //       //     code: error.code,
-  //       //     startDate: this.startDate,
-  //       //     endDate: this.endDate
-  //       //   }
-  //       // })
-  //       //this.logger.error('Erro ao obter token', error);
-  //     });
-  // }
-
-  // async getData(dataInicio = null, dataFim = null) {
-  //   if (!this.status) {
-  //     console.log("⏳ Aguardando 30 segundos antes de tentar novamente...");
-  //     await new Promise(resolve => setTimeout(resolve, 30000));
-  //   }
-  //   let token, url;
-
-  //   url = new URL('findByPer', this.config.get('API_URL'));
-
-  //   if (dataInicio && dataFim) {
-  //     this.startDate = dataInicio;
-  //     this.endDate = dataFim;
-  //   } else {
-  //     const date = this.getCurrentDate(1);
-  //     this.startDate = date.startDateShort;
-  //     this.endDate = date.endDateShort;
-  //   }
-
-  //   console.log('Solicitado dados para o intervalo entre:', this.startDate, this.endDate);
-  //   url.searchParams.append('dataInicio', this.startDate);
-  //   url.searchParams.append('dataFim', this.endDate);
-
-  //   while (true) {
-  //     try {
-  //       token = await this.getToken();
-
-  //       const response = await fetch(url, {
-  //         method: 'GET',
-  //         headers: {
-  //           Authorization: `Bearer ${token.access_token}`
-  //         }
-  //       });
-
-  //       if (!response.ok) {
-  //         const errorData = await response.json();
-  //         throw new Error(`Error ${response.status}: ${errorData.error_description || errorData.error || 'Unknown error'}`);
-  //       }
-
-  //       const data = await response.json();
-  //       console.log("✅ Dados solicitados com sucesso:", data);
-  //       this.status = true;
-  //       return data;
-
-  //     } catch (error) {
-  //       const code = 500;
-  //       const cause = ServiceUnavailableException;
-  //       const category = 'api-autoservice-vw';
-  //       const startDate = this.startDate;
-  //       const endDate = this.endDate;
-  //       this.status = false;
-  //       throw new CustomError(error.message, code, cause, category, startDate, endDate);
-  //       // continue;
-  //     } finally {
-  //       if (this.status) {
-  //         continue;
-  //       } else {
-  //         this.getData(this.startDate, this.endDate);
-  //       }
-  //     }
-  //   }
-  // }
-
-
-  // async getData(dataInicio = null, dataFim = null) {
-  //   let token, url;
-
-  //   url = new URL('findByPer', this.config.get('API_URL'));
-  //   // url.searchParams.append('dataInicio', '2025-01-02T00:41:37');
-  //   // url.searchParams.append('dataFim', '2025-01-03T23:41:37');
-  //   if (dataInicio && dataFim) {
-  //     this.startDate = dataInicio;
-  //     this.endDate = dataFim;
-  //   } else {
-  //     const date = this.getCurrentDate(1);
-  //     this.startDate = date.startDateShort;
-  //     this.endDate = date.endDateShort;
-  //   }
-  //   console.log('solicitado dados para o intervalo entre: ', this.startDate, this.endDate);
-  //   url.searchParams.append('dataInicio', this.startDate);
-  //   url.searchParams.append('dataFim', this.endDate);
-  //   token = await this.getToken();
-
-  //   return await fetch(url, {
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: `Bearer ${token.access_token}`
-  //     }
-  //   })
-  //     .then(async response => {
-  //       if (!response.ok) {
-  //         const errorData = await response.json();
-  //         throw new Error(`Error ${response.status}: ${errorData.error_description || errorData.error || 'Unknown error'}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       console.log("Dados solicitados", data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Falha ao obter dados do Autoservice: ", error.message);
-  //       setInterval(() => this.getData(), 30000);
-  //       // await this.prisma.errorLog.create({
-  //       //   data: {
-  //       //     category: "vw-api",
-  //       //     message: error.message,
-  //       //     code: error.code,
-  //       //     startDate: this.startDate,
-  //       //     endDate: this.endDate
-  //       //   }
-  //       // })
-  //     });
-  // }
 }

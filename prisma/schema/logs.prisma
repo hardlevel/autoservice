@@ -59,3 +59,16 @@ model DailyCk {
 
     @@unique(name: "daily", [day, month, year])
 }
+
+model LastSearch {
+    id        Int    @unique @default(1)
+    startDate String
+    endDate   String
+}
+
+model LastParams {
+    day   Int
+    month Int
+    year  Int @unique
+    hour  Int
+}

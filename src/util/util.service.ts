@@ -84,4 +84,75 @@ export class UtilService {
             (key, value) => (typeof value === 'bigint' ? value.toString() : value)
         );
     }
+
+    async timer(seconds: number, text: string = "Aguardando...") {
+        let remainingSeconds = seconds;
+
+        const progressInterval = setInterval(() => {
+            process.stdout.write(`\r${text} ${remainingSeconds} segundos restantes`);
+            remainingSeconds--;
+
+            if (remainingSeconds < 0) {
+                clearInterval(progressInterval);
+                console.log("\n");
+            }
+        }, 1000);
+
+        await new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    }
+
+    async progressByTime(taskName: string, total: number, progressInterval: number = 1000) {
+        let progress = 0;
+
+        const progressBarLength = 30;
+        const progressIntervalTime = total / progressBarLength;
+
+        const interval = setInterval(() => {
+            const progressBar = '='.repeat(Math.floor(progress / (100 / progressBarLength))) + ' '.repeat(progressBarLength - Math.floor(progress / (100 / progressBarLength)));
+
+            process.stdout.write(`\r[${progressBar}] ${progress.toFixed(2)}% - ${taskName}`);
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                console.log('\nTarefa concluída!');
+            }
+        }, progressIntervalTime);
+
+        for (let i = 0; i <= total; i++) {
+            await new Promise(resolve => setTimeout(resolve, progressInterval));
+            progress = (i / total) * 100;
+        }
+    }
+
+    async progressByValue(taskName, total, currentProgress) {
+        const progressBarLength = 30;
+        const progressPercentage = ((total - currentProgress) / total) * 100;
+        const progressBar = '='.repeat(Math.floor(progressPercentage / (100 / progressBarLength))) + ' '.repeat(progressBarLength - Math.floor(progressPercentage / (100 / progressBarLength)));
+        process.stdout.write(`\r${taskName}: [${progressBar}] ${progressPercentage.toFixed(2)}%\n`);
+
+        if (progressPercentage >= 100) {
+            console.log('\nTarefa concluída!');
+        }
+    }
+
+
+    async diffDays(date) {
+        const currentDate = moment(date);
+        const end = currentDate.clone().endOf('year');
+        const leap = currentDate.clone().isLeapYear();
+        const total = leap ? 366 : 365;
+        const remaining = end.diff(currentDate, 'days');
+        return { total, remaining }
+    }
+
+    async remainingDays(date) {
+        const days = await this.diffDays(date);
+        await this.progressByValue('Dias restantes', days.total, days.remaining);
+    }
+
+    isLastDayOfYear(date) {
+        const currentDate = moment(date);
+        const lastMomentOfYear = moment().endOf('year');
+        return currentDate.isSame(lastMomentOfYear);
+    }
 }
