@@ -14,6 +14,7 @@ import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { last } from 'rxjs';
+import { Cron, CronExpression, Interval } from '@nestjs/schedule';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 interface RequestOptions {
@@ -45,13 +46,14 @@ export class AutoserviceService implements OnModuleInit {
     this.isBusy = false;
     this.autoserviceQueue.drain();
     await Promise.all([
-      // this.autoserviceService.pastData(2024, 1, 30),
-      // this.autoserviceService.pastData(2025, 1, 30)
-      // this.autoserviceService.parseYear(2025),
-      // this.autoserviceService.parseYear(2024)
       this.startProcess(2024),
       this.startProcess(2025),
     ]);
+  }
+
+  @Interval(60000)
+  testeInterval() {
+    this.checkQueue();
   }
 
   @OnEvent('autoservice.*')
@@ -221,6 +223,13 @@ export class AutoserviceService implements OnModuleInit {
     });
   }
 
+  async changeStatusLastParam(year) {
+    return this.prisma.lastParams.update({
+      where: { year },
+      data: { status: true }
+    });
+  }
+
   async checkQueueStatus() {
     const activeJobs = await this.autoserviceQueue.getActiveCount();
     const waitingJobs = await this.autoserviceQueue.getWaitingCount();
@@ -267,14 +276,17 @@ export class AutoserviceService implements OnModuleInit {
     // }
   }
 
-  async startProcess(year = 2024, month = 1, day = 1, hour = 0, minutes = 0, interval = 1) {
+  async startProcess(year = 2024, month = 0, day = 1, hour = 0, minutes = 0, interval = 1) {
     const data = { year, month, day, hour, minutes, interval };
 
     const lastParams = await this.getLastParams(year);
 
     if (lastParams) {
-      const date1 = moment().year(year).month(month).date(day).hour(hour).minute(minutes).seconds(0);
-      const date2 = moment().year(lastParams.year).month(lastParams.month).date(lastParams.day).hour(lastParams.hour).minute(0).seconds(0);
+      if (lastParams.status === true) return;
+      const date1 = this.util.setDate(year, month, day, hour, minutes);
+      const date2 = this.util.setDate(lastParams.year, lastParams.month, lastParams.day, lastParams.hour);
+      // const date1 = moment().year(year).month(month).date(day).hour(hour).minute(minutes).seconds(0);
+      // const date2 = moment().year(lastParams.year).month(lastParams.month).date(lastParams.day).hour(lastParams.hour).minute(0).seconds(0);
 
       if (date2.isAfter(date1)) {
         data.year = lastParams.year;
@@ -285,13 +297,13 @@ export class AutoserviceService implements OnModuleInit {
         data.interval = interval;
       }
     }
-
-    return this.parseYear(data);
+    return this.parseYearMoment(data);
+    // return this.parseYear(data);
   }
 
   async parseYear(data) {
     console.log('Iniciando o ano:', data.year);
-    for (let m = data.month; m <= 12; m++) {
+    for (let m = data.month; m <= 11; m++) {
       data.month = m;
       await this.parseMonth(data);
     }
@@ -303,16 +315,48 @@ export class AutoserviceService implements OnModuleInit {
       data.day = d;
       await this.parseDay(data);
     }
-    return this.clearLastParam(data.year);
   }
 
   async parseDay(data) {
     const { year, month, day, hour, minutes, interval } = data;
-    const date = moment(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`);
-    const endOfDay = moment(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`).endOf('day');
+    // const date = moment(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`);
+    // const endOfDay = moment(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`).endOf('day');
+    const date = this.util.setDate(year, month, day, hour, minutes);
+    const endOfDay = this.util.setEndDate(year, month, day);
     while (date.isSameOrBefore(endOfDay)) {
       await this.requestData(date, interval);
-      date.add(1, 'hour');
+      if (this.util.isLastHourOfYear(date)) {
+        this.clearLastParam(year);
+        return;
+      }
+      date.add(interval, 'hour');
+    }
+  }
+
+  async parseYearMoment(data) {
+    let initialDate = moment()
+      .year(data.year)
+      .month(data.month)
+      .date(data.day)
+      .hours(data.hour)
+      .minute(data.minutes)
+      .second(0);
+    let finalDate = moment().year(data.year).endOf('year');
+    let today = moment();
+    for (let day = initialDate.clone(); day.isBefore(finalDate); day.add(1, 'days')) {
+      for await (let hour of Array.from({ length: 24 }, (_, i) => i).filter(h => h % data.interval === 0)) {
+        let currentTime = day.clone().hour(hour).minute(0).second(0).millisecond(0);
+        if (currentTime.isBefore(today)) {
+          await this.requestData(currentTime, data.interval);
+        } else {
+          return;
+        }
+        if (this.util.isLastHourOfYear(currentTime)) {
+          this.changeStatusLastParam(data.year);
+          return;
+        }
+        // console.log(`Teste: Dia ${currentTime.format('YYYY-MM-DD')} Hora ${currentTime.format('HH:mm')}`);
+      }
     }
   }
 
@@ -353,14 +397,27 @@ export class AutoserviceService implements OnModuleInit {
 
       if (activeCount === 0 && waitingCount === 0) {
         console.warn(`Nenhuma tarefa ativa. Pausando a fila...`);
-        // await this.autoserviceQueue.pause();
-        await this.autoserviceQueue.close();
+        if (!(await this.autoserviceQueue.isPaused())) {
+          await this.autoserviceQueue.pause();
+        }
+        // await this.autoserviceQueue.close();
+        this.isBusy = false;
       } else {
+        if (await this.autoserviceQueue.isPaused()) {
+          console.log('Fila pausada. Retomando...');
+          await this.autoserviceQueue.resume();
+        }
+        if (activeCount === 0) {
+          if (!(await this.autoserviceQueue.isPaused())) {
+            await this.autoserviceQueue.pause();
+          }
+        }
         console.log(`Fila ativa: ${activeCount} tarefas em execução.`);
       }
     } catch (error) {
       console.error('Erro ao verificar a fila:', error);
     }
+    return;
   }
 
   // onModuleInit() {

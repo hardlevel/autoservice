@@ -17,6 +17,7 @@ import { UtilModule } from './util/util.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AssobravModule } from './assobrav/assobrav.module';
 import pino from 'pino';
+import { ScheduleModule } from '@nestjs/schedule';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -40,6 +41,7 @@ import pino from 'pino';
     HealthModule,
     UtilModule,
     AssobravModule,
+    ScheduleModule.forRoot(),
     // LoggerModule.forRoot({
     //   pinoHttp: {
     //     level: process.env.NODE_ENV == 'prod' ? 'info' : 'debug',

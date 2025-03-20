@@ -67,8 +67,9 @@ model LastSearch {
 }
 
 model LastParams {
-    day   Int
-    month Int
-    year  Int @unique
-    hour  Int
+    day    Int
+    month  Int
+    year   Int     @unique
+    hour   Int
+    status Boolean @default(false)
 }
