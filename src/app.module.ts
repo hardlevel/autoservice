@@ -75,10 +75,10 @@ import pino from 'pino';
             },
           ],
         },
-        genReqId: (req) => req.headers['x-request-id'] || req.id,
-        customProps: (req, res) => ({
-          context: 'HTTP',
-        }),
+        // genReqId: (req) => req.headers['x-request-id'] || req.id,
+        // customProps: (req, res) => ({
+        //   context: 'HTTP',
+        // }),
         timestamp: () => `,"time":"${new Date().toISOString()}"`,
         base: { service: 'autoservice-api', version: '1.0.0' },
         messageKey: 'message',

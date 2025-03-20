@@ -41,9 +41,17 @@ export class AutoserviceService implements OnModuleInit {
     // private readonly logger = new Logger(AutoserviceService.name)
   ) { }
 
-  onModuleInit() {
+  async onModuleInit() {
     this.isBusy = false;
     this.autoserviceQueue.drain();
+    await Promise.all([
+      // this.autoserviceService.pastData(2024, 1, 30),
+      // this.autoserviceService.pastData(2025, 1, 30)
+      // this.autoserviceService.parseYear(2025),
+      // this.autoserviceService.parseYear(2024)
+      this.startProcess(2024),
+      this.startProcess(2025),
+    ]);
   }
 
   @OnEvent('autoservice.*')
@@ -325,9 +333,11 @@ export class AutoserviceService implements OnModuleInit {
 
     await this.saveLastParams(data);
     await this.util.remainingDays(startDate);
-    // while (this.isBusy == true) {
-    //   await this.util.timer(3, "Fila ocupada, aguardando...");
-    // }
+
+    while (this.isBusy == true) {
+      await this.checkQueue();
+      await this.util.timer(3, "Fila ocupada, aguardando...");
+    }
 
     await this.getData(startDate, endDate);
 
@@ -335,6 +345,27 @@ export class AutoserviceService implements OnModuleInit {
 
     return;
   }
+
+  async checkQueue() {
+    try {
+      const activeCount = await this.autoserviceQueue.getActiveCount();
+      const waitingCount = await this.autoserviceQueue.getWaitingCount();
+
+      if (activeCount === 0 && waitingCount === 0) {
+        console.warn(`Nenhuma tarefa ativa. Pausando a fila...`);
+        await this.autoserviceQueue.pause();
+      } else {
+        console.log(`Fila ativa: ${activeCount} tarefas em execução.`);
+      }
+    } catch (error) {
+      console.error('Erro ao verificar a fila:', error);
+    }
+  }
+
+  // onModuleInit() {
+  //   // Executa a verificação a cada minuto
+  //   setInterval(() => this.checkQueueStatus(), 60 * 1000);
+  // }
 
   async getClients(page = 1) {
     const [results, total] = await this.prisma.$transaction([
