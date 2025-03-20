@@ -89,7 +89,7 @@ export class UtilService {
         let remainingSeconds = seconds;
 
         const progressInterval = setInterval(() => {
-            process.stdout.write(`\r${text} ${remainingSeconds} segundos restantes`);
+            process.stdout.write(`\r${text} ${remainingSeconds} segundos restantes\n`);
             remainingSeconds--;
 
             if (remainingSeconds < 0) {
@@ -110,11 +110,11 @@ export class UtilService {
         const interval = setInterval(() => {
             const progressBar = '='.repeat(Math.floor(progress / (100 / progressBarLength))) + ' '.repeat(progressBarLength - Math.floor(progress / (100 / progressBarLength)));
 
-            process.stdout.write(`\r[${progressBar}] ${progress.toFixed(2)}% - ${taskName}`);
+            process.stdout.write(`\r[${progressBar}] ${progress.toFixed(2)}% - ${taskName}\n`);
 
             if (progress >= 100) {
                 clearInterval(interval);
-                console.log('\nTarefa concluída!');
+                console.log('\nTarefa concluída!\n');
             }
         }, progressIntervalTime);
 
@@ -131,7 +131,7 @@ export class UtilService {
         process.stdout.write(`\r${taskName}: [${progressBar}] ${progressPercentage.toFixed(2)}%\n`);
 
         if (progressPercentage >= 100) {
-            console.log('\nTarefa concluída!');
+            console.log('\nTarefa concluída!\n');
         }
     }
 
@@ -147,12 +147,44 @@ export class UtilService {
 
     async remainingDays(date) {
         const days = await this.diffDays(date);
-        await this.progressByValue('Dias restantes', days.total, days.remaining);
+        await this.progressByValue(`Dias restantes ${days.remaining}:`, days.total, days.remaining);
     }
 
     isLastDayOfYear(date) {
         const currentDate = moment(date);
         const lastMomentOfYear = moment().endOf('year');
         return currentDate.isSame(lastMomentOfYear);
+    }
+
+    isLastHourOfYear(time) {
+        const date = moment(time);
+        const isLastHourOfYear = date.month() === 11 &&
+            date.date() === 31 &&
+            date.hour() === 23 &&
+            date.minute() === 0 &&
+            date.second() === 0;
+        return isLastHourOfYear ? true : false;
+    }
+
+    setDate(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0, minute: number = 0) {
+        return moment()
+            .year(year)
+            .month(month)
+            .date(day)
+            .hour(hour)
+            .minute(minute)
+            .second(0)
+    }
+
+    setEndDate(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0, minute: number = 0) {
+        return moment()
+            .year(year)
+            .month(month)
+            .date(day)
+            .endOf('day')
+    }
+
+    formatDate(date: any, format: string = "YYYY-MM-DDTHH:mm:ss") {
+        return moment(date).format(format);
     }
 }
