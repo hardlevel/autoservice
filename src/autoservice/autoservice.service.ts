@@ -353,7 +353,8 @@ export class AutoserviceService implements OnModuleInit {
 
       if (activeCount === 0 && waitingCount === 0) {
         console.warn(`Nenhuma tarefa ativa. Pausando a fila...`);
-        await this.autoserviceQueue.pause();
+        // await this.autoserviceQueue.pause();
+        await this.autoserviceQueue.close();
       } else {
         console.log(`Fila ativa: ${activeCount} tarefas em execução.`);
       }
