@@ -473,7 +473,7 @@ export class AutoserviceService implements OnModuleInit {
 
     await this.getData(startDate, endDate);
 
-    await this.util.timer(10, "Aguardando para próxima chamada na API...");
+    await this.util.timer(5, "Aguardando para próxima chamada na API...");
 
     return;
   }
