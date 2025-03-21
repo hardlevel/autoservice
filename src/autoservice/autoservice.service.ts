@@ -265,14 +265,17 @@ export class AutoserviceService implements OnModuleInit {
       }
     } catch (error) {
       this.attempts++;
-      let holdingTime = this.attempts * 10000;
+      let holdingTime = Math.min(this.attempts * 10000, 300000);
       console.log(`Tentativa ${this.attempts}, tempo de espera: ${holdingTime}`);
+
+      if (this.attempts > 10) {
+        holdingTime = 300000; // 5 minutos
+      }
+
       setTimeout(async () => {
-        this.setLog('error', 'Erro ao solicitar dados da API da VW', error.message, this.startDate, this.endDate);
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
         this.isBusy = true;
         await this.getData(startDate, endDate);
-        // }, 60000);
       }, holdingTime);
     }
   }
