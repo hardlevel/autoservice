@@ -48,6 +48,11 @@ export class AutoserviceService implements OnModuleInit {
     ]);
   }
 
+  @Interval(10000)
+  async testSqs() {
+    await this.getSqsStatus();
+  }
+
   @Interval(60000)
   testeInterval() {
     this.checkQueue();
@@ -96,7 +101,10 @@ export class AutoserviceService implements OnModuleInit {
 
   async getSqsStatus(): Promise<boolean> {
     try {
-      const consumerStatus = await this.sqsService.consumers.get('autoservice').instance.status;
+      const consumer = await this.sqsService.consumers.get('autoservice');
+      const instance = consumer.instance;
+      const consumerStatus = instance.status;
+      console.log(consumer, instance, consumerStatus)
       console.log('Status do SQS:', consumerStatus);
       return consumerStatus.isPolling && consumerStatus.isRunning;
     } catch (error) {
@@ -386,12 +394,12 @@ export class AutoserviceService implements OnModuleInit {
     await this.saveLastParams(data);
     await this.util.remainingDays(startDate);
 
-    let sqsStatus = await this.getSqsStatus();
-    while (sqsStatus) {
-      console.log("SQS ainda processando mensagens...");
-      await this.util.timer(3, "Aguardando SQS processar mensagens...");
-      sqsStatus = await this.getSqsStatus();
-    }
+    // let sqsStatus = await this.getSqsStatus();
+    // while (sqsStatus) {
+    //   console.log("SQS ainda processando mensagens...");
+    //   await this.util.timer(3, "Aguardando SQS processar mensagens...");
+    //   sqsStatus = await this.getSqsStatus();
+    // }
 
     while (this.isBusy) {
       await this.checkQueue();
