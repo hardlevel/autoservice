@@ -372,7 +372,7 @@ export class AutoserviceService implements OnModuleInit {
   async requestData(date, interval) {
     const startDate = moment(date).format("YYYY-MM-DDTHH:mm:ss");
     const endDate = moment(date).add(interval, 'hour').format("YYYY-MM-DDTHH:mm:ss");
-    console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
+    console.info('Solicitando dados retroativos: ', startDate, endDate, 'Estado da fila do BullMQ:', this.isBusy);
 
     this.startDate = startDate;
     this.endDate = endDate;
@@ -387,9 +387,14 @@ export class AutoserviceService implements OnModuleInit {
     await this.saveLastParams(data);
     await this.util.remainingDays(startDate);
 
-    while (this.isBusy == true) {
+    const sqsStatus = await this.getSqsStatus();
+    while (sqsStatus) {
+      await this.util.timer(3, "SQS ainda processando mensagens...");
+    }
+
+    while (this.isBusy) {
       await this.checkQueue();
-      await this.util.timer(3, "Fila ocupada, aguardando...");
+      await this.util.timer(3, "Fila do BullMQ ocupada, aguardando...");
     }
 
     await this.getData(startDate, endDate);
@@ -398,6 +403,7 @@ export class AutoserviceService implements OnModuleInit {
 
     return;
   }
+
 
   async handleQueue() {
     const isPaused = await this.autoserviceQueue.isPaused();
@@ -417,14 +423,8 @@ export class AutoserviceService implements OnModuleInit {
 
   async checkQueue() {
     try {
-      const sqsStatus = await this.getSqsStatus();
       const activeCount = await this.autoserviceQueue.getActiveCount();
       const waitingCount = await this.autoserviceQueue.getWaitingCount();
-
-      if (!sqsStatus) {
-        console.log('Erro ao verificar SQS, cheque se o serviço está ativo!');
-        await this.autoserviceQueue.pause();  // Ou poderia usar handleQueue()
-      }
 
       if (activeCount === 0 && waitingCount === 0) {
         console.warn(`Nenhuma tarefa ativa. Pausando a fila...`);
