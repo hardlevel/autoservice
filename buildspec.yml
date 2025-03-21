@@ -4,7 +4,8 @@ phases:
   install:
     runtime-versions:
       nodejs: 23
-    # commands:
+    commands:
+      - aws codeartifact login --tool npm --repository autoservice-dependencies --domain autoservice --domain-owner 055542020254 --region us-east-1
     # - npm install -g pnpm
   build:
     commands:
