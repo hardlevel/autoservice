@@ -30,6 +30,7 @@ export class AutoserviceService implements OnModuleInit {
   status: boolean;
   isBusy: boolean;
   sqsEmpty: boolean;
+  attempts: number;
 
   constructor(
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
@@ -43,6 +44,7 @@ export class AutoserviceService implements OnModuleInit {
   async onModuleInit() {
     this.isBusy = false;
     this.sqsEmpty = true;
+    this.attempts = 0;
     this.autoserviceQueue.drain();
     await Promise.all([
       this.startProcess(2024, 2),
@@ -261,12 +263,16 @@ export class AutoserviceService implements OnModuleInit {
         });
       }
     } catch (error) {
-      setTimeout(() => {
+      this.attempts++;
+      let holdingTime = this.attempts * 10000;
+      console.log(`Tentativa ${this.attempts}, tempo de espera: ${holdingTime}`);
+      setTimeout(async () => {
         this.setLog('error', 'Erro ao solicitar dados da API da VW', error.message, this.startDate, this.endDate);
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
         this.isBusy = true;
-        this.getData(startDate, endDate);
-      }, 60000);
+        await this.getData(startDate, endDate);
+        // }, 60000);
+      }, holdingTime);
     }
   }
 
