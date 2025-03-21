@@ -5,6 +5,7 @@ import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 import { UtilService } from '../util/util.service';
 import fs from 'fs/promises';
 import { ApiQuery } from '@nestjs/swagger';
+import { Cron, CronExpression } from '@nestjs/schedule';
 @Controller('autoservice')
 export class AutoserviceController {
   constructor(
@@ -12,24 +13,25 @@ export class AutoserviceController {
     private readonly util: UtilService
   ) { }
 
-  // @Get('teste')
-  // async test() {
-  //   return this.autoserviceService.teste();
-  // }
+  @Cron(CronExpression.EVERY_HOUR)
+  @Get('request')
+  async request() {
+    try {
+      const { startDate, endDate } = this.util.getDatesTimeZoneFormat();
+      await this.autoserviceService.getData(startDate, endDate);
+      return { message: 'Processo concluído com sucesso' };
+    } catch (error) {
+      return { message: 'Erro ao processar a solicitação', error: error.message };
+    }
+  }
 
   @Get('past')
   async pastData() {
-    // return this.autoserviceService.parseYear(2025);
-    // return this.autoserviceService.pastData(2024, 0);
-    await Promise.all([
-      // this.autoserviceService.pastData(2024, 1, 30),
-      // this.autoserviceService.pastData(2025, 1, 30)
-      // this.autoserviceService.parseYear(2025),
-      // this.autoserviceService.parseYear(2024)
-      this.autoserviceService.startProcess(2024),
-      this.autoserviceService.startProcess(2025),
-    ]);
-    return { message: 'Processamento concluído para 2025 e 2024.' };
+    // await Promise.all([
+    //   this.autoserviceService.startProcess(2024),
+    //   this.autoserviceService.startProcess(2025),
+    // ]);
+    // return { message: 'Processamento concluído para 2025 e 2024.' };
   }
 
   @Get('start')

@@ -45,10 +45,10 @@ export class AutoserviceService implements OnModuleInit {
   async onModuleInit() {
     this.isBusy = false;
     this.autoserviceQueue.drain();
-    await Promise.all([
-      this.startProcess(2024),
-      this.startProcess(2025),
-    ]);
+    // await Promise.all([
+    //   this.startProcess(2024),
+    //   this.startProcess(2025),
+    // ]);
   }
 
   @Interval(60000)
@@ -419,11 +419,6 @@ export class AutoserviceService implements OnModuleInit {
     }
     return;
   }
-
-  // onModuleInit() {
-  //   // Executa a verificação a cada minuto
-  //   setInterval(() => this.checkQueueStatus(), 60 * 1000);
-  // }
 
   async getClients(page = 1) {
     const [results, total] = await this.prisma.$transaction([
