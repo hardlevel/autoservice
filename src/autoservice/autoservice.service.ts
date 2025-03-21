@@ -97,6 +97,7 @@ export class AutoserviceService implements OnModuleInit {
   async getSqsStatus(): Promise<boolean> {
     try {
       const consumerStatus = await this.sqsService.consumers.get('autoservice').instance.status;
+      console.log('Status do SQS:', consumerStatus);
       return consumerStatus.isPolling && consumerStatus.isRunning;
     } catch (error) {
       this.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.startDate, this.endDate);
