@@ -30,6 +30,7 @@ export class AutoserviceService implements OnModuleInit {
   status: boolean;
   isBusy: boolean;
   sqsEmpty: boolean;
+  attempts: number;
 
   constructor(
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
@@ -43,6 +44,7 @@ export class AutoserviceService implements OnModuleInit {
   async onModuleInit() {
     this.isBusy = false;
     this.sqsEmpty = true;
+    this.attempts = 0;
     this.autoserviceQueue.drain();
     await Promise.all([
       this.startProcess(2024, 2),
@@ -251,6 +253,7 @@ export class AutoserviceService implements OnModuleInit {
         const apiConfig = this.config.get('api');
         const api = await this.fetch(apiConfig.url, dates, 'GET', 'findByPeriod', 'api-vw', access_token);
         await this.saveLastSearch(startDate, endDate);
+        this.attempts = 0;
         Logger.debug(`Processando dados no dia ${dates.dataInicio} - ${dates.dataFim}`);
       } else {
         await this.prisma.logError({
@@ -261,12 +264,19 @@ export class AutoserviceService implements OnModuleInit {
         });
       }
     } catch (error) {
-      setTimeout(() => {
-        this.setLog('error', 'Erro ao solicitar dados da API da VW', error.message, this.startDate, this.endDate);
+      this.attempts++;
+      let holdingTime = Math.min(this.attempts * 10000, 300000);
+      console.log(`Tentativa ${this.attempts}, tempo de espera: ${holdingTime}`);
+
+      if (this.attempts > 10) {
+        holdingTime = 300000; // 5 minutos
+      }
+
+      setTimeout(async () => {
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
         this.isBusy = true;
-        this.getData(startDate, endDate);
-      }, 60000);
+        await this.getData(startDate, endDate);
+      }, holdingTime);
     }
   }
 
