@@ -42,10 +42,10 @@ export class AutoserviceService implements OnModuleInit {
   async onModuleInit() {
     this.isBusy = false;
     this.autoserviceQueue.drain();
-    // await Promise.all([
-    //   this.startProcess(2024, 2),
-    //   this.startProcess(2025, 2),
-    // ]);
+    await Promise.all([
+      this.startProcess(2024, 2),
+      this.startProcess(2025, 2),
+    ]);
   }
 
   @Interval(10000)
