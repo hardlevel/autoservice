@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 import { PrismaService } from '../prisma/prisma.service';
 import { CustomError } from '../common/errors/custom-error';
-
+import * as momentTz from 'moment-timezone';
 @Injectable()
 export class UtilService {
     constructor() { }
@@ -74,7 +74,9 @@ export class UtilService {
             date,
             day: date.date(),
             month: date.month(),
-            year: date.year()
+            year: date.year(),
+            hour: date.hour(),
+            minute: date.minute()
         }
     }
 
@@ -186,5 +188,32 @@ export class UtilService {
 
     formatDate(date: any, format: string = "YYYY-MM-DDTHH:mm:ss") {
         return moment(date).format(format);
+    }
+
+    setTimeZone(date, tz) {
+        return momentTz(date).tz(tz);
+    }
+
+    getDateTimeZone(date?: string | null, tz: string = 'America/Sao_Paulo') {
+        if (date) return momentTz(date).utc().tz(tz);
+        return momentTz().tz(tz);
+    }
+
+    getDateLocal() {
+        const date = moment();
+        return {
+            date,
+            day: date.date(),
+            month: date.month(),
+            year: date.year(),
+            hour: date.hour(),
+            minute: date.minute()
+        }
+    }
+
+    getDatesTimeZoneFormat(format: string = "YYYY-MM-DDTHH:mm:ss", tz: string = 'America/Sao_Paulo', interval: number = 1) {
+        const date1 = this.getDateTimeZone().startOf('hour');
+        const date2 = date1.clone().add(interval, 'hour');
+        return { startDate: date1.format(format), endDate: date2.format(format) };
     }
 }

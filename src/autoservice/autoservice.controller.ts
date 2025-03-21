@@ -1,10 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Logger, Query } from '@nestjs/common';
 import { AutoserviceService } from './autoservice.service';
-import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
-import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 import { UtilService } from '../util/util.service';
-import fs from 'fs/promises';
 import { ApiQuery } from '@nestjs/swagger';
+import { Cron, CronExpression } from '@nestjs/schedule';
 @Controller('autoservice')
 export class AutoserviceController {
   constructor(
@@ -12,46 +10,26 @@ export class AutoserviceController {
     private readonly util: UtilService
   ) { }
 
-  // @Get('teste')
-  // async test() {
-  //   return this.autoserviceService.teste();
+  @Cron(CronExpression.EVERY_HOUR)
+  @Get('request')
+  async request() {
+    try {
+      const { startDate, endDate } = this.util.getDatesTimeZoneFormat();
+      await this.autoserviceService.getData(startDate, endDate);
+      return { message: 'Processo concluído com sucesso' };
+    } catch (error) {
+      return { message: 'Erro ao processar a solicitação', error: error.message };
+    }
+  }
+
+  // @Get('past')
+  // async pastData() {
+  // await Promise.all([
+  //   this.autoserviceService.startProcess(2024),
+  //   this.autoserviceService.startProcess(2025),
+  // ]);
+  // return { message: 'Processamento concluído para 2025 e 2024.' };
   // }
-
-  @Get('past')
-  async pastData() {
-    // return this.autoserviceService.parseYear(2025);
-    // return this.autoserviceService.pastData(2024, 0);
-    await Promise.all([
-      // this.autoserviceService.pastData(2024, 1, 30),
-      // this.autoserviceService.pastData(2025, 1, 30)
-      // this.autoserviceService.parseYear(2025),
-      // this.autoserviceService.parseYear(2024)
-      this.autoserviceService.startProcess(2024),
-      this.autoserviceService.startProcess(2025),
-    ]);
-    return { message: 'Processamento concluído para 2025 e 2024.' };
-  }
-
-  @Get('start')
-  start() {
-    try {
-      this.autoserviceService.getData('2024-01-10T00:00:00', '2024-01-10T23:59:00');
-    } catch (error) {
-      throw new Error('Erro ao processar arquivos');
-    }
-  }
-
-  @Get('teste')
-  async teste() {
-    const filePath = './dados.json';
-    try {
-      const data = await fs.readFile(filePath, 'utf8');
-      const jsonData = JSON.parse(data);
-      console.log(jsonData);
-    } catch (error) {
-      console.error('Erro ao carregar JSON:', error);
-    }
-  }
 
   @Get('clients')
   async clients() {

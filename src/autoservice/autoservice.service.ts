@@ -38,8 +38,6 @@ export class AutoserviceService implements OnModuleInit {
     private readonly prisma: PrismaService,
     private readonly util: UtilService,
     private readonly eventEmitter: EventEmitter2,
-    // //@InjectPinoLogger(AutoserviceService.name) private readonly logger: PinoLogger
-    // private readonly logger = new Logger(AutoserviceService.name)
   ) { }
 
   async onModuleInit() {
@@ -178,7 +176,6 @@ export class AutoserviceService implements OnModuleInit {
       }
     } catch (error) {
       setTimeout(() => {
-        // Logger.error(`Erro ao solicitar dados da API da VW, ${this.startDate} - ${this.endDate}`);
         this.setLog('error', 'Erro ao solicitar dados da API da VW', error.message, this.startDate, this.endDate);
         console.error('Falha ao acessar API, aguardando para tentar novamente...');
         this.isBusy = true;
@@ -241,40 +238,40 @@ export class AutoserviceService implements OnModuleInit {
     }
   }
 
-  async pastData(year, month, day = null) {
-    const lastSearch = await this.getLastSearch();
-    if (lastSearch) {
-      const date = moment(lastSearch.startDate);
-      console.log(date);
-    }
-    let startMonth;
-    if (day) {
-      startMonth = moment().month(month).year(year).date(day);
-    } else {
-      startMonth = moment().month(month).year(year).startOf('month');
-    }
-    const endMonth = moment().month(month).endOf('month');
-    const days = moment().month(month).daysInMonth();
-    const startDay = day ?? 1;
-    // for (let i = startDay; i <= days; i++) {
-    //   const date = startMonth.clone().date(i).startOf('day');
-    //   for (let h = 0; h < 24; h++) {
-    //     const endDate = date.clone().add(h + 1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
-    //     const startDate = date.clone().add(h, 'hours').format('YYYY-MM-DDTHH:mm:ss');
-    //     this.startDate = startDate;
-    //     this.endDate = endDate;
-    //     console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
+  // async pastData(year, month, day = null) {
+  //   const lastSearch = await this.getLastSearch();
+  //   if (lastSearch) {
+  //     const date = moment(lastSearch.startDate);
+  //     console.log(date);
+  //   }
+  //   let startMonth;
+  //   if (day) {
+  //     startMonth = moment().month(month).year(year).date(day);
+  //   } else {
+  //     startMonth = moment().month(month).year(year).startOf('month');
+  //   }
+  //   const endMonth = moment().month(month).endOf('month');
+  //   const days = moment().month(month).daysInMonth();
+  //   const startDay = day ?? 1;
+  // for (let i = startDay; i <= days; i++) {
+  //   const date = startMonth.clone().date(i).startOf('day');
+  //   for (let h = 0; h < 24; h++) {
+  //     const endDate = date.clone().add(h + 1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+  //     const startDate = date.clone().add(h, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+  //     this.startDate = startDate;
+  //     this.endDate = endDate;
+  //     console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
 
-    //     while (this.isBusy == true) {
-    //       await new Promise(resolve => setTimeout(resolve, 1000));
-    //     }
+  //     while (this.isBusy == true) {
+  //       await new Promise(resolve => setTimeout(resolve, 1000));
+  //     }
 
-    //     await this.getData(startDate, endDate);
+  //     await this.getData(startDate, endDate);
 
-    //     await new Promise(resolve => setTimeout(resolve, 3000));
-    //   }
-    // }
-  }
+  //     await new Promise(resolve => setTimeout(resolve, 3000));
+  //   }
+  // }
+  // }
 
   async startProcess(year = 2024, month = 0, day = 1, hour = 0, minutes = 0, interval = 1) {
     const data = { year, month, day, hour, minutes, interval };
@@ -419,11 +416,6 @@ export class AutoserviceService implements OnModuleInit {
     }
     return;
   }
-
-  // onModuleInit() {
-  //   // Executa a verificação a cada minuto
-  //   setInterval(() => this.checkQueueStatus(), 60 * 1000);
-  // }
 
   async getClients(page = 1) {
     const [results, total] = await this.prisma.$transaction([
