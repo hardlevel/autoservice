@@ -18,6 +18,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AssobravModule } from './assobrav/assobrav.module';
 import pino from 'pino';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AutoserviceHealthIndicator } from './autoservice/autoservice.health';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -116,6 +117,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       useClass: ErrorInterceptor,
     },
     UtilService,
+    AutoserviceHealthIndicator
   ],
 })
 export class AppModule { }

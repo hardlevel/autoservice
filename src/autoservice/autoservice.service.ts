@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, OnModuleInit, ServiceUnavail
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 import { InjectQueue } from '@nestjs/bullmq';
-import { Queue } from 'bullmq';
+import { Queue, isNotConnectionError } from 'bullmq';
 import { ConfigService } from '@nestjs/config';
 import { Message } from "@aws-sdk/client-sqs";
 import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/nestjs-sqs";
@@ -29,6 +29,7 @@ export class AutoserviceService implements OnModuleInit {
   endDate
   status: boolean;
   isBusy: boolean;
+  sqsEmpty: boolean;
 
   constructor(
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
@@ -41,6 +42,7 @@ export class AutoserviceService implements OnModuleInit {
 
   async onModuleInit() {
     this.isBusy = false;
+    this.sqsEmpty = true;
     this.autoserviceQueue.drain();
     await Promise.all([
       this.startProcess(2024, 2),
@@ -48,13 +50,36 @@ export class AutoserviceService implements OnModuleInit {
     ]);
   }
 
+
+  // @Interval(2000)
+  // async testSqs() {
+  // console.log('teste bull', await this.getBullMqStatus());
+  //   console.log('vazio?', this.sqsEmpty);
+  //   console.log('status', await this.getSqsStatus());
+
+  // console.log((await this.autoserviceQueue.client).status)
+  // }
+
   @Interval(10000)
-  async testSqs() {
-    await this.getSqsStatus();
+  async retryFailedJobs() {
+    const status = await this.getBullMqStatus();
+    if (status.failed > 0) {
+      const jobs = await this.autoserviceQueue.getFailed();
+      for (let failedjob of jobs) {
+        const job = await this.autoserviceQueue.getJob(failedjob.id);
+        await job.retry();
+      }
+    }
+    if (status.paused > 0) {
+      const status = await this.autoserviceQueue.isPaused();
+      if (status) {
+        await this.autoserviceQueue.resume();
+      }
+    }
   }
 
   @Interval(60000)
-  testeInterval() {
+  testQueue() {
     this.checkQueue();
   }
 
@@ -99,17 +124,59 @@ export class AutoserviceService implements OnModuleInit {
     }
   }
 
+  @SqsConsumerEventHandler('autoservice', 'empty')
+  public onEmpty() {
+    this.sqsEmpty = true;
+  }
+
+  @SqsConsumerEventHandler('autoservice', 'aborted')
+  public onAbort() {
+    this.sqsEmpty = true;
+  }
+
+  @SqsConsumerEventHandler('autoservice', 'stopped')
+  public onStop() {
+    this.sqsEmpty = true;
+  }
+
+  @SqsConsumerEventHandler('autoservice', 'timeout_error')
+  public onTimeout(error: Error, message: Message) {
+    this.sqsEmpty = true;
+  }
+
+  @SqsConsumerEventHandler('autoservice', 'message_received')
+  public onMsgReceived() {
+    this.sqsEmpty = false;
+  }
+
+  @SqsConsumerEventHandler('autoservice', 'waiting_for_polling_to_complete')
+  public onWaiting() {
+    this.sqsEmpty = false;
+    console.log('aguardando conclusão');
+  }
+
+  @SqsConsumerEventHandler('queueName', 'processing_error')
+  public onProcessingError(error: Error, message: Message) {
+    this.setLog('error', 'Há algum problema no SQS externo', error.message, this.startDate, this.endDate)
+  }
+
   async getSqsStatus(): Promise<boolean> {
     try {
-      const consumer = await this.sqsService.consumers.get('autoservice');
-      const instance = consumer.instance;
-      const consumerStatus = instance.status;
-      console.log(consumer, instance, consumerStatus)
-      console.log('Status do SQS:', consumerStatus);
-      return consumerStatus.isPolling && consumerStatus.isRunning;
+      const { isPolling, isRunning } = await this.sqsService.consumers.get('autoservice').instance.status;
+      return isPolling && isRunning;
     } catch (error) {
       this.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.startDate, this.endDate);
       return false;
+    }
+  }
+
+  async getBullMqStatus() {
+    try {
+      const jobCounts = await this.autoserviceQueue.getJobCounts();
+      console.log(jobCounts);
+      return jobCounts;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -394,12 +461,10 @@ export class AutoserviceService implements OnModuleInit {
     await this.saveLastParams(data);
     await this.util.remainingDays(startDate);
 
-    // let sqsStatus = await this.getSqsStatus();
-    // while (sqsStatus) {
-    //   console.log("SQS ainda processando mensagens...");
-    //   await this.util.timer(3, "Aguardando SQS processar mensagens...");
-    //   sqsStatus = await this.getSqsStatus();
-    // }
+    while (!this.sqsEmpty) {
+      console.log("SQS ainda processando mensagens...");
+      await this.util.timer(3, "Aguardando SQS processar mensagens...");
+    }
 
     while (this.isBusy) {
       await this.checkQueue();
