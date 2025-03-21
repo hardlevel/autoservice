@@ -4,11 +4,14 @@ phases:
   install:
     runtime-versions:
       nodejs: 23
+    commands:
+      - npm install -g pnpm
   build:
     commands:
-      - npm install
-      - npm run build
-      - ls -la
+      # - npm install
+      # - npm run build
+      - pnpm install
+      - pnpm run build
   post_build:
     commands:
       - echo "Build completed successfully"
