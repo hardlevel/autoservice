@@ -14,8 +14,7 @@ import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { last } from 'rxjs';
-import { Cron, CronExpression, Interval } from '@nestjs/schedule';
-//import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { Interval } from '@nestjs/schedule';
 
 interface RequestOptions {
   method: string;
@@ -44,8 +43,8 @@ export class AutoserviceService implements OnModuleInit {
     this.isBusy = false;
     this.autoserviceQueue.drain();
     await Promise.all([
-      this.startProcess(2024),
-      this.startProcess(2025),
+      this.startProcess(2024, 2),
+      this.startProcess(2025, 2),
     ]);
   }
 
@@ -94,6 +93,17 @@ export class AutoserviceService implements OnModuleInit {
       await this.setLog('error', 'Erro ao processar mensagem do SQS', error.message, this.startDate, this.endDate);
     }
   }
+
+  async getSqsStatus(): Promise<boolean> {
+    try {
+      const consumerStatus = await this.sqsService.consumers.get('autoservice').instance.status;
+      return consumerStatus.isPolling && consumerStatus.isRunning;
+    } catch (error) {
+      this.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.startDate, this.endDate);
+      return false;
+    }
+  }
+
 
   async fetch(url, params, method, endpoint = null, category = null, token = null) {
     const path = endpoint ? new URL(endpoint, url) : new URL(url);
@@ -227,16 +237,16 @@ export class AutoserviceService implements OnModuleInit {
     });
   }
 
-  async checkQueueStatus() {
-    const activeJobs = await this.autoserviceQueue.getActiveCount();
-    const waitingJobs = await this.autoserviceQueue.getWaitingCount();
+  // async checkQueueStatus() {
+  //   const activeJobs = await this.autoserviceQueue.getActiveCount();
+  //   const waitingJobs = await this.autoserviceQueue.getWaitingCount();
 
-    console.log(`Jobs Ativos: ${activeJobs}, Jobs Aguardando: ${waitingJobs}`);
+  //   console.log(`Jobs Ativos: ${activeJobs}, Jobs Aguardando: ${waitingJobs}`);
 
-    if (activeJobs === 0 && waitingJobs === 0) {
-      console.log('Fila está vazia! Executando ação...');
-    }
-  }
+  //   if (activeJobs === 0 && waitingJobs === 0) {
+  //     console.log('Fila está vazia! Executando ação...');
+  //   }
+  // }
 
   // async pastData(year, month, day = null) {
   //   const lastSearch = await this.getLastSearch();
@@ -360,7 +370,7 @@ export class AutoserviceService implements OnModuleInit {
   async requestData(date, interval) {
     const startDate = moment(date).format("YYYY-MM-DDTHH:mm:ss");
     const endDate = moment(date).add(interval, 'hour').format("YYYY-MM-DDTHH:mm:ss");
-    console.info('solicitando dados retroativos: ', startDate, endDate, 'estado da fila:', this.isBusy);
+    console.info('Solicitando dados retroativos: ', startDate, endDate, 'Estado da fila do BullMQ:', this.isBusy);
 
     this.startDate = startDate;
     this.endDate = endDate;
@@ -375,9 +385,14 @@ export class AutoserviceService implements OnModuleInit {
     await this.saveLastParams(data);
     await this.util.remainingDays(startDate);
 
-    while (this.isBusy == true) {
+    const sqsStatus = await this.getSqsStatus();
+    while (sqsStatus) {
+      await this.util.timer(3, "SQS ainda processando mensagens...");
+    }
+
+    while (this.isBusy) {
       await this.checkQueue();
-      await this.util.timer(3, "Fila ocupada, aguardando...");
+      await this.util.timer(3, "Fila do BullMQ ocupada, aguardando...");
     }
 
     await this.getData(startDate, endDate);
@@ -387,6 +402,23 @@ export class AutoserviceService implements OnModuleInit {
     return;
   }
 
+
+  async handleQueue() {
+    const isPaused = await this.autoserviceQueue.isPaused();
+    if (isPaused) {
+      await this.autoserviceQueue.resume();
+      if (!(await this.autoserviceQueue.isPaused())) {
+        return true;
+      }
+    } else {
+      await this.autoserviceQueue.pause();
+      if (await this.autoserviceQueue.isPaused()) {
+        return false;
+      }
+    }
+    return isPaused;
+  }
+
   async checkQueue() {
     try {
       const activeCount = await this.autoserviceQueue.getActiveCount();
@@ -394,18 +426,14 @@ export class AutoserviceService implements OnModuleInit {
 
       if (activeCount === 0 && waitingCount === 0) {
         console.warn(`Nenhuma tarefa ativa. Pausando a fila...`);
-        if (!(await this.autoserviceQueue.isPaused())) {
-          await this.autoserviceQueue.pause();
+        const wasPaused = await this.handleQueue();  // Usando handleQueue para pausar
+        if (wasPaused !== false) {
+          this.isBusy = false;
         }
-        // await this.autoserviceQueue.close();
-        this.isBusy = false;
       } else {
-        if (await this.autoserviceQueue.isPaused()) {
-          console.log('Fila pausada. Retomando...');
-          await this.autoserviceQueue.resume();
-        }
+        const wasResumed = await this.handleQueue();  // Usando handleQueue para retomar
         if (activeCount === 0) {
-          if (!(await this.autoserviceQueue.isPaused())) {
+          if (wasResumed === true) {
             await this.autoserviceQueue.pause();
           }
         }
@@ -416,6 +444,7 @@ export class AutoserviceService implements OnModuleInit {
     }
     return;
   }
+
 
   async getClients(page = 1) {
     const [results, total] = await this.prisma.$transaction([
