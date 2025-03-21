@@ -213,7 +213,7 @@ export class UtilService {
 
     getDatesTimeZoneFormat(format: string = "YYYY-MM-DDTHH:mm:ss", tz: string = 'America/Sao_Paulo', interval: number = 1) {
         const date1 = this.getDateTimeZone().startOf('hour');
-        const date2 = date1.clone().add(interval, 'hour');
-        return { startDate: date1.format(format), endDate: date2.format(format) };
+        const date2 = date1.clone().subtract(interval, 'hour');
+        return { startDate: date2.format(format), endDate: date1.format(format) };
     }
 }
