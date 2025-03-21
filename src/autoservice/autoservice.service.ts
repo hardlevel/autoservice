@@ -253,6 +253,7 @@ export class AutoserviceService implements OnModuleInit {
         const apiConfig = this.config.get('api');
         const api = await this.fetch(apiConfig.url, dates, 'GET', 'findByPeriod', 'api-vw', access_token);
         await this.saveLastSearch(startDate, endDate);
+        this.attempts = 0;
         Logger.debug(`Processando dados no dia ${dates.dataInicio} - ${dates.dataFim}`);
       } else {
         await this.prisma.logError({
