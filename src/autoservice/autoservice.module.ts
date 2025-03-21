@@ -14,7 +14,6 @@ import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
 import { UtilModule } from '../util/util.module';
 import { AutoserviceHealthIndicator } from './autoservice.health';
-import { HealthModule } from '../health/health.module';
 // import { LoggerModule } from 'nestjs-pino';
 
 @Module({
