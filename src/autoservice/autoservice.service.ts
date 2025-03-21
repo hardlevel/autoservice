@@ -120,7 +120,7 @@ export class AutoserviceService implements OnModuleInit {
       });
     } catch (error) {
       console.error('consumer error', JSON.stringify(error));
-      await this.setLog('error', 'Erro ao processar mensagem do SQS', error.message, this.startDate, this.endDate);
+      this.setLog('error', 'Erro ao processar mensagem do SQS', error.message, this.startDate, this.endDate);
     }
   }
 
