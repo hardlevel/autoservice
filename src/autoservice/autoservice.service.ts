@@ -14,9 +14,7 @@ import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { last } from 'rxjs';
-import { Cron, CronExpression, Interval } from '@nestjs/schedule';
-import { GetQueueAttributesCommand } from '@aws-sdk/client-sqs';
-//import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { Interval } from '@nestjs/schedule';
 
 interface RequestOptions {
   method: string;
