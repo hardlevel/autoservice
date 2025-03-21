@@ -386,9 +386,11 @@ export class AutoserviceService implements OnModuleInit {
     await this.saveLastParams(data);
     await this.util.remainingDays(startDate);
 
-    const sqsStatus = await this.getSqsStatus();
+    let sqsStatus = await this.getSqsStatus();
     while (sqsStatus) {
-      await this.util.timer(3, "SQS ainda processando mensagens...");
+      console.log("SQS ainda processando mensagens...");
+      await this.util.timer(3, "Aguardando SQS processar mensagens...");
+      sqsStatus = await this.getSqsStatus();
     }
 
     while (this.isBusy) {
