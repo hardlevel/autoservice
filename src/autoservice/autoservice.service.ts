@@ -255,6 +255,7 @@ export class AutoserviceService implements OnModuleInit {
         await this.saveLastSearch(startDate, endDate);
         this.attempts = 0;
         Logger.debug(`Processando dados no dia ${dates.dataInicio} - ${dates.dataFim}`);
+        return;
       } else {
         await this.prisma.logError({
           category: 'ck7003',
