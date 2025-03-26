@@ -75,3 +75,19 @@ view fontes_pagadoras_view {
 
     @@unique(name: "fp_view", [parent, parent_id, numero_do_dn])
 }
+
+view pecas_balcao_view {
+    numero_do_dn       String  @unique
+    mes_ano            String
+    qtd_pecas_balcao   BigInt
+    vl_liq_peca_balcao Decimal @db.Decimal(10, 2)
+}
+
+view pecas_oficina_view {
+    numero_do_dn        String  @unique
+    mes_ano             String
+    qtd_pecas_oficina   BigInt
+    vl_liq_peca_oficina Decimal @db.Decimal(10, 2)
+    qtd_hora_vendida    Float
+    vl_liq_mao_obra     Decimal @db.Decimal(10, 2)
+}
