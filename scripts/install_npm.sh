@@ -5,3 +5,4 @@ source /root/.bashrc
 cd /var/www/autoservice
 #pnpm install
 #pnpm run build
+pnpm env use --global 22.14.0
