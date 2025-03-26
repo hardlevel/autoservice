@@ -15,6 +15,7 @@ import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { last } from 'rxjs';
 import { Interval } from '@nestjs/schedule';
+import { LazyModuleLoader } from '@nestjs/core';
 
 interface RequestOptions {
   method: string;
@@ -33,6 +34,7 @@ export class AutoserviceService implements OnApplicationBootstrap {
   attempts: number;
 
   constructor(
+    private lazyModuleLoader: LazyModuleLoader,
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
     private readonly config: ConfigService,
     private readonly sqsService: SqsService,

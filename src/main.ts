@@ -28,7 +28,7 @@ async function bootstrap() {
   const pinoLogger = await app.resolve(PinoLogger);
 
   app.useLogger(new CustomLogger(pinoLogger));
-  await app.init();
+  // await app.init();
   // app.useGlobalFilters(new AllExceptionsFilter());
   const { httpAdapter } = app.get(HttpAdapterHost);
   // app.useGlobalFilters(
