@@ -53,11 +53,8 @@ export class AutoserviceService implements OnApplicationBootstrap {
       await this.autoserviceQueue.drain();
 
       await Promise.all([
-        this.parseMonthMoment({ year: 2024, month: 0 }),
-        this.parseMonthMoment({ year: 2024, month: 1 }),
-        this.parseMonthMoment({ year: 2024, month: 2 }),
-        this.parseMonthMoment({ year: 2024, month: 3 }),
         this.startProcess(2025, 2),
+        this.startProcess(2024, 5),
       ]);
 
       console.debug('Processos concluídos');
