@@ -42,14 +42,26 @@ export class AutoserviceService implements OnApplicationBootstrap {
   ) { }
 
   async onApplicationBootstrap() {
-    this.isBusy = false;
-    this.sqsEmpty = true;
-    this.attempts = 0;
-    this.autoserviceQueue.drain();
-    await Promise.all([
-      this.startProcess(2024, 5),
-      this.startProcess(2025, 2),
-    ]);
+    try {
+      console.debug('Inicializando processo em onApplicationBootstrap');
+      this.isBusy = false;
+      this.sqsEmpty = true;
+      this.attempts = 0;
+
+      // Aguarda a drenagem da fila
+      await this.autoserviceQueue.drain();
+      console.debug('Fila drenada');
+
+      // Inicia os processos em paralelo
+      await Promise.all([
+        this.startProcess(2024, 5),
+        this.startProcess(2025, 2),
+      ]);
+
+      console.debug('Processos concluídos');
+    } catch (error) {
+      console.error('Erro durante onApplicationBootstrap:', error);
+    }
   }
 
 
