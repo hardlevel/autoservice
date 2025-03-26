@@ -48,7 +48,7 @@ export class AutoserviceService implements OnModuleInit {
     this.autoserviceQueue.drain();
     await Promise.all([
       this.startProcess(2024, 5),
-      this.startProcess(2025, 5),
+      this.startProcess(2025, 2),
     ]);
   }
 
