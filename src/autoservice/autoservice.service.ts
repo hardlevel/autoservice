@@ -47,20 +47,11 @@ export class AutoserviceService implements OnModuleInit {
     this.attempts = 0;
     this.autoserviceQueue.drain();
     await Promise.all([
-      this.startProcess(2024, 2),
-      this.startProcess(2025, 2),
+      this.startProcess(2024, 5),
+      this.startProcess(2025, 5),
     ]);
   }
 
-
-  // @Interval(2000)
-  // async testSqs() {
-  // console.log('teste bull', await this.getBullMqStatus());
-  //   console.log('vazio?', this.sqsEmpty);
-  //   console.log('status', await this.getSqsStatus());
-
-  // console.log((await this.autoserviceQueue.client).status)
-  // }
 
   @Interval(10000)
   async retryFailedJobs() {
@@ -181,7 +172,6 @@ export class AutoserviceService implements OnModuleInit {
       console.log(error);
     }
   }
-
 
   async fetch(url, params, method, endpoint = null, category = null, token = null) {
     const path = endpoint ? new URL(endpoint, url) : new URL(url);
@@ -750,5 +740,41 @@ export class AutoserviceService implements OnModuleInit {
       page: skip,
       data
     };
+  }
+
+  async getPecasBalcao(year: number, month?: number, dn?: string) {
+    const where: any = {
+      mes_ano: {
+        startsWith: year.toString()
+      }
+    };
+
+    if (month !== undefined) {
+      where.mes_ano.endsWith = month.toString();
+    }
+
+    if (dn !== undefined) {
+      where.numero_do_dn = dn;
+    }
+
+    return this.prisma.pecas_balcao_view.findMany({ where });
+  }
+
+  async getPecasOficina(year: number, month?: number, dn?: string) {
+    const where: any = {
+      mes_ano: {
+        startsWith: year.toString()
+      }
+    };
+
+    if (month !== undefined) {
+      where.mes_ano.endsWith = month.toString();
+    }
+
+    if (dn !== undefined) {
+      where.numero_do_dn = dn;
+    }
+
+    return this.prisma.pecas_oficina_view.findMany({ where });
   }
 }

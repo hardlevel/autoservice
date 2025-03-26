@@ -79,4 +79,20 @@ export class AutoserviceController {
   async servicesStateYear(@Query('year') year?: number) {
     return this.autoserviceService.getServicesStateYear(year);
   }
+
+  @Get('pecas_balcao')
+  @ApiQuery({ name: 'year', required: true, type: Number })
+  @ApiQuery({ name: 'month', required: false, type: Number })
+  @ApiQuery({ name: 'dn', required: false, type: String })
+  async pecasBalcao(@Query('year') year: number, @Query('month') month?: number, @Query('dn') dn?: string) {
+    return this.autoserviceService.getPecasBalcao(year, month, dn);
+  }
+
+  @Get('pecas_oficina')
+  @ApiQuery({ name: 'year', required: true, type: Number })
+  @ApiQuery({ name: 'month', required: false, type: Number })
+  @ApiQuery({ name: 'dn', required: false, type: String })
+  async pecasOficina(@Query('year') year: number, @Query('month') month?: number, @Query('dn') dn?: string) {
+    return this.autoserviceService.getPecasOficina(year, month, dn);
+  }
 }

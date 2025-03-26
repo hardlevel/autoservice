@@ -6,14 +6,21 @@ phases:
       nodejs: 23
     commands:
       - aws codeartifact login --tool npm --repository autoservice-dependencies --domain autoservice --domain-owner 055542020254 --region us-east-1
-    # - npm install -g pnpm
+      - npm install -g pnpm
+      - pnpm install
+      - git diff --quiet HEAD^ HEAD -- package.json || export PACKAGE_JSON_CHANGED=true
   build:
     commands:
-      - npm install
-      - npm run build
+      - if [ "$PACKAGE_JSON_CHANGED" = "true" ]; then pnpm install; fi
+      - pnpm run build
+
   post_build:
     commands:
       - echo "Build completed successfully"
+
+cache:
+  paths:
+    - "node_modules/**/*"
 artifacts:
   files:
     - "**/*"
@@ -25,3 +32,17 @@ artifacts:
     - "Docker*"
     - "laravel/**/*"
     - "app/**/*"
+    - "test/**/*"
+    - "docs/**/*"
+  discard-paths: no
+  base-directory: .
+  name: artifact-$(date +%Y-%m-%d)
+  secondary-artifacts:
+    node_modules_artifact:
+      files:
+        - "node_modules/**/*"
+      discard-paths: no
+      base-directory: .
+      name: node_modules-$(date +%Y-%m-%d)
+      when:
+        - $PACKAGE_JSON_CHANGED = "true"
