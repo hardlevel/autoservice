@@ -15,6 +15,7 @@ import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { last } from 'rxjs';
 import { Interval } from '@nestjs/schedule';
+import { LazyModuleLoader } from '@nestjs/core';
 
 interface RequestOptions {
   method: string;
@@ -33,6 +34,7 @@ export class AutoserviceService implements OnApplicationBootstrap {
   attempts: number;
 
   constructor(
+    private lazyModuleLoader: LazyModuleLoader,
     @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
     private readonly config: ConfigService,
     private readonly sqsService: SqsService,
@@ -42,14 +44,26 @@ export class AutoserviceService implements OnApplicationBootstrap {
   ) { }
 
   async onApplicationBootstrap() {
-    this.isBusy = false;
-    this.sqsEmpty = true;
-    this.attempts = 0;
-    this.autoserviceQueue.drain();
-    await Promise.all([
-      this.startProcess(2024, 5),
-      this.startProcess(2025, 2),
-    ]);
+    try {
+      console.debug('Inicializando processo em onApplicationBootstrap');
+      this.isBusy = false;
+      this.sqsEmpty = true;
+      this.attempts = 0;
+
+      // Aguarda a drenagem da fila
+      await this.autoserviceQueue.drain();
+      console.debug('Fila drenada');
+
+      // Inicia os processos em paralelo
+      await Promise.all([
+        this.startProcess(2024, 5),
+        this.startProcess(2025, 2),
+      ]);
+
+      console.debug('Processos concluídos');
+    } catch (error) {
+      console.error('Erro durante onApplicationBootstrap:', error);
+    }
   }
 
 
