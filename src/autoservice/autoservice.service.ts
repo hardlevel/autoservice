@@ -6,7 +6,7 @@ import { Queue, isNotConnectionError } from 'bullmq';
 import { ConfigService } from '@nestjs/config';
 import { Message } from "@aws-sdk/client-sqs";
 import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/nestjs-sqs";
-import { Prisma } from '@prisma/client';
+// import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import * as moment from 'moment';
 import { CustomError } from '../common/errors/custom-error';
