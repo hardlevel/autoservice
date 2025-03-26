@@ -1,6 +1,11 @@
 module.exports = {
   apps: [{
-    script: 'dist/main.js',
+    name: 'Autoservice',
+    // script: 'dist/main.js',
+    script: 'pnpm',
+    args: 'run start:prod',
+    cwd: '/var/www/autoservice',
+    interpreter: 'none',
     watch: '.',
     ignore_watch: ["[\/\\]\./", "node modules", "logs"],
     autorestart: true,
