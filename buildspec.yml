@@ -12,6 +12,7 @@ phases:
   build:
     commands:
       - if [ "$PACKAGE_JSON_CHANGED" = "true" ]; then pnpm install; fi
+      - pnpm prisma generate
       - pnpm run build
 
   post_build:
