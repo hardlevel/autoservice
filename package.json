@@ -96,5 +96,8 @@
       "@nestjs/core",
       "nestjs-pino"
     ]
+  },
+  "engines": {
+    "node": "22.14.0"
   }
 }
