@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
+import { Inject, Injectable, Logger, LoggerService, OnApplicationBootstrap, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 import { InjectQueue } from '@nestjs/bullmq';
@@ -24,7 +24,7 @@ interface RequestOptions {
 }
 
 @Injectable()
-export class AutoserviceService implements OnModuleInit {
+export class AutoserviceService implements OnApplicationBootstrap {
   startDate
   endDate
   status: boolean;
@@ -41,7 +41,7 @@ export class AutoserviceService implements OnModuleInit {
     private readonly eventEmitter: EventEmitter2,
   ) { }
 
-  async onModuleInit() {
+  async onApplicationBootstrap() {
     this.isBusy = false;
     this.sqsEmpty = true;
     this.attempts = 0;
