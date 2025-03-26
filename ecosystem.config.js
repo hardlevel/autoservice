@@ -5,7 +5,7 @@ module.exports = {
     script: 'pnpm',
     args: 'run start:prod',
     cwd: '/var/www/autoservice',
-    interpreter: 'none',
+    interpreter: "/home/ubuntu/.local/share/pnpm/nodejs/22.14.0/bin/node",
     watch: '.',
     ignore_watch: ["[\/\\]\./", "node modules", "logs"],
     autorestart: true,
