@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Logger, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Logger, Query, BadRequestException } from '@nestjs/common';
 import { AutoserviceService } from './autoservice.service';
 import { UtilService } from '../util/util.service';
 import { ApiQuery } from '@nestjs/swagger';
@@ -78,21 +78,5 @@ export class AutoserviceController {
   @ApiQuery({ name: 'year', required: false, type: Number })
   async servicesStateYear(@Query('year') year?: number) {
     return this.autoserviceService.getServicesStateYear(year);
-  }
-
-  @Get('pecas_balcao')
-  @ApiQuery({ name: 'year', required: true, type: Number })
-  @ApiQuery({ name: 'month', required: false, type: Number })
-  @ApiQuery({ name: 'dn', required: false, type: String })
-  async pecasBalcao(@Query('year') year: number, @Query('month') month?: number, @Query('dn') dn?: string) {
-    return this.autoserviceService.getPecasBalcao(year, month, dn);
-  }
-
-  @Get('pecas_oficina')
-  @ApiQuery({ name: 'year', required: true, type: Number })
-  @ApiQuery({ name: 'month', required: false, type: Number })
-  @ApiQuery({ name: 'dn', required: false, type: String })
-  async pecasOficina(@Query('year') year: number, @Query('month') month?: number, @Query('dn') dn?: string) {
-    return this.autoserviceService.getPecasOficina(year, month, dn);
   }
 }

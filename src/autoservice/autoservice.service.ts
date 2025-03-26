@@ -13,9 +13,10 @@ import { CustomError } from '../common/errors/custom-error';
 import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
-import { last } from 'rxjs';
+import { last, startWith } from 'rxjs';
 import { Interval } from '@nestjs/schedule';
 import { LazyModuleLoader } from '@nestjs/core';
+import { Decimal } from '@prisma/client/runtime/library';
 
 interface RequestOptions {
   method: string;
@@ -45,18 +46,17 @@ export class AutoserviceService implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     try {
-      console.debug('Inicializando processo em onApplicationBootstrap');
       this.isBusy = false;
       this.sqsEmpty = true;
       this.attempts = 0;
 
-      // Aguarda a drenagem da fila
       await this.autoserviceQueue.drain();
-      console.debug('Fila drenada');
 
-      // Inicia os processos em paralelo
       await Promise.all([
-        this.startProcess(2024, 5),
+        this.parseMonthMoment({ year: 2024, month: 0 }),
+        this.parseMonthMoment({ year: 2024, month: 1 }),
+        this.parseMonthMoment({ year: 2024, month: 2 }),
+        this.parseMonthMoment({ year: 2024, month: 3 }),
         this.startProcess(2025, 2),
       ]);
 
@@ -458,6 +458,38 @@ export class AutoserviceService implements OnApplicationBootstrap {
     }
   }
 
+  async parseMonthMoment(data) {
+    console.log(`Processando dados de ${data.year}/${data.month}`);
+
+    let initialDate = moment().year(data.year).month(data.month).startOf('month');
+    let finalDate = moment().year(data.year).month(data.month).endOf('month');
+
+    console.log(initialDate.format(), finalDate.format());
+
+    let today = moment();
+
+    for (let day = initialDate.clone(); day.isSameOrBefore(finalDate); day.add(1, 'days')) {
+      const startTime = day.clone().startOf('day');
+      const endDateTime = day.clone().endOf('day');
+      // for (let hour = 0; hour <= 24; hour++) {
+      for (let hour = startTime.clone(); hour.isSameOrBefore(endDateTime); hour.add(1, 'hour')) {
+        if (hour.isBefore(today)) {
+          await this.requestData(hour, 1);
+        } else {
+          return; // Sai da função se ultrapassar o dia atual
+        }
+
+        if (this.util.isLastHourOfYear(hour)) {
+          await this.changeStatusLastParam(data.year);
+          return;
+        }
+
+        console.log(`Teste: Dia ${hour.format('YYYY-MM-DD')} Hora ${hour.format('HH:mm')}`);
+      }
+    }
+  }
+
+
   async requestData(date, interval) {
     const startDate = moment(date).format("YYYY-MM-DDTHH:mm:ss");
     const endDate = moment(date).add(interval, 'hour').format("YYYY-MM-DDTHH:mm:ss");
@@ -754,41 +786,5 @@ export class AutoserviceService implements OnApplicationBootstrap {
       page: skip,
       data
     };
-  }
-
-  async getPecasBalcao(year: number, month?: number, dn?: string) {
-    const where: any = {
-      mes_ano: {
-        startsWith: year.toString()
-      }
-    };
-
-    if (month !== undefined) {
-      where.mes_ano.endsWith = month.toString();
-    }
-
-    if (dn !== undefined) {
-      where.numero_do_dn = dn;
-    }
-
-    return this.prisma.pecas_balcao_view.findMany({ where });
-  }
-
-  async getPecasOficina(year: number, month?: number, dn?: string) {
-    const where: any = {
-      mes_ano: {
-        startsWith: year.toString()
-      }
-    };
-
-    if (month !== undefined) {
-      where.mes_ano.endsWith = month.toString();
-    }
-
-    if (dn !== undefined) {
-      where.numero_do_dn = dn;
-    }
-
-    return this.prisma.pecas_oficina_view.findMany({ where });
   }
 }
