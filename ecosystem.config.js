@@ -6,7 +6,8 @@ module.exports = {
     // args: 'run start:prod',
     // cwd: '/var/www/autoservice',
     // interpreter: "/home/ubuntu/.local/share/pnpm/node",
-    watch: '.',
+    // watch: '.',
+    watch: false,
     ignore_watch: ["[\/\\]\./", "node modules", "logs"],
     autorestart: true,
     env: {
