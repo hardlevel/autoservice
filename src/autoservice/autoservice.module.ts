@@ -72,7 +72,7 @@ import { AutoserviceHealthIndicator } from './autoservice.health';
       name: 'autoservice'
     }),
     BullModule.registerQueueAsync({
-      name: 'autoservice-2024'
+      name: 'mainProcess'
     }),
   ]
 })

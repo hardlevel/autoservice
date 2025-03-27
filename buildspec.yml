@@ -7,10 +7,10 @@ phases:
     commands:
       - aws codeartifact login --tool npm --repository autoservice-dependencies --domain autoservice --domain-owner 055542020254 --region us-east-1
       - npm install -g pnpm
-      - pnpm install
-      - git diff --quiet HEAD^ HEAD -- package.json || export PACKAGE_JSON_CHANGED=true
+      # - pnpm install
   build:
     commands:
+      - git diff --quiet HEAD^ HEAD -- package.json || export PACKAGE_JSON_CHANGED=true
       - if [ "$PACKAGE_JSON_CHANGED" = "true" ]; then pnpm install; fi
       - pnpm prisma generate
       - pnpm run build
