@@ -17,6 +17,7 @@ import { last, startWith } from 'rxjs';
 import { Interval } from '@nestjs/schedule';
 import { LazyModuleLoader } from '@nestjs/core';
 import { Decimal } from '@prisma/client/runtime/library';
+import { DateService } from '../util/date.service';
 
 interface RequestOptions {
   method: string;
@@ -42,6 +43,7 @@ export class AutoserviceService implements OnApplicationBootstrap {
     private readonly prisma: PrismaService,
     private readonly util: UtilService,
     private readonly eventEmitter: EventEmitter2,
+    private readonly dates: DateService
   ) { }
 
   async onApplicationBootstrap() {
@@ -53,14 +55,26 @@ export class AutoserviceService implements OnApplicationBootstrap {
       await this.autoserviceQueue.drain();
 
       await Promise.all([
-        this.startProcess(2025, 2),
-        this.startProcess(2024, 5),
+        this.addJobsToQueue('mainProcess', { year: 2025, month: 0 }),
+        this.addJobsToQueue('mainProcess', { year: 2024, month: 0 })
+        // this.startProcess(2025, 2),
+        // this.startProcess(2024, 5),
+        // this.startProcess(2024, 0),
       ]);
 
       console.debug('Processos concluídos');
     } catch (error) {
       console.error('Erro durante onApplicationBootstrap:', error);
     }
+  }
+
+  public async addJobsToQueue(queue, data) {
+    return this.autoserviceQueue.add(queue, data, {
+      delay: 5000,
+      attempts: 10,
+      backoff: 3,
+      removeOnComplete: true
+    });
   }
 
 
