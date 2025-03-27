@@ -34,6 +34,7 @@ export class AutoserviceConsumer extends WorkerHost {
     }
 
     async main(startDate, endDate) {
+        console.debug('Processando fila no novo consumer', startDate);
         const { access_token } = await this.getToken();
         try {
             while (!this.autoservice.sqsEmpty) {
@@ -45,6 +46,10 @@ export class AutoserviceConsumer extends WorkerHost {
                 await this.autoservice.checkQueue();
                 await this.util.timer(3, "Fila do BullMQ ocupada, aguardando...");
             }
+
+            this.autoservice.startDate = startDate;
+            this.autoservice.endDate = endDate;
+
             await this.makeRequest(access_token, startDate, endDate);
         } catch (error) {
             this.autoservice.setLog('error', 'Falha ao solicitar dados da API do autoservice', error.message);
