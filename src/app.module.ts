@@ -5,8 +5,6 @@ import { AutoserviceModule } from './autoservice/autoservice.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
 import { PrismaModule } from './prisma/prisma.module';
-// import { APP_FILTER } from '@nestjs/core';
-// import { GlobalErrorHandler } from './error.listenner';
 import { HealthModule } from './health/health.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ErrorInterceptor } from './common/errors/error.interceptor';
@@ -43,17 +41,6 @@ import { AutoserviceHealthIndicator } from './autoservice/autoservice.health';
     UtilModule,
     AssobravModule,
     ScheduleModule.forRoot(),
-    // LoggerModule.forRoot({
-    //   pinoHttp: {
-    //     level: process.env.NODE_ENV == 'prod' ? 'info' : 'debug',
-    //     customLevels: { autoserviceError: 35 },
-    //     useOnlyCustomLevels: false,
-    //     transport: {
-    //       target: 'pino/file',
-    //       options: { destination: 'logs/autoservice.log' },
-    //     },
-    //   },
-    // }),
     LoggerModule.forRoot({
       pinoHttp: {
         level: process.env.NODE_ENV === 'prod' ? 'info' : 'debug',
@@ -78,35 +65,11 @@ import { AutoserviceHealthIndicator } from './autoservice/autoservice.health';
             },
           ],
         },
-        // genReqId: (req) => req.headers['x-request-id'] || req.id,
-        // customProps: (req, res) => ({
-        //   context: 'HTTP',
-        // }),
         timestamp: () => `,"time":"${new Date().toISOString()}"`,
         base: { service: 'autoservice-api', version: '1.0.0' },
         messageKey: 'message',
       },
     })
-
-    // LoggerModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory: async (config: ConfigService) => {
-    //     return {
-    //       pinoHttp: {
-    //         name: 'Autoservice',
-    //         transport: {
-    //           target: 'pino-pretty'
-    //         },
-    //         stream: pino.destination({
-    //           dest: './logs/autoservice.log',
-    //           minLength: 4096,
-    //           sync: false
-    //         })
-    //       }
-    //     }
-    //   }
-    // })
   ],
   controllers: [AppController],
   providers: [
