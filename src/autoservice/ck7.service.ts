@@ -46,29 +46,49 @@ export class Ck7Service {
         const data = { ...this.util.extractData(ck7001, fields) };
 
         try {
-            let ck = await this.prisma.ck7001.findUnique({
+            // let ck = await this.prisma.ck7001.findUnique({
+            //     where: {
+            //         ck7001_cod: {
+            //             numero_da_nota_fiscal: ck7001.numero_da_nota_fiscal,
+            //             numero_do_dn: ck7001.numero_do_dn
+            //         }
+            //     }
+            // });
+
+            // if (ck) {
+            //     await this.prisma.ck7001.update({
+            //         where: {
+            //             id: ck.id
+            //         },
+            //         data
+            //     });
+            // } else {
+            //     ck = await this.prisma.ck7001.create({ data });
+            // }
+
+            // if (ck.created_at == ck.modified_at) {
+            //     await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7001', 1);
+            // }
+            const ck = await this.prisma.ck7001.upsert({
                 where: {
                     ck7001_cod: {
                         numero_da_nota_fiscal: ck7001.numero_da_nota_fiscal,
                         numero_do_dn: ck7001.numero_do_dn
                     }
+                },
+                create: data,
+                update: data,
+                select: {
+                    id: true,
+                    created_at: true,
+                    modified_at: true
                 }
             });
 
-            if (ck) {
-                await this.prisma.ck7001.update({
-                    where: {
-                        id: ck.id
-                    },
-                    data
-                });
-            } else {
-                ck = await this.prisma.ck7001.create({ data });
-            }
-
-            if (ck.created_at == ck.modified_at) {
+            if (ck.created_at.getTime() === ck.modified_at.getTime()) {
                 await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7001', 1);
             }
+
 
             if (ck7001.CK7002) await this.ck7002(ck.id, ck7001.CK7002);
             if (ck7001.CK7003) await this.ck7003(ck.id, ck7001.CK7003);
