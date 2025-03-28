@@ -23,8 +23,8 @@ export class QueueService implements OnApplicationBootstrap {
     ) { }
 
     public async onApplicationBootstrap() {
-        await this.autoservice.drain();
-        console.log('fila drenada');
+        // await this.autoservice.drain();
+        // console.log('fila drenada');
     }
 
     @Interval(10000)
@@ -76,38 +76,45 @@ export class QueueService implements OnApplicationBootstrap {
     }
 
     public async addJobsToQueue(queue, data) {
-        return this[queue].add(queue, data, {
+        // Verifique se a fila está pausada
+        const isPaused = await this[queue].isPaused();
+        if (isPaused) {
+            await this[queue].resume();
+            console.log(`Fila ${queue} retomada para adicionar novo job`);
+        }
+
+        const job = await this[queue].add(queue, data, {
             delay: 5000,
             attempts: 10,
             backoff: 3,
             removeOnComplete: true
         });
+
+        console.log(`Job adicionado à fila ${queue}: ${job.id}`);
+        return job;
     }
 
     async checkQueue() {
         try {
+            const isPaused = await this.autoservice.isPaused();
             const activeCount = await this.autoservice.getActiveCount();
             const waitingCount = await this.autoservice.getWaitingCount();
 
-            if (activeCount === 0 && waitingCount === 0) {
-                console.warn(`Nenhuma tarefa ativa. Pausando a fila...`);
-                const wasPaused = await this.handleQueue();  // Usando handleQueue para pausar
-                if (wasPaused !== false) {
-                    this.isBusy = false;
-                }
-            } else {
-                const wasResumed = await this.handleQueue();  // Usando handleQueue para retomar
-                if (activeCount === 0) {
-                    if (wasResumed === true) {
-                        await this.autoservice.pause();
-                    }
-                }
-                console.log(`Fila ativa: ${activeCount} tarefas em execução.`);
+            // Se há jobs para processar e a fila está pausada, retome-a
+            if ((activeCount > 0 || waitingCount > 0) && isPaused) {
+                await this.autoservice.resume();
+                console.log(`Fila retomada: ${activeCount} ativos, ${waitingCount} em espera`);
+                this.isBusy = true;
+            }
+            // Se não há jobs e a fila está ativa, pause-a
+            else if (activeCount === 0 && waitingCount === 0 && !isPaused) {
+                await this.autoservice.pause();
+                console.log('Fila pausada: sem jobs para processar');
+                this.isBusy = false;
             }
         } catch (error) {
             console.error('Erro ao verificar a fila:', error);
         }
-        return;
     }
 
     async handleQueue() {
@@ -127,20 +134,22 @@ export class QueueService implements OnApplicationBootstrap {
     }
 
     public async getActiveJobs(queue) {
-        const activeJobs = await this[queue].getActive();
+        const activeJobs = await this[queue].getJobCounts();
         return activeJobs;
     }
 
     public async jobAlreadyAdded(queue, data) {
-        const jobs = await this.getActiveJobs(queue);
-        if (jobs.length > 0) {
-            for (let job of jobs) {
-                const jobData = job.data;
-                if (jobData.startDate === data.startDate && jobData.endDate === data.endDate) {
-                    return true;
-                }
+        // Obtenha os jobs em espera
+        const waitingJobs = await this[queue].getJobs(['waiting']);
+
+        // Verifique se algum job tem os mesmos dados
+        for (const job of waitingJobs) {
+            const jobData = job.data;
+            if (jobData.startDate === data.startDate && jobData.endDate === data.endDate) {
+                return true;
             }
         }
+
         return false;
     }
 
