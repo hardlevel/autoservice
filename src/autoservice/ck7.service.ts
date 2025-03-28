@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { AutoserviceService } from './autoservice.service';
 import { UtilService } from '../util/util.service';
 import { CustomError } from '../common/errors/custom-error';
+import { LogService } from './log.service';
 //import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
@@ -17,8 +18,8 @@ export class Ck7Service {
         private readonly config: ConfigService,
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
-        private readonly util: UtilService
-        //@InjectPinoLogger(Ck7Service.name) private readonly logger: PinoLogger
+        private readonly util: UtilService,
+        private readonly log: LogService
     ) {
         this.date = this.util.getDate();
     }
@@ -46,29 +47,6 @@ export class Ck7Service {
         const data = { ...this.util.extractData(ck7001, fields) };
 
         try {
-            // let ck = await this.prisma.ck7001.findUnique({
-            //     where: {
-            //         ck7001_cod: {
-            //             numero_da_nota_fiscal: ck7001.numero_da_nota_fiscal,
-            //             numero_do_dn: ck7001.numero_do_dn
-            //         }
-            //     }
-            // });
-
-            // if (ck) {
-            //     await this.prisma.ck7001.update({
-            //         where: {
-            //             id: ck.id
-            //         },
-            //         data
-            //     });
-            // } else {
-            //     ck = await this.prisma.ck7001.create({ data });
-            // }
-
-            // if (ck.created_at == ck.modified_at) {
-            //     await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7001', 1);
-            // }
             const ck = await this.prisma.ck7001.upsert({
                 where: {
                     ck7001_cod: {
@@ -102,7 +80,7 @@ export class Ck7Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.autoservice.setLog('error', 'Falha ao registrar CK7001', error.message, this.startDate, this.endDate);
+            this.log.setLog('error', 'Falha ao registrar CK7001', error.message, this.startDate, this.endDate);
             return;
         }
     }
@@ -152,7 +130,7 @@ export class Ck7Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.autoservice.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
+            this.log.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
             return;
         }
     }
@@ -184,7 +162,7 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.autoservice.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
+                this.log.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -218,7 +196,7 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.autoservice.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
+                this.log.setLog('error', 'Falha ao registrar CK7002', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -259,7 +237,7 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.autoservice.setLog('error', 'Falha ao registrar CK7003', error.message, this.startDate, this.endDate);
+                this.log.setLog('error', 'Falha ao registrar CK7003', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -313,7 +291,7 @@ export class Ck7Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.autoservice.setLog('error', 'Falha ao registrar CK7004', error.message, this.startDate, this.endDate);
+                this.log.setLog('error', 'Falha ao registrar CK7004', error.message, this.startDate, this.endDate);
                 return;
             }
         }

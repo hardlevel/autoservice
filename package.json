@@ -23,7 +23,7 @@
     "reset": "npx prisma migrate reset"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.775.0",
+    "@aws-sdk/client-sqs": "^3.777.0",
     "@nestjs/axios": "^4.0.0",
     "@nestjs/bullmq": "^11.0.2",
     "@nestjs/common": "^11.0.12",
