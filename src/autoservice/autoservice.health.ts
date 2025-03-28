@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { AutoserviceService } from './autoservice.service';
 import { HealthCheckError, HealthIndicator, HealthIndicatorResult } from '@nestjs/terminus';
 import { QueueService } from './queue.service';
 import { SqsConsumer } from './sqs.consumer';
@@ -7,7 +6,6 @@ import { SqsConsumer } from './sqs.consumer';
 @Injectable()
 export class AutoserviceHealthIndicator extends HealthIndicator {
     constructor(
-        private readonly autoservice: AutoserviceService,
         private readonly queue: QueueService,
         private readonly sqs: SqsConsumer
     ) { super() }

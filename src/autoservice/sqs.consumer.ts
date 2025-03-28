@@ -23,7 +23,6 @@ export class SqsConsumer implements OnApplicationBootstrap {
     ) { }
 
     public async onApplicationBootstrap() {
-        console.log('onApplicationBootstrap');
         this.observeSqs();
     }
 
@@ -55,8 +54,12 @@ export class SqsConsumer implements OnApplicationBootstrap {
 
     public observeSqs() {
         this.emitter.waitFor('event').then(function (data) {
-            console.log(data); // ['bar']
+            console.log('Evento recebido:', data);
         });
+    }
+
+    private async purgeQueue() {
+        await this.sqsService.purgeQueue('autoservice');
     }
 
     @SqsConsumerEventHandler('autoservice', 'empty')
@@ -68,16 +71,19 @@ export class SqsConsumer implements OnApplicationBootstrap {
     @SqsConsumerEventHandler('autoservice', 'aborted')
     public onAbort() {
         this.sqsEmpty = true;
+        this.emitter.emit('event', 'sqsEmpty');
     }
 
     @SqsConsumerEventHandler('autoservice', 'stopped')
     public onStop() {
         this.sqsEmpty = true;
+        this.emitter.emit('event', 'sqsEmpty');
     }
 
     @SqsConsumerEventHandler('autoservice', 'timeout_error')
     public onTimeout(error: Error, message: Message) {
         this.sqsEmpty = true;
+        this.emitter.emit('event', 'sqsEmpty');
     }
 
     @SqsConsumerEventHandler('autoservice', 'message_received')
