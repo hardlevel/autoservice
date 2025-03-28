@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, OnApplicationBootstrap, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, Logger, LoggerService, OnApplicationBootstrap, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
 import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
 import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
 import { InjectQueue } from '@nestjs/bullmq';
@@ -13,17 +13,25 @@ import { CustomError } from '../common/errors/custom-error';
 import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
-import { last, startWith } from 'rxjs';
+import { catchError, firstValueFrom, last, retry, startWith } from 'rxjs';
 import { Interval } from '@nestjs/schedule';
 import { LazyModuleLoader } from '@nestjs/core';
 import { Decimal } from '@prisma/client/runtime/library';
 import { DateService } from '../util/date.service';
+import { AxiosError } from 'axios';
+import { HttpService } from '@nestjs/axios';
 
 interface RequestOptions {
   method: string;
   headers: any;
   body?: any;
   endpoint?: string;
+}
+
+interface TokenBody {
+  client_id: string;
+  client_secret: string;
+  grant_type: string;
 }
 
 @Injectable()
@@ -43,7 +51,8 @@ export class AutoserviceService implements OnApplicationBootstrap {
     private readonly prisma: PrismaService,
     private readonly util: UtilService,
     private readonly eventEmitter: EventEmitter2,
-    private readonly dates: DateService
+    private readonly dates: DateService,
+    private readonly httpService: HttpService
   ) { }
 
   async onApplicationBootstrap() {
@@ -55,8 +64,8 @@ export class AutoserviceService implements OnApplicationBootstrap {
       await this.autoserviceQueue.drain();
 
       await Promise.all([
-        this.addJobsToQueue('mainProcess', { year: 2025, month: 0 }),
-        this.addJobsToQueue('mainProcess', { year: 2024, month: 0 })
+        await this.dates.processYear(2024, 6, this.main),
+        await this.dates.processYear(2025, 0, this.main),
         // this.startProcess(2025, 2),
         // this.startProcess(2024, 5),
         // this.startProcess(2024, 0),
@@ -195,6 +204,86 @@ export class AutoserviceService implements OnApplicationBootstrap {
       return jobCounts;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async getToken() {
+    const { apiId: client_id, apiSecret: client_secret, url } = this.config.get('token');
+    const body: TokenBody = {
+      client_id,
+      client_secret,
+      grant_type: 'client_credentials'
+    };
+
+    try {
+      const response = await firstValueFrom(
+        this.httpService.post(url, body, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }),
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error('Error obtaining access token');
+    }
+  }
+
+  async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
+    const { url } = this.config.get('api');
+
+    try {
+      if (!access_token) throw new BadRequestException('Access Token não informado');
+      if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
+
+      const response = await firstValueFrom(
+        this.httpService.get(url, {
+          params: { dataInicio, dataFim },
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }).pipe(
+          retry({
+            count: Infinity,
+            delay: 30000,
+          }),
+          catchError((error: AxiosError) => {
+            this.setLog(
+              'error',
+              'Falha ao solicitar dados da API Autoservice',
+              error.message,
+              dataInicio,
+              dataFim
+            );
+            throw new BadRequestException('Falha ao solicitar dados da API Autoservice');
+          }),
+        ),
+      );
+    } catch (error) {
+      throw new Error('Error obtaining access token: ' + error.message);
+    }
+  }
+
+  async main(startDate, endDate) {
+    console.debug('Processando fila no novo consumer', startDate);
+    const { access_token } = await this.getToken();
+    try {
+      while (!this.sqsEmpty) {
+        console.log("SQS ainda processando mensagens...");
+        await this.util.timer(3, "Aguardando SQS processar mensagens...");
+      }
+
+      while (this.isBusy) {
+        await this.checkQueue();
+        await this.util.timer(3, "Fila do BullMQ ocupada, aguardando...");
+      }
+
+      this.startDate = startDate;
+      this.endDate = endDate;
+
+      await this.makeRequest(access_token, startDate, endDate);
+    } catch (error) {
+      this.setLog('error', 'Falha ao solicitar dados da API do autoservice', error.message);
     }
   }
 
