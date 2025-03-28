@@ -1,22 +1,10 @@
 import { BadRequestException, Inject, Injectable, Logger, LoggerService, OnApplicationBootstrap, OnModuleInit, ServiceUnavailableException } from '@nestjs/common';
-import { CreateAutoserviceDto } from './dto/create-autoservice.dto';
-import { UpdateAutoserviceDto } from './dto/update-autoservice.dto';
-import { InjectQueue } from '@nestjs/bullmq';
-import { Queue, isNotConnectionError } from 'bullmq';
 import { ConfigService } from '@nestjs/config';
-import { Message } from "@aws-sdk/client-sqs";
-import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/nestjs-sqs";
-// import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
-import * as moment from 'moment';
-import { CustomError } from '../common/errors/custom-error';
-import { ErrorMessages } from '../common/errors/messages';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { catchError, firstValueFrom, last, retry, startWith } from 'rxjs';
 import { Interval } from '@nestjs/schedule';
 import { LazyModuleLoader } from '@nestjs/core';
-import { Decimal } from '@prisma/client/runtime/library';
 import { DateService } from '../util/date.service';
 import { AxiosError } from 'axios';
 import { HttpService } from '@nestjs/axios';
@@ -50,13 +38,17 @@ export class AutoserviceService implements OnApplicationBootstrap {
     private readonly log: LogService,
   ) { }
 
+  @OnEvent('*')
+  testEvent(payload) { console.log(payload); }
+
   async onApplicationBootstrap() {
+
     try {
       await Promise.all([
         // await this.dates.processYear(2024, 6, this.main),
         // await this.dates.processYear(2025, 0, this.main),
         // this.startProcess(2025, 0),
-        this.main(2024, 5),
+        this.init(2024, 5),
         // this.startProcess(2024, 0),
       ]);
 
@@ -84,16 +76,16 @@ export class AutoserviceService implements OnApplicationBootstrap {
       );
       return response.data;
     } catch (error) {
-      throw new Error('Error obtaining access token');
+      throw new BadRequestException('Error obtaining access token');
     }
   }
 
   async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
-    const { url } = this.config.get('api');
-
+    console.log('Solicitando dados retroativos:', dataInicio);
     try {
       if (!access_token) throw new BadRequestException('Access Token não informado');
       if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
+      const { url } = this.config.get('api');
 
       const response = await firstValueFrom(
         this.httpService.get(url, {
@@ -123,9 +115,8 @@ export class AutoserviceService implements OnApplicationBootstrap {
     }
   }
 
-  async main(startDate, endDate) {
+  async mainProcess(startDate, endDate) {
     console.debug('Processando fila no novo consumer', startDate);
-    const { access_token } = await this.getToken();
     try {
       // while (!this.sqsEmpty) {
       //   console.log("SQS ainda processando mensagens...");
@@ -138,6 +129,8 @@ export class AutoserviceService implements OnApplicationBootstrap {
       // }
       this.eventEmitter.waitFor('sqsEmpty');
 
+      const { access_token } = await this.getToken();
+
       this.startDate = startDate;
       this.endDate = endDate;
 
@@ -147,6 +140,16 @@ export class AutoserviceService implements OnApplicationBootstrap {
     }
   }
 
+  public async init(
+    year: number = 2024,
+    month: number = 0,
+    day: number = 1,
+    hour: number = 0,
+    minutes: number = 0,
+    seconds: number = 0,
+    interval = 1) {
+    return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess);
+  }
 
   // async startProcess(year = 2024, month = 0, day = 1, hour = 0, minutes = 0, interval = 1) {
   //   const data = { year, month, day, hour, minutes, interval };

@@ -1,11 +1,9 @@
-import { Message } from "@aws-sdk/client-sqs";
 import { InjectQueue } from "@nestjs/bullmq";
 import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
 import { Interval } from "@nestjs/schedule";
-import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/nestjs-sqs";
 import { Job, JobsOptions, Queue } from "bullmq";
 import { UtilService } from "../util/util.service";
 import { DateService } from "../util/date.service";

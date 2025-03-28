@@ -79,8 +79,8 @@ import { AutoserviceHealthIndicator } from './autoservice/autoservice.health';
       provide: APP_INTERCEPTOR,
       useClass: ErrorInterceptor,
     },
-    UtilService,
-    AutoserviceHealthIndicator
+    // UtilService,
+    // AutoserviceHealthIndicator
   ],
 })
 export class AppModule { }

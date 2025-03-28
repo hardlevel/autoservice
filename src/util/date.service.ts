@@ -93,8 +93,17 @@ export class DateService {
         }
     }
 
-    public async completeYear(year: number = 2024, callback?) {
-        let date = new Date(`${year}-01-01T00:00:00:00Z`).getTime();
+    public async processCompleteTimestamp(
+        year: number = 2024,
+        month: number = 0,
+        day: number = 1,
+        hours: number = 0,
+        minutes: number = 0,
+        seconds: number = 0,
+        callback?
+    ) {
+        const dateStr = this.setDate(year, month, day, hours, minutes, seconds);
+        let date = new Date(`${dateStr}:00Z`).getTime();
         const finalDate = new Date(`${year}-12-31T23:59:59:00Z`).getTime();
         const oneHour = 60 * 60 * 1000;
         while (date <= finalDate) {
@@ -108,12 +117,12 @@ export class DateService {
 
     public timestampToDate(timestamp: number): string {
         const date = new Date(timestamp);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
+        const year = date.getUTCFullYear();
+        const month = date.getUTCMonth() + 1;
+        const day = date.getUTCDate();
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+        const seconds = date.getUTCSeconds();
         return this.setDate(year, month, day, hours, minutes, seconds);
     }
 
@@ -126,5 +135,16 @@ export class DateService {
         const minutes = date.getUTCMinutes();
         const seconds = date.getUTCSeconds();
         return this.getDates(year, month, day, hours, minutes, seconds);
+    }
+
+    public getDateObject(dateStr: string): any {
+        const date = new Date(dateStr);
+        const year = date.getUTCFullYear();
+        const month = date.getUTCMonth() + 1;
+        const day = date.getUTCDate();
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+        const seconds = date.getUTCSeconds();
+        return { date, year, month, day, hours, minutes, seconds };
     }
 }
