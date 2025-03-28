@@ -81,6 +81,9 @@ import { LogService } from './log.service';
     BullModule.registerQueueAsync({
       name: 'autoservice'
     }),
+    BullModule.registerQueueAsync({
+      name: 'mainJobs'
+    }),
   ]
 })
 export class AutoserviceModule { }

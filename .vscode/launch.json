@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Run pino",
-            "runtimeExecutable": "pino",
+            "runtimeExecutable": "pino-pretty",
             "cwd": "${workspaceFolder}/node_modules/pino",
             "args": []
         },
@@ -20,6 +20,19 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/autoservice/autoservice.service.ts",
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/src/main.ts",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"

@@ -24,17 +24,28 @@ export class DateService {
     }
 
     public setDate(year: number = 2024, month: number = 0, day: number = 0, hours: number = 0, minutes: number = 0, seconds: number = 0): string {
-        const fMonth = month.toString().padStart(2, '0');
+        if (hours === -1) {
+            if (day === 1) {
+                day = this.daysInMonth(year, (month - 1));
+                month--;
+            } else {
+                day--;
+            }
+            hours = 23;
+            minutes = 59;
+            seconds = 59;
+        }
+        const fMonth = (month + 1).toString().padStart(2, '0');
         const fDay = day.toString().padStart(2, '0');
         const fHours = hours.toString().padStart(2, '0');
         const fMinutes = minutes.toString().padStart(2, '0');
         const fSeconds = minutes.toString().padStart(2, '0');
-        return `${year}-${month}-${day}T${hours}:${minutes}:${fSeconds}`;
+        return `${year}-${fMonth}-${fDay}T${fHours}:${fMinutes}:${fSeconds}`;
     }
 
-    public getDates(year: number = 2024, month: number = 0, day: number = 1, hours: number = 0, minutes: number = 0, interval: number = 1) {
-        const startDate = this.setDate(year, month, day, (hours - interval), minutes);
-        const endDate = this.setDate(year, month, day, hours, minutes);
+    public getDates(year: number = 2024, month: number = 0, day: number = 1, hours: number = 0, minutes: number = 0, seconds: number = 0, interval: number = 1) {
+        const startDate = this.setDate(year, month, day, hours - interval, minutes, seconds);
+        const endDate = this.setDate(year, month, day, hours, minutes, seconds);
         return { startDate, endDate };
     }
 
@@ -102,14 +113,13 @@ export class DateService {
         seconds: number = 0,
         callback?
     ) {
-        const dateStr = this.setDate(year, month, day, hours, minutes, seconds);
-        let date = new Date(`${dateStr}:00Z`).getTime();
-        const finalDate = new Date(`${year}-12-31T23:59:59:00Z`).getTime();
+        let date = Date.UTC(year, month, day, hours, minutes, seconds);
+        const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
         const oneHour = 60 * 60 * 1000;
         while (date <= finalDate) {
             if (callback) {
                 const { startDate, endDate } = this.timestampToDates(date);
-                await callback(date);
+                await callback(startDate, endDate);
             }
             date += oneHour;
         }
@@ -129,7 +139,7 @@ export class DateService {
     public timestampToDates(timestamp: number): any {
         const date = new Date(timestamp);
         const year = date.getUTCFullYear();
-        const month = date.getUTCMonth() + 1;
+        const month = date.getUTCMonth();
         const day = date.getUTCDate();
         const hours = date.getUTCHours();
         const minutes = date.getUTCMinutes();

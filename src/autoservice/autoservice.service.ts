@@ -9,6 +9,7 @@ import { DateService } from '../util/date.service';
 import { AxiosError } from 'axios';
 import { HttpService } from '@nestjs/axios';
 import { LogService } from './log.service';
+import { QueueService } from './queue.service';
 
 interface RequestOptions {
   method: string;
@@ -36,6 +37,7 @@ export class AutoserviceService implements OnApplicationBootstrap {
     private readonly dates: DateService,
     private readonly httpService: HttpService,
     private readonly log: LogService,
+    private readonly queue: QueueService,
   ) { }
 
   @OnEvent('*')
@@ -133,7 +135,7 @@ export class AutoserviceService implements OnApplicationBootstrap {
 
       this.startDate = startDate;
       this.endDate = endDate;
-
+      await this.log.saveLastParams(startDate);
       await this.makeRequest(access_token, startDate, endDate);
     } catch (error) {
       this.log.setLog('error', 'Falha ao solicitar dados da API do autoservice', error.message);
@@ -148,7 +150,18 @@ export class AutoserviceService implements OnApplicationBootstrap {
     minutes: number = 0,
     seconds: number = 0,
     interval = 1) {
-    return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess);
+    // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
+    return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
+  }
+
+  async sendJob(startDate, endDate) {
+    try {
+      const job = await this.queue.addJobsToQueue('mainJobs', { startDate, endDate });
+      console.log('Job enviado para a fila:', job.id, startDate);
+      return job;
+    } catch (error) {
+      throw new Error('Error sending job to queue: ' + error.message);
+    }
   }
 
   // async startProcess(year = 2024, month = 0, day = 1, hour = 0, minutes = 0, interval = 1) {

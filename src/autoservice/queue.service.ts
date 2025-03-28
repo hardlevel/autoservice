@@ -15,6 +15,7 @@ export class QueueService implements OnApplicationBootstrap {
     constructor(
         private lazyModuleLoader: LazyModuleLoader,
         @InjectQueue('autoservice') private readonly autoserviceQueue: Queue,
+        @InjectQueue('mainJobs') private readonly mainJobs: Queue,
         private readonly config: ConfigService,
         private readonly util: UtilService,
         private readonly eventEmitter: EventEmitter2,
