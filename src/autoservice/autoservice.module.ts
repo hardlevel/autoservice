@@ -14,6 +14,7 @@ import { Ck5Service } from './ck5.service';
 import { Ck6Service } from './ck6.service';
 import { UtilModule } from '../util/util.module';
 import { AutoserviceHealthIndicator } from './autoservice.health';
+import { HttpModule } from '@nestjs/axios';
 // import { LoggerModule } from 'nestjs-pino';
 
 @Module({
@@ -36,6 +37,7 @@ import { AutoserviceHealthIndicator } from './autoservice.health';
     UtilModule,
     ConfigModule,
     PrismaModule,
+    HttpModule,
     SqsModule.registerAsync({
       // imports: [ConfigModule.forFeature(autoserviceConfig)],
       useFactory: async (configuration: ConfigService) => {
@@ -70,9 +72,6 @@ import { AutoserviceHealthIndicator } from './autoservice.health';
     }),
     BullModule.registerQueueAsync({
       name: 'autoservice'
-    }),
-    BullModule.registerQueueAsync({
-      name: 'mainProcess'
     }),
   ]
 })
