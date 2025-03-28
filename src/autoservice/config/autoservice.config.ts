@@ -1,7 +1,7 @@
 export default () => ({
     token: {
-        appId: process.env.API_ID,
-        appSecret: process.env.API_SECRET,
+        client_id: process.env.API_ID,
+        client_secret: process.env.API_SECRET,
         url: process.env.TOKEN_URL
     },
     api: {

@@ -88,10 +88,10 @@ export class AutoserviceProcessor extends WorkerHost {
 
     @OnWorkerEvent('completed')
     async onCompleted(job: Job) {
-        console.log(`Job ${job.id} completed.`);
+        console.log(`Job ${job.id} completed. Fila MAINJOBS`);
         // const last = await this.prisma.findOne(1, 'lastSearch');
         // console.log('ultima pesquisa', last);
-        this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
+        this.eventEmitter.emit('mainjobs.complete', { id: job.id, status: true });
     }
 
     @OnWorkerEvent('failed')

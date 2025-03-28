@@ -10,6 +10,7 @@ import { AxiosError } from 'axios';
 import { HttpService } from '@nestjs/axios';
 import { LogService } from './log.service';
 import { QueueService } from './queue.service';
+import { SqsConsumer } from './sqs.consumer';
 
 interface RequestOptions {
   method: string;
@@ -25,7 +26,7 @@ interface TokenBody {
 }
 
 @Injectable()
-export class AutoserviceService implements OnApplicationBootstrap {
+export class AutoserviceService implements OnModuleInit {
   startDate: string;
   endDate: string;
 
@@ -38,12 +39,20 @@ export class AutoserviceService implements OnApplicationBootstrap {
     private readonly httpService: HttpService,
     private readonly log: LogService,
     private readonly queue: QueueService,
+    private readonly sqs: SqsConsumer
   ) { }
 
-  @OnEvent('*')
-  testEvent(payload) { console.log(payload); }
+  // @OnEvent('*')
+  // testEvent(payload) { console.log(payload); }
 
-  async onApplicationBootstrap() {
+  @OnEvent('updateDates')
+  updateDates(payload) {
+    const { startDate, endDate } = payload;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+  // async onApplicationBootstrap() {
+  async onModuleInit() {
 
     try {
       await Promise.all([
@@ -61,7 +70,7 @@ export class AutoserviceService implements OnApplicationBootstrap {
   }
 
   async getToken() {
-    const { apiId: client_id, apiSecret: client_secret, url } = this.config.get('token');
+    const { client_id, client_secret, url } = this.config.get('token');;
     const body: TokenBody = {
       client_id,
       client_secret,
@@ -129,13 +138,22 @@ export class AutoserviceService implements OnApplicationBootstrap {
       //   await this.queuecheckQueue();
       //   await this.util.timer(3, "Fila do BullMQ ocupada, aguardando...");
       // }
-      this.eventEmitter.waitFor('sqsEmpty');
+      // Verifica se o SQS já está vazio
+      const sqsStatus = await this.sqs.getSqsStatus();
+      if (sqsStatus === true) {
+        // SQS já está vazio, prosseguir diretamente
+      } else {
+        // Aguardar o evento sqsEmpty
+        await this.eventEmitter.waitFor('sqsEmpty');
+      }
 
       const { access_token } = await this.getToken();
 
       this.startDate = startDate;
       this.endDate = endDate;
-      await this.log.saveLastParams(startDate);
+      const dateObj = this.dates.getDateObject(startDate);
+      const { day, hour, month, year } = dateObj;
+      await this.log.saveLastParams({ day, hour, month, year });
       await this.makeRequest(access_token, startDate, endDate);
     } catch (error) {
       this.log.setLog('error', 'Falha ao solicitar dados da API do autoservice', error.message);
@@ -150,14 +168,15 @@ export class AutoserviceService implements OnApplicationBootstrap {
     minutes: number = 0,
     seconds: number = 0,
     interval = 1) {
-    // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
-    return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
+    return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
+    // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
   }
 
   async sendJob(startDate, endDate) {
     try {
+      if (await this.queue.jobAlreadyAdded('mainJobs', { startDate, endDate })) return;
       const job = await this.queue.addJobsToQueue('mainJobs', { startDate, endDate });
-      console.log('Job enviado para a fila:', job.id, startDate);
+      console.log('Job enviado para a fila mainjobs:', job.id, startDate);
       return job;
     } catch (error) {
       throw new Error('Error sending job to queue: ' + error.message);
