@@ -66,7 +66,7 @@ export class AutoserviceService implements OnApplicationBootstrap {
       await Promise.all([
         // await this.dates.processYear(2024, 6, this.main),
         // await this.dates.processYear(2025, 0, this.main),
-        this.startProcess(2025, 0),
+        // this.startProcess(2025, 0),
         this.startProcess(2024, 5),
         // this.startProcess(2024, 0),
       ]);
