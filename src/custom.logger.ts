@@ -1,23 +1,13 @@
 import { LoggerService, ConsoleLogger } from '@nestjs/common';
-// import pino from 'pino';
 import { LoggerModule, PinoLogger, Logger } from 'nestjs-pino';
 
 export class CustomLogger implements LoggerService {
   private readonly consoleLogger = new ConsoleLogger('Autoservice');
-  // private readonly pinoLogger = PinoLogger;
   private readonly pinoLogger: PinoLogger;
 
   constructor(pinoLogger: PinoLogger) {
     this.pinoLogger = pinoLogger;
   }
-  // (
-  //   {
-  //     level: process.env.LOG_LEVEL || 'info',
-  //     customLevels: { autoserviceError: 35 },
-  //     useOnlyCustomLevels: false
-  //   },
-  //   pino.destination('logs/autoservice.log'),
-  // );
 
   log(message: string) {
     this.consoleLogger.log(message);

@@ -19,24 +19,14 @@ async function bootstrap() {
     fs.mkdirSync(logDirectory, { recursive: true });
   }
 
-  // const app = await NestFactory.create(AppModule, { bufferLogs: true });
-  // console.debug('iniciando app');
   const app = await NestFactory.create(AppModule);
 
-  // console.debug('iniciando pino')
   const pinoLogger = await app.resolve(PinoLogger);
 
   app.useLogger(new CustomLogger(pinoLogger));
-  // await app.init();
-  // app.useGlobalFilters(new AllExceptionsFilter());
-  const { httpAdapter } = app.get(HttpAdapterHost);
-  // app.useGlobalFilters(
-  //   new AllExceptionsFilter(httpAdapter),
-  //   new PrismaClientExceptionFilter(httpAdapter)
-  // );
-  // app.useGlobalInterceptors(new ErrorsInterceptor());
 
-  // console.debug('iniciando swagger');
+  const { httpAdapter } = app.get(HttpAdapterHost);
+
   const config = new DocumentBuilder()
     .setTitle('Autoservice')
     .setDescription('Volkswagen Autoservice')
@@ -46,16 +36,10 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
-  // console.debug('iniciando pipes');
   app.useGlobalPipes(
     new ValidationPipe(),
-    // new MoneyPipe(),
-    // new DatePipe()
   );
 
-  // console.debug('iniciando escuta na porta 3000');
   await app.listen(3000);
-
-  // console.debug('todos processos realizados');
 }
 bootstrap();

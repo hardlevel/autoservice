@@ -1,15 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { AutoserviceService } from './autoservice.service';
 import { HealthCheckError, HealthIndicator, HealthIndicatorResult } from '@nestjs/terminus';
+import { QueueService } from './queue.service';
+import { SqsConsumer } from './sqs.consumer';
 
 @Injectable()
 export class AutoserviceHealthIndicator extends HealthIndicator {
     constructor(
         private readonly autoservice: AutoserviceService,
+        private readonly queue: QueueService,
+        private readonly sqs: SqsConsumer
     ) { super() }
 
     async isHealthySqs(key: string): Promise<HealthIndicatorResult> {
-        const status = await this.autoservice.getSqsStatus();
+        const status = await this.sqs.getSqsStatus();
         const isHealthy = status === true;
 
         const result = this.getStatus(key, isHealthy, {
@@ -22,7 +26,7 @@ export class AutoserviceHealthIndicator extends HealthIndicator {
     }
 
     async isHealthyBull(key: string): Promise<HealthIndicatorResult> {
-        const status = await this.autoservice.getBullMqStatus();
+        const status = await this.queue.getBullMqStatus();
         const isHealthy = status.failed === 0;
 
         const result = this.getStatus(key, isHealthy, {

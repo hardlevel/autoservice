@@ -15,6 +15,10 @@ import { Ck7Service } from './ck7.service';
 import { UtilModule } from '../util/util.module';
 import { AutoserviceHealthIndicator } from './autoservice.health';
 import { HttpModule } from '@nestjs/axios';
+import { SqsConsumer } from './sqs.consumer';
+import { QueueService } from './queue.service';
+import { ApiService } from './api.service';
+import { LogService } from './log.service';
 // import { LoggerModule } from 'nestjs-pino';
 
 @Module({
@@ -29,6 +33,10 @@ import { HttpModule } from '@nestjs/axios';
     Ck5Service,
     Ck6Service,
     Ck7Service,
+    SqsConsumer,
+    QueueService,
+    ApiService,
+    LogService,
     AutoserviceHealthIndicator
   ],
   exports: [AutoserviceHealthIndicator, AutoserviceService],
