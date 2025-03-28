@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { Logger } from "nestjs-pino";
+import { Logger } from "@nestjs/common";
 import { DateService } from "../util/date.service";
 
 @Injectable()
@@ -27,14 +27,8 @@ export class LogService {
     }
 
     async saveLastParams(data) {
-        let year: number;
-        if (typeof data === 'string') {
-            year = this.dates.getDateObject(data).year;
-        } else {
-            year = parseInt(data.year)
-        }
         return this.prisma.lastParams.upsert({
-            where: { year },
+            where: { year: parseInt(data.year) },
             create: data,
             update: data
         });

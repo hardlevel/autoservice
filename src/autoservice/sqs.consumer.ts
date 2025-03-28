@@ -1,4 +1,4 @@
-import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
 import { EventEmitter2 } from "@nestjs/event-emitter";
@@ -18,7 +18,7 @@ export class SqsConsumer implements OnApplicationBootstrap {
         private readonly sqsService: SqsService,
         private readonly emitter: EventEmitter2,
         private readonly queue: QueueService,
-        private readonly autoservice: AutoserviceService,
+        @Inject(forwardRef(() => AutoserviceService)) private readonly autoservice: AutoserviceService,
         private readonly log: LogService
     ) { }
 
