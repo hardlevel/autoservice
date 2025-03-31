@@ -110,6 +110,7 @@ export class AutoserviceService implements OnModuleInit {
             delay: 30000,
           }),
           catchError((error: AxiosError) => {
+            console.log('Error:', error.message);
             this.log.setLog(
               'error',
               'Falha ao solicitar dados da API Autoservice',
@@ -150,9 +151,13 @@ export class AutoserviceService implements OnModuleInit {
       // }
 
       const { access_token } = await this.getToken();
+      if (!access_token) {
+        throw new Error('Falha ao obter token de acesso');
+      }
 
       this.startDate = startDate;
       this.endDate = endDate;
+      console.log(startDate, endDate, this.startDate, this.endDate);
       const dateObj = this.dates.getDateObject(startDate);
       const { day, hour, month, year } = dateObj;
       await this.log.saveLastParams({ day, hour, month, year });
