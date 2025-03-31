@@ -52,11 +52,6 @@ export class AutoserviceService implements OnModuleInit {
     this.endDate = endDate;
   }
 
-  @Interval(10000)
-  async checkSqs() {
-    console.log('Quantidade de mensagens no SQS:', await this.sqs.getSqsMessagesCount());
-  }
-
   // async onApplicationBootstrap() {
   async onModuleInit() {
 
@@ -215,7 +210,6 @@ export class AutoserviceService implements OnModuleInit {
     callback?
   ) {
     let date = Date.UTC(year, month, day, hours, minutes, seconds);
-    console.log(date, year, month, day, hours, minutes, seconds);
     const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
     const oneHour = 60 * 60 * 1000;
     while (date <= finalDate) {
