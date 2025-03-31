@@ -94,10 +94,10 @@ export class AutoserviceService implements OnModuleInit {
   async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
     console.log('Solicitando dados retroativos:', dataInicio);
     try {
-      if (!access_token) throw new BadRequestException('Access Token não informado');
-      if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
+      // if (!access_token) throw new BadRequestException('Access Token não informado');
+      // if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
       const { url } = this.config.get('api');
-
+      console.log(url);
       const response = await firstValueFrom(
         this.httpService.get(url, {
           params: { dataInicio, dataFim },
@@ -121,6 +121,7 @@ export class AutoserviceService implements OnModuleInit {
           }),
         ),
       );
+      return response.data;
     } catch (error) {
       throw new Error('Error obtaining access token: ' + error.message);
     }
