@@ -187,7 +187,7 @@ export class AutoserviceService implements OnModuleInit {
         return;
       }
       if (lastYear <= year && lastMonth <= month && lastDay <= day && lastHour <= hour) {
-        return this.processCompleteTimestamp(lastYear, lastMonth, lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
+        return this.processCompleteTimestamp(lastYear, (lastMonth - 1), lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
       }
     }
     // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
