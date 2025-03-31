@@ -139,14 +139,14 @@ export class AutoserviceService implements OnModuleInit {
       //   await this.util.timer(3, "Fila do BullMQ ocupada, aguardando...");
       // }
       // Verifica se o SQS já está vazio
-      const sqsStatus = await this.sqs.getSqsStatus();
-      console.log('SQS Status:', sqsStatus);
-      if (sqsStatus === true) {
-        // SQS já está vazio, prosseguir diretamente
-      } else {
-        // Aguardar o evento sqsEmpty
-        await this.eventEmitter.waitFor('sqsEmpty');
-      }
+      // const sqsStatus = await this.sqs.getSqsStatus();
+      // console.log('SQS Status:', sqsStatus);
+      // if (sqsStatus === true) {
+      //   // SQS já está vazio, prosseguir diretamente
+      // } else {
+      //   // Aguardar o evento sqsEmpty
+      //   await this.eventEmitter.waitFor('sqsEmpty');
+      // }
 
       const { access_token } = await this.getToken();
 
@@ -169,7 +169,7 @@ export class AutoserviceService implements OnModuleInit {
     minutes: number = 0,
     seconds: number = 0,
     interval = 1) {
-    return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
+    return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
     // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
   }
 
@@ -181,6 +181,28 @@ export class AutoserviceService implements OnModuleInit {
       return job;
     } catch (error) {
       throw new Error('Error sending job to queue: ' + error.message);
+    }
+  }
+
+  public async processCompleteTimestamp(
+    year: number = 2024,
+    month: number = 0,
+    day: number = 1,
+    hours: number = 0,
+    minutes: number = 0,
+    seconds: number = 0,
+    callback?
+  ) {
+    let date = Date.UTC(year, month, day, hours, minutes, seconds);
+    const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
+    const oneHour = 60 * 60 * 1000;
+    while (date <= finalDate) {
+      if (callback) {
+        const { startDate, endDate } = this.dates.timestampToDates(date);
+        await callback(startDate, endDate);
+      }
+      date += oneHour;
+      await this.eventEmitter.waitFor('sqsEmpty');
     }
   }
 
