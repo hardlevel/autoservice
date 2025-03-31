@@ -205,6 +205,8 @@ export class AutoserviceService implements OnModuleInit {
     while (date <= finalDate) {
       if (callback) {
         const { startDate, endDate } = this.dates.timestampToDates(date);
+        console.log('processo timestamp', startDate, date);
+        console.log('quantidade de mensages', await this.sqs.getSqsMessagesCount());
         console.log('estado do sqs', await this.sqs.getSqsStatus());
         await callback(startDate, endDate);
       }
