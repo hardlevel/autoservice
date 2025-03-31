@@ -48,6 +48,8 @@ export class SqsConsumer implements OnApplicationBootstrap {
     public async getSqsStatus(): Promise<boolean> {
         try {
             const { isPolling, isRunning } = await this.sqsService.consumers.get('autoservice').instance.status;
+            const result = await this.sqsService.getQueueAttributes('autoservice');
+            console.log(result);
             return isPolling && isRunning;
         } catch (error) {
             this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
