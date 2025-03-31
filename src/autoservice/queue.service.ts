@@ -23,7 +23,7 @@ export class QueueService implements OnApplicationBootstrap {
     ) { }
 
     public async onApplicationBootstrap() {
-        // await this.autoservice.drain();
+        await this.autoservice.drain();
         // console.log('fila drenada');
     }
 
