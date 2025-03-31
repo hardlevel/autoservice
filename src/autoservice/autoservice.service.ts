@@ -51,6 +51,12 @@ export class AutoserviceService implements OnModuleInit {
     this.startDate = startDate;
     this.endDate = endDate;
   }
+
+  @Interval(10000)
+  async checkSqs() {
+    console.log('Quantidade de mensagens no SQS:', await this.sqs.getSqsMessagesCount());
+  }
+
   // async onApplicationBootstrap() {
   async onModuleInit() {
 
