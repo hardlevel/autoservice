@@ -14,6 +14,7 @@ import { AllExceptionsFilter } from '../common/errors/all.exceptions';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as moment from 'moment';
 import { UtilService } from '../util/util.service';
+import { SqsConsumer } from './sqs.consumer';
 interface JobLog {
     jobId: number;
     started_at: Date;
@@ -71,6 +72,7 @@ export class AutoserviceProcessor extends WorkerHost {
         private readonly ck5service: Ck5Service,
         private readonly ck6service: Ck6Service,
         private readonly ck7service: Ck7Service,
+        private readonly sqs: SqsConsumer,
     ) {
         super();
     }
@@ -225,6 +227,8 @@ export class AutoserviceProcessor extends WorkerHost {
         console.log(`Job ${job.id} completed.`);
         // const last = await this.prisma.findOne(1, 'lastSearch');
         // console.log('ultima pesquisa', last);
+
+        console.log('Quantidade de mensagens no SQS:', await this.sqs.getSqsMessagesCount());
         this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
     }
 
