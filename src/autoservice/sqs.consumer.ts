@@ -58,6 +58,19 @@ export class SqsConsumer implements OnApplicationBootstrap {
     public async getSqsMessagesCount(): Promise<any> {
         try {
             const result = await this.sqsService.getQueueAttributes('autoservice');
+            this.emitter.emit('sqsEmpty');
+            return result.ApproximateNumberOfMessages;
+        } catch (error) {
+            this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
+            return [];
+        }
+    }
+
+    public async isSqsEmpty(): Promise<any> {
+        try {
+            const result = await this.sqsService.getQueueAttributes('autoservice');
+            const count = result.ApproximateNumberOfMessages;
+            console.log('tipo de count é', typeof count);
             return result.ApproximateNumberOfMessages;
         } catch (error) {
             this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
