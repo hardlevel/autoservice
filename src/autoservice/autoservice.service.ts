@@ -96,10 +96,10 @@ export class AutoserviceService implements OnModuleInit {
     try {
       // if (!access_token) throw new BadRequestException('Access Token não informado');
       // if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
-      const { url } = this.config.get('api');
-      console.log(url);
+      const { url, endpoint } = this.config.get('api');
+      const apiUrl = `${url}/${endpoint}`;
       const response = await firstValueFrom(
-        this.httpService.get(url, {
+        this.httpService.get(apiUrl, {
           params: { dataInicio, dataFim },
           headers: {
             Authorization: `Bearer ${access_token}`,
@@ -154,11 +154,13 @@ export class AutoserviceService implements OnModuleInit {
       if (!access_token) {
         throw new Error('Falha ao obter token de acesso');
       }
+      console.log('Token de acesso obtido:', access_token);
 
       this.startDate = startDate;
       this.endDate = endDate;
-      console.log(startDate, endDate, this.startDate, this.endDate);
+      console.log('datas parametrizadas', startDate, endDate, this.startDate, this.endDate);
       const dateObj = this.dates.getDateObject(startDate);
+      console.log('datas convertidas', dateObj);
       const { day, hour, month, year } = dateObj;
       await this.log.saveLastParams({ day, hour, month, year });
       await this.makeRequest(access_token, startDate, endDate);
@@ -205,9 +207,6 @@ export class AutoserviceService implements OnModuleInit {
     while (date <= finalDate) {
       if (callback) {
         const { startDate, endDate } = this.dates.timestampToDates(date);
-        console.log('processo timestamp', startDate, date);
-        console.log('quantidade de mensages', await this.sqs.getSqsMessagesCount());
-        console.log('estado do sqs', await this.sqs.getSqsStatus());
         await callback(startDate, endDate);
       }
       date += oneHour;

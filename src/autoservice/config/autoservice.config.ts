@@ -5,7 +5,8 @@ export default () => ({
         url: process.env.TOKEN_URL
     },
     api: {
-        url: process.env.API_URL
+        url: process.env.API_URL,
+        endpoint: 'findByPeriod'
     },
     sqs: {
         accessKeyId: process.env.SQS_ID,
