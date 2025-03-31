@@ -154,13 +154,10 @@ export class AutoserviceService implements OnModuleInit {
       if (!access_token) {
         throw new Error('Falha ao obter token de acesso');
       }
-      console.log('Token de acesso obtido:', access_token);
 
       this.startDate = startDate;
       this.endDate = endDate;
-      console.log('datas parametrizadas', startDate, endDate, this.startDate, this.endDate);
       const dateObj = this.dates.getDateObject(startDate);
-      console.log('datas convertidas', dateObj);
       const { day, hour, month, year } = dateObj;
       await this.log.saveLastParams({ day, hour, month, year });
       await this.makeRequest(access_token, startDate, endDate);
@@ -177,8 +174,18 @@ export class AutoserviceService implements OnModuleInit {
     minutes: number = 0,
     seconds: number = 0,
     interval = 1) {
-    return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
+    const lastParams = await this.log.getLastParams(2024);
+    if (lastParams) {
+      const { day: lastDay, hour: lastHour, month: lastMonth, year: lastYear } = lastParams;
+      if (year === lastYear && month === lastMonth && day === lastDay && hour === lastHour) {
+        return;
+      }
+      if (lastYear <= year && lastMonth <= month && lastDay <= day && lastHour <= hour) {
+        return this.processCompleteTimestamp(lastYear, lastMonth, lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
+      }
+    }
     // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
+    return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
   }
 
   async sendJob(startDate, endDate) {
