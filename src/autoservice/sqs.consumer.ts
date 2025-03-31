@@ -21,10 +21,13 @@ export class SqsConsumer implements OnApplicationBootstrap {
         @Inject(forwardRef(() => AutoserviceService)) private readonly autoservice: AutoserviceService,
         private readonly log: LogService
     ) { }
-
-    public async onApplicationBootstrap() {
-        this.observeSqs();
+    onApplicationBootstrap() {
+        throw new Error("Method not implemented.");
     }
+
+    // public async onApplicationBootstrap() {
+    //     this.observeSqs();
+    // }
 
     @SqsMessageHandler('autoservice', false)
     private async handleMessage(message: Message) {
@@ -52,11 +55,11 @@ export class SqsConsumer implements OnApplicationBootstrap {
         }
     }
 
-    public observeSqs() {
-        this.emitter.waitFor('event').then(function (data) {
-            console.log('Evento recebido:', data);
-        });
-    }
+    // public observeSqs() {
+    //     this.emitter.waitFor('event').then(function (data) {
+    //         console.log('Evento recebido:', data);
+    //     });
+    // }
 
     private async purgeQueue() {
         await this.sqsService.purgeQueue('autoservice');
