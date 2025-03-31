@@ -140,6 +140,7 @@ export class AutoserviceService implements OnModuleInit {
       // }
       // Verifica se o SQS já está vazio
       const sqsStatus = await this.sqs.getSqsStatus();
+      console.log('SQS Status:', sqsStatus);
       if (sqsStatus === true) {
         // SQS já está vazio, prosseguir diretamente
       } else {
