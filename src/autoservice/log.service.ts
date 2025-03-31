@@ -27,7 +27,6 @@ export class LogService {
     }
 
     async saveLastParams(data) {
-        console.log('salvando data', data);
         return this.prisma.lastParams.upsert({
             where: { year: parseInt(data.year) },
             create: data,
