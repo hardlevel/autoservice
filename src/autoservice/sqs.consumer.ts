@@ -48,8 +48,6 @@ export class SqsConsumer implements OnApplicationBootstrap {
     public async getSqsStatus(): Promise<boolean> {
         try {
             const { isPolling, isRunning } = await this.sqsService.consumers.get('autoservice').instance.status;
-            console.log(await this.getSqsMessagesCount());
-            console.log(await this.isSqsEmpty());
             return isPolling && isRunning;
         } catch (error) {
             this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
@@ -60,7 +58,6 @@ export class SqsConsumer implements OnApplicationBootstrap {
     public async getSqsMessagesCount(): Promise<any> {
         try {
             const result = await this.sqsService.getQueueAttributes('autoservice');
-            this.emitter.emit('sqsEmpty');
             return result.ApproximateNumberOfMessages;
         } catch (error) {
             this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
@@ -71,9 +68,26 @@ export class SqsConsumer implements OnApplicationBootstrap {
     public async isSqsEmpty(): Promise<any> {
         try {
             const result = await this.sqsService.getQueueAttributes('autoservice');
-            const count = result.ApproximateNumberOfMessages;
-            console.log('tipo de count é', typeof count);
-            return result.ApproximateNumberOfMessages;
+            const count = parseInt(result.ApproximateNumberOfMessages);
+            if (count === 0) {
+                return true;
+            }
+            return false;
+        } catch (error) {
+            this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
+            return [];
+        }
+    }
+
+    public async isSqsActiveAndEmpty(): Promise<any> {
+        try {
+            const isEmpty = await this.isSqsEmpty();
+            const isActive = await this.getSqsStatus();
+            if (isEmpty && isActive) {
+                this.emitter.emit('sqsEmpty', this.sqsEmpty);
+                return true;
+            }
+            return false;
         } catch (error) {
             this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
             return [];
@@ -93,25 +107,25 @@ export class SqsConsumer implements OnApplicationBootstrap {
     @SqsConsumerEventHandler('autoservice', 'empty')
     public onEmpty() {
         this.sqsEmpty = true;
-        this.emitter.emit('event', 'sqsEmpty');
+        this.emitter.emit('sqsEmpty', this.sqsEmpty);
     }
 
     @SqsConsumerEventHandler('autoservice', 'aborted')
     public onAbort() {
         this.sqsEmpty = true;
-        this.emitter.emit('event', 'sqsEmpty');
+        this.emitter.emit('sqsEmpty', this.sqsEmpty);
     }
 
     @SqsConsumerEventHandler('autoservice', 'stopped')
     public onStop() {
         this.sqsEmpty = true;
-        this.emitter.emit('event', 'sqsEmpty');
+        this.emitter.emit('sqsEmpty', this.sqsEmpty);
     }
 
     @SqsConsumerEventHandler('autoservice', 'timeout_error')
     public onTimeout(error: Error, message: Message) {
         this.sqsEmpty = true;
-        this.emitter.emit('event', 'sqsEmpty');
+        this.emitter.emit('sqsEmpty', this.sqsEmpty);
     }
 
     @SqsConsumerEventHandler('autoservice', 'message_received')
