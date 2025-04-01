@@ -136,7 +136,7 @@ export class AutoserviceService implements OnModuleInit {
   }
 
   async mainProcess(startDate, endDate) {
-    console.debug('Processando fila no novo consumer', startDate);
+    console.debug('Processando fila', startDate, endDate);
     try {
       // while (!this.sqsEmpty) {
       //   console.log("SQS ainda processando mensagens...");
@@ -192,7 +192,7 @@ export class AutoserviceService implements OnModuleInit {
       }
     }
     // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
-    return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.mainProcess.bind(this));
+    return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds);
   }
 
   async sendJob(startDate, endDate) {
@@ -224,7 +224,7 @@ export class AutoserviceService implements OnModuleInit {
         console.log('evento esperado recebido no while');
         if (callback) {
           const { startDate, endDate } = this.dates.timestampToDates(date);
-          await callback(startDate, endDate);
+          await this.mainProcess(startDate, endDate);
         }
         date += oneHour;
       });
