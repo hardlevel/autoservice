@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable, Logger, LoggerService, OnAppli
 import { ConfigService } from '@nestjs/config';
 import { UtilService } from '../util/util.service';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
-import { catchError, firstValueFrom, last, retry, startWith } from 'rxjs';
+import { catchError, firstValueFrom, last, retry, startWith, throwError, timer } from 'rxjs';
 import { Interval } from '@nestjs/schedule';
 import { LazyModuleLoader } from '@nestjs/core';
 import { DateService } from '../util/date.service';
@@ -97,26 +97,83 @@ export class AutoserviceService implements OnModuleInit {
     }
   }
 
+  // async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
+  //   console.log('Solicitando dados retroativos:', dataInicio);
+  //   try {
+  //     // if (!access_token) throw new BadRequestException('Access Token não informado');
+  //     // if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
+  //     const { url, endpoint } = this.config.get('api');
+  //     const apiUrl = `${url}/${endpoint}`;
+  //     const response = await firstValueFrom(
+  //       this.httpService.get(apiUrl, {
+  //         params: { dataInicio, dataFim },
+  //         headers: {
+  //           Authorization: `Bearer ${access_token}`,
+  //         },
+  //       }).pipe(
+  //         retry({
+  //           count: Infinity,
+  //           delay: 30000,
+  //         }),
+  //         catchError((error: AxiosError) => {
+  //           console.log('Error:', error.message);
+  //           this.log.setLog(
+  //             'error',
+  //             'Falha ao solicitar dados da API Autoservice',
+  //             error.message,
+  //             dataInicio,
+  //             dataFim
+  //           );
+  //           throw new BadRequestException('Falha ao solicitar dados da API Autoservice');
+  //         }),
+  //       ),
+  //     );
+  //     return response.data;
+  //   } catch (error) {
+  //     throw new Error('Error obtaining access token: ' + error.message);
+  //   }
+  // }
+
   async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
     console.log('Solicitando dados retroativos:', dataInicio);
+
     try {
-      // if (!access_token) throw new BadRequestException('Access Token não informado');
-      // if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
+      if (!access_token) throw new BadRequestException('Access Token não informado');
+      if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
+
       const { url, endpoint } = this.config.get('api');
       const apiUrl = `${url}/${endpoint}`;
+
+      let attempt = 0; // Contador de tentativas
+
       const response = await firstValueFrom(
         this.httpService.get(apiUrl, {
           params: { dataInicio, dataFim },
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
+          headers: { Authorization: `Bearer ${access_token}` },
         }).pipe(
           retry({
-            count: Infinity,
-            delay: 30000,
+            count: Infinity, // Tentará indefinidamente
+            delay: (error, retryCount) => {
+              attempt = retryCount;
+              console.warn(`Tentativa ${attempt}: API falhou. Retentando em 30s...`);
+
+              // Logar um alerta após um número alto de tentativas
+              if (attempt % 100 === 0) {
+                console.error(`⚠️ Atenção: ${attempt} tentativas falharam. Verifique a API.`);
+                this.log.setLog(
+                  'error',
+                  `⚠️ ${attempt} tentativas falharam ao solicitar dados da API Autoservice`,
+                  error.message,
+                  dataInicio,
+                  dataFim
+                );
+              }
+
+              return timer(30000);
+            },
           }),
           catchError((error: AxiosError) => {
-            console.log('Error:', error.message);
+            console.error('Erro crítico na API:', error.message);
             this.log.setLog(
               'error',
               'Falha ao solicitar dados da API Autoservice',
@@ -124,18 +181,24 @@ export class AutoserviceService implements OnModuleInit {
               dataInicio,
               dataFim
             );
-            throw new BadRequestException('Falha ao solicitar dados da API Autoservice');
+            return throwError(() => new BadRequestException('Falha ao solicitar dados da API Autoservice'));
           }),
-        ),
+        )
       );
+
+      console.log('Solicitação bem-sucedida após', attempt, 'tentativas.');
       return response.data;
+
     } catch (error) {
-      throw new Error('Error obtaining access token: ' + error.message);
+      console.error('Erro inesperado na solicitação:', error);
+      throw new BadRequestException('Erro ao obter os dados: ' + error.message);
     }
   }
 
+
   async mainProcess(startDate, endDate) {
     console.debug('Processando fila', startDate, endDate);
+    console.log('Ouvintes registrados para sqsEmpty:', this.eventEmitter.listeners('sqsEmpty'));
     try {
       // while (!this.sqsEmpty) {
       //   console.log("SQS ainda processando mensagens...");
@@ -226,7 +289,9 @@ export class AutoserviceService implements OnModuleInit {
     let date = Date.UTC(year, month, day, hours, minutes, seconds);
     const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
     const oneHour = 60 * 60 * 1000;
+    console.log('Ouvintes registrados para sqsEmpty2:', this.eventEmitter.listeners('sqsEmpty'));
     while (date <= finalDate) {
+      console.log('Ouvintes registrados para sqsEmpty3:', this.eventEmitter.listeners('sqsEmpty'));
       // await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
       //   console.log('evento esperado recebido no while');
       //   const { startDate, endDate } = this.dates.timestampToDates(date);
