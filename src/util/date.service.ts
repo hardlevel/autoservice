@@ -168,12 +168,12 @@ export class DateService {
         return true;
     }
 
-    public addDays(timestamp, days) {
+    public addDaysTs(timestamp, days) {
         const daysTimestamp = 86400000 * days;
         const newTimestamp = timestamp + daysTimestamp;
         const valid = this.isDateValid(newTimestamp);
         if (!valid) {
-            return this.addDays(newTimestamp, 1);
+            return this.addDaysTs(newTimestamp, 1);
         }
         return newTimestamp
     }
