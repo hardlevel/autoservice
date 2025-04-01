@@ -54,6 +54,10 @@ export class AutoserviceService implements OnModuleInit {
 
   // async onApplicationBootstrap() {
   async onModuleInit() {
+    console.log('atualizado!!!')
+    console.log('atualizado!!!')
+    console.log('atualizado!!!')
+    console.log('atualizado!!!')
     try {
       // await Promise.all([
       // await this.dates.processYear(2024, 6, this.main),
