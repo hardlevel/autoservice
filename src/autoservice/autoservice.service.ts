@@ -221,6 +221,7 @@ export class AutoserviceService implements OnModuleInit {
     const oneHour = 60 * 60 * 1000;
     while (date <= finalDate) {
       await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
+        console.log('evento esperado recebido no while');
         if (callback) {
           const { startDate, endDate } = this.dates.timestampToDates(date);
           await callback(startDate, endDate);
