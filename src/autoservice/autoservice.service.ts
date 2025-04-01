@@ -143,7 +143,7 @@ export class AutoserviceService implements OnModuleInit {
 
       const { url, endpoint } = this.config.get('api');
       const apiUrl = `${url}/${endpoint}`;
-      console.log(apiUrl);
+      console.log('url da api:', apiUrl, url, endpoint);
       let attempt = 0; // Contador de tentativas
 
       const response = await firstValueFrom(
