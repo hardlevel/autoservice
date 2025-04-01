@@ -70,6 +70,12 @@ export class AutoserviceService implements OnModuleInit {
     }
   }
 
+  @Interval(10000)
+  async checkSqs() {
+    console.debug('checando status do sqs');
+    return this.sqs.isSqsActiveAndEmpty();
+  }
+
   async getToken() {
     const { client_id, client_secret, url } = this.config.get('token');;
     const body: TokenBody = {
@@ -215,13 +221,12 @@ export class AutoserviceService implements OnModuleInit {
     const oneHour = 60 * 60 * 1000;
     while (date <= finalDate) {
       await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
-        console.log('sqsEmpty acionado', data);
+        if (callback) {
+          const { startDate, endDate } = this.dates.timestampToDates(date);
+          await callback(startDate, endDate);
+        }
+        date += oneHour;
       });
-      if (callback) {
-        const { startDate, endDate } = this.dates.timestampToDates(date);
-        await callback(startDate, endDate);
-      }
-      date += oneHour;
     }
   }
 
