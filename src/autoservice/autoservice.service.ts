@@ -295,7 +295,6 @@ export class AutoserviceService implements OnModuleInit {
     const oneHour = 60 * 60 * 1000;
     console.log('Ouvintes registrados para sqsEmpty2:', this.eventEmitter.listeners('sqsEmpty'));
     while (date <= finalDate) {
-      if (!this.dates.isDateValid(date)) date = this.dates.addDays(date, 1);
 
       console.log('teste de data: ', date,)
       console.log('Ouvintes registrados para sqsEmpty3:', this.eventEmitter.listeners('sqsEmpty'));
