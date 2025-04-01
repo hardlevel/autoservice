@@ -308,10 +308,10 @@ export class AutoserviceService implements OnModuleInit {
       const isSqsEmpty = await this.sqs.isSqsActiveAndEmpty();
 
       if (isSqsEmpty) {
-        const { startDate, endDate } = this.dates.timestampToDates(date.getTime());
+        const { startDate, endDate } = this.dates.timestampToDates(date);
         await this.mainProcess(startDate, endDate);
-        // date += oneHour;
-        date = new Date(date.getTime() + oneHour);
+        date += oneHour;
+        // date = new Date(date.getTime() + oneHour);
       } else {
         // Esperar um pouco antes de verificar novamente
         await new Promise(resolve => setTimeout(resolve, 5000));
