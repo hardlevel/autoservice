@@ -25,13 +25,10 @@ export class DateService {
 
     public setDate(year: number = 2024, month: number = 0, day: number = 0, hours: number = 0, minutes: number = 0, seconds: number = 0): string {
         if (hours === -1) {
-            if (day === 1) {
-                month--
-                day = this.daysInMonth(year, month);
-            } else {
-                day--;
-            }
-            hours = 23;
+            const previousDay = new Date(year, month, day, hours);
+            month = previousDay.getMonth();
+            day = previousDay.getDate();
+            hours = previousDay.getHours();
         }
         const fMonth = (month + 1).toString().padStart(2, '0');
         const fDay = day.toString().padStart(2, '0');
