@@ -54,17 +54,16 @@ export class AutoserviceService implements OnModuleInit {
 
   // async onApplicationBootstrap() {
   async onModuleInit() {
-
     try {
-      await Promise.all([
-        // await this.dates.processYear(2024, 6, this.main),
-        // await this.dates.processYear(2025, 0, this.main),
-        // this.startProcess(2025, 0),
-        this.init(2024, 6),
+      // await Promise.all([
+      // await this.dates.processYear(2024, 6, this.main),
+      // await this.dates.processYear(2025, 0, this.main),
+      // this.startProcess(2025, 0),
+      await this.init(2024, 6),
         // this.startProcess(2024, 0),
-      ]);
+        // ]);
 
-      console.debug('Processos concluídos');
+        console.debug('Processos concluídos');
     } catch (error) {
       console.error('Erro durante onApplicationBootstrap:', error);
     }
@@ -222,10 +221,8 @@ export class AutoserviceService implements OnModuleInit {
     while (date <= finalDate) {
       await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
         console.log('evento esperado recebido no while');
-        if (callback) {
-          const { startDate, endDate } = this.dates.timestampToDates(date);
-          await this.mainProcess(startDate, endDate);
-        }
+        const { startDate, endDate } = this.dates.timestampToDates(date);
+        await this.mainProcess(startDate, endDate);
         date += oneHour;
       });
     }
