@@ -227,7 +227,7 @@ export class AutoserviceProcessor extends WorkerHost {
         console.log(`Job ${job.id} completed.`);
         // const last = await this.prisma.findOne(1, 'lastSearch');
         // console.log('ultima pesquisa', last);
-        await this.sqs.isSqsActiveAndEmpty();
+        // await this.sqs.isSqsActiveAndEmpty();
         this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
     }
 
