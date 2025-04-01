@@ -299,10 +299,8 @@ export class AutoserviceService implements OnModuleInit {
       for (let d = day; d <= daysInMonth; d++) {
         for (let h = hours; h < 24; h++) {
           const { startDate, endDate } = this.dates.getDates(year, m, d, h, minutes, seconds);
-          this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
-            await this.mainProcess(startDate, endDate);
-            h = h + 1;
-          });
+          await this.eventEmitter.waitFor('sqsEmpty')
+          await this.mainProcess(startDate, endDate);
         }
       }
     }
