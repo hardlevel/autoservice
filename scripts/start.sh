@@ -27,7 +27,6 @@ cp /home/ubuntu/.env_prod /var/www/autoservice/.env
 # pm2 start ecosystem.config.js --silent & disown
 nohup pm2 start ecosystem.config.js > /dev/null 2>&1 &
 
-sudo rm -rf /opt/codedeploy-agent/deployment-root/*
 echo "Aplicação iniciada com sucesso!"
 exit 0
 
