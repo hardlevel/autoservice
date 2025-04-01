@@ -296,16 +296,13 @@ export class AutoserviceService implements OnModuleInit {
     console.log('Ouvintes registrados para sqsEmpty2:', this.eventEmitter.listeners('sqsEmpty'));
     for (let m = month; m <= 11; m++) {
       const daysInMonth = this.dates.daysInMonth(year, m);
-      for (let d = 1; d <= daysInMonth; d++) {
-        for (let h = 0; h < 24; h++) {
-          for (let m = 0; m < 60; m += 15) {
-            const { startDate, endDate } = this.dates.getDates(year, m, d, h, m);
-            this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
-              console.log('evento esperado recebido no while');
-              await this.mainProcess(startDate, endDate);
-            });
+      for (let d = day; d <= daysInMonth; d++) {
+        for (let h = hours; h < 24; h++) {
+          const { startDate, endDate } = this.dates.getDates(year, m, d, h, minutes, seconds);
+          this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
+            await this.mainProcess(startDate, endDate);
             h = h + 1;
-          }
+          });
         }
       }
     }
