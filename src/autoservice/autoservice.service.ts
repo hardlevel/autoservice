@@ -142,7 +142,8 @@ export class AutoserviceService implements OnModuleInit {
       if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
       console.log(access_token);
       const { url, endpoint } = this.config.get('api');
-      const apiUrl = `${url}/${endpoint}`;
+      const params = this.util.jsonToUrlParams({ dataInicio, dataFim });
+      const apiUrl = `${url}/${endpoint}?${params}`;
       console.log('url da api:', apiUrl, url, endpoint, dataFim, dataInicio);
       let attempt = 0; // Contador de tentativas
 
@@ -286,8 +287,10 @@ export class AutoserviceService implements OnModuleInit {
     callback?
   ) {
     console.log('Processando timestamp:', year, month, day, hours, minutes, seconds);
-    let date = Date.UTC(year, month, day, hours, minutes, seconds);
-    const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
+    // let date = Date.UTC(year, month, day, hours, minutes, seconds);
+    let date = new Date(Date.UTC(year, month, day, hours, minutes, seconds));
+    // const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
+    const finalDate = new Date(Date.UTC(year, 11, 31, 23, 59, 59)); // Final de 31 de Dezembro de 2024
     const oneHour = 60 * 60 * 1000;
     console.log('Ouvintes registrados para sqsEmpty2:', this.eventEmitter.listeners('sqsEmpty'));
     while (date <= finalDate) {
@@ -301,9 +304,10 @@ export class AutoserviceService implements OnModuleInit {
       const isSqsEmpty = await this.sqs.isSqsActiveAndEmpty();
 
       if (isSqsEmpty) {
-        const { startDate, endDate } = this.dates.timestampToDates(date);
+        const { startDate, endDate } = this.dates.timestampToDates(date.getTime());
         await this.mainProcess(startDate, endDate);
-        date += oneHour;
+        // date += oneHour;
+        date = new Date(date.getTime() + oneHour);
       } else {
         // Esperar um pouco antes de verificar novamente
         await new Promise(resolve => setTimeout(resolve, 5000));

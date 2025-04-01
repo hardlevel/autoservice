@@ -216,4 +216,14 @@ export class UtilService {
         const date2 = date1.clone().subtract(interval, 'hour');
         return { startDate: date2.format(format), endDate: date1.format(format) };
     }
+
+    jsonToUrlParams(json: Record<string, any>): string {
+        const params = new URLSearchParams();
+
+        Object.entries(json).forEach(([key, value]) => {
+            params.append(key, value);
+        });
+
+        return params.toString();
+    }
 }
