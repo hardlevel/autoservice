@@ -227,12 +227,23 @@ export class AutoserviceService implements OnModuleInit {
     const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
     const oneHour = 60 * 60 * 1000;
     while (date <= finalDate) {
-      await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
-        console.log('evento esperado recebido no while');
+      // await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
+      //   console.log('evento esperado recebido no while');
+      //   const { startDate, endDate } = this.dates.timestampToDates(date);
+      //   await this.mainProcess(startDate, endDate);
+      //   date += oneHour;
+      // });
+      const isSqsEmpty = await this.sqs.isSqsActiveAndEmpty();
+
+      if (isSqsEmpty) {
         const { startDate, endDate } = this.dates.timestampToDates(date);
         await this.mainProcess(startDate, endDate);
         date += oneHour;
-      });
+      } else {
+        // Esperar um pouco antes de verificar novamente
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.log('Aguardando SQS esvaziar...');
+      }
     }
   }
 
