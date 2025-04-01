@@ -143,7 +143,7 @@ export class AutoserviceService implements OnModuleInit {
 
       const { url, endpoint } = this.config.get('api');
       const apiUrl = `${url}/${endpoint}`;
-
+      console.log(apiUrl);
       let attempt = 0; // Contador de tentativas
 
       const response = await firstValueFrom(
@@ -156,7 +156,7 @@ export class AutoserviceService implements OnModuleInit {
             delay: (error, retryCount) => {
               attempt = retryCount;
               console.warn(`Tentativa ${attempt}: API falhou. Retentando em 30s...`);
-
+              console.error(error);
               // Logar um alerta após um número alto de tentativas
               if (attempt % 100 === 0) {
                 console.error(`⚠️ Atenção: ${attempt} tentativas falharam. Verifique a API.`);
