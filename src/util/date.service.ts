@@ -155,4 +155,25 @@ export class DateService {
         const seconds = date.getUTCSeconds();
         return { date, year, month, day, hour, minutes, seconds };
     }
+
+    public isDateValid(timestamp) {
+        if (isNaN(timestamp)) {
+            return false;
+        }
+        const date = new Date(timestamp);
+        if (isNaN(date.getTime())) {
+            return false;
+        }
+        return true;
+    }
+
+    public addDays(timestamp, days) {
+        const daysTimestamp = 86400000 * days;
+        const newTimestamp = timestamp + daysTimestamp;
+        const valid = this.isDateValid(newTimestamp);
+        if (!valid) {
+            return this.addDays(newTimestamp, 1);
+        }
+        return newTimestamp
+    }
 }

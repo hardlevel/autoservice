@@ -288,13 +288,16 @@ export class AutoserviceService implements OnModuleInit {
     callback?
   ) {
     console.log('Processando timestamp:', year, month, day, hours, minutes, seconds);
-    // let date = Date.UTC(year, month, day, hours, minutes, seconds);
-    let date = new Date(Date.UTC(year, month, day, hours, minutes, seconds));
-    // const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
-    const finalDate = new Date(Date.UTC(year, 11, 31, 23, 59, 59)); // Final de 31 de Dezembro de 2024
+    let date = Date.UTC(year, month, day, hours, minutes, seconds);
+    const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
+    // let date = new Date(Date.UTC(year, month, day, hours, minutes, seconds));
+    // const finalDate = new Date(Date.UTC(year, 11, 31, 23, 59, 59)); // Final de 31 de Dezembro de 2024
     const oneHour = 60 * 60 * 1000;
     console.log('Ouvintes registrados para sqsEmpty2:', this.eventEmitter.listeners('sqsEmpty'));
     while (date <= finalDate) {
+      if (!this.dates.isDateValid(date)) date = this.dates.addDays(date, 1);
+
+      console.log('teste de data: ', date,)
       console.log('Ouvintes registrados para sqsEmpty3:', this.eventEmitter.listeners('sqsEmpty'));
       // await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
       //   console.log('evento esperado recebido no while');
