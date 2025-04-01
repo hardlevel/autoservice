@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
-import { EventEmitter2 } from "@nestjs/event-emitter";
+import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
 import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/nestjs-sqs";
 import { QueueService } from "./queue.service";
 import { Message } from "@aws-sdk/client-sqs";
@@ -85,6 +85,7 @@ export class SqsConsumer implements OnApplicationBootstrap {
             const isActive = await this.getSqsStatus();
             console.log('estado do SQS, vazio:', isEmpty, 'ativo: ', isActive);
             if (isEmpty && isActive) {
+                console.log('esta vazio, emitindo evento!');
                 this.emitter.emit('sqsEmpty');
                 return true;
             }
@@ -140,8 +141,14 @@ export class SqsConsumer implements OnApplicationBootstrap {
         console.log('aguardando conclusão');
     }
 
-    @SqsConsumerEventHandler('queueName', 'processing_error')
+    @SqsConsumerEventHandler('autoservice', 'processing_error')
     public onProcessingError(error: Error, message: Message) {
         this.log.setLog('error', 'Há algum problema no SQS externo', error.message, this.autoservice.startDate, this.autoservice.endDate)
+    }
+
+    @OnEvent('sqsEmpty')
+    public onEmptyEvent(data) {
+        console.log('evento recebido', data);
+        return;
     }
 }
