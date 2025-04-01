@@ -140,10 +140,10 @@ export class AutoserviceService implements OnModuleInit {
     try {
       if (!access_token) throw new BadRequestException('Access Token não informado');
       if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
-
+      console.log(access_token);
       const { url, endpoint } = this.config.get('api');
       const apiUrl = `${url}/${endpoint}`;
-      console.log('url da api:', apiUrl, url, endpoint);
+      console.log('url da api:', apiUrl, url, endpoint, dataFim, dataInicio);
       let attempt = 0; // Contador de tentativas
 
       const response = await firstValueFrom(
