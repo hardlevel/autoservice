@@ -83,8 +83,9 @@ export class SqsConsumer implements OnApplicationBootstrap {
         try {
             const isEmpty = await this.isSqsEmpty();
             const isActive = await this.getSqsStatus();
+            console.log('estado do SQS, vazio:', isEmpty, 'ativo: ', isActive);
             if (isEmpty && isActive) {
-                this.emitter.emit('sqsEmpty', this.sqsEmpty);
+                this.emitter.emit('sqsEmpty');
                 return true;
             }
             return false;
