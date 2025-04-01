@@ -79,22 +79,32 @@ export class SqsConsumer implements OnApplicationBootstrap {
         }
     }
 
-    public async isSqsActiveAndEmpty(): Promise<any> {
+    public async isSqsActiveAndEmpty(): Promise<boolean> {
         try {
             const isEmpty = await this.isSqsEmpty();
             const isActive = await this.getSqsStatus();
-            console.log('estado do SQS, vazio:', isEmpty, 'ativo: ', isActive);
+
+            console.log('Estado do SQS - Vazio:', isEmpty, 'Ativo:', isActive);
+
             if (isEmpty && isActive) {
-                console.log('esta vazio, emitindo evento!');
+                console.log('Está vazio, emitindo evento!');
                 this.emitter.emit('sqsEmpty');
                 return true;
             }
+
             return false;
         } catch (error) {
-            this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
-            return [];
+            this.log.setLog(
+                'error',
+                'Não foi possível verificar o status do SQS',
+                error?.message || error.toString(),
+                this.autoservice.startDate,
+                this.autoservice.endDate
+            );
+            return false;
         }
     }
+
 
     // public observeSqs() {
     //     this.emitter.waitFor('event').then(function (data) {
@@ -146,9 +156,9 @@ export class SqsConsumer implements OnApplicationBootstrap {
         this.log.setLog('error', 'Há algum problema no SQS externo', error.message, this.autoservice.startDate, this.autoservice.endDate)
     }
 
-    @OnEvent('sqsEmpty')
-    public onEmptyEvent(data) {
-        console.log('evento recebido', data);
-        return;
-    }
+    // @OnEvent('sqsEmpty')
+    // public onEmptyEvent(data) {
+    //     console.log('evento recebido', data);
+    //     return;
+    // }
 }
