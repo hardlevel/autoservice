@@ -288,11 +288,6 @@ export class AutoserviceService implements OnModuleInit {
     callback?
   ) {
     console.log('Processando timestamp:', year, month, day, hours, minutes, seconds);
-    // let date = Date.UTC(year, month, day, hours, minutes, seconds);
-    // const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
-    // let date = new Date(Date.UTC(year, month, day, hours, minutes, seconds));
-    // const finalDate = new Date(Date.UTC(year, 11, 31, 23, 59, 59)); // Final de 31 de Dezembro de 2024
-    // const oneHour = 60 * 60 * 1000;
     console.log('Ouvintes registrados para sqsEmpty2:', this.eventEmitter.listeners('sqsEmpty'));
     for (let m = month; m <= 11; m++) {
       const daysInMonth = this.dates.daysInMonth(year, m);
@@ -304,29 +299,6 @@ export class AutoserviceService implements OnModuleInit {
         }
       }
     }
-    // while (date <= finalDate) {
-
-    //   console.log('teste de data: ', date,)
-    //   console.log('Ouvintes registrados para sqsEmpty3:', this.eventEmitter.listeners('sqsEmpty'));
-    //   // await this.eventEmitter.waitFor('sqsEmpty').then(async (data) => {
-    //   //   console.log('evento esperado recebido no while');
-    //   //   const { startDate, endDate } = this.dates.timestampToDates(date);
-    //   //   await this.mainProcess(startDate, endDate);
-    //   //   date += oneHour;
-    //   // });
-    //   const isSqsEmpty = await this.sqs.isSqsActiveAndEmpty();
-
-    //   if (isSqsEmpty) {
-    //     const { startDate, endDate } = this.dates.timestampToDates(date);
-    //     await this.mainProcess(startDate, endDate);
-    //     date += oneHour;
-    //     // date = new Date(date.getTime() + oneHour);
-    //   } else {
-    //     // Esperar um pouco antes de verificar novamente
-    //     await new Promise(resolve => setTimeout(resolve, 5000));
-    //     console.log('Aguardando SQS esvaziar...');
-    //   }
-    // }
   }
 
   // async startProcess(year = 2024, month = 0, day = 1, hour = 0, minutes = 0, interval = 1) {
