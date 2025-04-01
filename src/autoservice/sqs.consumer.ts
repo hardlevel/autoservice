@@ -9,7 +9,7 @@ import { AutoserviceService } from "./autoservice.service";
 import { LogService } from "./log.service";
 
 @Injectable()
-export class SqsConsumer implements OnApplicationBootstrap {
+export class SqsConsumer {
     public sqsEmpty: boolean;
 
     constructor(
@@ -21,9 +21,6 @@ export class SqsConsumer implements OnApplicationBootstrap {
         @Inject(forwardRef(() => AutoserviceService)) private readonly autoservice: AutoserviceService,
         private readonly log: LogService
     ) { }
-    onApplicationBootstrap() {
-        throw new Error("Method not implemented.");
-    }
 
     // public async onApplicationBootstrap() {
     //     this.observeSqs();
