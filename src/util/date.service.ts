@@ -26,8 +26,8 @@ export class DateService {
     public setDate(year: number = 2024, month: number = 0, day: number = 0, hours: number = 0, minutes: number = 0, seconds: number = 0): string {
         if (hours === -1) {
             if (day === 1) {
-                day = this.daysInMonth(year, (month - 1));
-                month--;
+                month--
+                day = this.daysInMonth(year, month);
             } else {
                 day--;
             }
@@ -37,7 +37,8 @@ export class DateService {
         const fDay = day.toString().padStart(2, '0');
         const fHours = hours.toString().padStart(2, '0');
         const fMinutes = minutes.toString().padStart(2, '0');
-        const fSeconds = minutes.toString().padStart(2, '0');
+        const fSeconds = seconds.toString().padStart(2, '0');
+
         return `${year}-${fMonth}-${fDay}T${fHours}:${fMinutes}:${fSeconds}`;
     }
 
