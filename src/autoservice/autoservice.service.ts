@@ -142,8 +142,9 @@ export class AutoserviceService implements OnModuleInit {
       if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
       console.log(access_token);
       const { url, endpoint } = this.config.get('api');
-      const params = this.util.jsonToUrlParams({ dataInicio, dataFim });
-      const apiUrl = `${url}/${endpoint}?${params}`;
+      // const params = this.util.jsonToUrlParams({ dataInicio, dataFim });
+      // const apiUrl = `${url}/${endpoint}?${params}`;
+      const apiUrl = `${url}/${endpoint}`;
       console.log('url da api:', apiUrl, url, endpoint, dataFim, dataInicio);
       let attempt = 0; // Contador de tentativas
 
@@ -157,7 +158,7 @@ export class AutoserviceService implements OnModuleInit {
             delay: (error, retryCount) => {
               attempt = retryCount;
               console.warn(`Tentativa ${attempt}: API falhou. Retentando em 30s...`);
-              console.error(error);
+              // console.error(error);
               // Logar um alerta após um número alto de tentativas
               if (attempt % 100 === 0) {
                 console.error(`⚠️ Atenção: ${attempt} tentativas falharam. Verifique a API.`);
