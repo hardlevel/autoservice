@@ -183,12 +183,20 @@ export class AutoserviceService implements OnModuleInit {
     const lastParams = await this.log.getLastParams(2024);
     if (lastParams) {
       const { day: lastDay, hour: lastHour, month: lastMonth, year: lastYear } = lastParams;
-      if (year === lastYear && month === lastMonth && day === lastDay && hour === lastHour) {
-        return;
+      // if (year === lastYear && month === lastMonth && day === lastDay && hour === lastHour) {
+      //   return;
+      // }
+      if (
+        lastYear < year ||
+        (lastYear === year && lastMonth < month) ||
+        (lastYear === year && lastMonth === month && lastDay < day) ||
+        (lastYear === year && lastMonth === month && lastDay === day && lastHour < hour)
+      ) {
+        return this.processCompleteTimestamp(lastYear, Math.max(0, lastMonth - 1), lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
       }
-      if (lastYear <= year && lastMonth <= month && lastDay <= day && lastHour <= hour) {
-        return this.processCompleteTimestamp(lastYear, (lastMonth - 1), lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
-      }
+      // if (lastYear <= year && lastMonth <= month && lastDay <= day && lastHour <= hour) {
+      //   return this.processCompleteTimestamp(lastYear, Math.max(0, lastMonth - 1), lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
+      // }
     }
     // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
     return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds);
