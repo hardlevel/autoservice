@@ -63,7 +63,7 @@ export class AutoserviceService implements OnModuleInit {
       // await this.dates.processYear(2024, 6, this.main),
       // await this.dates.processYear(2025, 0, this.main),
       // this.startProcess(2025, 0),
-      await this.init(2024, 6),
+      await this.init(2025, 0),
         // this.startProcess(2024, 0),
         // ]);
 
@@ -294,7 +294,7 @@ export class AutoserviceService implements OnModuleInit {
       for (let d = day; d <= daysInMonth; d++) {
         for (let h = hours; h < 24; h++) {
           const { startDate, endDate } = this.dates.getDates(year, m, d, h, minutes, seconds);
-          await this.eventEmitter.waitFor('sqsEmpty')
+          await this.eventEmitter.waitFor('sqsEmpty');
           await this.mainProcess(startDate, endDate);
         }
       }
