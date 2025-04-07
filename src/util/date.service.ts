@@ -35,7 +35,6 @@ export class DateService {
         const fHours = hours.toString().padStart(2, '0');
         const fMinutes = minutes.toString().padStart(2, '0');
         const fSeconds = seconds.toString().padStart(2, '0');
-        console.log(`Data gerada: ${year}-${fMonth}-${fDay}T${fHours}:${fMinutes}:${fSeconds}`);
         if (isNaN(new Date(`${year}-${fMonth}-${fDay}`).getTime())) {
             throw new Error(`Invalid date: ${year}-${fMonth}-${fDay}T${fHours}:${fMinutes}:${fSeconds}`);
         }
