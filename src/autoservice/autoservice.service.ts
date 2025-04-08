@@ -156,6 +156,7 @@ export class AutoserviceService implements OnModuleInit {
               attempt = retryCount;
               console.warn(`Tentativa ${attempt}: API falhou. Retentando em 30s...`);
               console.error(error);
+              console.error(error.response?.data);
               // Logar um alerta após um número alto de tentativas
               if (attempt % 100 === 0) {
                 console.error(`⚠️ Atenção: ${attempt} tentativas falharam. Verifique a API.`);
@@ -243,7 +244,7 @@ export class AutoserviceService implements OnModuleInit {
     minutes: number = 0,
     seconds: number = 0,
     interval = 1) {
-    const lastParams = await this.log.getLastParams(2024);
+    const lastParams = await this.log.getLastParams(2025);
     if (lastParams) {
       const { day: lastDay, hour: lastHour, month: lastMonth, year: lastYear } = lastParams;
       // if (year === lastYear && month === lastMonth && day === lastDay && hour === lastHour) {
@@ -265,16 +266,7 @@ export class AutoserviceService implements OnModuleInit {
     return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds);
   }
 
-  async sendJob(startDate, endDate) {
-    try {
-      if (await this.queue.jobAlreadyAdded('mainJobs', { startDate, endDate })) return;
-      const job = await this.queue.addJobsToQueue('mainJobs', { startDate, endDate });
-      console.log('Job enviado para a fila mainjobs:', job.id, startDate);
-      return job;
-    } catch (error) {
-      throw new Error('Error sending job to queue: ' + error.message);
-    }
-  }
+
 
   public async processCompleteTimestamp(
     year: number = 2024,
@@ -289,15 +281,39 @@ export class AutoserviceService implements OnModuleInit {
     console.log('Ouvintes registrados para sqsEmpty2:', this.eventEmitter.listeners('sqsEmpty'));
     for (let m = month; m <= 11; m++) {
       const daysInMonth = this.dates.daysInMonth(year, m);
-      for (let d = day; d <= daysInMonth; d++) {
-        for (let h = hours; h < 24; h++) {
-          const { startDate, endDate } = this.dates.getDates(year, m, d, h, minutes, seconds);
+      const startDay = (m === month) ? day : 1;
+      for (let d = startDay; d <= daysInMonth; d++) {
+        const startHour = (m === month && d === day) ? hours : 0;
+        for (let h = startHour; h < 24; h++) {
+          const { startDate, endDate } = this.dates.getDates(year, m, d, h);
           await this.eventEmitter.waitFor('sqsEmpty');
           await this.mainProcess(startDate, endDate);
         }
       }
     }
+
+    // for (let m = month; m <= 11; m++) {
+    //   const daysInMonth = this.dates.daysInMonth(year, m);
+    //   for (let d = day; d <= daysInMonth; d++) {
+    //     for (let h = hours; h < 24; h++) {
+    //       const { startDate, endDate } = this.dates.getDates(year, m, d, h, minutes, seconds);
+    //       await this.eventEmitter.waitFor('sqsEmpty');
+    //       await this.mainProcess(startDate, endDate);
+    //     }
+    //   }
+    // }
   }
+
+  // async sendJob(startDate, endDate) {
+  //   try {
+  //     if (await this.queue.jobAlreadyAdded('mainJobs', { startDate, endDate })) return;
+  //     const job = await this.queue.addJobsToQueue('mainJobs', { startDate, endDate });
+  //     console.log('Job enviado para a fila mainjobs:', job.id, startDate);
+  //     return job;
+  //   } catch (error) {
+  //     throw new Error('Error sending job to queue: ' + error.message);
+  //   }
+  // }
 
   // async startProcess(year = 2024, month = 0, day = 1, hour = 0, minutes = 0, interval = 1) {
   //   const data = { year, month, day, hour, minutes, interval };
