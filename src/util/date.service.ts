@@ -41,10 +41,21 @@ export class DateService {
         return `${year}-${fMonth}-${fDay}T${fHours}:${fMinutes}:${fSeconds}`;
     }
 
-    public getDates(year: number = 2024, month: number = 0, day: number = 1, hours: number = 0, minutes: number = 0, seconds: number = 0, interval: number = 1) {
-        const startDate = this.setDate(year, month, day, hours - interval, minutes, seconds);
-        const endDate = this.setDate(year, month, day, hours, minutes, seconds);
-        return { startDate, endDate };
+    // public getDates(year: number = 2024, month: number = 0, day: number = 1, hours: number = 0, minutes: number = 0, seconds: number = 0, interval: number = 1) {
+    //     const startDate = this.setDate(year, month, day, hours - interval, minutes, seconds);
+    //     const endDate = this.setDate(year, month, day, hours, minutes, seconds);
+    //     return { startDate, endDate };
+    // }
+
+    public getDates(year: number = 2024, month: number = 0, day: number = 1, hour: number = 0, minutes: number = 0, seconds: number = 0) {
+        const start = new Date(year, month, day, hour, minutes, seconds);
+        const end = new Date(start);
+        end.setHours(end.getHours() + 1);
+
+        return {
+            startDate: start.toISOString(),
+            endDate: end.toISOString(),
+        };
     }
 
     public getEndOf(term: string, year: number, month: number = 11, day: number = 1): string {
