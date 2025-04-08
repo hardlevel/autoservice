@@ -20,7 +20,8 @@ export class HealthController {
   @HealthCheck()
   check() {
     return this.health.check([
-      () => this.http.pingCheck('nestjs-docs', 'https://docs.nestjs.com'),
+      () => this.http.pingCheck('api-requests', 'https://api.samip.vw.com.br/xapp-samip-assobrav/api/v1/autoservice'),
+      () => this.http.pingCheck('api-token', 'https://api.samip.vw.com.br/xapp-samip-auth-general/v1/token'),
       () => this.disk.checkStorage('storage', { path: '/dados', thresholdPercent: 100 }),
       () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
       () => this.db.pingCheck('prisma', this.prisma),
