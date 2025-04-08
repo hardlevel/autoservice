@@ -91,7 +91,7 @@ export class AutoserviceService implements OnModuleInit {
           },
         }),
       );
-      return response.data;
+      return response.data.access_token;
     } catch (error) {
       throw new BadRequestException('Error obtaining access token');
     }
@@ -134,11 +134,12 @@ export class AutoserviceService implements OnModuleInit {
   //   }
   // }
 
-  async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
+  // async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
+  async makeRequest(dataInicio: string, dataFim: string) {
     console.log('Solicitando dados retroativos:', dataInicio);
 
     try {
-      if (!access_token) throw new BadRequestException('Access Token não informado');
+      // if (!access_token) throw new BadRequestException('Access Token não informado');
       if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
       const { url, endpoint } = this.config.get('api');
       const apiUrl = `${url}/${endpoint}`;
@@ -147,7 +148,7 @@ export class AutoserviceService implements OnModuleInit {
       const response = await firstValueFrom(
         this.httpService.get(apiUrl, {
           params: { dataInicio, dataFim },
-          headers: { Authorization: `Bearer ${access_token}` },
+          headers: { Authorization: `Bearer ${await this.getToken()}` },
         }).pipe(
           retry({
             count: Infinity, // Tentará indefinidamente
@@ -217,17 +218,18 @@ export class AutoserviceService implements OnModuleInit {
       //   await this.eventEmitter.waitFor('sqsEmpty');
       // }
 
-      const { access_token } = await this.getToken();
-      if (!access_token) {
-        throw new Error('Falha ao obter token de acesso');
-      }
+      // const access_token = await this.getToken();
+      // if (!access_token) {
+      //   throw new Error('Falha ao obter token de acesso');
+      // }
 
       this.startDate = startDate;
       this.endDate = endDate;
       const dateObj = this.dates.getDateObject(startDate);
       const { day, hour, month, year } = dateObj;
       await this.log.saveLastParams({ day, hour, month, year });
-      await this.makeRequest(access_token, startDate, endDate);
+      // await this.makeRequest(access_token, startDate, endDate);
+      await this.makeRequest(startDate, endDate);
     } catch (error) {
       this.log.setLog('error', 'Falha ao solicitar dados da API do autoservice', error.message);
     }
