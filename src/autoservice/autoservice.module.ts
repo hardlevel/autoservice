@@ -19,6 +19,8 @@ import { SqsConsumer } from './sqs.consumer';
 import { QueueService } from './queue.service';
 import { ApiService } from './api.service';
 import { LogService } from './log.service';
+import { AxiosTokenInterceptor } from './axios.interceptor';
+import { TokenService } from './token.service';
 // import { LoggerModule } from 'nestjs-pino';
 
 @Module({
@@ -37,7 +39,9 @@ import { LogService } from './log.service';
     QueueService,
     ApiService,
     LogService,
-    AutoserviceHealthIndicator
+    AutoserviceHealthIndicator,
+    TokenService,
+    AxiosTokenInterceptor
   ],
   exports: [AutoserviceHealthIndicator, AutoserviceService],
   imports: [
@@ -47,7 +51,6 @@ import { LogService } from './log.service';
     PrismaModule,
     HttpModule,
     SqsModule.registerAsync({
-      // imports: [ConfigModule.forFeature(autoserviceConfig)],
       useFactory: async (configuration: ConfigService) => {
         const sqs = configuration.get('sqs');
         const { accessKeyId, secretAccessKey, queueUrl, region } = sqs;
@@ -80,9 +83,6 @@ import { LogService } from './log.service';
     }),
     BullModule.registerQueueAsync({
       name: 'autoservice'
-    }),
-    BullModule.registerQueueAsync({
-      name: 'mainJobs'
     }),
   ]
 })

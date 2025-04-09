@@ -16,7 +16,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AssobravModule } from './assobrav/assobrav.module';
 import pino from 'pino';
 import { ScheduleModule } from '@nestjs/schedule';
-import { AutoserviceHealthIndicator } from './autoservice/autoservice.health';
+import { AxiosTokenInterceptor } from './autoservice/axios.interceptor';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -34,7 +34,10 @@ import { AutoserviceHealthIndicator } from './autoservice/autoservice.health';
       }),
       inject: [ConfigService],
     }),
-    EventEmitterModule.forRoot(),
+    EventEmitterModule.forRoot({
+      wildcard: true,
+      verboseMemoryLeak: true,
+    }),
     AutoserviceModule,
     PrismaModule,
     HealthModule,
