@@ -9,6 +9,9 @@ module.exports = {
     // watch: '.',
     watch: false,
     ignore_watch: ["[\/\\]\./", "node modules", "logs"],
+    max_size: '10M',  // Tamanho máximo do log (pode ser em MB, KB ou GB)
+    retain: '2',     // Número de arquivos antigos a manter
+    log_date_format: 'YYYY-MM-DD HH:mm Z',
     autorestart: true,
     env: {
       NODE_ENV: 'development'
