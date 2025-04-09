@@ -238,11 +238,11 @@ export class UtilService {
                 const progress = Math.floor((current / total) * 20); // 20 blocos na barra
                 const bar = '█'.repeat(progress).padEnd(20, '░');
                 const percent = Math.floor((current / total) * 100);
-
-                process.stdout.clearLine(0); // limpa a linha atual
-                process.stdout.cursorTo(0); // move o cursor pro começo
-                process.stdout.write(`⏳ Esperando: [${bar}] ${percent}% ${message || ''}`);
-
+                if (process.env.NODE_ENV === 'development') {
+                    process.stdout.clearLine(0); // limpa a linha atual
+                    process.stdout.cursorTo(0); // move o cursor pro começo
+                    process.stdout.write(`⏳ Esperando: [${bar}] ${percent}% ${message || ''}`);
+                }
                 if (current >= total) {
                     clearInterval(interval);
                     process.stdout.write('\n');
