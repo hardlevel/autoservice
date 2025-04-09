@@ -47,15 +47,42 @@ export class DateService {
     //     return { startDate, endDate };
     // }
 
-    public getDates(year: number = 2024, month: number = 0, day: number = 1, hour: number = 0, minutes: number = 0, seconds: number = 0) {
-        const start = new Date(year, month, day, hour, minutes, seconds);
-        const end = new Date(start);
-        end.setHours(end.getHours() + 1);
+    // public getDates(year: number = 2024, month: number = 0, day: number = 1, hour: number = 0, minutes: number = 0, seconds: number = 0) {
+    //     const start = new Date(year, month, day, hour, minutes, seconds);
+    //     const end = new Date(start);
+    //     end.setHours(end.getHours() + 1);
+
+    //     return {
+    //         startDate: start.toISOString(),
+    //         endDate: end.toISOString(),
+    //     };
+    // }
+
+    public getDates(
+        year: number = 2024,
+        month: number = 0,
+        day: number = 1,
+        hour: number = 0,
+        minutes: number = 0,
+        seconds: number = 0
+    ) {
+        const startDate = this.formatDate(new Date(year, month, day, hour - 1, minutes, seconds));
+        const endDate = this.formatDate(new Date(year, month, day, hour, minutes, seconds));
 
         return {
-            startDate: start.toISOString(),
-            endDate: end.toISOString(),
+            startDate,
+            endDate,
         };
+    }
+
+    private formatDate(date: Date): string {
+        const y = date.getFullYear();
+        const m = (date.getMonth() + 1).toString().padStart(2, '0');
+        const d = date.getDate().toString().padStart(2, '0');
+        const h = date.getHours().toString().padStart(2, '0');
+        const min = date.getMinutes().toString().padStart(2, '0');
+        const s = date.getSeconds().toString().padStart(2, '0');
+        return `${y}-${m}-${d}T${h}:${min}:${s}`;
     }
 
     public getEndOf(term: string, year: number, month: number = 11, day: number = 1): string {
