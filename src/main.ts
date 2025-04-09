@@ -13,6 +13,14 @@ import * as path from 'path';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 async function bootstrap() {
+
+  // if (process.env.NODE_ENV !== 'dev') {
+  //   console.log = () => {};
+  //   console.debug = () => {};
+  //   console.warn = () => {};
+  //   console.info = () => {};
+  // }
+
   const logDirectory = 'logs';
 
   // Verifique se o diretório existe, se não, cria

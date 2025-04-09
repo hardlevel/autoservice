@@ -232,13 +232,15 @@ export class UtilService {
             const total = seconds;
             let current = 0;
 
+            const isTTY = process.stdout.isTTY && process.env.NODE_ENV === 'development';
+
             const interval = setInterval(() => {
                 current++;
 
                 const progress = Math.floor((current / total) * 20); // 20 blocos na barra
                 const bar = '█'.repeat(progress).padEnd(20, '░');
                 const percent = Math.floor((current / total) * 100);
-                if (process.env.NODE_ENV === 'development') {
+                if (isTTY) {
                     process.stdout.clearLine(0); // limpa a linha atual
                     process.stdout.cursorTo(0); // move o cursor pro começo
                     process.stdout.write(`⏳ Esperando: [${bar}] ${percent}% ${message || ''}`);
