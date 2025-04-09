@@ -29,6 +29,7 @@ interface TokenBody {
 export class AutoserviceService implements OnModuleInit {
   startDate: string;
   endDate: string;
+  private accessToken: string | null = null;
 
   constructor(
     private lazyModuleLoader: LazyModuleLoader,
@@ -75,27 +76,6 @@ export class AutoserviceService implements OnModuleInit {
     return this.sqs.isSqsActiveAndEmpty();
   }
 
-  async getToken() {
-    const { client_id, client_secret, url } = this.config.get('token');;
-    const body: TokenBody = {
-      client_id,
-      client_secret,
-      grant_type: 'client_credentials'
-    };
-
-    try {
-      const response = await firstValueFrom(
-        this.httpService.post(url, body, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        }),
-      );
-      return response.data.access_token;
-    } catch (error) {
-      throw new BadRequestException('Error obtaining access token');
-    }
-  }
 
   // async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
   //   console.log('Solicitando dados retroativos:', dataInicio);
@@ -134,67 +114,94 @@ export class AutoserviceService implements OnModuleInit {
   //   }
   // }
 
-  // async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
-  async makeRequest(dataInicio: string, dataFim: string) {
-    console.log('Solicitando dados retroativos:', dataInicio);
+  async getToken(forceRefresh = false): Promise<string> {
+    if (this.accessToken && !forceRefresh) {
+      return this.accessToken;
+    }
+
+    const { client_id, client_secret, url } = this.config.get('token');
+    const body = new URLSearchParams({
+      client_id,
+      client_secret,
+      grant_type: 'client_credentials'
+    });
 
     try {
-      // if (!access_token) throw new BadRequestException('Access Token não informado');
-      if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
-      const { url, endpoint } = this.config.get('api');
-      const apiUrl = `${url}/${endpoint}`;
-      let attempt = 0;
-
       const response = await firstValueFrom(
-        this.httpService.get(apiUrl, {
-          params: { dataInicio, dataFim },
-          headers: { Authorization: `Bearer ${await this.getToken()}` },
-        }).pipe(
-          retry({
-            count: Infinity, // Tentará indefinidamente
-            delay: (error, retryCount) => {
-              attempt = retryCount;
-              console.warn(`Tentativa ${attempt}: API falhou. Retentando em 30s...`);
-              console.error(error);
-              console.error(error.response?.data);
-              // Logar um alerta após um número alto de tentativas
-              if (attempt % 100 === 0) {
-                console.error(`⚠️ Atenção: ${attempt} tentativas falharam. Verifique a API.`);
-                this.log.setLog(
-                  'error',
-                  `⚠️ ${attempt} tentativas falharam ao solicitar dados da API Autoservice`,
-                  error.message,
-                  dataInicio,
-                  dataFim
-                );
-              }
-
-              return timer(30000);
-            },
-          }),
-          catchError((error: AxiosError) => {
-            console.error('Erro crítico na API:', error.message);
-            this.log.setLog(
-              'error',
-              'Falha ao solicitar dados da API Autoservice',
-              error.message,
-              dataInicio,
-              dataFim
-            );
-            return throwError(() => new BadRequestException('Falha ao solicitar dados da API Autoservice'));
-          }),
-        )
+        this.httpService.post(url, body.toString(), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }),
       );
 
-      console.log('Solicitação bem-sucedida após', attempt, 'tentativas.');
-      return response.data;
-
+      this.accessToken = response.data.access_token;
+      return this.accessToken;
     } catch (error) {
-      console.error('Erro inesperado na solicitação:', error);
-      throw new BadRequestException('Erro ao obter os dados: ' + error.message);
+      throw new BadRequestException('Error obtaining access token');
     }
   }
 
+
+  // async makeRequest(access_token: string, dataInicio: string, dataFim: string) {
+  async makeRequest(dataInicio: string, dataFim: string) {
+    console.log('Solicitando dados retroativos:', dataInicio);
+    if (!dataInicio || !dataFim) throw new BadRequestException('Datas de início e fim não informadas');
+
+    const { url, endpoint } = this.config.get('api');
+    const apiUrl = `${url}/${endpoint}`;
+    let attempt = 0;
+    let token = await this.getToken(); // Obtem o token fora do retry
+
+    const response = await firstValueFrom(
+      this.httpService.get(apiUrl, {
+        params: { dataInicio, dataFim },
+        headers: { Authorization: `Bearer ${token}` },
+      }).pipe(
+        retry({
+          count: Infinity,
+          delay: async (error, retryCount) => {
+            attempt = retryCount;
+            const status = error?.response?.status;
+
+            // Se for 401 ou 403, renove o token
+            if (status === 401 || status === 403) {
+              console.warn(`Token expirado ou inválido. Gerando novo token...`);
+              token = await this.getToken(true); // força renovação
+            }
+
+            console.warn(`Tentativa ${attempt}: Retentando em 30s...`);
+            console.error(error.response?.data);
+
+            if (attempt % 100 === 0) {
+              this.log.setLog(
+                'error',
+                `⚠️ ${attempt} tentativas falharam ao solicitar dados da API Autoservice`,
+                error.message,
+                dataInicio,
+                dataFim
+              );
+            }
+
+            return timer(30000);
+          },
+        }),
+        catchError((error: AxiosError) => {
+          this.log.setLog(
+            'error',
+            'Falha ao solicitar dados da API Autoservice',
+            error.message,
+            dataInicio,
+            dataFim
+          );
+          return throwError(() => new BadRequestException('Falha ao solicitar dados da API Autoservice'));
+        }),
+      )
+    );
+
+    console.log('Solicitação bem-sucedida após', attempt, 'tentativas.');
+    return response.data;
+  }
 
   async mainProcess(startDate, endDate) {
     console.debug('Processando fila', startDate, endDate);
