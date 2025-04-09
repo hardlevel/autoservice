@@ -49,6 +49,8 @@ import { AxiosTokenInterceptor } from './autoservice/axios.interceptor';
         level: process.env.NODE_ENV === 'prod' ? 'info' : 'debug',
         customLevels: { autoserviceError: 35 },
         useOnlyCustomLevels: false,
+        // autoLogging: process.env.NODE_ENV !== 'prod',
+        autoLogging: false,
         transport: {
           targets: [
             {
