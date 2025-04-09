@@ -229,6 +229,7 @@ export class AutoserviceProcessor extends WorkerHost {
         // console.log('ultima pesquisa', last);
         // await this.sqs.isSqsActiveAndEmpty();
         this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
+        this.eventEmitter.emit('job.completed', { id: job.id, status: true });
     }
 
     @OnWorkerEvent('failed')

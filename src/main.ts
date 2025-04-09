@@ -10,6 +10,7 @@ import { CustomLogger } from './custom.logger';
 import { PinoLogger } from 'nestjs-pino';
 import * as fs from 'fs';
 import * as path from 'path';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 async function bootstrap() {
   const logDirectory = 'logs';
@@ -41,5 +42,8 @@ async function bootstrap() {
   );
 
   await app.listen(3000);
+
+  const eventEmitter = app.get(EventEmitter2);
+  eventEmitter.emit('app.start');
 }
 bootstrap();

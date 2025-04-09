@@ -9,25 +9,24 @@ import { UtilService } from "../util/util.service";
 import { DateService } from "../util/date.service";
 
 @Injectable()
-export class QueueService implements OnApplicationBootstrap {
+export class QueueService {
     public isBusy: boolean;
 
     constructor(
         private lazyModuleLoader: LazyModuleLoader,
         @InjectQueue('autoservice') private readonly autoservice: Queue,
-        @InjectQueue('mainJobs') private readonly mainJobs: Queue,
         private readonly config: ConfigService,
         private readonly util: UtilService,
         private readonly eventEmitter: EventEmitter2,
         private readonly dates: DateService,
     ) { }
 
-    public async onApplicationBootstrap() {
-        await this.autoservice.drain();
-        // console.log('fila drenada');
-    }
+    // public async onApplicationBootstrap() {
+    // await this.autoservice.drain();
+    // console.log('fila drenada');
+    // }
 
-    @Interval(10000)
+    @Interval(100000)
     async retryFailedJobs() {
         const status = await this.getBullMqStatus();
         if (status.failed > 0) {
@@ -166,12 +165,6 @@ export class QueueService implements OnApplicationBootstrap {
     @OnEvent('autoservice.complete')
     handleComplete(payload) {
         console.log('fila concluida', payload);
-        this.isBusy = false;
-    }
-
-    @OnEvent('mainjobs.complete')
-    handleCompleteJobs(payload) {
-        console.log('fila concluida MAINJOBS', payload);
         this.isBusy = false;
     }
 }
