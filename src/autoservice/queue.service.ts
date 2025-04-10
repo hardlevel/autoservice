@@ -1,30 +1,37 @@
-import { InjectQueue } from "@nestjs/bullmq";
+import { InjectFlowProducer, InjectQueue } from "@nestjs/bullmq";
 import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
 import { Interval } from "@nestjs/schedule";
-import { Job, JobsOptions, Queue } from "bullmq";
+import { FlowProducer, Job, JobsOptions, Queue } from "bullmq";
 import { UtilService } from "../util/util.service";
 import { DateService } from "../util/date.service";
 
 @Injectable()
-export class QueueService {
+export class QueueService implements OnApplicationBootstrap {
     public isBusy: boolean;
 
     constructor(
         private lazyModuleLoader: LazyModuleLoader,
         @InjectQueue('autoservice') private readonly autoservice: Queue,
+        @InjectQueue('daily') private readonly daily: Queue,
+        @InjectQueue('monthly') private readonly monthly: Queue,
+        @InjectQueue('hourly') private readonly hourly: Queue,
+        @InjectFlowProducer('autoserviceFlow') private readonly flow: FlowProducer,
         private readonly config: ConfigService,
         private readonly util: UtilService,
         private readonly eventEmitter: EventEmitter2,
         private readonly dates: DateService,
     ) { }
 
-    // public async onApplicationBootstrap() {
-    // await this.autoservice.drain();
-    // console.log('fila drenada');
-    // }
+    public async onApplicationBootstrap() {
+        await this.autoservice.drain();
+        await this.daily.drain();
+        await this.monthly.drain();
+        await this.hourly.drain();
+        console.log('fila drenada');
+    }
 
     @Interval(100000)
     async retryFailedJobs() {
@@ -44,6 +51,15 @@ export class QueueService {
         }
     }
 
+    // @Interval(5000)
+    // async isQueueActive(queue) {
+    //     const status = await this.autoservice.isPaused();
+    //     const status2 = await this.autoservice.getActive();
+    //     // await this.autoservice.retryJobs();
+    //     console.log(await this.daily.isPaused(), await this.daily.getActiveCount(), await this.daily.getJobCounts());
+    //     console.log(status, status2, await this.autoservice.getJobCounts());
+    // }
+
     protected async addJobToQueue(queue: string, data: any): Promise<Job> {
         try {
             const options: JobsOptions = {
@@ -59,10 +75,14 @@ export class QueueService {
         }
     }
 
-    @Interval(60000)
-    testQueue() {
-        this.checkQueue();
+    public async bulkAddJobs(queue, data) {
+        return this[queue].addBulk(data);
     }
+
+    // @Interval(60000)
+    // testQueue() {
+    //     this.checkQueue();
+    // }
 
     async getBullMqStatus() {
         try {
@@ -76,11 +96,11 @@ export class QueueService {
 
     public async addJobsToQueue(queue, data) {
         // Verifique se a fila está pausada
-        const isPaused = await this[queue].isPaused();
-        if (isPaused) {
-            await this[queue].resume();
-            console.log(`Fila ${queue} retomada para adicionar novo job`);
-        }
+        // const isPaused = await this[queue].isPaused();
+        // if (isPaused) {
+        //     await this[queue].resume();
+        //     console.log(`Fila ${queue} retomada para adicionar novo job`);
+        // }
 
         const job = await this[queue].add(queue, data, {
             delay: 5000,
@@ -152,6 +172,103 @@ export class QueueService {
         return false;
     }
 
+    public async manageFlow(
+        year: number = 2024,
+        month: number = 1,
+        day: number = 1,
+        hour: number = 0,
+        minute: number = 0,
+        second: number = 0
+    ) {
+        const daysInMonth = this.dates.daysInMonth(year, month);
+
+        // Gerar os jobs `daily`, cada um com filhos por hora
+        const dailyJobs = [];
+        for (let d = 1; d <= daysInMonth; d++) {
+            const hourlyJobs = [];
+
+            for (let h = 0; h < 24; h++) {
+                hourlyJobs.push({
+                    name: `hour-${d}-${h}`,
+                    queueName: 'hourly',
+                    jobId: `${year}-${month}-${d}-${h}`,
+                    data: {
+                        year,
+                        month,
+                        day: d,
+                        hour: h,
+                        step: `process hour ${h} for day ${d}`,
+                    },
+                });
+            }
+
+            dailyJobs.push({
+                name: `daily-${d}`,
+                queueName: 'daily',
+                jobId: `${year}-${month}-${d}`,
+                data: { year, month, day: d, step: `process daily ${d}` },
+                children: hourlyJobs,
+            });
+        }
+
+        const flow = await this.flow.add({
+            name: 'autoserviceFlow',
+            queueName: 'autoserviceFlow',
+            data: { year, month, day, hour, minute, second },
+            children: [
+                {
+                    name: `monthly-${year}-${month}`,
+                    queueName: 'monthly',
+                    data: { year, month, step: `${year}-${month} monthly process start` },
+                    children: dailyJobs,
+                },
+            ],
+        });
+        // console.log('flow', flow);
+        return flow;
+    }
+
+
+    public async getAutoserviceStatus() {
+        const status = await this.autoservice.getJobCounts();
+        console.log('status', status);
+        return status;
+    }
+
+    @Interval(10000)
+    public async monitorAutoserviceQueue() {
+        while (true) {
+            const status = await this.getAutoserviceStatus();
+
+            if (status.failed > 0) {
+                await this.autoservice.retryJobs({ state: 'failed' });
+            }
+
+            if (status.active === 0 && status.waiting === 0) {
+                console.log('Possível finalização detectada, aguardando mais 10s para confirmar...');
+                await new Promise(resolve => setTimeout(resolve, 10000)); // aguarda 10 segundos
+
+                const secondCheck = await this.getAutoserviceStatus();
+                if (secondCheck.active === 0 && secondCheck.waiting === 0) {
+                    console.log('Fila confirmadamente finalizada!');
+                    break;
+                } else {
+                    console.log('Fila ainda em andamento após segunda checagem. Continuando monitoramento...');
+                }
+            }
+
+            await this.eventEmitter.emit('autoservice.working');
+            await new Promise(resolve => setTimeout(resolve, 5000));
+        }
+
+        await this.eventEmitter.emit('autoservice.complete');
+    }
+
+
+    // public async waitAutorviceComplete() {
+    //     while()
+    // }
+
     @OnEvent('autoservice.*')
     handleOrderEvents(payload) {
         console.log(payload);
@@ -166,5 +283,19 @@ export class QueueService {
     handleComplete(payload) {
         console.log('fila concluida', payload);
         this.isBusy = false;
+    }
+
+    @OnEvent('daily.job.complete')
+    async handleDailyComplete(payload) {
+        const dailyStatus = await this.daily.getActiveCount();
+        const jobs = await this.daily.getJobCounts();
+        // console.log('dailyStatus', dailyStatus, jobs);
+    }
+
+    @OnEvent('test.job.complete')
+    async handleTestComplete(payload) {
+        const dailyStatus = await this.daily.getActiveCount();
+        const jobs = await this.daily.getJobCounts();
+        // console.log('testStatus', dailyStatus, jobs);
     }
 }

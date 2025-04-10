@@ -41,11 +41,11 @@ export class SqsConsumer implements OnModuleInit {
 
     @SqsMessageHandler('autoservice', false)
     private async handleMessage(message: Message) {
-        if (!this.autoservice.startDate || !this.autoservice.endDate) {
-            const { year, month, day, hour } = await this.log.getLastParams(2025);
-            this.autoservice.startDate = this.dates.setDate(year, month, day, hour - 1);
-            this.autoservice.endDate = this.dates.setDate(year, month, day, hour);
-        }
+        // if (!this.autoservice.startDate || !this.autoservice.endDate) {
+        //     const { year, month, day, hour } = await this.log.getLastParams(2025);
+        //     this.autoservice.startDate = this.dates.setDate(year, month, day, hour - 1);
+        //     this.autoservice.endDate = this.dates.setDate(year, month, day, hour);
+        // }
         const msgBody = JSON.parse(message.Body);
         if (msgBody) {
             console.log('mensagem recebida', this.autoservice.startDate, this.autoservice.endDate);

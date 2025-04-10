@@ -48,8 +48,10 @@ export class AutoserviceService implements OnModuleInit {
   async appStart() {
     console.log('aplicação iniciada');
     try {
-      await this.init(2024, 7),
-        console.log('Processos concluídos');
+      // await this.init(2024, 7),
+      await this.util.progressBarTimer(5);
+      await this.processYear(2025, 2);
+      console.log('Processos concluídos');
     } catch (error) {
       console.error('Erro durante onApplicationBootstrap:', error);
     }
@@ -340,17 +342,53 @@ export class AutoserviceService implements OnModuleInit {
         (lastYear === year && lastMonth === month && lastDay < day) ||
         (lastYear === year && lastMonth === month && lastDay === day && lastHour < hour)
       ) {
-        return this.processCompleteTimestamp(lastYear, Math.max(0, lastMonth - 1), lastDay, lastHour, minutes, seconds);
+        return this.process(lastYear, Math.max(0, lastMonth - 1), lastDay, lastHour, minutes, seconds);
       }
       // if (lastYear <= year && lastMonth <= month && lastDay <= day && lastHour <= hour) {
       //   return this.processCompleteTimestamp(lastYear, Math.max(0, lastMonth - 1), lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
       // }
     }
     // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
-    return this.processCompleteTimestamp(year, month, day, hour, minutes, seconds);
+    return this.process(year, month, day, hour, minutes, seconds);
   }
 
-  public async processCompleteTimestamp(
+  public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0) {
+    const bulkJobs = [];
+    const today = this.dates.getDateObject(new Date().toString());
+
+    for (let m = month; m <= 12; m++) {
+      await this.queue.manageFlow(year, m);
+      // const days = this.dates.daysInMonth(year, m);
+
+      // for (let d = 1; d <= days; d++) {
+      //   if (year === today.year && m === today.month && d > today.day) {
+      //     console.log('Data futura atingida, encerrando...');
+      //     await this.queue.bulkAddJobs('daily', bulkJobs); // garante envio dos últimos jobs
+      //     return;
+      //   }
+      //   for (let h = hour; h <= 23; h++) {
+      //     const { startDate, endDate } = this.dates.getDatesFormat(year, m, d, h, 0, 1);
+      //     // console.debug('processando dados de', startDate, endDate);
+      //     bulkJobs.push({
+      //       name: 'process-hour',
+      //       data: { startDate, endDate },
+      //     });
+
+      //     if (bulkJobs.length >= 500) {
+      //       await this.queue.bulkAddJobs('daily', bulkJobs);
+      //       bulkJobs.length = 0;
+      //     }
+      //   }
+      // }
+    }
+
+    // envia o que sobrou
+    if (bulkJobs.length > 0) {
+      await this.queue.bulkAddJobs('daily', bulkJobs);
+    }
+  }
+
+  public async process(
     year: number = 2024,
     month: number = 0,
     day: number = 1,
@@ -370,7 +408,7 @@ export class AutoserviceService implements OnModuleInit {
             console.warn(`🚫 SQS não está estável. Abortando request para: ${startDate}`);
             continue;
           }
-          await this.makeRequest(startDate, endDate);
+          // await this.makeRequest(startDate, endDate);
         }
       }
     }
