@@ -85,6 +85,27 @@ export class DateService {
         return `${y}-${m}-${d}T${h}:${min}:${s}`;
     }
 
+    public getDatesFormat(year: number = 2024, month: number = 0, day: number = 1, hours: number = 0, minutes: number = 0, interval: number = 1) {
+        const d = day.toString().padStart(2, '0');
+        const h1 = hours.toString().padStart(2, '0');
+        let h2, m2, s2;
+        if (hours === 23) {
+            h2 = hours.toString().padStart(2, '0');
+            m2 = 59;
+            s2 = 59;
+        } else {
+            h2 = (hours + interval).toString().padStart(2, '0');
+            m2 = '00';
+            s2 = '00';
+        }
+        const min = minutes.toString().padStart(2, '0');
+        const m = month.toString().padStart(2, '0');
+        return {
+            startDate: `${year}-${m}-${d}T${h1}:${min}:00`,
+            endDate: `${year}-${m}-${d}T${h2}:${m2}:${s2}`,
+        };
+    }
+
     public getEndOf(term: string, year: number, month: number = 11, day: number = 1): string {
         let result: string;
 
@@ -127,60 +148,16 @@ export class DateService {
         }
     }
 
-    public async processComplete(year: number = 2024, callback?) {
+    public async processComplete(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0) {
         for (let m = 0; m <= 11; m++) {
             const days = this.daysInMonth(year, m);
             for (let d = 1; d <= days; d++) {
                 for (let h = 0; h < 24; h++) {
                     const { startDate, endDate } = this.getDates(year, m, d, h, 0, 1);
                     console.debug('processando dados de', startDate, endDate);
-                    await callback(startDate, endDate);
                 }
             }
         }
-    }
-
-    public async processCompleteTimestamp(
-        year: number = 2024,
-        month: number = 0,
-        day: number = 1,
-        hours: number = 0,
-        minutes: number = 0,
-        seconds: number = 0,
-        callback?
-    ) {
-        let date = Date.UTC(year, month, day, hours, minutes, seconds);
-        const finalDate = Date.UTC(year, 11, 31, 23, 59, 59);
-        const oneHour = 60 * 60 * 1000;
-        while (date <= finalDate) {
-            if (callback) {
-                const { startDate, endDate } = this.timestampToDates(date);
-                await callback(startDate, endDate);
-            }
-            date += oneHour;
-        }
-    }
-
-    public timestampToDate(timestamp: number): string {
-        const date = new Date(timestamp);
-        const year = date.getUTCFullYear();
-        const month = date.getUTCMonth() + 1;
-        const day = date.getUTCDate();
-        const hours = date.getUTCHours();
-        const minutes = date.getUTCMinutes();
-        const seconds = date.getUTCSeconds();
-        return this.setDate(year, month, day, hours, minutes, seconds);
-    }
-
-    public timestampToDates(timestamp: number): any {
-        const date = new Date(timestamp);
-        const year = date.getUTCFullYear();
-        const month = date.getUTCMonth();
-        const day = date.getUTCDate();
-        const hours = date.getUTCHours();
-        const minutes = date.getUTCMinutes();
-        const seconds = date.getUTCSeconds();
-        return this.getDates(year, month, day, hours, minutes, seconds);
     }
 
     public getDateObject(dateStr: string): any {
@@ -203,15 +180,5 @@ export class DateService {
             return false;
         }
         return true;
-    }
-
-    public addDaysTs(timestamp, days) {
-        const daysTimestamp = 86400000 * days;
-        const newTimestamp = timestamp + daysTimestamp;
-        const valid = this.isDateValid(newTimestamp);
-        if (!valid) {
-            return this.addDaysTs(newTimestamp, 1);
-        }
-        return newTimestamp
     }
 }

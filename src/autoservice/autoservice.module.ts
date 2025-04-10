@@ -21,6 +21,9 @@ import { ApiService } from './api.service';
 import { LogService } from './log.service';
 import { AxiosTokenInterceptor } from './axios.interceptor';
 import { TokenService } from './token.service';
+import { DailyConsumer } from './daily.queue';
+import { MonthlyConsumer } from './monthly.queue';
+import { HourlyConsumer } from './hourly.queue';
 // import { LoggerModule } from 'nestjs-pino';
 
 @Module({
@@ -41,7 +44,10 @@ import { TokenService } from './token.service';
     LogService,
     AutoserviceHealthIndicator,
     TokenService,
-    AxiosTokenInterceptor
+    AxiosTokenInterceptor,
+    DailyConsumer,
+    MonthlyConsumer,
+    HourlyConsumer
   ],
   exports: [AutoserviceHealthIndicator, AutoserviceService],
   imports: [
@@ -81,9 +87,23 @@ import { TokenService } from './token.service';
       },
       inject: [ConfigService],
     }),
-    BullModule.registerQueueAsync({
-      name: 'autoservice'
-    }),
+    BullModule.registerQueueAsync(
+      {
+        name: 'autoservice'
+      },
+      {
+        name: 'daily'
+      },
+      {
+        name: 'monthly'
+      },
+      {
+        name: 'hourly'
+      }
+    ),
+    BullModule.registerFlowProducer({
+      name: 'autoserviceFlow',
+    })
   ]
 })
 export class AutoserviceModule { }
