@@ -48,7 +48,7 @@ export class AutoserviceService implements OnModuleInit {
   async appStart() {
     console.log('aplicação iniciada');
     try {
-      await this.init(2025, 0, 25, 17),
+      await this.init(2024, 7),
         console.log('Processos concluídos');
     } catch (error) {
       console.error('Erro durante onApplicationBootstrap:', error);
@@ -376,3 +376,11 @@ export class AutoserviceService implements OnModuleInit {
     }
   }
 }
+
+
+//TODO
+// criar eventos nas queue quando acaberem para que acionem uma função no onEvent, essa função deve verificar se o sqs está ativo
+//limpar codigo comentado
+//checar a checagem de status da queue, talvez não seja necessário esperar tudo concluir para adicionar novas tarefas
+//checar a mensagem recebida no sqs para verificar se há dados que ajudem a depurar a quantidade total
+//testar flow com 3 filas, uma para cada dia e hora, uma para requests e outra para salvar os dados
