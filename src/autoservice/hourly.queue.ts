@@ -1,5 +1,5 @@
 import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
-import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { Job } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
 import { DateService } from '../util/date.service';
