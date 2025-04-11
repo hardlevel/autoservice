@@ -186,10 +186,10 @@ export class QueueService implements OnApplicationBootstrap {
 
         // Gerar os jobs `daily`, cada um com filhos por hora
         const dailyJobs = [];
-        for (let d = 1; d <= daysInMonth; d++) {
+        for (let d = day; d <= daysInMonth; d++) {
             const hourlyJobs = [];
 
-            for (let h = 0; h < 24; h++) {
+            for (let h = hour; h < 24; h++) {
                 hourlyJobs.push({
                     name: `hour-${d}-${h}`,
                     queueName: 'hourly',
@@ -274,16 +274,21 @@ export class QueueService implements OnApplicationBootstrap {
     @OnEvent('autoservice.active')
     async startMonitoringQueue() {
         await this.hourly.pause();
-        let timeoutName = 'first-check';
-        let intervalName = 'monitor-interval';
 
-        const interval = setInterval(async () => {
+        const timeoutName = 'first-check';
+        const intervalName = 'monitor-interval';
+
+        const intervalCallback = async () => {
             const status = await this.getAutoserviceStatus();
             console.log('Monitorando fila...', status);
 
             if (status.active === 0 && status.waiting === 0 && status.delayed === 0) {
-                clearInterval(this.scheduler.getInterval(intervalName));
-                this.scheduler.deleteInterval(intervalName);
+                const intervalRef = this.scheduler.getInterval(intervalName);
+                clearInterval(intervalRef);
+                if (this.scheduler.getIntervals().includes(intervalName)) {
+                    this.scheduler.deleteInterval(intervalName);
+                }
+                //   this.scheduler.deleteInterval(intervalName);
 
                 const timeout = setTimeout(() => {
                     this.eventEmitter.emit('autoservice.final-check');
@@ -292,24 +297,29 @@ export class QueueService implements OnApplicationBootstrap {
 
                 this.scheduler.addTimeout(timeoutName, timeout);
             }
-        }, 10000);
+        };
 
+        const interval = setInterval(intervalCallback, 10000);
         this.scheduler.addInterval(intervalName, interval);
     }
 
     @OnEvent('autoservice.final-check')
     async finalMonitoringQueue() {
         this.hourly.pause();
-        let timeoutName = 'final-check';
-        let intervalName = 'monitor-interval';
+        const timeoutName = 'final-check';
+        const intervalName = 'monitor-interval';
 
-        const interval = setInterval(async () => {
+        const intervalCallback = async () => {
             const status = await this.getAutoserviceStatus();
             console.log('Checagem final...', status);
 
             if (status.active === 0 && status.waiting === 0 && status.delayed === 0 && this.newMessage === false) {
-                clearInterval(this.scheduler.getInterval(intervalName));
-                this.scheduler.deleteInterval(intervalName);
+                const intervalRef = this.scheduler.getInterval(intervalName);
+                clearInterval(intervalRef);
+                if (this.scheduler.getIntervals().includes(intervalName)) {
+                    this.scheduler.deleteInterval(intervalName);
+                }
+                // this.scheduler.deleteInterval(intervalName);
 
                 const timeout = setTimeout(() => {
                     this.eventEmitter.emit('autoservice.complete');
@@ -318,8 +328,9 @@ export class QueueService implements OnApplicationBootstrap {
 
                 this.scheduler.addTimeout(timeoutName, timeout);
             }
-        }, 20000);
+        };
 
+        const interval = setInterval(intervalCallback, 20000);
         this.scheduler.addInterval(intervalName, interval);
     }
 
