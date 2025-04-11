@@ -3,7 +3,7 @@ import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
-import { Interval } from "@nestjs/schedule";
+import { Interval, SchedulerRegistry, Timeout } from "@nestjs/schedule";
 import { FlowProducer, Job, JobsOptions, Queue } from "bullmq";
 import { UtilService } from "../util/util.service";
 import { DateService } from "../util/date.service";
@@ -11,6 +11,7 @@ import { DateService } from "../util/date.service";
 @Injectable()
 export class QueueService implements OnApplicationBootstrap {
     public isBusy: boolean;
+    public newMessage: boolean;
 
     constructor(
         private lazyModuleLoader: LazyModuleLoader,
@@ -23,6 +24,7 @@ export class QueueService implements OnApplicationBootstrap {
         private readonly util: UtilService,
         private readonly eventEmitter: EventEmitter2,
         private readonly dates: DateService,
+        private readonly scheduler: SchedulerRegistry,
     ) { }
 
     public async onApplicationBootstrap() {
@@ -244,12 +246,17 @@ export class QueueService implements OnApplicationBootstrap {
                 await this.autoservice.retryJobs({ state: 'failed' });
             }
 
-            if (status.active === 0 && status.waiting === 0) {
+            if (status.active === 0 && status.waiting === 0 && status.delayed === 0) {
                 console.log('Possível finalização detectada, aguardando mais 10s para confirmar...');
-                await new Promise(resolve => setTimeout(resolve, 10000)); // aguarda 10 segundos
+                await new Promise(resolve => setTimeout(resolve, 10000));
+                // addTimeout('autoserviceConfirm', 10000) {
+                //TODO implementar segunda checagem de 20 segundos, se receber um sinal, abort ou evento de nova mensagem, sair do loop
+                //Testar usar decorador onevent acima do timeout
+                // }
 
+                // }
                 const secondCheck = await this.getAutoserviceStatus();
-                if (secondCheck.active === 0 && secondCheck.waiting === 0) {
+                if (secondCheck.active === 0 && secondCheck.waiting === 0 && secondCheck.delayed === 0) {
                     console.log('Fila confirmadamente finalizada!');
                     break;
                 } else {
@@ -262,6 +269,19 @@ export class QueueService implements OnApplicationBootstrap {
         }
 
         await this.eventEmitter.emit('autoservice.complete');
+    }
+
+    @OnEvent('autoservice.ready')
+    handleAutoserviceReadyEvent(payload: any) {
+        const timeoutName = `check-complete-${Date.now()}`;
+
+        const callback = () => {
+            // this.logger.log(`Timeout ${timeoutName} executado.`);
+            // ... aqui você pode emitir outro evento se quiser
+        };
+
+        const timeout = setTimeout(callback, 10000);
+        this.scheduler.addTimeout(timeoutName, timeout);
     }
 
 
@@ -297,5 +317,10 @@ export class QueueService implements OnApplicationBootstrap {
         const dailyStatus = await this.daily.getActiveCount();
         const jobs = await this.daily.getJobCounts();
         // console.log('testStatus', dailyStatus, jobs);
+    }
+
+    @OnEvent('sqsMessage')
+    newMessageArrived() {
+        this.newMessage = true;
     }
 }
