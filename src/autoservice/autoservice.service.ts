@@ -50,7 +50,7 @@ export class AutoserviceService implements OnModuleInit {
     try {
       // await this.init(2024, 7),
       await this.util.progressBarTimer(5);
-      await this.processYear(2025, 3, 20);
+      await this.processYear(2025, 3, 11);
       console.log('Processos concluídos');
     } catch (error) {
       console.error('Erro durante onApplicationBootstrap:', error);
