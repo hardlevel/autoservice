@@ -357,7 +357,7 @@ export class AutoserviceService implements OnModuleInit {
     const today = this.dates.getDateObject(new Date().toString());
 
     for (let m = month; m <= 12; m++) {
-      await this.queue.manageFlow(year, m);
+      await this.queue.manageFlow(year, m, day, hour);
       // const days = this.dates.daysInMonth(year, m);
 
       // for (let d = 1; d <= days; d++) {
