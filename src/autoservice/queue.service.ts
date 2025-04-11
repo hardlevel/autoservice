@@ -283,7 +283,7 @@ export class QueueService implements OnApplicationBootstrap {
             console.log('Monitorando fila...', status);
 
             if (status.active === 0 && status.waiting === 0 && status.delayed === 0) {
-                const intervalRef = this.scheduler.getInterval(intervalName); // agora seguro
+                const intervalRef = this.scheduler.getInterval(intervalName);
                 clearInterval(intervalRef);
                 if (this.scheduler.getIntervals().includes(intervalName)) {
                     this.scheduler.deleteInterval(intervalName);
@@ -331,7 +331,7 @@ export class QueueService implements OnApplicationBootstrap {
         };
 
         const interval = setInterval(intervalCallback, 20000);
-        this.scheduler.addInterval(intervalName, interval); // deve ser antes de tentar buscar por ele
+        this.scheduler.addInterval(intervalName, interval);
     }
 
     @OnEvent('sqsEmpty')
