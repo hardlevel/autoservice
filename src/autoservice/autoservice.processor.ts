@@ -211,17 +211,6 @@ export class AutoserviceProcessor extends WorkerHost {
         }
     }
 
-    teste(data) {
-        console.log(data);
-    }
-
-    descructData(data, fields) {
-        fields.forEach(field => {
-
-        })
-        return { fields } = data;
-    }
-
     @OnWorkerEvent('completed')
     async onCompleted(job: Job) {
         console.log(`Job ${job.id} completed.`);
@@ -230,6 +219,12 @@ export class AutoserviceProcessor extends WorkerHost {
         // await this.sqs.isSqsActiveAndEmpty();
         // this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
         this.eventEmitter.emit('job.completed', { id: job.id, status: true });
+    }
+
+    @OnWorkerEvent('ready')
+    handleReady(job: Job) {
+        console.log(`Job autoservice ${job} is ready.`);
+        this.eventEmitter.emit('autoservice.ready');
     }
 
     @OnWorkerEvent('active')

@@ -30,6 +30,7 @@ interface TokenBody {
 export class AutoserviceService {
   public startDate: string;
   public endDate: string;
+  public isBusy: boolean = true;
 
   constructor(
     private lazyModuleLoader: LazyModuleLoader,
@@ -64,6 +65,7 @@ export class AutoserviceService {
     while (!sqsEmpty) {
       sqsEmpty = await this.sqs.isSqsActiveAndEmpty();
       if (!sqsEmpty) {
+        await this.eventEmitter.emit('sqs.bull.busy');
         await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
     }
@@ -72,9 +74,18 @@ export class AutoserviceService {
     while (bullActive) {
       bullActive = await this.queue.autoserviceIsActive();
       if (bullActive) {
+        await this.eventEmitter.emit('sqs.bull.busy');
         await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
     }
+    await this.eventEmitter.emit('sqs.bull.empty');
+  }
+
+  @OnEvent('sqs.bull.busy')
+  async handleSqsBullBusy() {
+    console.log('Fila ocupada. Aguardando liberação...');
+    this.isBusy = true;
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
   }
 
   @OnEvent('updateDates')
@@ -100,10 +111,29 @@ export class AutoserviceService {
     return response.data;
   }
 
+  async monitorState() {
+    while (this.isBusy) {
+      console.log('monitorando estado');
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+    }
+  }
+
   public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0) {
     const today = this.dates.getDateObject(new Date().toString());
+    const currentYear = today.year;
+    const currentMonth = today.month;
 
-    for (let m = month; m <= 12; m++) {
+    const lastMonth = year < currentYear
+      ? 12
+      : year === currentYear
+        ? currentMonth
+        : 0;
+
+    if (lastMonth === 0) {
+      return;
+    }
+
+    for (let m = month; m <= lastMonth; m++) {
       await this.queue.manageFlow(year, m, day, hour);
     }
   }

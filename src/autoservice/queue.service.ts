@@ -307,6 +307,12 @@ export class QueueService implements OnApplicationBootstrap {
         this.eventEmitter.emit('autoservice.complete');
     }
 
+    @OnEvent('sqs.bull.empty')
+    async handleSqsBullEmpty() {
+        if (await this.hourly.isPaused()) {
+            await this.hourly.resume();
+        }
+    }
 
     @OnEvent('sqsEmpty')
     async handleSqsEmpt() {

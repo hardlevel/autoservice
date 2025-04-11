@@ -21,8 +21,13 @@ export class HourlyConsumer extends WorkerHost {
         let progress = 0;
         const { year, month, day, hour } = job.data;
         const { startDate, endDate } = this.dates.getDatesFormat(year, month, day, hour);
-        await this.queue.autoserviceIsActive();
-        await this.emitter.waitFor('autoservice.empty');
+        // await this.queue.autoserviceIsActive();
+        // await this.emitter.waitFor('autoservice.empty');
+        // await this.autoservice.waitForSqsAndBullEmpty(10000);
+        await this.autoservice.monitorState();
+        // await this.autoservice.waitForSqsAndBullEmpty(10000);
+        console.log('hour', startDate);
+        // await this.autoservice.waitForSqsAndBullEmpty();
         await this.emitter.emit('updateDates', { startDate, endDate });
         // while (true) {
         //     const status = await this.queue.getAutoserviceStatus();
