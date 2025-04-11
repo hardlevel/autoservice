@@ -19,21 +19,21 @@ export class HourlyConsumer extends WorkerHost {
     }
     async process(job: Job<any, any, string>): Promise<any> {
         let progress = 0;
-        console.log('hour', job.data);
         const { year, month, day, hour } = job.data;
         const { startDate, endDate } = this.dates.getDatesFormat(year, month, day, hour);
-        await this.emitter.waitFor('autoservice.complete');
+        await this.queue.autoserviceIsActive();
+        await this.emitter.waitFor('autoservice.empty');
         await this.emitter.emit('updateDates', { startDate, endDate });
-        while (true) {
-            const status = await this.queue.getAutoserviceStatus();
-            if (status.active === 0 && status.waiting === 0) {
-                // Aguarda 10s e confirma de novo
-                await new Promise(r => setTimeout(r, 10000));
-                const doubleCheck = await this.queue.getAutoserviceStatus();
-                if (doubleCheck.active === 0 && doubleCheck.waiting === 0) break;
-            }
-            await new Promise(r => setTimeout(r, 5000));
-        }
+        // while (true) {
+        //     const status = await this.queue.getAutoserviceStatus();
+        //     if (status.active === 0 && status.waiting === 0) {
+        //         // Aguarda 10s e confirma de novo
+        //         await new Promise(r => setTimeout(r, 10000));
+        //         const doubleCheck = await this.queue.getAutoserviceStatus();
+        //         if (doubleCheck.active === 0 && doubleCheck.waiting === 0) break;
+        //     }
+        //     await new Promise(r => setTimeout(r, 5000));
+        // }
         const result = await this.autoservice.makeRequest(startDate, endDate);
 
         for (let i = 0; i < 100; i++) {
