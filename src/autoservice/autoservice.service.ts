@@ -50,7 +50,7 @@ export class AutoserviceService implements OnModuleInit {
     try {
       // await this.init(2024, 7),
       await this.util.progressBarTimer(5);
-      await this.processYear(2025, 3, 20);
+      await this.processYear(2025, 3, 11);
       console.log('Processos concluídos');
     } catch (error) {
       console.error('Erro durante onApplicationBootstrap:', error);
@@ -357,7 +357,7 @@ export class AutoserviceService implements OnModuleInit {
     const today = this.dates.getDateObject(new Date().toString());
 
     for (let m = month; m <= 12; m++) {
-      await this.queue.manageFlow(year, m);
+      await this.queue.manageFlow(year, m, day, hour);
       // const days = this.dates.daysInMonth(year, m);
 
       // for (let d = 1; d <= days; d++) {

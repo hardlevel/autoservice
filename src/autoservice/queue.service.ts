@@ -237,57 +237,102 @@ export class QueueService implements OnApplicationBootstrap {
         return status;
     }
 
-    @Interval(10000)
-    public async monitorAutoserviceQueue() {
-        while (true) {
-            const status = await this.getAutoserviceStatus();
+    // @Interval(10000)
+    // public async monitorAutoserviceQueue() {
+    //     while (true) {
+    //         const status = await this.getAutoserviceStatus();
 
-            if (status.failed > 0) {
-                await this.autoservice.retryJobs({ state: 'failed' });
-            }
+    //         if (status.failed > 0) {
+    //             await this.autoservice.retryJobs({ state: 'failed' });
+    //         }
+
+    //         if (status.active === 0 && status.waiting === 0 && status.delayed === 0) {
+    //             console.log('Possível finalização detectada, aguardando mais 10s para confirmar...');
+    //             await new Promise(resolve => setTimeout(resolve, 10000));
+    //             // addTimeout('autoserviceConfirm', 10000) {
+    //             //TODO implementar segunda checagem de 20 segundos, se receber um sinal, abort ou evento de nova mensagem, sair do loop
+    //             //Testar usar decorador onevent acima do timeout
+    //             // }
+
+    //             // }
+    //             const secondCheck = await this.getAutoserviceStatus();
+    //             if (secondCheck.active === 0 && secondCheck.waiting === 0 && secondCheck.delayed === 0) {
+    //                 console.log('Fila confirmadamente finalizada!');
+    //                 break;
+    //             } else {
+    //                 console.log('Fila ainda em andamento após segunda checagem. Continuando monitoramento...');
+    //             }
+    //         }
+
+    //         await this.eventEmitter.emit('autoservice.working');
+    //         await new Promise(resolve => setTimeout(resolve, 5000));
+    //     }
+
+    //     await this.eventEmitter.emit('autoservice.complete');
+    // }
+
+    @OnEvent('autoservice.active')
+    async startMonitoringQueue() {
+        await this.hourly.pause();
+        let timeoutName = 'first-check';
+        let intervalName = 'monitor-interval';
+
+        const interval = setInterval(async () => {
+            const status = await this.getAutoserviceStatus();
+            console.log('Monitorando fila...', status);
 
             if (status.active === 0 && status.waiting === 0 && status.delayed === 0) {
-                console.log('Possível finalização detectada, aguardando mais 10s para confirmar...');
-                await new Promise(resolve => setTimeout(resolve, 10000));
-                // addTimeout('autoserviceConfirm', 10000) {
-                //TODO implementar segunda checagem de 20 segundos, se receber um sinal, abort ou evento de nova mensagem, sair do loop
-                //Testar usar decorador onevent acima do timeout
-                // }
+                clearInterval(this.scheduler.getInterval(intervalName));
+                this.scheduler.deleteInterval(intervalName);
 
-                // }
-                const secondCheck = await this.getAutoserviceStatus();
-                if (secondCheck.active === 0 && secondCheck.waiting === 0 && secondCheck.delayed === 0) {
-                    console.log('Fila confirmadamente finalizada!');
-                    break;
-                } else {
-                    console.log('Fila ainda em andamento após segunda checagem. Continuando monitoramento...');
-                }
+                const timeout = setTimeout(() => {
+                    this.eventEmitter.emit('autoservice.final-check');
+                    this.scheduler.deleteTimeout(timeoutName);
+                }, 10000);
+
+                this.scheduler.addTimeout(timeoutName, timeout);
             }
+        }, 10000);
 
-            await this.eventEmitter.emit('autoservice.working');
-            await new Promise(resolve => setTimeout(resolve, 5000));
-        }
-
-        await this.eventEmitter.emit('autoservice.complete');
+        this.scheduler.addInterval(intervalName, interval);
     }
 
-    @OnEvent('autoservice.ready')
-    handleAutoserviceReadyEvent(payload: any) {
-        const timeoutName = `check-complete-${Date.now()}`;
+    @OnEvent('autoservice.final-check')
+    async finalMonitoringQueue() {
+        this.hourly.pause();
+        let timeoutName = 'final-check';
+        let intervalName = 'monitor-interval';
 
-        const callback = () => {
-            // this.logger.log(`Timeout ${timeoutName} executado.`);
-            // ... aqui você pode emitir outro evento se quiser
-        };
+        const interval = setInterval(async () => {
+            const status = await this.getAutoserviceStatus();
+            console.log('Checagem final...', status);
 
-        const timeout = setTimeout(callback, 10000);
-        this.scheduler.addTimeout(timeoutName, timeout);
+            if (status.active === 0 && status.waiting === 0 && status.delayed === 0 && this.newMessage === false) {
+                clearInterval(this.scheduler.getInterval(intervalName));
+                this.scheduler.deleteInterval(intervalName);
+
+                const timeout = setTimeout(() => {
+                    this.eventEmitter.emit('autoservice.complete');
+                    this.scheduler.deleteTimeout(timeoutName);
+                }, 10000);
+
+                this.scheduler.addTimeout(timeoutName, timeout);
+            }
+        }, 20000);
+
+        this.scheduler.addInterval(intervalName, interval);
     }
 
+    @OnEvent('sqsEmpty')
+    async handleSqsEmpt() {
+        this.newMessage = false;
+    }
 
-    // public async waitAutorviceComplete() {
-    //     while()
-    // }
+    @OnEvent('autoservice.complete')
+    async handleAutoserviceComplete() {
+        console.log('Fila concluída!');
+        this.hourly.resume();
+    }
 
     @OnEvent('autoservice.*')
     handleOrderEvents(payload) {
