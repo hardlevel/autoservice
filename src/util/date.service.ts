@@ -106,6 +106,27 @@ export class DateService {
         };
     }
 
+    public getDatesFormatMinutes(year: number = 2024, month: number = 0, day: number = 1, hours: number = 0, minutes: number = 0, interval: number = 10) {
+        const d = day.toString().padStart(2, '0');
+        const h1 = hours.toString().padStart(2, '0');
+        let h2, m2, s2;
+        if (hours === 23 && minutes === 50) {
+            h2 = hours.toString().padStart(2, '0');
+            m2 = 59;
+            s2 = 59;
+        } else {
+            h2 = hours.toString().padStart(2, '0');
+            m2 = (minutes + interval).toString().padStart(2, '0');
+            s2 = '00';
+        }
+        const min = minutes.toString().padStart(2, '0');
+        const m = month.toString().padStart(2, '0');
+        return {
+            startDate: `${year}-${m}-${d}T${h1}:${min}:00`,
+            endDate: `${year}-${m}-${d}T${h2}:${m2}:${s2}`,
+        };
+    }
+
     public getEndOf(term: string, year: number, month: number = 11, day: number = 1): string {
         let result: string;
 

@@ -16,7 +16,6 @@ export class DailyConsumer extends WorkerHost {
     async process(job: Job<any, any, string>): Promise<any> {
         try {
             // const result = await this.autoservice.makeRequest()
-
             return {};
         } catch (err) {
             console.error('Erro em daily:', err);

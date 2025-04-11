@@ -9,6 +9,7 @@ import { AutoserviceService } from "./autoservice.service";
 import { LogService } from "./log.service";
 import { UtilService } from "../util/util.service";
 import { DateService } from "../util/date.service";
+import { StateService, QueueState } from "./state.service";
 
 @Injectable()
 export class SqsConsumer implements OnModuleInit {
@@ -27,16 +28,14 @@ export class SqsConsumer implements OnModuleInit {
         private readonly log: LogService,
         private readonly util: UtilService,
         private readonly dates: DateService,
+        private readonly state: StateService,
     ) { }
 
-    // public async onApplicationBootstrap() {
-    //     this.observeSqs();
-    // }
     async onModuleInit() {
-        console.log('sqs consumer init');
-        // const status = await this.isSqsActiveAndEmpty();
-        // if (status) this.emitter.emit('sqsEmpty');
-        // await this.purgeQueue();
+        // const isEmpty = await this.isSqsActiveAndEmpty();
+        // if (isEmpty) {
+        //     this.emitter.emit('sqs.free');
+        // }
     }
 
     @SqsMessageHandler('autoservice', false)
@@ -54,12 +53,29 @@ export class SqsConsumer implements OnModuleInit {
         };
 
         try {
-            const job = await this.queue.addJobsToQueue('autoservice', msgBody);
+            const job = await this.queue.addJobToQueue('autoservice', msgBody);
         } catch (error) {
             console.error('consumer error', JSON.stringify(error));
             this.log.setLog('error', 'Erro ao processar mensagem do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
         }
     }
+
+    @OnEvent('waiting.messages')
+    public async waitForMessages() {
+        await new Promise(resolve => setTimeout(resolve, 20000));
+
+        const isEmpty = await this.isSqsActiveAndEmpty();
+        console.log('✅ 20s passaram. Verificando o estado do SQS...');
+
+        if (isEmpty) {
+            console.log('✅ SQS está vazio após 20s. Liberando...');
+            this.emitter.emit('sqs.state', { state: 'free' });
+        } else {
+            console.log('⛔ SQS recebeu mensagens. Não vamos liberar agora.');
+            this.emitter.emit('sqs.state', { state: 'busy' });
+        }
+    }
+
 
     public async getSqsStatus(): Promise<boolean> {
         try {
@@ -94,18 +110,6 @@ export class SqsConsumer implements OnModuleInit {
             return [];
         }
     }
-
-    // public async waitSqsEmpty() {
-    //     try {
-    //         if (!await this.isSqsEmpty()) {
-    //             await this.emitter.waitFor('sqsEmpty');
-    //         }
-    //         return;
-    //     } catch (error) {
-    //         this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
-    //         return;
-    //     }
-    // }
 
     public async waitSqsEmpty() {
         const empty = await this.isSqsEmpty();
@@ -152,13 +156,7 @@ export class SqsConsumer implements OnModuleInit {
 
             console.log('Estado do SQS - Vazio:', isEmpty, 'Ativo:', isActive);
 
-            if (isEmpty && isActive) {
-                console.log('Está vazio, emitindo evento!');
-                this.emitter.emit('sqsEmpty');
-                return true;
-            }
-
-            return false;
+            return isEmpty && isActive;
         } catch (error) {
             this.log.setLog(
                 'error',
@@ -171,191 +169,49 @@ export class SqsConsumer implements OnModuleInit {
         }
     }
 
+    // async verifySqsEmpty() {
+    //     const isEmpty = await this.isSqsActiveAndEmpty();
+    //     this.sqsEmpty = isEmpty;
 
-    // public observeSqs() {
-    //     this.emitter.waitFor('event').then(function (data) {
-    //         console.log('Evento recebido:', data);
-    //     });
+    //     if (isEmpty) {
+    //         this.state.setSqsState(QueueState.FREE);
+    //         console.log('SQS está vazia');
+    //     } else {
+    //         this.state.setSqsState(QueueState.BUSY);
+    //         console.log('SQS está ocupada');
+    //     }
     // }
 
     private async purgeQueue() {
         await this.sqsService.purgeQueue('autoservice');
     }
 
-    // @SqsConsumerEventHandler('autoservice', 'empty')
-    // public async waitUntilSqsReallyEmpty(): Promise<void> {
-    //     if (this.isVerifyingEmpty) {
-    //         console.log('⏳ Já existe uma verificação de SQS em andamento. Ignorando este evento.');
-    //         return;
-    //     }
-
-    //     this.isVerifyingEmpty = true;
-
-    //     const intervalSeconds = 10;
-    //     const maxAttempts = 10;
-    //     let stableCount = 0;
-    //     this.sqsInterrupted = false; // resetar a flag de interrupção
-
-    //     console.log('📥 Evento SQS empty recebido. Verificando se fila estável...');
-
-    //     for (let i = 1; i <= maxAttempts; i++) {
-    //         if (this.sqsInterrupted) {
-    //             console.log('❌ Verificação cancelada: nova mensagem recebida durante o processo.');
-    //             this.isVerifyingEmpty = false;
-    //             return;
-    //         }
-
-    //         const isEmpty = await this.isSqsEmpty();
-
-    //         if (isEmpty) {
-    //             stableCount++;
-    //             console.log(`🔍 Verificação ${i}/${maxAttempts}: fila ainda vazia (${stableCount})`);
-    //         } else {
-    //             stableCount = 0;
-    //             console.log(`📦 Fila recebeu mensagens na verificação ${i}. Reiniciando contagem...`);
-    //         }
-
-    //         if (stableCount >= maxAttempts) {
-    //             console.log('✅ Fila confirmada como vazia após 10 verificações. Emitindo evento sqsEmpty...');
-    //             this.emitter.emit('sqsEmpty');
-    //             this.isVerifyingEmpty = false;
-    //             return;
-    //         }
-
-    //         await this.util.progressBarTimer(intervalSeconds, `Verificação ${i}...`);
-    //     }
-
-    //     console.log('⚠️ Fila não se manteve vazia por 10 verificações.');
-    //     this.isVerifyingEmpty = false;
-    // }
-
-    public async waitUntilSqsReallyEmptySafe(intervalSeconds = 10, maxAttempts = 10): Promise<boolean> {
-        if (this.isVerifyingEmpty) {
-            console.log('⏳ Já existe uma verificação em andamento. Aguardando ela terminar...');
-            while (this.isVerifyingEmpty) {
-                await this.util.delay(1000); // 1s entre checagens
-            }
-            return false;
-        }
-
-        this.isVerifyingEmpty = true;
-        this.sqsInterrupted = false;
-
-        console.log('📥 Iniciando verificação da estabilidade da fila...');
-
-        let stableCount = 0;
-
-        for (let i = 1; i <= maxAttempts; i++) {
-            if (this.sqsInterrupted) {
-                console.log('❌ Verificação cancelada: mensagem recebida.');
-                this.isVerifyingEmpty = false;
-                return false;
-            }
-
-            const isEmpty = await this.isSqsEmpty();
-
-            if (isEmpty) {
-                stableCount++;
-                console.log(`🔍 Verificação ${i}/${maxAttempts}: fila ainda vazia (${stableCount})`);
-            } else {
-                stableCount = 0;
-                console.log(`📦 Verificação ${i}: Fila não está vazia. Resetando contador.`);
-            }
-
-            if (stableCount >= maxAttempts) {
-                console.log('✅ Fila SQS confirmada como vazia e estável.');
-
-                // ⚠️ NOVO BLOCO: Verifica BullMQ antes de liberar
-                const bullStatus = await this.queue.getBullMqStatus(); // Supondo QueueService injetado como `this.queue`
-                if (bullStatus.waiting > 0 || bullStatus.active > 0 || bullStatus.delayed > 0) {
-                    console.log(`🚧 BullMQ ainda ocupado (waiting: ${bullStatus.waiting}, active: ${bullStatus.active}, delayed: ${bullStatus.delayed}). Aguardando...`);
-
-                    // Aguarda esvaziar BullMQ antes de prosseguir
-                    while (bullStatus.waiting > 0 || bullStatus.active > 0 || bullStatus.delayed > 0) {
-                        await this.util.progressBarTimer(intervalSeconds, '⏳ Aguardando BullMQ esvaziar...');
-                        const again = await this.queue.getBullMqStatus();
-                        bullStatus.waiting = again.waiting;
-                        bullStatus.active = again.active;
-                        bullStatus.delayed = again.delayed;
-                    }
-
-                    console.log('✅ BullMQ também esvaziou.');
-                }
-
-                this.emitter.emit('sqsEmpty');
-                this.isVerifyingEmpty = false;
-                return true;
-            }
-
-            await this.util.progressBarTimer(intervalSeconds, `Verificação ${i}...`);
-        }
-
-        console.log('⚠️ Fila não se manteve estável. Abortando verificação.');
-        this.isVerifyingEmpty = false;
-        return false;
-    }
-
     @SqsConsumerEventHandler('autoservice', 'message_received')
     public onMsgReceived() {
         console.log('📨 Mensagem recebida durante verificação.');
         this.emitter.emit('sqsMessage');
+        this.emitter.emit('sqs.state', { state: 'busy' });
     }
 
     @SqsConsumerEventHandler('autoservice', 'empty')
     public onEmpty(data) {
         console.log('🔄 Verificação de estabilidade da fila cancelada.');
         this.emitter.emit('sqsEmpty');
+        this.emitter.emit('sqs.state', { state: 'free' });
+        this.emitter.emit('bull.state', { state: 'free' });
+        console.log(this.state.getBullState(), this.state.getSqsState());
     }
-
-    // @SqsConsumerEventHandler('autoservice', 'aborted')
-    // public onAbort() {
-    //     this.sqsEmpty = true;
-    //     this.emitter.emit('sqsEmpty', this.sqsEmpty);
-    // }
-
-    // @SqsConsumerEventHandler('autoservice', 'stopped')
-    // public onStop() {
-    //     this.sqsEmpty = true;
-    //     this.emitter.emit('sqsEmpty', this.sqsEmpty);
-    // }
-
-    // @SqsConsumerEventHandler('autoservice', 'timeout_error')
-    // public onTimeout(error: Error, message: Message) {
-    //     this.sqsEmpty = true;
-    //     this.emitter.emit('sqsEmpty', this.sqsEmpty);
-    // }
-
-    // @SqsConsumerEventHandler('autoservice', 'message_received')
-    // public onMsgReceived() {
-    //     this.sqsEmpty = false;
-    // }
-
-    // @SqsConsumerEventHandler('autoservice', 'waiting_for_polling_to_complete')
-    // public onWaiting() {
-    //     this.sqsEmpty = false;
-    //     console.log('aguardando conclusão');
-    // }
 
     @SqsConsumerEventHandler('autoservice', 'processing_error')
     public onProcessingError(error: Error, message: Message) {
         this.log.setLog('error', 'Há algum problema no SQS externo', error.message, this.autoservice.startDate, this.autoservice.endDate)
     }
 
-    // @OnEvent('sqsEmpty')
-    // public onEmptyEvent(data) {
-    //     console.log('evento recebido', data);
-    //     return;
-    // }
-    // @OnEvent('job.completed')
-    // public async onJobCompleted(data) {
-    //     await this.util.progressBarTimer(10, `aguardando após concluir o job ${data.id}`);
-    //     const sqsStatus = await this.isSqsActiveAndEmpty();
-    //     console.log('evento jobCompleted recebido!', sqsStatus);
-    //     if (sqsStatus) {
-    //         console.log('Emitindo sqsEmpty', sqsStatus);
-    //         this.emitter.emit('sqsEmpty', true);
-    //     }
-    //     console.log('SQS ainda recebendo mensagens...', sqsStatus);
-    //     return;
-    // }
+
+    @OnEvent('sqs.start')
+    public async onSqsStart() {
+        const sqsStatus = await this.isSqsActiveAndEmpty();
+        const state = sqsStatus ? 'free' : 'busy';
+        await this.emitter.emit('sqs.state', { state });
+    }
 }

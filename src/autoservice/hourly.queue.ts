@@ -5,6 +5,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { DateService } from '../util/date.service';
 import { AutoserviceService } from './autoservice.service';
 import { QueueService } from './queue.service';
+import { StateService } from './state.service';
 
 @Processor('hourly')
 export class HourlyConsumer extends WorkerHost {
@@ -14,15 +15,24 @@ export class HourlyConsumer extends WorkerHost {
         private readonly dates: DateService,
         private readonly autoservice: AutoserviceService,
         private readonly queue: QueueService,
+        private readonly state: StateService,
     ) {
         super()
     }
     async process(job: Job<any, any, string>): Promise<any> {
         let progress = 0;
-        const { year, month, day, hour } = job.data;
-        const { startDate, endDate } = this.dates.getDatesFormat(year, month, day, hour);
-        await this.queue.autoserviceIsActive();
-        await this.emitter.waitFor('autoservice.empty');
+        const { year, month, day, hour, minute } = job.data;
+        const { startDate, endDate } = this.dates.getDatesFormatMinutes(year, month, day, hour, minute);
+        // await this.queue.autoserviceIsActive();
+        // await this.emitter.waitFor('autoservice.empty');
+        // await this.autoservice.waitForSqsAndBullEmpty(10000);
+        // await this.autoservice.waitForSqsAndBullEmpty(10000);
+        // if (!this.state.checkState()) {
+        //     await this.state.waitAppFree();
+        // }
+        await this.emitter.waitFor('app.free');
+        console.log('hour', startDate);
+        // await this.autoservice.waitForSqsAndBullEmpty();
         await this.emitter.emit('updateDates', { startDate, endDate });
         // while (true) {
         //     const status = await this.queue.getAutoserviceStatus();
@@ -35,6 +45,8 @@ export class HourlyConsumer extends WorkerHost {
         //     await new Promise(r => setTimeout(r, 5000));
         // }
         const result = await this.autoservice.makeRequest(startDate, endDate);
+        // await this.emitter.emit('waiting.complete');
+        await this.emitter.emit('waiting.messages');
 
         for (let i = 0; i < 100; i++) {
             // console.log(job.data);
@@ -58,10 +70,42 @@ export class HourlyConsumer extends WorkerHost {
 
     @OnWorkerEvent('completed')
     async onCompleted(job: Job) {
-        // console.log(`Job ${job.id} completed.`);
-        // console.log(`Job hour ${job.data.year} ${job.data.month} ${job.data.day} ${job.data.hour} completed.`);
-        this.emitter.emit('hourly.job.complete', { id: job.id, status: true });
-        // await this.isLast(job.data);
+        console.log(`Job ${job.id} completed.`);
+        // const last = await this.prisma.findOne(1, 'lastSearch');
+        // console.log('ultima pesquisa', last);
+        // await this.sqs.isSqsActiveAndEmpty();
+        // this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
+        this.emitter.emit('job.completed', { id: job.id, status: true });
+        this.emitter.emit('bull.state', { state: 'free' });
+    }
+
+    @OnWorkerEvent('ready')
+    handleReady(job: Job) {
+        console.log(`Job autoservice ${job} is ready.`);
+        this.emitter.emit('bull.state', { state: 'busy' });
+    }
+
+    @OnWorkerEvent('active')
+    handleActive(job: Job) {
+        console.log(`Job ${job.id} is active.`);
+        // this.eventEmitter.emit('autoservice.active', { id: job.id, status: true });
+        this.emitter.emit('bull.state', { state: 'busy' });
+    }
+
+    @OnWorkerEvent('failed')
+    async onFailed(job: Job, error: Error) {
+        console.error(`Job ${job.id} failed.`, error.message);
+        console.log(error);
+        // this.jobLog.ended_at = new Date();
+        // this.jobLog.status = "FAILED";
+        // this.jobLog.message = error.message;
+        // this.jobLog.data = job.data;
+        // this.jobLog.startDate = job.data.startDate;
+        // this.jobLog.endDate = job.data.endDate;
+        this.emitter.emit('bull.state', { state: 'free' });
+        // await this.prisma.jobLogs.create({
+        //     data: this.jobLog
+        // })
     }
 
     async isLast(data) {

@@ -12,6 +12,7 @@ import { LogService } from './log.service';
 import { QueueService } from './queue.service';
 import { SqsConsumer } from './sqs.consumer';
 import { AxiosTokenInterceptor } from './axios.interceptor';
+import { StateService } from './state.service';
 
 interface RequestOptions {
   method: string;
@@ -30,6 +31,7 @@ interface TokenBody {
 export class AutoserviceService {
   public startDate: string;
   public endDate: string;
+  public isBusy: boolean = true;
 
   constructor(
     private lazyModuleLoader: LazyModuleLoader,
@@ -41,41 +43,54 @@ export class AutoserviceService {
     private readonly log: LogService,
     private readonly queue: QueueService,
     private readonly sqs: SqsConsumer,
+    private readonly state: StateService,
   ) { }
 
   @OnEvent('app.start')
   private async appStart() {
     console.log('aplicação iniciada');
     try {
+      await this.eventEmitter.emit('queue.start');
+      await this.eventEmitter.emit('sqs.start');
+      await this.eventEmitter.waitFor('app.free');
+      await this.checkAndStart();
       // await this.init(2024, 7),
       // await this.util.progressBarTimer(5);
-      await this.waitForSqsAndBullEmpty();
-      await this.processYear(2025, 3, 11);
-      console.log('Processos concluídos');
+      // await this.eventEmitter.emit('queue.start');
+      // await this.eventEmitter.emit('sqs.start');
+      // // await this.state.waitBullBusy();
+      // await this.eventEmitter.waitFor('bull.free');
+      // console.log('bull free');
+      // await this.eventEmitter.waitFor('sqs.free');
+      // console.log('sqs free');
+      // await this.processYear(2025, 3, 11);
+      // console.log('Processos concluídos');
     } catch (error) {
-      console.error('Erro durante onApplicationBootstrap:', error);
+      console.error('Erro durante evento app.start:', error);
     }
   }
 
-  public async waitForSqsAndBullEmpty(
-    delayMs = 5000,
-  ): Promise<void> {
-    let sqsEmpty = false;
-    while (!sqsEmpty) {
-      sqsEmpty = await this.sqs.isSqsActiveAndEmpty();
-      if (!sqsEmpty) {
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
-      }
-    }
+  async checkAndStart() {
+    const state = this.state.getState();
 
-    let bullActive = false
-    while (bullActive) {
-      bullActive = await this.queue.autoserviceIsActive();
-      if (bullActive) {
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
-      }
+    if (state === 'free') {
+      console.log('SQS e BullMQ livres. Iniciando processYear...');
+      await this.processYear(2025, 3, 11);
+    } else {
+      console.log('SQS ou BullMQ ocupados. Aguardando liberação...');
+      const listener = async () => {
+        if (this.state.getState() === 'free') {
+          console.log('Ambos livres agora. Iniciando processYear...');
+          this.eventEmitter.off('bull.free', listener);
+          this.eventEmitter.off('sqs.bull.free', listener);
+          await this.processYear(2025, 3, 11);
+        }
+      };
+      this.eventEmitter.on('bull.free', listener);
+      this.eventEmitter.on('sqs.bull.free', listener);
     }
   }
+
 
   @OnEvent('updateDates')
   updateDates(payload) {
@@ -100,11 +115,23 @@ export class AutoserviceService {
     return response.data;
   }
 
-  public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0) {
+  public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0, minutes: number = 0, seconds: number = 0, interval = '30m') {
     const today = this.dates.getDateObject(new Date().toString());
+    const currentYear = today.year;
+    const currentMonth = today.month;
 
-    for (let m = month; m <= 12; m++) {
-      await this.queue.manageFlow(year, m, day, hour);
+    const lastMonth = year < currentYear
+      ? 12
+      : year === currentYear
+        ? currentMonth
+        : 0;
+
+    if (lastMonth === 0) {
+      return;
+    }
+
+    for (let m = month; m <= lastMonth; m++) {
+      await this.queue.manageFlow(year, m, day, hour, minutes, seconds, interval);
     }
   }
 

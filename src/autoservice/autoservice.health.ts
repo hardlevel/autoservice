@@ -24,7 +24,7 @@ export class AutoserviceHealthIndicator extends HealthIndicator {
     }
 
     async isHealthyBull(key: string): Promise<HealthIndicatorResult> {
-        const status = await this.queue.getBullMqStatus();
+        const status = await this.queue.getQueueStatus('autoservice');
         const isHealthy = status.failed === 0;
 
         const result = this.getStatus(key, isHealthy, {

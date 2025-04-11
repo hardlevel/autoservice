@@ -24,6 +24,7 @@ import { TokenService } from './token.service';
 import { DailyConsumer } from './daily.queue';
 import { MonthlyConsumer } from './monthly.queue';
 import { HourlyConsumer } from './hourly.queue';
+import { StateService } from './state.service';
 // import { LoggerModule } from 'nestjs-pino';
 
 @Module({
@@ -47,7 +48,8 @@ import { HourlyConsumer } from './hourly.queue';
     AxiosTokenInterceptor,
     DailyConsumer,
     MonthlyConsumer,
-    HourlyConsumer
+    HourlyConsumer,
+    StateService
   ],
   exports: [AutoserviceHealthIndicator, AutoserviceService],
   imports: [
