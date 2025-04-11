@@ -241,11 +241,11 @@ export class QueueService implements OnApplicationBootstrap {
 
     public async autoserviceIsActive() {
         const { active, waiting, delayed } = await this.getAutoserviceStatus();
-        if (active > 0 || waiting > 0 || delayed > 0) {
-            return true;
+        const isActive = active > 0 || waiting > 0 || delayed > 0;
+        if (!isActive) {
+            this.eventEmitter.emit('autoservice.empty');
         }
-        this.eventEmitter.emit('autoservice.empty');
-        return
+        return isActive;
     }
 
 
