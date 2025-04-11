@@ -135,17 +135,23 @@ export class QueueService implements OnApplicationBootstrap {
         interval: string = '1h'
     ) {
         const daysInMonth = this.dates.daysInMonth(year, month);
-
         const dailyJobs = [];
+
         for (let d = day; d <= daysInMonth; d++) {
             const hourlyJobs = [];
 
-            for (let h = hour; h < 24; h++) {
-                for (let m = minute; m < 60; m += 10) {
+            // Define valores iniciais de hora/minuto só para o primeiro dia
+            const startHour = d === day ? hour : 0;
+            const endHour = 24;
+
+            for (let h = startHour; h < endHour; h++) {
+                const startMinute = d === day && h === hour ? minute : 0;
+
+                for (let m = startMinute; m < 60; m += 10) {
                     hourlyJobs.push({
-                        name: `hour-${d}-${h}`,
+                        name: `hour-${d}-${h}-${m}`,
+                        jobId: `${year}-${month}-${d}-${h}-${m}`,
                         queueName: 'hourly',
-                        jobId: `${year}-${month}-${d}-${h}`,
                         data: {
                             year,
                             month,
@@ -162,7 +168,12 @@ export class QueueService implements OnApplicationBootstrap {
                 name: `daily-${d}`,
                 queueName: 'daily',
                 jobId: `${year}-${month}-${d}`,
-                data: { year, month, day: d, step: `process daily ${d}` },
+                data: {
+                    year,
+                    month,
+                    day: d,
+                    step: `process daily ${d}`,
+                },
                 children: hourlyJobs,
             });
         }
@@ -175,11 +186,13 @@ export class QueueService implements OnApplicationBootstrap {
                 {
                     name: `monthly-${year}-${month}`,
                     queueName: 'monthly',
-                    data: { year, month, step: `${year}-${month} monthly process start` },
+                    jobId: `${year}-${month}`,
+                    data: { year, month, step: `process monthly ${month}` },
                     children: dailyJobs,
                 },
             ],
         });
+
         return flow;
     }
 

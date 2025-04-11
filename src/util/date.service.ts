@@ -106,26 +106,46 @@ export class DateService {
         };
     }
 
-    public getDatesFormatMinutes(year: number = 2024, month: number = 0, day: number = 1, hours: number = 0, minutes: number = 0, interval: number = 10) {
+    public getDatesFormatMinutes(
+        year: number = 2024,
+        month: number = 1,         // <- mês de 1 a 12, mantido como você quer
+        day: number = 1,
+        hours: number = 0,
+        minutes: number = 0,
+        interval: number = 10
+    ) {
         const d = day.toString().padStart(2, '0');
         const h1 = hours.toString().padStart(2, '0');
-        let h2, m2, s2;
-        if (hours === 23 && minutes === 50) {
-            h2 = hours.toString().padStart(2, '0');
-            m2 = 59;
-            s2 = 59;
-        } else {
-            h2 = hours.toString().padStart(2, '0');
-            m2 = (minutes + interval).toString().padStart(2, '0');
-            s2 = '00';
-        }
         const min = minutes.toString().padStart(2, '0');
         const m = month.toString().padStart(2, '0');
+
+        let h2: string, m2: string, s2: string;
+
+        if (hours === 23 && minutes + interval >= 60) {
+            // fim do dia
+            h2 = '23';
+            m2 = '59';
+            s2 = '59';
+        } else {
+            let newMinutes = minutes + interval;
+            let newHours = hours;
+
+            if (newMinutes >= 60) {
+                newMinutes = newMinutes % 60;
+                newHours += 1;
+            }
+
+            h2 = newHours.toString().padStart(2, '0');
+            m2 = newMinutes.toString().padStart(2, '0');
+            s2 = '00';
+        }
+
         return {
             startDate: `${year}-${m}-${d}T${h1}:${min}:00`,
             endDate: `${year}-${m}-${d}T${h2}:${m2}:${s2}`,
         };
     }
+
 
     public getEndOf(term: string, year: number, month: number = 11, day: number = 1): string {
         let result: string;
