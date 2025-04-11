@@ -38,6 +38,7 @@
     "@nestjs/terminus": "^11.0.0",
     "@prisma/client": "6.5.0",
     "@ssut/nestjs-sqs": "^3.0.1",
+    "autoservice": "file:",
     "axios": "^1.8.4",
     "bullmq": "^5.45.0",
     "class-transformer": "^0.5.1",

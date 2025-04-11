@@ -131,7 +131,20 @@ export class AutoserviceService {
     }
 
     for (let m = month; m <= lastMonth; m++) {
-      await this.queue.manageFlow(year, m, day, hour, minutes, seconds, interval);
+      const startDay = (m === month) ? day : 1;
+      const startHour = (m === month) ? hour : 0;
+      const startMinute = (m === month) ? minutes : 0;
+      const startSecond = (m === month) ? seconds : 0;
+      await this.queue.manageFlow(
+        year,
+        m,
+        startDay,
+        startHour,
+        startMinute,
+        startSecond,
+        interval
+      );
+      // await this.queue.manageFlow(year, m, day, hour, minutes, seconds, interval);
     }
   }
 
