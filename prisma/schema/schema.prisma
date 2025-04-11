@@ -8,3 +8,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model CkLogs {
+    id         BigInt   @id @default(autoincrement()) @db.BigInt
+    created_at DateTime @default(now())
+    startDate  String
+    endDate    String
+    category   String
+    data       String?
+    qtd        Int?
+    status     String
+    message    String?
+    jobId      BigInt
+}
