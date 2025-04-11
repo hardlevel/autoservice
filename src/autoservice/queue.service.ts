@@ -1,5 +1,5 @@
 import { InjectFlowProducer, InjectQueue } from "@nestjs/bullmq";
-import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
@@ -7,6 +7,7 @@ import { Interval, SchedulerRegistry, Timeout } from "@nestjs/schedule";
 import { FlowProducer, Job, JobsOptions, Queue } from "bullmq";
 import { UtilService } from "../util/util.service";
 import { DateService } from "../util/date.service";
+import { AutoserviceService } from "./autoservice.service";
 
 @Injectable()
 export class QueueService implements OnApplicationBootstrap {
@@ -25,6 +26,7 @@ export class QueueService implements OnApplicationBootstrap {
         private readonly eventEmitter: EventEmitter2,
         private readonly dates: DateService,
         private readonly scheduler: SchedulerRegistry,
+        @Inject(forwardRef(() => AutoserviceService)) private readonly autoserviceService: AutoserviceService,
     ) { }
 
     public async onApplicationBootstrap() {
@@ -246,6 +248,7 @@ export class QueueService implements OnApplicationBootstrap {
         return
     }
 
+
     // @Interval(10000)
     // public async monitorAutoserviceQueue() {
     //     while (true) {
@@ -283,65 +286,27 @@ export class QueueService implements OnApplicationBootstrap {
     @OnEvent('autoservice.active')
     async startMonitoringQueue() {
         await this.hourly.pause();
-
-        const timeoutName = 'first-check';
-        const intervalName = 'monitor-interval';
-
-        const intervalCallback = async () => {
-            const status = await this.getAutoserviceStatus();
-            console.log('Monitorando fila...', status);
-
-            if (status.active === 0 && status.waiting === 0 && status.delayed === 0) {
-                const intervalRef = this.scheduler.getInterval(intervalName);
-                clearInterval(intervalRef);
-                if (this.scheduler.getIntervals().includes(intervalName)) {
-                    this.scheduler.deleteInterval(intervalName);
-                }
-                //   this.scheduler.deleteInterval(intervalName);
-
-                const timeout = setTimeout(() => {
-                    this.eventEmitter.emit('autoservice.final-check');
-                    this.scheduler.deleteTimeout(timeoutName);
-                }, 10000);
-
-                this.scheduler.addTimeout(timeoutName, timeout);
-            }
-        };
-
-        const interval = setInterval(intervalCallback, 10000);
-        this.scheduler.addInterval(intervalName, interval);
+        await this.autoserviceService.waitForSqsAndBullEmpty(10000);
+        this.eventEmitter.emit('autoservice.final-check');
     }
 
     @OnEvent('autoservice.final-check')
     async finalMonitoringQueue() {
-        this.hourly.pause();
-        const timeoutName = 'final-check';
-        const intervalName = 'monitor-interval';
+        await this.hourly.pause();
 
-        const intervalCallback = async () => {
+        let isEmpty = false;
+        while (!isEmpty) {
             const status = await this.getAutoserviceStatus();
-            console.log('Checagem final...', status);
+            isEmpty = status.active === 0 && status.waiting === 0 && status.delayed === 0 && !this.newMessage;
 
-            if (status.active === 0 && status.waiting === 0 && status.delayed === 0 && this.newMessage === false) {
-                const intervalRef = this.scheduler.getInterval(intervalName);
-                clearInterval(intervalRef);
-                if (this.scheduler.getIntervals().includes(intervalName)) {
-                    this.scheduler.deleteInterval(intervalName);
-                }
-                // this.scheduler.deleteInterval(intervalName);
-
-                const timeout = setTimeout(() => {
-                    this.eventEmitter.emit('autoservice.complete');
-                    this.scheduler.deleteTimeout(timeoutName);
-                }, 10000);
-
-                this.scheduler.addTimeout(timeoutName, timeout);
+            if (!isEmpty) {
+                await new Promise((res) => setTimeout(res, 10000));
             }
-        };
+        }
 
-        const interval = setInterval(intervalCallback, 20000);
-        this.scheduler.addInterval(intervalName, interval);
+        this.eventEmitter.emit('autoservice.complete');
     }
+
 
     @OnEvent('sqsEmpty')
     async handleSqsEmpt() {
