@@ -295,12 +295,16 @@ export class SqsConsumer implements OnModuleInit {
         return false;
     }
 
-
-
     @SqsConsumerEventHandler('autoservice', 'message_received')
     public onMsgReceived() {
         console.log('📨 Mensagem recebida durante verificação.');
-        this.sqsInterrupted = true;
+        this.emitter.emit('sqsMessage');
+    }
+
+    @SqsConsumerEventHandler('autoservice', 'empty')
+    public onEmpty() {
+        console.log('🔄 Verificação de estabilidade da fila cancelada.');
+        this.emitter.emit('sqsEmpty');
     }
 
     // @SqsConsumerEventHandler('autoservice', 'aborted')
