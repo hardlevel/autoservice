@@ -52,7 +52,7 @@ export class SqsConsumer implements OnModuleInit {
             msgBody.startDate = this.autoservice.startDate;
             msgBody.endDate = this.autoservice.endDate;
         };
-        await this.emitter.emit('sqsMessage');
+
         try {
             const job = await this.queue.addJobsToQueue('autoservice', msgBody);
         } catch (error) {
@@ -302,7 +302,7 @@ export class SqsConsumer implements OnModuleInit {
     }
 
     @SqsConsumerEventHandler('autoservice', 'empty')
-    public onEmpty() {
+    public onEmpty(data) {
         console.log('🔄 Verificação de estabilidade da fila cancelada.');
         this.emitter.emit('sqsEmpty');
     }

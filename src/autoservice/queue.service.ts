@@ -237,6 +237,15 @@ export class QueueService implements OnApplicationBootstrap {
         return status;
     }
 
+    public async autoserviceIsActive() {
+        const { active, waiting, delayed } = await this.getAutoserviceStatus();
+        if (active > 0 || waiting > 0 || delayed > 0) {
+            return true;
+        }
+        this.eventEmitter.emit('autoservice.empty');
+        return
+    }
+
     // @Interval(10000)
     // public async monitorAutoserviceQueue() {
     //     while (true) {
