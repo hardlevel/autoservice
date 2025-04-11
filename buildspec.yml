@@ -13,7 +13,7 @@ phases:
       # - git diff --quiet HEAD^ HEAD -- package.json || export PACKAGE_JSON_CHANGED=true
       # - if [ "$PACKAGE_JSON_CHANGED" = "true" ]; then pnpm install; fi
       - pnpm install
-      - pnpm prisma generate
+      # - pnpm prisma generate
       - pnpm run build
 
   post_build:
