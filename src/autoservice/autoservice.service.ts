@@ -12,6 +12,7 @@ import { LogService } from './log.service';
 import { QueueService } from './queue.service';
 import { SqsConsumer } from './sqs.consumer';
 import { AxiosTokenInterceptor } from './axios.interceptor';
+import { StateService } from './state.service';
 
 interface RequestOptions {
   method: string;
@@ -42,51 +43,54 @@ export class AutoserviceService {
     private readonly log: LogService,
     private readonly queue: QueueService,
     private readonly sqs: SqsConsumer,
+    private readonly state: StateService,
   ) { }
 
   @OnEvent('app.start')
   private async appStart() {
     console.log('aplicação iniciada');
     try {
+      await this.eventEmitter.emit('queue.start');
+      await this.eventEmitter.emit('sqs.start');
+      await this.eventEmitter.waitFor('app.free');
+      await this.checkAndStart();
       // await this.init(2024, 7),
       // await this.util.progressBarTimer(5);
-      await this.waitForSqsAndBullEmpty();
-      await this.processYear(2025, 3, 11);
-      console.log('Processos concluídos');
+      // await this.eventEmitter.emit('queue.start');
+      // await this.eventEmitter.emit('sqs.start');
+      // // await this.state.waitBullBusy();
+      // await this.eventEmitter.waitFor('bull.free');
+      // console.log('bull free');
+      // await this.eventEmitter.waitFor('sqs.free');
+      // console.log('sqs free');
+      // await this.processYear(2025, 3, 11);
+      // console.log('Processos concluídos');
     } catch (error) {
-      console.error('Erro durante onApplicationBootstrap:', error);
+      console.error('Erro durante evento app.start:', error);
     }
   }
 
-  public async waitForSqsAndBullEmpty(
-    delayMs = 5000,
-  ): Promise<void> {
-    let sqsEmpty = false;
-    while (!sqsEmpty) {
-      sqsEmpty = await this.sqs.isSqsActiveAndEmpty();
-      if (!sqsEmpty) {
-        await this.eventEmitter.emit('sqs.bull.busy');
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
-      }
-    }
+  async checkAndStart() {
+    const state = this.state.getState();
 
-    let bullActive = false
-    while (bullActive) {
-      bullActive = await this.queue.autoserviceIsActive();
-      if (bullActive) {
-        await this.eventEmitter.emit('sqs.bull.busy');
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
-      }
+    if (state === 'free') {
+      console.log('SQS e BullMQ livres. Iniciando processYear...');
+      await this.processYear(2025, 3, 11);
+    } else {
+      console.log('SQS ou BullMQ ocupados. Aguardando liberação...');
+      const listener = async () => {
+        if (this.state.getState() === 'free') {
+          console.log('Ambos livres agora. Iniciando processYear...');
+          this.eventEmitter.off('bull.free', listener);
+          this.eventEmitter.off('sqs.bull.free', listener);
+          await this.processYear(2025, 3, 11);
+        }
+      };
+      this.eventEmitter.on('bull.free', listener);
+      this.eventEmitter.on('sqs.bull.free', listener);
     }
-    await this.eventEmitter.emit('sqs.bull.empty');
   }
 
-  @OnEvent('sqs.bull.busy')
-  async handleSqsBullBusy() {
-    console.log('Fila ocupada. Aguardando liberação...');
-    this.isBusy = true;
-    // await new Promise((resolve) => setTimeout(resolve, 5000));
-  }
 
   @OnEvent('updateDates')
   updateDates(payload) {
@@ -111,14 +115,7 @@ export class AutoserviceService {
     return response.data;
   }
 
-  async monitorState() {
-    while (this.isBusy) {
-      console.log('monitorando estado');
-      await new Promise((resolve) => setTimeout(resolve, 10000));
-    }
-  }
-
-  public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0) {
+  public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0, minutes: number = 0, seconds: number = 0, interval = '30m') {
     const today = this.dates.getDateObject(new Date().toString());
     const currentYear = today.year;
     const currentMonth = today.month;
@@ -134,7 +131,7 @@ export class AutoserviceService {
     }
 
     for (let m = month; m <= lastMonth; m++) {
-      await this.queue.manageFlow(year, m, day, hour);
+      await this.queue.manageFlow(year, m, day, hour, minutes, seconds, interval);
     }
   }
 

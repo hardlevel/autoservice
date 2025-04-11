@@ -97,9 +97,6 @@ export class AutoserviceProcessor extends WorkerHost {
             data: 'OK'
         }
 
-        if (data) {
-            this.eventEmitter.emit('autoservice.working', { id: job.id, status: true });
-        }
         // const filePath = path.join(process.cwd(), `${ck}.json`);
         // console.log(ck, filePath);
         // console.log(ck);
@@ -219,18 +216,20 @@ export class AutoserviceProcessor extends WorkerHost {
         // await this.sqs.isSqsActiveAndEmpty();
         // this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
         this.eventEmitter.emit('job.completed', { id: job.id, status: true });
+        this.eventEmitter.emit('bull.state', { state: 'free' });
     }
 
     @OnWorkerEvent('ready')
     handleReady(job: Job) {
         console.log(`Job autoservice ${job} is ready.`);
-        this.eventEmitter.emit('autoservice.ready');
+        this.eventEmitter.emit('bull.state', { state: 'busy' });
     }
 
     @OnWorkerEvent('active')
     handleActive(job: Job) {
         console.log(`Job ${job.id} is active.`);
-        this.eventEmitter.emit('autoservice.active', { id: job.id, status: true });
+        // this.eventEmitter.emit('autoservice.active', { id: job.id, status: true });
+        this.eventEmitter.emit('bull.state', { state: 'busy' });
     }
 
     @OnWorkerEvent('failed')
@@ -243,7 +242,7 @@ export class AutoserviceProcessor extends WorkerHost {
         this.jobLog.data = job.data;
         this.jobLog.startDate = job.data.startDate;
         this.jobLog.endDate = job.data.endDate;
-
+        this.eventEmitter.emit('bull.state', { state: 'free' });
         // await this.prisma.jobLogs.create({
         //     data: this.jobLog
         // })
