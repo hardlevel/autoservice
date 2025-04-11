@@ -68,10 +68,10 @@ export class AutoserviceService {
       }
     }
 
-    let bullEmpty = false
-    while (!bullEmpty) {
-      bullEmpty = await this.queue.autoserviceIsActive();
-      if (!bullEmpty) {
+    let bullActive = false
+    while (bullActive) {
+      bullActive = await this.queue.autoserviceIsActive();
+      if (bullActive) {
         await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
     }
