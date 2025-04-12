@@ -196,10 +196,11 @@ export class SqsConsumer implements OnModuleInit {
     @SqsConsumerEventHandler('autoservice', 'empty')
     public onEmpty(data) {
         console.log('🔄 Verificação de estabilidade da fila cancelada.');
-        this.emitter.emit('sqsEmpty');
-        this.emitter.emit('sqs.state', { state: 'free' });
-        this.emitter.emit('bull.state', { state: 'free' });
-        console.log(this.state.getBullState(), this.state.getSqsState());
+        // this.emitter.emit('sqsEmpty');
+        // this.emitter.emit('sqs.state', { state: 'free' });
+        // this.emitter.emit('bull.state', { state: 'free' });
+        this.emitter.emit('sqs.free');
+        console.log('estados (sqsconsumer', this.state.getBullState(), this.state.getSqsState());
     }
 
     @SqsConsumerEventHandler('autoservice', 'processing_error')
