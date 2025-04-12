@@ -108,7 +108,7 @@ export class DateService {
 
     public getDatesFormatMinutes(
         year: number = 2024,
-        month: number = 1,         // <- mês de 1 a 12, mantido como você quer
+        month: number = 1,
         day: number = 1,
         hours: number = 0,
         minutes: number = 0,

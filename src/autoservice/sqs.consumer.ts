@@ -13,11 +13,6 @@ import { StateService, QueueState } from "./state.service";
 
 @Injectable()
 export class SqsConsumer implements OnModuleInit {
-    public sqsEmpty: boolean;
-    public sqsInterrupted: boolean = false;
-    private isVerifyingEmpty = false;
-    private lastVerifiedEmpty: boolean = false;
-
     constructor(
         private lazyModuleLoader: LazyModuleLoader,
         private readonly config: ConfigService,
@@ -106,7 +101,7 @@ export class SqsConsumer implements OnModuleInit {
             return false;
         } catch (error) {
             this.log.setLog('error', 'Não foi possível verificar o status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
-            return [];
+            return false;
         }
     }
 
