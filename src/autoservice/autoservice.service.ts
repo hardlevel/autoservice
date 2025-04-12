@@ -116,6 +116,7 @@ export class AutoserviceService {
   }
 
   public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0, minutes: number = 0, seconds: number = 0, interval = '30m') {
+    console.log(`Starting to process year ${year} from month ${month}, day ${day}`);
     const today = this.dates.getDateObject(new Date().toString());
     const currentYear = today.year;
     const currentMonth = today.month;
@@ -131,23 +132,28 @@ export class AutoserviceService {
     }
 
     for (let m = month; m <= lastMonth; m++) {
+      console.log(`Processing year ${year}, month ${m}`);
       const startDay = (m === month) ? day : 1;
       const startHour = (m === month) ? hour : 0;
       const startMinute = (m === month) ? minutes : 0;
       const startSecond = (m === month) ? seconds : 0;
-      await this.queue.manageFlow(
-        year,
-        m,
-        startDay,
-        startHour,
-        startMinute,
-        startSecond,
-        interval
-      );
+      try {
+        await this.queue.manageFlow(
+          year,
+          m,
+          startDay,
+          startHour,
+          startMinute,
+          startSecond,
+          interval
+        );
+      } catch (error) {
+        console.error(`Failed to process month ${m} of year ${year}:`, error);
       // await this.queue.manageFlow(year, m, day, hour, minutes, seconds, interval);
     }
   }
-
+  }
+}
   // public async init(
   //   year: number = 2024,
   //   month: number = 0,
@@ -204,7 +210,6 @@ export class AutoserviceService {
   //     }
   //   }
   // }
-}
 
 
 //TODO

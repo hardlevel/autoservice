@@ -58,13 +58,16 @@ export class QueueService implements OnApplicationBootstrap {
     }
 
     public async waitForQueueEmpty(queue) {
-        let isEmpty = false;
-        while (!isEmpty) {
-            isEmpty = await this.isQueueActive(queue);
-            if (!isEmpty) {
-                await this.eventEmitter.emit('state.change', { state: false });
-                await new Promise((resolve) => setTimeout(resolve, 10000));
+        if (!this[queue] || typeof this[queue].getJobCounts !== 'function') {
+            throw new Error(`Queue "${queue}" not found or is invalid`);
+        }
+        let notified = false;
+        while (await this.isQueueActive(queue)) {
+            if (!notified) {
+                this.eventEmitter.emit('state.change', { state: false });
+                notified = true;
             }
+            await new Promise((resolve) => setTimeout(resolve, 10000));
         }
     }
 
@@ -110,8 +113,7 @@ export class QueueService implements OnApplicationBootstrap {
 
     public async isQueueActive(queue) {
         const { active, waiting, delayed } = await this.getQueueStatus(queue);
-        const isActive = active > 0 || waiting > 0 || delayed > 0;
-        return isActive;
+        return active > 0 || waiting > 0 || delayed > 0;
     }
 
     public async jobAlreadyAdded(queue, data) {
@@ -150,7 +152,6 @@ export class QueueService implements OnApplicationBootstrap {
                     console.log(`${year}-${month}-${d}-${h}-${m}`);
                     hourlyJobs.push({
                         name: `hour-${d}-${h}-${m}`,
-                        jobId: `${year}-${month}-${d}-${h}-${m}`,
                         queueName: 'hourly',
                         data: {
                             year,
@@ -160,6 +161,10 @@ export class QueueService implements OnApplicationBootstrap {
                             minute: m,
                             step: `process hour ${h} for day ${d}`,
                         },
+                        opts: {
+                            removeOnComplete: true,
+                            removeOnFail: false,
+                        },
                     });
                 }
             }
@@ -167,12 +172,15 @@ export class QueueService implements OnApplicationBootstrap {
             dailyJobs.push({
                 name: `daily-${d}`,
                 queueName: 'daily',
-                jobId: `${year}-${month}-${d}`,
                 data: {
                     year,
                     month,
                     day: d,
                     step: `process daily ${d}`,
+                },
+                opts: {
+                    removeOnComplete: true,
+                    removeOnFail: false,
                 },
                 children: hourlyJobs,
             });
@@ -186,8 +194,11 @@ export class QueueService implements OnApplicationBootstrap {
                 {
                     name: `monthly-${year}-${month}`,
                     queueName: 'monthly',
-                    opts: { jobId: `${year}-${month}` },
                     data: { year, month, step: `process monthly ${month}` },
+                    opts: {
+                        removeOnComplete: true,
+                        removeOnFail: false,
+                    },
                     children: dailyJobs,
                 },
             ],
@@ -195,6 +206,7 @@ export class QueueService implements OnApplicationBootstrap {
 
         return flow;
     }
+
 
     @OnEvent('queue.start')
     async onAppStart() {
