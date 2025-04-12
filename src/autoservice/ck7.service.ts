@@ -63,9 +63,9 @@ export class Ck7Service {
                 }
             });
 
-            if (ck.created_at.getTime() === ck.modified_at.getTime()) {
-                await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7001', 1);
-            }
+            // if (ck.created_at.getTime() === ck.modified_at.getTime()) {
+            //     await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7001', 1);
+            // }
 
 
             if (ck7001.CK7002) await this.ck7002(ck.id, ck7001.CK7002);
@@ -115,9 +115,9 @@ export class Ck7Service {
                 ck = await this.prisma.create('ck7002', data);
             }
 
-            if (ck.created_at == ck.modified_at) {
-                await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7002', 1);
-            }
+            // if (ck.created_at == ck.modified_at) {
+            //     await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7002', 1);
+            // }
 
             const phones = await this.phones(ck.id, ck7002.telefones);
             const emails = await this.emails(ck.id, ck7002.emails);
@@ -226,7 +226,7 @@ export class Ck7Service {
                     await this.prisma.update('ck7003', ck.id, data);
                 } else {
                     ck = await this.prisma.create('ck7003', data);
-                    await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7003', 1);
+                    // await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7003', 1);
                 }
             } catch (error) {
                 await this.prisma.logError({
@@ -267,7 +267,7 @@ export class Ck7Service {
                     await this.prisma.update('ck7004', ck.id, data);
                 } else {
                     ck = await this.prisma.create('ck7004', data);
-                    await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7004', 1);
+                    // await this.prisma.recordDaily(this.date.year, this.date.month, this.date.day, 'ck7004', 1);
                 }
                 // const ck = await this.prisma.ck7004.upsert({
                 //     where: {
