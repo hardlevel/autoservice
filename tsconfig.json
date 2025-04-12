@@ -6,8 +6,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    // "target": "ES2021",
-    "target": "ES2024",
+    "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -31,4 +30,9 @@
   "include": [
     "src"
   ],
+  "exclude": [
+    "node_modules",
+    "test",
+    "dist"
+  ]
 }
