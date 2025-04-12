@@ -11,6 +11,8 @@ import { PinoLogger } from 'nestjs-pino';
 import * as fs from 'fs';
 import * as path from 'path';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import * as crypto from 'crypto';
+(globalThis as any).crypto = crypto;
 
 async function bootstrap() {
 

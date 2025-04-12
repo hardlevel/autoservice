@@ -39,10 +39,13 @@ export class StateService implements OnModuleInit {
 
     @Interval(3000)
     checkState() {
+        console.log('checando estado do app');
         if (this.bullState === QueueState.FREE && this.sqsState === QueueState.FREE) {
             this.eventEmitter.emit('app.free');
         }
-        return this.bullState === QueueState.FREE && this.sqsState === QueueState.FREE;
+        if (this.bullState === QueueState.BUSY && this.sqsState === QueueState.BUSY) {
+            this.eventEmitter.emit('app.busy');
+        }
     }
 
     public setBullState(state: QueueState) {
