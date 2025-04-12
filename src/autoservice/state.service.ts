@@ -8,8 +8,8 @@ export enum QueueState {
 
 @Injectable()
 export class StateService implements OnModuleInit {
-    private bullState: QueueState = QueueState.BUSY;
-    private sqsState: QueueState = QueueState.BUSY;
+    private bullState: QueueState = QueueState.FREE;
+    private sqsState: QueueState = QueueState.FREE;
     private appIsFree = false;
 
     constructor(private readonly eventEmitter: EventEmitter2) { }
@@ -72,7 +72,7 @@ export class StateService implements OnModuleInit {
     }
 
     getState() {
-        return this.bullState === 'free' && this.sqsState === 'free' ? 'free' : 'busy';
+        return this.bullState === QueueState.FREE && this.sqsState === QueueState.FREE ? 'free' : 'busy';
     }
 
     @OnEvent('bull.state')
