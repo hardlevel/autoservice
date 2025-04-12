@@ -14,6 +14,7 @@ phases:
       # - if [ "$PACKAGE_JSON_CHANGED" = "true" ]; then pnpm install; fi
       - pnpm install
       - pnpm prisma generate --schema=prisma/schema/schema.prisma
+      - pnpm run prisma migrate
       - pnpm run build
 
   post_build:
