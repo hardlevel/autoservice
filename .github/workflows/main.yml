@@ -71,6 +71,7 @@ jobs:
           --exclude='.env.prod' \
           --exclude='.eslintrc.js' \
           --exclude='docker.sh' \
+          --exclude='private_key.pem' \
           ./ ubuntu@107.22.156.206:/var/www/autoservice
           
       # Passo 8: Executar os comandos no servidor remoto
