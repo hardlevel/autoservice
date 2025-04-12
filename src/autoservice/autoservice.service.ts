@@ -122,8 +122,14 @@ export class AutoserviceService {
                 minute: min,
                 step: `process hour ${h} for day ${d}`,
               };
-
-              await this.queue.addJobToQueue('hourly', data);
+              this.eventEmitter.waitFor('sqs.free');
+              try {
+                const { startDate, endDate } = this.dates.getDatesFormatMinutes(data.year, data.month, data.day, data.minute);
+                await this.makeRequest(startDate, endDate);
+              } catch (error) {
+                console.error('Erro ao enviar mensagem para SQS:', error);
+              }
+              // await this.queue.addJobToQueue('hourly', data);
             }
           }
         }
