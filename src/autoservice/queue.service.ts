@@ -186,7 +186,7 @@ export class QueueService implements OnApplicationBootstrap {
                 {
                     name: `monthly-${year}-${month}`,
                     queueName: 'monthly',
-                    jobId: `${year}-${month}`,
+                    opts: { jobId: `${year}-${month}` },
                     data: { year, month, step: `process monthly ${month}` },
                     children: dailyJobs,
                 },

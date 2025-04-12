@@ -1,0 +1,493 @@
+model Ck3001 {
+  id                                           BigInt   @id @default(autoincrement()) @db.BigInt
+  numero_do_dn                                 String
+  numero_da_nota_fiscal                        String //@unique
+  serie_da_nota_fiscal                         String?
+  fonte_pagadora                               Int
+  valor_total_liquido_das_pecas_na_nota_fiscal Decimal  @default(0) @db.Decimal(10, 2)
+  indicador                                    String
+  data_e_hora_da_emissao_da_nota_fiscal        DateTime
+  numero                                       String?
+  endereco                                     String
+  complemento                                  String?
+  nome_do_cliente                              String
+  cpf_cnpj                                     String
+  ck3002                                       Ck3002[]
+  ck3003                                       Ck3003[]
+  created_at                                   DateTime @default(now())
+  modified_at                                  DateTime @updatedAt
+
+  @@unique(name: "ck3001_cod", [cpf_cnpj, numero_da_nota_fiscal])
+  @@index([numero_da_nota_fiscal], type: Hash)
+}
+
+model Ck3002 {
+  id          BigInt      @id @default(autoincrement()) @db.BigInt
+  cidade      String
+  bairro      String?
+  uf          String
+  cep         String
+  ck3001      Ck3001      @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
+  ck3001_id   BigInt
+  emails      Emails[]
+  telefones   Telefones[]
+  created_at  DateTime    @default(now())
+  modified_at DateTime    @updatedAt
+
+  @@unique(name: "ck3002_cod", [cidade, bairro, uf, cep, ck3001_id])
+}
+
+model Ck3003 {
+  id                          BigInt   @id @default(autoincrement()) @db.BigInt
+  codigo_da_peca              String
+  descricao_da_peca           String?
+  quantidade_da_peca          Int
+  valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
+  codigo_promocional          String?
+  ck3001                      Ck3001   @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
+  ck3001_id                   BigInt
+  created_at                  DateTime @default(now())
+  modified_at                 DateTime @updatedAt
+
+  @@unique(name: "ck3003_cod", [codigo_da_peca, ck3001_id])
+  @@index([codigo_da_peca], type: Hash)
+}
+
+model Ck4001 {
+  id                                    BigInt    @id @default(autoincrement()) @db.BigInt
+  tipo_do_cancelamento                  String
+  numero_do_dn                          String
+  numero_da_nota_fiscal                 String? //@unique
+  numero_da_os                          String? //@unique
+  serie_da_nota_fiscal                  String?
+  data_e_hora_da_emissao_da_nota_fiscal DateTime?
+  data_do_cancelamento_do_documento     DateTime
+  data_e_hora_da_abertura_da_os         DateTime?
+  data_e_hora_do_fechamento_da_os       DateTime?
+  created_at                            DateTime  @default(now())
+  modified_at                           DateTime  @updatedAt
+
+  @@unique(name: "ck4001_cod", [numero_do_dn, data_do_cancelamento_do_documento])
+  @@index([numero_da_nota_fiscal], type: Hash)
+}
+
+model Ck5001 {
+  id                                                         BigInt   @id @default(autoincrement()) @db.BigInt
+  numero_do_dn                                               String //@unique
+  tempo_remunerado                                           Float?
+  tempo_disponivel_servicos_gerais_produtivos                Float?
+  tempo_disponivel_servicos_rapido_produtivos                Float?
+  tempo_disponivel_servicos_carroceria_produtivos_funileiros Float?
+  tempo_disponivel_servicos_carroceria_produtivos_pintores   Float?
+  taxa_de_mao_de_obra_publico                                Float?
+  servicos_gerente                                           Int?
+  servicos_chefe_de_oficina                                  Int?
+  servicos_consultor_tecnico                                 Int?
+  servicos_aprendiz                                          Int?
+  servicos_suporte                                           Int?
+  servicos_gerais_produtivos                                 Int?
+  servicos_rapido_produtivos                                 Int?
+  servicos_carroceria_produtivos_funileiros                  Int?
+  servicos_carroceria_produtivos_pintores                    Int?
+  servicos_lavadores_lubrificadores                          Int?
+  servicos_terceiros                                         Int?
+  pecas_gerente                                              Int?
+  pecas_suporte                                              Int?
+  pecas_balconista_varejo                                    Int?
+  pecas_balconista_oficina                                   Int?
+  pecas_vendedor_atacado                                     Int?
+  pecas_vendedor_acessorios                                  Int?
+  locais_de_trabalho_servicos_gerais                         Int?
+  locais_de_trabalho_servico_rapido                          Int?
+  locais_de_trabalho_servicos_de_funilaria                   Int?
+  locais_de_trabalho_servicos_de_pintura                     Int?
+  locais_de_trabalho_lavagem_e_lubrificacao                  Int?
+  locais_de_trabalho_utilizados_por_terceiros                Int?
+  mes_e_ano_de_referencia                                    String?
+  ano_de_referencia                                          Int
+  mes_de_referencia                                          Int
+  created_at                                                 DateTime @default(now())
+  modified_at                                                DateTime @updatedAt
+
+  @@unique(name: "ck5001_cod", [numero_do_dn, ano_de_referencia, mes_de_referencia])
+  @@index([numero_do_dn], type: Hash)
+}
+
+model Ck6011 {
+  id                                       BigInt    @id @default(autoincrement()) @db.BigInt
+  numero_do_dn                             String
+  numero_da_os                             String //@unique
+  data_e_hora_da_abertura_da_os            DateTime
+  data_e_hora_do_fechamento_da_os          DateTime?
+  fonte_pagadora                           Int
+  valor_total_liquido_das_pecas_na_os      Decimal?  @default(0) @db.Decimal(10, 2)
+  valor_total_liquido_da_mao_de_obra_na_os Decimal?  @default(0) @db.Decimal(10, 2)
+  ck6021                                   Ck6021[]
+  ck6031                                   Ck6031[]
+  ck6041                                   Ck6041[]
+  // ck6042                                   Ck6042[]
+  created_at                               DateTime  @default(now())
+  modified_at                              DateTime  @updatedAt
+
+  @@unique(name: "ck6011_cod", [numero_da_os, numero_do_dn])
+  @@index([numero_da_os], type: Hash)
+}
+
+model Ck6021 {
+  id                          BigInt   @id @default(autoincrement()) @db.BigInt
+  codigo_da_peca              String
+  descricao_da_peca           String?
+  quantidade_da_peca          Int
+  valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
+  codigo_promocional          String?
+  ck6011_id                   BigInt
+  ck6011                      Ck6011   @relation(fields: [ck6011_id], references: [id], onDelete: Cascade)
+  created_at                  DateTime @default(now())
+  modified_at                 DateTime @updatedAt
+
+  @@unique(name: "ck6021_cod", [codigo_da_peca, ck6011_id])
+}
+
+model Ck6031 {
+  id                                 BigInt   @id @default(autoincrement()) @db.BigInt
+  cos                                String?
+  descricao_do_servico               String?
+  tipo_de_servico                    Int?
+  hora_vendida                       Float?
+  valor_total_liquido_da_mao_de_obra Decimal? @default(0) @db.Decimal(10, 2)
+  ck6011_id                          BigInt
+  ck6011                             Ck6011   @relation(fields: [ck6011_id], references: [id], onDelete: Cascade)
+  created_at                         DateTime @default(now())
+  modified_at                        DateTime @updatedAt
+
+  @@unique(name: "ck6031_cod", [cos, ck6011_id])
+}
+
+model Ck6041 {
+  id                       BigInt   @id @default(autoincrement()) @db.BigInt
+  quilometragem_do_veiculo Int?     @default(0)
+  indicador                String
+  chassi_do_veiculo        String?
+  placa_do_veiculo         String?
+  nome_do_cliente          String
+  cpf_cnpj                 String
+  endereco                 String
+  numero                   String?
+  complemento              String?
+  bairro                   String?
+  ck6011_id                BigInt
+  ck6011                   Ck6011   @relation(fields: [ck6011_id], references: [id], onDelete: Cascade)
+  created_at               DateTime @default(now())
+  modified_at              DateTime @updatedAt
+  ck6042                   Ck6042[]
+
+  @@unique(name: "ck6041_cod", [nome_do_cliente, chassi_do_veiculo, ck6011_id])
+}
+
+model Ck6042 {
+  id          BigInt      @id @default(autoincrement()) @db.BigInt
+  cidade      String
+  uf          String
+  cep         String
+  ck6041_id   BigInt
+  ck6041      Ck6041      @relation(fields: [ck6041_id], references: [id])
+  created_at  DateTime    @default(now())
+  modified_at DateTime    @updatedAt
+  telefones   Telefones[]
+  emails      Emails[]
+  // Ck6011      Ck6011?     @relation(fields: [ck6011Id], references: [id])
+  // ck6011Id    Int?
+
+  @@unique(name: "ck6042_cod", [cidade, uf, cep, ck6041_id])
+}
+
+model Ck7001 {
+  id                                                BigInt    @id @default(autoincrement()) @db.BigInt
+  nome_do_cliente                                   String
+  endereco                                          String
+  numero_do_dn                                      String
+  numero_da_nota_fiscal                             String //@unique
+  numero_da_os                                      String
+  serie_da_nota_fiscal                              String?
+  fonte_pagadora                                    Int
+  valor_total_liquido_das_pecas_na_nota_fiscal      Decimal?  @default(0) @db.Decimal(10, 2)
+  valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal?  @default(0) @db.Decimal(10, 2)
+  data_e_hora_da_abertura_da_os                     DateTime
+  data_e_hora_da_emissao_da_nota_fiscal             DateTime
+  data_e_hora_do_fechamento_da_os                   DateTime?
+  ck7002                                            Ck7002[]
+  ck7003                                            Ck7003[]
+  ck7004                                            Ck7004[]
+  created_at                                        DateTime  @default(now())
+  modified_at                                       DateTime  @updatedAt
+
+  @@unique(name: "ck7001_cod", [numero_da_nota_fiscal, numero_do_dn])
+  @@index([numero_da_nota_fiscal], type: Hash)
+}
+
+model Ck7002 {
+  id          BigInt      @id @default(autoincrement()) @db.BigInt
+  ck7001_id   BigInt
+  ck7001      Ck7001      @relation(fields: [ck7001_id], references: [id])
+  indicador   String
+  cidade      String
+  uf          String
+  bairro      String?
+  numero      String?     @default("Não informado")
+  complemento String?
+  cpf_cnpj    String
+  cep         String
+  telefones   Telefones[]
+  emails      Emails[]
+  created_at  DateTime    @default(now())
+  modified_at DateTime    @updatedAt
+
+  @@unique(name: "ck7002_cod", [cidade, uf, indicador, ck7001_id])
+}
+
+model Ck7003 {
+  id                          BigInt   @id @default(autoincrement()) @db.BigInt
+  ck7001_id                   BigInt
+  ck7001                      Ck7001   @relation(fields: [ck7001_id], references: [id])
+  codigo_da_peca              String
+  descricao_da_peca           String?
+  quantidade_da_peca          Int
+  valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
+  codigo_promocional          String?
+  created_at                  DateTime @default(now())
+  modified_at                 DateTime @updatedAt
+
+  @@unique(name: "ck7003_cod", [ck7001_id, codigo_da_peca])
+}
+
+model Ck7004 {
+  id                                 BigInt   @id @default(autoincrement()) @db.BigInt
+  ck7001_id                          BigInt
+  ck7001                             Ck7001   @relation(fields: [ck7001_id], references: [id])
+  cos                                String?
+  descricao_do_servico               String
+  hora_vendida                       Float?
+  valor_total_liquido_da_mao_de_obra Decimal? @default(0) @db.Decimal(10, 2)
+  tipo_de_servico                    Int?
+  created_at                         DateTime @default(now())
+  modified_at                        DateTime @updatedAt
+
+  @@unique(name: "ck7004_cod", [ck7001_id, cos])
+}
+
+model Emails {
+  email             String   @unique
+  descricao         String   @default("pessoal")
+  autoriza_contato  Boolean
+  autoriza_pesquisa Boolean
+  created_at        DateTime @default(now())
+  modified_at       DateTime @updatedAt
+  ck3002            Ck3002?  @relation(fields: [ck3002_id], references: [id], onDelete: Cascade)
+  ck3002_id         BigInt?
+  ck6042            Ck6042?  @relation(fields: [ck6042_id], references: [id], onDelete: Cascade)
+  ck6042_id         BigInt?
+  ck7002            Ck7002?  @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
+  ck7002_id         BigInt?
+  // cliente           Clientes? @relation(fields: [cliente_id], references: [id])
+  // cliente_id        BigInt?
+}
+
+model ErrorLogger {
+  id           BigInt   @id @default(autoincrement()) @db.BigInt
+  created_at   DateTime @default(now())
+  time         DateTime @default(now())
+  category     String?
+  message      String?
+  code         String?
+  params       String?
+  originalData String?
+
+  // @@unique(name: "error_log", [category, message])
+}
+
+model CkLogs {
+  id         BigInt   @id @default(autoincrement()) @db.BigInt
+  created_at DateTime @default(now())
+  startDate  String
+  endDate    String
+  category   String
+  data       String?
+  qtd        Int?
+  status     String
+  message    String?
+  jobId      BigInt
+}
+
+model JobLogs {
+  id         BigInt   @id @default(autoincrement()) @db.BigInt
+  jobId      BigInt
+  created_at DateTime @default(now())
+  started_at DateTime
+  ended_at   DateTime
+  startDate  String?
+  endDate    String?
+  status     String
+  message    String?
+  data       String?
+}
+
+model DailyCk {
+  id     BigInt @id @default(autoincrement()) @db.BigInt
+  day    Int
+  month  Int
+  year   Int
+  ck3001 Int?
+  ck3002 Int?
+  ck3003 Int?
+  ck4001 Int?
+  ck5001 Int?
+  ck6011 Int?
+  ck6021 Int?
+  ck6031 Int?
+  ck6041 Int?
+  ck6042 Int?
+  ck7001 Int?
+  ck7002 Int?
+  ck7003 Int?
+  ck7004 Int?
+  status String @default("PENDING")
+
+  @@unique(name: "daily", [day, month, year])
+}
+
+model LastSearch {
+  id        Int    @unique @default(1)
+  startDate String
+  endDate   String
+}
+
+model LastParams {
+  day    Int
+  month  Int
+  year   Int     @unique
+  hour   Int
+  status Boolean @default(false)
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views", "prismaSchemaFolder", "relationJoins"]
+  binaryTargets   = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x", "rhel-openssl-3.0.x"]
+  output          = "../../src/prisma/psql"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Telefones {
+  ck3002            Ck3002?  @relation(fields: [ck3002_id], references: [id], onDelete: Cascade)
+  ck3002_id         BigInt?
+  ck6042            Ck6042?  @relation(fields: [ck6042_id], references: [id], onDelete: Cascade)
+  ck6042_id         BigInt?
+  ck7002            Ck7002?  @relation(fields: [ck7002_id], references: [id], onDelete: Cascade)
+  ck7002_id         BigInt?
+  numero            String   @unique
+  descricao         String   @default("residencial")
+  autoriza_contato  Boolean
+  autoriza_pesquisa Boolean
+  created_at        DateTime @default(now())
+  modified_at       DateTime @updatedAt
+  // cliente           Clientes? @relation(fields: [cliente_id], references: [id])
+  // cliente_id        BigInt?
+}
+
+view servicos_view {
+  id                                    BigInt    @unique
+  cos                                   String
+  descricao_do_servico                  String
+  hora_vendida                          Float
+  valor_total_liquido_da_mao_de_obra    Decimal   @db.Decimal(10, 2)
+  numero_da_os                          String?
+  numero_do_dn                          String?
+  fonte_pagadora                        Int?
+  data_e_hora_da_abertura_da_os         DateTime?
+  data_e_hora_da_emissao_da_nota_fiscal DateTime?
+  uf                                    String
+  parent                                String
+  parent_id                             BigInt
+}
+
+view pecas_view {
+  id                          BigInt  @unique
+  codigo_da_peca              String
+  descricao_da_peca           String
+  quantidade_da_peca          Int
+  valor_total_liquido_da_peca Decimal @db.Decimal(10, 2)
+  parent                      String
+  parent_id                   BigInt
+}
+
+view clientes_view {
+  id              BigInt  @unique
+  nome_do_cliente String
+  cpf_cnpj        String
+  endereco        String
+  numero          String
+  complemento     String?
+  bairro          String
+  cidade          String
+  uf              String
+  cep             String
+  tel_res         String?
+  tel_cel         String?
+  tel_com         String?
+  email_res       String?
+  email_com       String?
+  parent          String
+  parent_id       BigInt
+  // indicador       String
+  // fonte_pagadora  Int
+}
+
+view nf_view {
+  id                                                BigInt    @unique
+  numero_da_nota_fiscal                             String
+  serie_da_nota_fiscal                              String
+  fonte_pagadora                                    Int
+  valor_total_liquido_das_pecas_na_nota_fiscal      Decimal?  @default(0.00) @db.Decimal(10, 2)
+  valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal?  @default(0.00) @db.Decimal(10, 2)
+  data_e_hora_da_abertura_da_os                     DateTime?
+  data_e_hora_do_fechamento_da_os                   DateTime?
+  data_e_hora_da_emissao_da_nota_fiscal             DateTime
+  categoria                                         String
+}
+
+view fontes_pagadoras_view {
+  id                    BigInt
+  numero_da_nota_fiscal String? @unique
+  serie_da_nota_fiscal  String?
+  nota_fiscal_id        BigInt?
+  numero_da_os          String? @unique
+  os_id                 BigInt?
+  numero_do_dn          String
+  fonte_pagadora        Int
+  fonte_pagadora_id     BigInt
+  indicador             String?
+  parent                String
+  parent_id             BigInt
+
+  @@unique(name: "fp_view", [parent, parent_id, numero_do_dn])
+}
+
+view pecas_balcao_view {
+  numero_do_dn       String  @unique
+  mes_ano            String
+  qtd_pecas_balcao   BigInt
+  vl_liq_peca_balcao Decimal @db.Decimal(10, 2)
+}
+
+view pecas_oficina_view {
+  numero_do_dn        String  @unique
+  mes_ano             String
+  qtd_pecas_oficina   BigInt
+  vl_liq_peca_oficina Decimal @db.Decimal(10, 2)
+  qtd_hora_vendida    Float
+  vl_liq_mao_obra     Decimal @db.Decimal(10, 2)
+}
