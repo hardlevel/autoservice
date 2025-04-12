@@ -122,7 +122,7 @@ export class AutoserviceService {
                 minute: min,
                 step: `process hour ${h} for day ${d}`,
               };
-              this.eventEmitter.waitFor('sqs.free');
+              await this.eventEmitter.waitFor('sqs.free');
               try {
                 const { startDate, endDate } = this.dates.getDatesFormatMinutes(data.year, data.month, data.day, data.minute);
                 await this.makeRequest(startDate, endDate);
