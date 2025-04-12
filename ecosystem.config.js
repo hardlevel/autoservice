@@ -14,9 +14,9 @@ module.exports = {
       retain: "2", // Número de arquivos antigos a manter
       log_date_format: "YYYY-MM-DD HH:mm Z",
       autorestart: true,
-      env: {
-        NODE_ENV: "production",
-      },
+      // env: {
+      //   NODE_ENV: "production",
+      // },
       env_file: "/home/ubuntu/.env_prod",
     },
   ],
