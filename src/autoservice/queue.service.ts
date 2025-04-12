@@ -96,9 +96,17 @@ export class QueueService implements OnApplicationBootstrap {
         return this[queue].addBulk(data);
     }
 
-    public async getQueueStatus(queue) {
-        const activeJobs = await this[queue].getJobCounts();
-        return activeJobs;
+    public async getQueueStatus(queue: string): Promise<Record<string, number>> {
+        try {
+            if (!this[queue] || typeof this[queue].getJobCounts !== 'function') {
+                throw new Error(`Queue "${queue}" not found or is invalid`);
+            }
+            const activeJobs = await this[queue].getJobCounts();
+            return activeJobs;
+        } catch (error) {
+            Logger.error(`Failed to get queue status for ${queue}: ${error.message}`);
+            throw error;
+        }
     }
 
     public async isQueueActive(queue) {
