@@ -78,6 +78,7 @@ jobs:
         run: |
           #ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && pnpm install && pm2 restart all"                  
           ssh -i private_key.pem ubuntu@107.22.156.206 "
+            cp /home/ubuntu/.env_prod /var/www/autoservice/.env &&
             cd /var/www/autoservice &&             
             if git diff --name-only HEAD | grep -E 'package.json|pnpm-lock.yaml'; then
               echo 'Dependencies changed, running pnpm install...';
