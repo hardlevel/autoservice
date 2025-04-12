@@ -49,11 +49,11 @@ jobs:
           ssh-keyscan -H 107.22.156.206 >> ~/.ssh/known_hosts
 
       # Passo 7: Executar os comandos no servidor remoto
-      - name: SSH and run commands
-        run: |
-          ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && git pull origin master && pm2 restart all"
+      #- name: SSH and run commands
+      #  run: |
+      #    ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && git pull origin master && pm2 restart all"
 
       # Passo 8: Deploy via rsync (opcional)
       - name: Deploy to server via rsync
         run: |
-          rsync -avz --delete ./dist/ ubuntu@107.22.156.206:/var/www/autoservice
+          rsync -avz -e "ssh -i private_key.pem" --delete ./dist/ ubuntu@107.22.156.206:/var/www/autoservice
