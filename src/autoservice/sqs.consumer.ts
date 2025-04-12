@@ -199,8 +199,8 @@ export class SqsConsumer implements OnModuleInit {
         // this.emitter.emit('sqsEmpty');
         // this.emitter.emit('sqs.state', { state: 'free' });
         // this.emitter.emit('bull.state', { state: 'free' });
-        this.emitter.emit('sqs.free');
-        console.log('estados (sqsconsumer', this.state.getBullState(), this.state.getSqsState());
+        this.emitter.emit('sqs.empty');
+        console.log('estados (sqsconsumer)', this.state.getBullState(), this.state.getSqsState());
     }
 
     @SqsConsumerEventHandler('autoservice', 'processing_error')
@@ -216,5 +216,18 @@ export class SqsConsumer implements OnModuleInit {
         // await this.emitter.emit('sqs.state', { state });
         sqsStatus ? this.emitter.emit('sqs.busy') : this.emitter.emit('sqs.free');
         console.log(`📦 Sqs está ${status ? 'ativa (busy)' : 'inativa (free)'}`);
+    }
+
+    @OnEvent('sqs.empty')
+    public async onSqsEmpty() {
+        console.log('Aguardando novas mensagens, margem de segurança');
+        try {
+            await this.emitter.waitFor('sqs.newMessage', 20000);
+            console.log('Nova mensagem recebida, verificando estabilidade da fila');
+            this.emitter.emit('sqs.busy');
+        } catch (e) {
+            console.log('Nenhuma nova mensagem recebida, fila está livre');
+            this.emitter.emit("sqs.free");
+        }
     }
 }

@@ -149,7 +149,6 @@ export class QueueService implements OnApplicationBootstrap {
                 const startMinute = d === day && h === hour ? minute : 0;
 
                 for (let m = startMinute; m < 60; m += 10) {
-                    console.log(`${year}-${month}-${d}-${h}-${m}`);
                     hourlyJobs.push({
                         name: `hour-${d}-${h}-${m}`,
                         queueName: 'hourly',
