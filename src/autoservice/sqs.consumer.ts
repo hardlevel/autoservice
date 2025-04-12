@@ -211,7 +211,9 @@ export class SqsConsumer implements OnModuleInit {
     @OnEvent('sqs.start')
     public async onSqsStart() {
         const sqsStatus = await this.isSqsActiveAndEmpty();
-        const state = sqsStatus ? 'free' : 'busy';
-        await this.emitter.emit('sqs.state', { state });
+        // const state = sqsStatus ? 'free' : 'busy';
+        // await this.emitter.emit('sqs.state', { state });
+        sqsStatus ? this.emitter.emit('sqs.busy') : this.emitter.emit('sqs.free');
+        console.log(`📦 Sqs está ${status ? 'ativa (busy)' : 'inativa (free)'}`);
     }
 }
