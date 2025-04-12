@@ -122,4 +122,12 @@ export class QueueService implements OnApplicationBootstrap {
         status ? this.emitter.emit('bull.busy') : this.emitter.emit('bull.free');
         console.log(`📦 Fila autoservice está ${status ? 'ativa (busy)' : 'inativa (free)'}`);
     }
+
+    @OnEvent('queue.check')
+    async handleQueueCheck() {
+        const isBusy = await this.isQueueActive('autoservice');
+        if (!isBusy) {
+            this.emitter.emit('bull.free');
+        }
+    }
 }

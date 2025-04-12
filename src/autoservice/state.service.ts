@@ -114,4 +114,21 @@ export class StateService implements OnModuleInit {
     handleBullFree() {
         this.bullState === QueueState.FREE && this.checkAndEmitAppFree();
     }
+
+    @OnEvent('bull.free')
+    @OnEvent('sqs.free')
+    checkIfAllFree() {
+        if (this.getState() === 'free') {
+            this.eventEmitter.emit('app.free');
+        }
+    }
+
+    public async waitForFreeState() {
+        await this.eventEmitter.emitAsync('sqs.check');
+        await this.eventEmitter.emitAsync('queue.check');
+
+        if (this.getState() !== 'free') {
+            return this.eventEmitter.waitFor('app.free');
+        }
+    }
 }
