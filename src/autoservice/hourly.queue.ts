@@ -69,7 +69,7 @@ export class HourlyConsumer extends WorkerHost {
 
     @OnWorkerEvent('completed')
     async onCompleted(job: Job) {
-        console.log(`Job ${job.id} completed.`);
+        console.log(`Job H ${job.id} completed.`);
         // const last = await this.prisma.findOne(1, 'lastSearch');
         // console.log('ultima pesquisa', last);
         // await this.sqs.isSqsActiveAndEmpty();
@@ -80,13 +80,13 @@ export class HourlyConsumer extends WorkerHost {
 
     @OnWorkerEvent('ready')
     handleReady(job: Job) {
-        console.log(`Job autoservice ${job} is ready.`);
+        console.log(`Job H ${job} is ready.`);
         this.emitter.emit('bull.state', { state: 'busy' });
     }
 
     @OnWorkerEvent('active')
     handleActive(job: Job) {
-        console.log(`Job ${job.id} is active.`);
+        console.log(`Job H ${job} is active.`);
         // this.eventEmitter.emit('autoservice.active', { id: job.id, status: true });
         this.emitter.emit('bull.state', { state: 'busy' });
     }

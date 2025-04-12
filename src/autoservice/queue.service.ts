@@ -80,7 +80,12 @@ export class QueueService implements OnApplicationBootstrap {
                 removeOnComplete: true,
                 removeOnFail: false,
             }
-            const job = await this.autoservice.add(queue, data, options)
+
+            if (!this[queue] || typeof this[queue].add !== 'function') {
+                throw new Error(`Fila ${queue} não encontrada`);
+            }
+
+            const job = await this[queue].add(queue, data, options)
             return job;
         } catch (error) {
             console.error(error);
