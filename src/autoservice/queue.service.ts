@@ -77,7 +77,8 @@ export class QueueService implements OnApplicationBootstrap {
                 delay: 5000,
                 attempts: 10,
                 backoff: 3,
-                removeOnComplete: true
+                removeOnComplete: true,
+                removeOnFail: false,
             }
             const job = await this.autoservice.add(queue, data, options)
             return job;
@@ -149,61 +150,64 @@ export class QueueService implements OnApplicationBootstrap {
                 const startMinute = d === day && h === hour ? minute : 0;
 
                 for (let m = startMinute; m < 60; m += 10) {
-                    hourlyJobs.push({
-                        name: `hour-${d}-${h}-${m}`,
-                        queueName: 'hourly',
-                        data: {
-                            year,
-                            month,
-                            day: d,
-                            hour: h,
-                            minute: m,
-                            step: `process hour ${h} for day ${d}`,
-                        },
-                        opts: {
-                            removeOnComplete: true,
-                            removeOnFail: false,
-                        },
-                    });
+                    const data = { year, month, day: d, hour: h, minute: m, step: `process hour ${h} for day ${d}` };
+                    await this.addJobToQueue('hourly', data);
+                    // hourlyJobs.push({
+                    //     name: `hour-${d}-${h}-${m}`,
+                    //     queueName: 'hourly',
+                    //     data: {
+                    //         year,
+                    //         month,
+                    //         day: d,
+                    //         hour: h,
+                    //         minute: m,
+                    //         step: `process hour ${h} for day ${d}`,
+                    //     },
+                    //     opts: {
+                    //         removeOnComplete: true,
+                    //         removeOnFail: false,
+                    //     },
+                    // });
                 }
             }
 
-            dailyJobs.push({
-                name: `daily-${d}`,
-                queueName: 'daily',
-                data: {
-                    year,
-                    month,
-                    day: d,
-                    step: `process daily ${d}`,
-                },
-                opts: {
-                    removeOnComplete: true,
-                    removeOnFail: false,
-                },
-                children: hourlyJobs,
-            });
+            // dailyJobs.push({
+            //     name: `daily-${d}`,
+            //     queueName: 'daily',
+            //     data: {
+            //         year,
+            //         month,
+            //         day: d,
+            //         step: `process daily ${d}`,
+            //     },
+            //     opts: {
+            //         removeOnComplete: true,
+            //         removeOnFail: false,
+            //     },
+            //     children: hourlyJobs,
+            // });
+        // }
+
+        // const flow = await this.flow.add({
+        //     name: 'autoserviceFlow',
+        //     queueName: 'autoserviceFlow',
+        //     data: { year, month, day, hour, minute, second },
+        //     children: [
+        //         {
+        //             name: `monthly-${year}-${month}`,
+        //             queueName: 'monthly',
+        //             data: { year, month, step: `process monthly ${month}` },
+        //             opts: {
+        //                 removeOnComplete: true,
+        //                 removeOnFail: false,
+        //             },
+        //             children: dailyJobs,
+        //         },
+        //     ],
+        // });
+
+        // return flow;
         }
-
-        const flow = await this.flow.add({
-            name: 'autoserviceFlow',
-            queueName: 'autoserviceFlow',
-            data: { year, month, day, hour, minute, second },
-            children: [
-                {
-                    name: `monthly-${year}-${month}`,
-                    queueName: 'monthly',
-                    data: { year, month, step: `process monthly ${month}` },
-                    opts: {
-                        removeOnComplete: true,
-                        removeOnFail: false,
-                    },
-                    children: dailyJobs,
-                },
-            ],
-        });
-
-        return flow;
     }
 
     @OnEvent('queue.start')
