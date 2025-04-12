@@ -2,7 +2,7 @@ import { InjectFlowProducer, InjectQueue } from "@nestjs/bullmq";
 import { forwardRef, Inject, Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
-import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
+import { emitter2, OnEvent } from "@nestjs/event-emitter";
 import { Interval, SchedulerRegistry, Timeout } from "@nestjs/schedule";
 import { FlowProducer, Job, JobsOptions, Queue } from "bullmq";
 import { UtilService } from "../util/util.service";
@@ -24,7 +24,7 @@ export class QueueService implements OnApplicationBootstrap {
         @InjectFlowProducer('autoserviceFlow') private readonly flow: FlowProducer,
         private readonly config: ConfigService,
         private readonly util: UtilService,
-        private readonly eventEmitter: EventEmitter2,
+        private readonly emitter: emitter2,
         private readonly dates: DateService,
         private readonly scheduler: SchedulerRegistry,
         // @Inject(forwardRef(() => AutoserviceService)) private readonly autoserviceService: AutoserviceService,
@@ -64,7 +64,7 @@ export class QueueService implements OnApplicationBootstrap {
         let notified = false;
         while (await this.isQueueActive(queue)) {
             if (!notified) {
-                this.eventEmitter.emit('state.change', { state: false });
+                this.emitter.emit('state.change', { state: false });
                 notified = true;
             }
             await new Promise((resolve) => setTimeout(resolve, 10000));
@@ -207,11 +207,12 @@ export class QueueService implements OnApplicationBootstrap {
         return flow;
     }
 
-
     @OnEvent('queue.start')
     async onAppStart() {
         const status = await this.isQueueActive('autoservice');
-        const state = status ? 'busy' : 'free';
-        this.eventEmitter.emit('bull.state', { type: 'queue', name: 'autoservice', state });
+        // const state = status ? 'busy' : 'free';
+        // this.emitter.emit('bull.state', { type: 'queue', name: 'autoservice', state });
+        status ? this.emitter.emit('queue.busy') : this.emitter.emit('queue.free');
+        console.log(`📦 Fila autoservice está ${status ? 'ativa (busy)' : 'inativa (free)'}`);
     }
 }
