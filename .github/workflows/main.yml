@@ -51,7 +51,7 @@ jobs:
       # Passo 7: Executar os comandos no servidor remoto
       - name: SSH and run commands
         run: |
-          ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && git pull && pm2 restart all"
+          ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && git pull origin master && pm2 restart all"
 
       # Passo 8: Deploy via rsync (opcional)
       - name: Deploy to server via rsync
