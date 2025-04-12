@@ -140,7 +140,6 @@ export class QueueService implements OnApplicationBootstrap {
         for (let d = day; d <= daysInMonth; d++) {
             const hourlyJobs = [];
 
-            // Define valores iniciais de hora/minuto só para o primeiro dia
             const startHour = d === day ? hour : 0;
             const endHour = 24;
 
@@ -148,6 +147,7 @@ export class QueueService implements OnApplicationBootstrap {
                 const startMinute = d === day && h === hour ? minute : 0;
 
                 for (let m = startMinute; m < 60; m += 10) {
+                    console.log(`${year}-${month}-${d}-${h}-${m}`);
                     hourlyJobs.push({
                         name: `hour-${d}-${h}-${m}`,
                         jobId: `${year}-${month}-${d}-${h}-${m}`,
