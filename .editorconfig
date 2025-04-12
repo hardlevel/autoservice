@@ -1,0 +1,24 @@
+# .editorconfig
+root = true
+
+# Todos os arquivos
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+
+# Arquivos de Markdown (como README.md)
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# JSON, YAML e arquivos de config (mantém indentação consistente)
+[*.{json,yml,yaml}]
+indent_size = 2
+
+# Arquivos TypeScript e JavaScript
+[*.{ts,js}]
+quote_type = double
