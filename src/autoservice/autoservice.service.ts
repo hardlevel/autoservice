@@ -61,7 +61,7 @@ export class AutoserviceService {
       // await this.eventEmitter.emitAsync('sqs.start');
       // await this.eventEmitter.waitFor('app.free');
       // await this.checkAndStart();
-      await this.init(2025, 4, 11);
+      await this.init(2025, 3, 10);
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
