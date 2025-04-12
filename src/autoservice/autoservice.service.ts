@@ -50,8 +50,8 @@ export class AutoserviceService {
   private async appStart() {
     console.log('aplicação iniciada');
     try {
-      await this.eventEmitter.emit('queue.start');
-      await this.eventEmitter.emit('sqs.start');
+      await this.eventEmitter.emitAsync('queue.start');
+      await this.eventEmitter.emitAsync('sqs.start');
       await this.eventEmitter.waitFor('app.free');
       await this.checkAndStart();
       // await this.init(2024, 7),
