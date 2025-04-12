@@ -1,30 +1,27 @@
-import { Module } from '@nestjs/common';
-import { AutoserviceService } from './autoservice.service';
-import { AutoserviceController } from './autoservice.controller';
-import { SqsModule } from '@ssut/nestjs-sqs';
-import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
-import { BullModule } from '@nestjs/bullmq';
-import { SQSClient } from '@aws-sdk/client-sqs';
-import { AutoserviceProcessor } from './autoservice.processor';
-import { PrismaModule } from '../prisma/prisma.module';
-import { Ck3Service } from './ck3.service';
-import { Ck4Service } from './ck4.service';
-import { Ck5Service } from './ck5.service';
-import { Ck6Service } from './ck6.service';
-import { Ck7Service } from './ck7.service';
-import { UtilModule } from '../util/util.module';
-import { AutoserviceHealthIndicator } from './autoservice.health';
-import { HttpModule } from '@nestjs/axios';
-import { SqsConsumer } from './sqs.consumer';
-import { QueueService } from './queue.service';
-import { ApiService } from './api.service';
-import { LogService } from './log.service';
-import { AxiosTokenInterceptor } from './axios.interceptor';
-import { TokenService } from './token.service';
-import { DailyConsumer } from './daily.queue';
-import { MonthlyConsumer } from './monthly.queue';
-import { HourlyConsumer } from './hourly.queue';
-import { StateService } from './state.service';
+import { Module } from "@nestjs/common";
+import { AutoserviceService } from "./autoservice.service";
+import { AutoserviceController } from "./autoservice.controller";
+import { SqsModule } from "@ssut/nestjs-sqs";
+import { ConfigModule, ConfigService, ConfigType } from "@nestjs/config";
+import { BullModule } from "@nestjs/bullmq";
+import { SQSClient } from "@aws-sdk/client-sqs";
+import { AutoserviceProcessor } from "./autoservice.processor";
+import { PrismaModule } from "../prisma/prisma.module";
+import { Ck3Service } from "./ck3.service";
+import { Ck4Service } from "./ck4.service";
+import { Ck5Service } from "./ck5.service";
+import { Ck6Service } from "./ck6.service";
+import { Ck7Service } from "./ck7.service";
+import { UtilModule } from "../util/util.module";
+import { AutoserviceHealthIndicator } from "./autoservice.health";
+import { HttpModule } from "@nestjs/axios";
+import { SqsConsumer } from "./sqs.consumer";
+import { QueueService } from "./queue.service";
+import { ApiService } from "./api.service";
+import { LogService } from "./log.service";
+import { AxiosTokenInterceptor } from "./axios.interceptor";
+import { TokenService } from "./token.service";
+import { HourlyConsumer } from "./hourly.queue";
 // import { LoggerModule } from 'nestjs-pino';
 
 @Module({
@@ -46,10 +43,7 @@ import { StateService } from './state.service';
     AutoserviceHealthIndicator,
     TokenService,
     AxiosTokenInterceptor,
-    DailyConsumer,
-    MonthlyConsumer,
     HourlyConsumer,
-    StateService
   ],
   exports: [AutoserviceHealthIndicator, AutoserviceService],
   imports: [
@@ -60,12 +54,12 @@ import { StateService } from './state.service';
     HttpModule,
     SqsModule.registerAsync({
       useFactory: async (configuration: ConfigService) => {
-        const sqs = configuration.get('sqs');
+        const sqs = configuration.get("sqs");
         const { accessKeyId, secretAccessKey, queueUrl, region } = sqs;
         return {
           consumers: [
             {
-              name: 'autoservice',
+              name: "autoservice",
               region,
               queueUrl,
               batchSize: 1,
@@ -91,21 +85,21 @@ import { StateService } from './state.service';
     }),
     BullModule.registerQueueAsync(
       {
-        name: 'autoservice'
+        name: "autoservice",
       },
       {
-        name: 'daily'
+        name: "daily",
       },
       {
-        name: 'monthly'
+        name: "monthly",
       },
       {
-        name: 'hourly'
-      }
+        name: "hourly",
+      },
     ),
     BullModule.registerFlowProducer({
-      name: 'autoserviceFlow',
-    })
-  ]
+      name: "autoserviceFlow",
+    }),
+  ],
 })
-export class AutoserviceModule { }
+export class AutoserviceModule {}

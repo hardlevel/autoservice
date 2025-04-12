@@ -27,25 +27,24 @@ services:
     ports:
       - 6500:5432
 
-  adminer:
-    restart: "no"
-    image: adminer
-    # restart: always
-    ports:
-      - 8080:8080
-  laravel:
-    restart: "no"
-    build:
-      dockerfile: Dockerfile.laravel
-      context: .
-      # target: dev
-    image: laravel
-    ports:
-      - 8888:8888
-    network_mode: "host"
-    volumes:
-      # - laravel:/var/www/autoservice
-      - ./laravel:/var/www/autoservice
+  # adminer:
+  #   restart: "no"
+  #   image: adminer
+  #   # restart: always
+  #   ports:
+  #     - 8080:8080
+  # laravel:
+  #   restart: "no"
+  #   build:
+  #     dockerfile: Dockerfile.laravel
+  #     context: .
+  #     # target: dev
+  #   image: laravel
+  #   ports:
+  #     - 8888:8888
+  #   network_mode: "host"
+  #   volumes:
+  #     - ./laravel:/var/www/autoservice
   # mongo:
   #   image: mongo
   #   restart: always
