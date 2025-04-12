@@ -56,4 +56,24 @@ jobs:
       # Passo 8: Deploy via rsync (opcional)
       - name: Deploy to server via rsync
         run: |
-          rsync -avz -e "ssh -i private_key.pem" --delete ./dist/ ubuntu@107.22.156.206:/var/www/autoservice
+          rsync -avz -e "ssh -i private_key.pem" --delete \
+          --exclude='node_modules/' \
+          --exclude='src/' \
+          --exclude='scripts/' \
+          --exclude='.history/' \
+          --exclude='.vscode/' \
+          --exclude='.laravel/' \
+          --exclude='.env' \
+          --exclude='*.log' \
+          --exclude='_appspec.yml_' \
+          --exclude='_buildspec.yml_' \
+          --exclude='.prettierrc' \
+          --exclude='CK*' \
+          --exclude='docker-compose.yml' \
+          --exclude='Dockerfile*' \
+          --exclude='entrypoint.sh' \
+          --exclude='.editorconfig' \
+          --exclude='.env.prod' \
+          --exclude='.eslintrc.js' \
+          --exclude='docker.sh' \
+          ./ ubuntu@107.22.156.206:/var/www/autoservice
