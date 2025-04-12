@@ -10,11 +10,12 @@ phases:
       # - pnpm install
   build:
     commands:
-      # - git diff --quiet HEAD^ HEAD -- package.json || export PACKAGE_JSON_CHANGED=true
-      # - if [ "$PACKAGE_JSON_CHANGED" = "true" ]; then pnpm install; fi
-      - pnpm install --ignore-scripts
+      - git diff --quiet HEAD^ HEAD -- package.json || export PACKAGE_JSON_CHANGED=true
+      - if [ "$PACKAGE_JSON_CHANGED" = "true" ]; then pnpm install; fi
+      - pnpm update
       - pnpm prisma generate
       - pnpm run build
+      - ls -la dist
 
   post_build:
     commands:
