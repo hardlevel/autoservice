@@ -13,20 +13,6 @@ import { QueueService } from './queue.service';
 import { SqsConsumer } from './sqs.consumer';
 import { AxiosTokenInterceptor } from './axios.interceptor';
 import { StateService } from './state.service';
-
-interface RequestOptions {
-  method: string;
-  headers: any;
-  body?: any;
-  endpoint?: string;
-}
-
-interface TokenBody {
-  client_id: string;
-  client_secret: string;
-  grant_type: string;
-}
-
 @Injectable()
 export class AutoserviceService {
   public startDate: string;
@@ -54,17 +40,6 @@ export class AutoserviceService {
       await this.eventEmitter.emitAsync('sqs.start');
       await this.eventEmitter.waitFor('app.free');
       await this.checkAndStart();
-      // await this.init(2024, 7),
-      // await this.util.progressBarTimer(5);
-      // await this.eventEmitter.emit('queue.start');
-      // await this.eventEmitter.emit('sqs.start');
-      // // await this.state.waitBullBusy();
-      // await this.eventEmitter.waitFor('bull.free');
-      // console.log('bull free');
-      // await this.eventEmitter.waitFor('sqs.free');
-      // console.log('sqs free');
-      // await this.processYear(2025, 3, 11);
-      // console.log('Processos concluídos');
     } catch (error) {
       console.error('Erro durante evento app.start:', error);
     }
@@ -91,19 +66,12 @@ export class AutoserviceService {
     }
   }
 
-
   @OnEvent('updateDates')
   updateDates(payload) {
     const { startDate, endDate } = payload;
     this.startDate = startDate;
     this.endDate = endDate;
   }
-
-  // @Interval(10000)
-  // async checkSqs() {
-  //   console.debug('checando status do sqs');
-  //   return this.sqs.isSqsActiveAndEmpty();
-  // }
 
   async makeRequest(dataInicio: string, dataFim: string) {
     console.log('Solicitando dados retroativos (request):', dataInicio);
@@ -115,8 +83,17 @@ export class AutoserviceService {
     return response.data;
   }
 
-  public async processYear(year: number = 2024, month: number = 1, day: number = 1, hour: number = 0, minutes: number = 0, seconds: number = 0, interval = '30m') {
+  public async processYear(
+    year: number = 2024,
+    month: number = 1,
+    day: number = 1,
+    hour: number = 0,
+    minutes: number = 0,
+    seconds: number = 0,
+    interval = '30m',
+  ) {
     console.log(`Starting to process year ${year} from month ${month}, day ${day}`);
+
     const today = this.dates.getDateObject(new Date().toString());
     const currentYear = today.year;
     const currentMonth = today.month;
@@ -131,85 +108,38 @@ export class AutoserviceService {
       return;
     }
 
-    for (let m = month; m <= lastMonth; m++) {
-      console.log(`Processing year ${year}, month ${m}`);
-      const startDay = (m === month) ? day : 1;
-      const startHour = (m === month) ? hour : 0;
-      const startMinute = (m === month) ? minutes : 0;
-      const startSecond = (m === month) ? seconds : 0;
-      try {
-        await this.queue.manageFlow(
-          year,
-          m,
-          startDay,
-          startHour,
-          startMinute,
-          startSecond,
-          interval
-        );
-      } catch (error) {
-        console.error(`Failed to process month ${m} of year ${year}:`, error);
-      // await this.queue.manageFlow(year, m, day, hour, minutes, seconds, interval);
+    for (let monthIndex = month; monthIndex <= lastMonth; monthIndex++) {
+      console.log(`Processing year ${year}, month ${monthIndex}`);
+
+      const startDay = (monthIndex === month) ? day : 1;
+      const startHour = (monthIndex === month) ? hour : 0;
+      const startMinute = (monthIndex === month) ? minutes : 0;
+      const startSecond = (monthIndex === month) ? seconds : 0;
+      const daysInMonth = this.dates.daysInMonth(year, monthIndex);
+
+      for (let d = startDay; d <= daysInMonth; d++) {
+        const dayStartHour = (d === day && monthIndex === month) ? hour : 0;
+
+        for (let h = dayStartHour; h < 24; h++) {
+          const minuteStart = (d === day && h === hour && monthIndex === month) ? minutes : 0;
+
+          for (let minute = minuteStart; minute < 60; minute += 10) {
+            const data = {
+              year,
+              month: monthIndex,
+              day: d,
+              hour: h,
+              minute,
+              step: `process hour ${h} for day ${d}`
+            };
+
+            await this.queue.addJobToQueue('hourly', data);
+          }
+        }
+      }
     }
   }
-  }
 }
-  // public async init(
-  //   year: number = 2024,
-  //   month: number = 0,
-  //   day: number = 1,
-  //   hour: number = 0,
-  //   minutes: number = 0,
-  //   seconds: number = 0,
-  //   interval = 1) {
-  //   console.log('Iniciando requisições a partir de:', year, month, day, hour, minutes, seconds);
-  //   const lastParams = await this.log.getLastParams(2025);
-  //   if (lastParams) {
-  //     const { day: lastDay, hour: lastHour, month: lastMonth, year: lastYear } = lastParams;
-  //     // if (year === lastYear && month === lastMonth && day === lastDay && hour === lastHour) {
-  //     //   return;
-  //     // }
-  //     if (
-  //       lastYear < year ||
-  //       (lastYear === year && lastMonth < month) ||
-  //       (lastYear === year && lastMonth === month && lastDay < day) ||
-  //       (lastYear === year && lastMonth === month && lastDay === day && lastHour < hour)
-  //     ) {
-  //       return this.process(lastYear, Math.max(0, lastMonth - 1), lastDay, lastHour, minutes, seconds);
-  //     }
-  //     // if (lastYear <= year && lastMonth <= month && lastDay <= day && lastHour <= hour) {
-  //     //   return this.processCompleteTimestamp(lastYear, Math.max(0, lastMonth - 1), lastDay, lastHour, minutes, seconds, this.mainProcess.bind(this));
-  //     // }
-  //   }
-  //   // return this.dates.processCompleteTimestamp(year, month, day, hour, minutes, seconds, this.sendJob.bind(this));
-  //   return this.process(year, month, day, hour, minutes, seconds);
-  // }
-
-  // public async process(
-  //   year: number = 2024,
-  //   month: number = 0,
-  //   day: number = 1,
-  //   hours: number = 0,
-  //   minutes: number = 0,
-  //   seconds: number = 0,
-  // ) {
-  //   for (let m = month; m <= 11; m++) {
-  //     const daysInMonth = this.dates.daysInMonth(year, m);
-  //     const startDay = (m === month) ? day : 1;
-  //     for (let d = startDay; d <= daysInMonth; d++) {
-  //       const startHour = (m === month && d === day) ? hours : 0;
-  //       for (let h = startHour; h < 24; h++) {
-  //         const { startDate, endDate } = this.dates.getDates(year, m, d, h);
-  //         const ready = await this.sqs.waitUntilSqsReallyEmptySafe(10, 6);
-  //         if (!ready) {
-  //           console.warn(`🚫 SQS não está estável. Abortando request para: ${startDate}`);
-  //           continue;
-  //         }
-  //         // await this.makeRequest(startDate, endDate);
-  //       }
-  //     }
-  //   }
-  // }
 
 
 //TODO

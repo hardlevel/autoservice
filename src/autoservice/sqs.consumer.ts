@@ -60,22 +60,21 @@ export class SqsConsumer implements OnModuleInit {
         }
     }
 
-    @OnEvent('waiting.messages')
-    public async waitForMessages() {
-        await new Promise(resolve => setTimeout(resolve, 20000));
+    // @OnEvent('waiting.messages')
+    // public async waitForMessages() {
+    //     await new Promise(resolve => setTimeout(resolve, 20000));
 
-        const isEmpty = await this.isSqsActiveAndEmpty();
-        console.log('✅ 20s passaram. Verificando o estado do SQS...');
+    //     const isEmpty = await this.isSqsActiveAndEmpty();
+    //     console.log('✅ 20s passaram. Verificando o estado do SQS...');
 
-        if (isEmpty) {
-            console.log('✅ SQS está vazio após 20s. Liberando...');
-            this.emitter.emit('sqs.state', { state: 'free' });
-        } else {
-            console.log('⛔ SQS recebeu mensagens. Não vamos liberar agora.');
-            this.emitter.emit('sqs.state', { state: 'busy' });
-        }
-    }
-
+    //     if (isEmpty) {
+    //         console.log('✅ SQS está vazio após 20s. Liberando...');
+    //         this.emitter.emit('sqs.state', { state: 'free' });
+    //     } else {
+    //         console.log('⛔ SQS recebeu mensagens. Não vamos liberar agora.');
+    //         this.emitter.emit('sqs.state', { state: 'busy' });
+    //     }
+    // }
 
     public async getSqsStatus(): Promise<boolean> {
         try {
@@ -111,44 +110,6 @@ export class SqsConsumer implements OnModuleInit {
         }
     }
 
-    public async waitSqsEmpty() {
-        const empty = await this.isSqsEmpty();
-
-        if (empty) return true;
-
-        try {
-            await Promise.race([
-                this.emitter.waitFor('sqsEmpty'),
-                this.util.timer(60),
-            ]);
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
-    public async waitSqsEmptyLoop(maxAttempts = 60, delaySeconds = 10): Promise<boolean> {
-        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-            try {
-                const empty = await this.isSqsEmpty();
-
-                if (empty === true) {
-                    console.log('✅ SQS está vazio, continuando...');
-                    return true;
-                }
-
-                console.log(`⌛ SQS ainda com mensagens. Tentativa ${attempt}/${maxAttempts}. Aguardando ${delaySeconds}s...`);
-                await this.util.timer(delaySeconds); // Aguarda X segundos
-            } catch (error) {
-                this.log.setLog('error', 'Erro ao verificar status do SQS', error.message, this.autoservice.startDate, this.autoservice.endDate);
-                return false; // Falha crítica, pode parar o processamento
-            }
-        }
-
-        console.warn('⚠️ Timeout: SQS não ficou vazio após várias tentativas.');
-        return false;
-    }
-
     public async isSqsActiveAndEmpty(): Promise<boolean> {
         try {
             const isEmpty = await this.isSqsEmpty();
@@ -168,19 +129,6 @@ export class SqsConsumer implements OnModuleInit {
             return false;
         }
     }
-
-    // async verifySqsEmpty() {
-    //     const isEmpty = await this.isSqsActiveAndEmpty();
-    //     this.sqsEmpty = isEmpty;
-
-    //     if (isEmpty) {
-    //         this.state.setSqsState(QueueState.FREE);
-    //         console.log('SQS está vazia');
-    //     } else {
-    //         this.state.setSqsState(QueueState.BUSY);
-    //         console.log('SQS está ocupada');
-    //     }
-    // }
 
     private async purgeQueue() {
         await this.sqsService.purgeQueue('autoservice');
@@ -207,7 +155,6 @@ export class SqsConsumer implements OnModuleInit {
     public onProcessingError(error: Error, message: Message) {
         this.log.setLog('error', 'Há algum problema no SQS externo', error.message, this.autoservice.startDate, this.autoservice.endDate)
     }
-
 
     @OnEvent('sqs.start')
     public async onSqsStart() {
