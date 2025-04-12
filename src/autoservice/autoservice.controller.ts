@@ -33,52 +33,52 @@ export class AutoserviceController {
   // return { message: 'Processamento concluído para 2025 e 2024.' };
   // }
 
-  @Get('clients')
-  async clients() {
-    return this.api.getClients();
-  }
+  // @Get('clients')
+  // async clients() {
+  //   return this.api.getClients();
+  // }
 
-  @Get('servicos')
-  @ApiQuery({ name: 'page', required: false, type: Number })
-  @ApiQuery({ name: 'year', required: false, type: Number })
-  @ApiQuery({ name: 'month', required: false, type: Number })
-  async services(@Query('page') page?: number, @Query('year') year?: number, @Query('month') month?: number) {
-    return this.api.getServicos(page, year, month);
-  }
+  // @Get('servicos')
+  // @ApiQuery({ name: 'page', required: false, type: Number })
+  // @ApiQuery({ name: 'year', required: false, type: Number })
+  // @ApiQuery({ name: 'month', required: false, type: Number })
+  // async services(@Query('page') page?: number, @Query('year') year?: number, @Query('month') month?: number) {
+  //   return this.api.getServicos(page, year, month);
+  // }
 
-  @Get('servicos-ano')
-  @ApiQuery({ name: 'year', required: false, type: Number })
-  async servicesYear(@Query('year') year?: number) {
-    return this.api.getServicosYear(year);
-  }
+  // @Get('servicos-ano')
+  // @ApiQuery({ name: 'year', required: false, type: Number })
+  // async servicesYear(@Query('year') year?: number) {
+  //   return this.api.getServicosYear(year);
+  // }
 
-  @Get('servicos-mes')
-  @ApiQuery({ name: 'year', required: true, type: Number })
-  @ApiQuery({ name: 'month', required: true, type: Number })
-  async servicesMontly(@Query('year') year: number, @Query('month') month: number) {
-    return this.api.getServicosMonth(year, month);
-  }
+  // @Get('servicos-mes')
+  // @ApiQuery({ name: 'year', required: true, type: Number })
+  // @ApiQuery({ name: 'month', required: true, type: Number })
+  // async servicesMontly(@Query('year') year: number, @Query('month') month: number) {
+  //   return this.api.getServicosMonth(year, month);
+  // }
 
-  @Get('pecas')
-  async parts() {
-    return this.api.getPecas();
-  }
+  // @Get('pecas')
+  // async parts() {
+  //   return this.api.getPecas();
+  // }
 
-  @Get('nfs')
-  async nfs() {
-    return this.api.getNfs();
-  }
+  // @Get('nfs')
+  // async nfs() {
+  //   return this.api.getNfs();
+  // }
 
-  @Get('servicos-estado')
-  @ApiQuery({ name: 'year', required: true, type: Number })
-  @ApiQuery({ name: 'month', required: true, type: Number })
-  async servicesState(@Query('year') year: number, @Query('month') month: number) {
-    return this.api.getServicesStateMonth(year, month);
-  }
+  // @Get('servicos-estado')
+  // @ApiQuery({ name: 'year', required: true, type: Number })
+  // @ApiQuery({ name: 'month', required: true, type: Number })
+  // async servicesState(@Query('year') year: number, @Query('month') month: number) {
+  //   return this.api.getServicesStateMonth(year, month);
+  // }
 
-  @Get('servicos-estado-ano')
-  @ApiQuery({ name: 'year', required: false, type: Number })
-  async servicesStateYear(@Query('year') year?: number) {
-    return this.api.getServicesStateYear(year);
-  }
+  // @Get('servicos-estado-ano')
+  // @ApiQuery({ name: 'year', required: false, type: Number })
+  // async servicesStateYear(@Query('year') year?: number) {
+  //   return this.api.getServicesStateYear(year);
+  // }
 }
