@@ -92,48 +92,39 @@ export class AutoserviceService {
     seconds: number = 0,
     interval = '30m',
   ) {
-    console.log(`Starting to process year ${year} from month ${month}, day ${day}`);
+    console.log(`Starting to process from ${year}-${month}-${day} ${hour}:${minutes}`);
 
-    const today = this.dates.getDateObject(new Date().toString());
-    const currentYear = today.year;
-    const currentMonth = today.month;
+    const now = this.dates.getDateObject(new Date().toString());
 
-    const lastMonth = year < currentYear
-      ? 12
-      : year === currentYear
-        ? currentMonth
-        : 0;
+    for (let y = year; y <= now.year; y++) {
+      const startMonth = y === year ? month : 1;
+      const endMonth = y === now.year ? now.month : 12;
 
-    if (lastMonth === 0) {
-      return;
-    }
+      for (let m = startMonth; m <= endMonth; m++) {
+        const startDay = y === year && m === month ? day : 1;
+        const daysInMonth = this.dates.daysInMonth(y, m);
+        const endDay = (y === now.year && m === now.month) ? now.day : daysInMonth;
 
-    for (let monthIndex = month; monthIndex <= lastMonth; monthIndex++) {
-      console.log(`Processing year ${year}, month ${monthIndex}`);
+        for (let d = startDay; d <= endDay; d++) {
+          const startHour = y === year && m === month && d === day ? hour : 0;
+          const endHour = (y === now.year && m === now.month && d === now.day) ? now.hour : 23;
 
-      const startDay = (monthIndex === month) ? day : 1;
-      const startHour = (monthIndex === month) ? hour : 0;
-      const startMinute = (monthIndex === month) ? minutes : 0;
-      const startSecond = (monthIndex === month) ? seconds : 0;
-      const daysInMonth = this.dates.daysInMonth(year, monthIndex);
+          for (let h = startHour; h <= endHour; h++) {
+            const startMinute = y === year && m === month && d === day && h === hour ? minutes : 0;
+            const endMinute = (y === now.year && m === now.month && d === now.day && h === now.hour) ? now.minute : 59;
 
-      for (let d = startDay; d <= daysInMonth; d++) {
-        const dayStartHour = (d === day && monthIndex === month) ? hour : 0;
+            for (let min = startMinute; min <= endMinute; min += 10) {
+              const data = {
+                year: y,
+                month: m,
+                day: d,
+                hour: h,
+                minute: min,
+                step: `process hour ${h} for day ${d}`,
+              };
 
-        for (let h = dayStartHour; h < 24; h++) {
-          const minuteStart = (d === day && h === hour && monthIndex === month) ? minutes : 0;
-
-          for (let minute = minuteStart; minute < 60; minute += 10) {
-            const data = {
-              year,
-              month: monthIndex,
-              day: d,
-              hour: h,
-              minute,
-              step: `process hour ${h} for day ${d}`
-            };
-
-            await this.queue.addJobToQueue('hourly', data);
+              await this.queue.addJobToQueue('hourly', data);
+            }
           }
         }
       }
