@@ -1,47 +1,57 @@
-name: Autoservice Deploy
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - master  # Aciona o deploy quando houver um merge na branch master
+      - master  # O deploy ocorre sempre que houver um push para a branch master
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest  # Usando uma máquina virtual Ubuntu
 
     steps:
-      # Passo 1: Fazer o checkout do código
-      - name: Checkout repository
+      # Passo 1: Checkout do código
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      # Passo 2: Configurar SSH
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.5.3
+      # Passo 2: Configurar o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          node-version: '23'  # Versão do Node.js que você está usando
 
-      # Passo 3: Instalar as dependências
-      - name: Install pnpm
-        run: |
-          npm install -g pnpm
-
-      # Passo 4: Instalar dependências do projeto
+      # Passo 3: Instalar as dependências usando pnpm
       - name: Install dependencies
         run: |
-          pnpm install --frozen-lockfile
+          npm install -g pnpm  # Instalar o pnpm
+          pnpm install  # Instalar as dependências do projeto
 
-      # Passo 5: Realizar build
+      # Passo 4: Realizar o build do projeto
       - name: Build the project
         run: |
-          pnpm run build
+          pnpm run build  # Executar o comando de build do NestJS (geralmente "tsc" ou "nest build")
 
-      # Passo 6: Transferir os arquivos para o servidor via SCP (Secure Copy)
-      - name: Deploy to server via SCP
+      # Passo 5: Configurar SSH com a chave privada
+      - name: Set up SSH key
+        env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Chave privada armazenada nos secrets
+        run: |
+          # Criar o arquivo com a chave privada
+          echo "$PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem  # Permissões corretas para o arquivo da chave privada
+
+      # Passo 6: Adicionar o servidor remoto ao known_hosts
+      - name: Add SSH host key to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 107.22.156.206 >> ~/.ssh/known_hosts
+
+      # Passo 7: Executar os comandos no servidor remoto
+      - name: SSH and run commands
+        run: |
+          ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && git pull && pm2 restart all"
+
+      # Passo 8: Deploy via rsync (opcional)
+      - name: Deploy to server via rsync
         run: |
           rsync -avz --delete ./dist/ ubuntu@107.22.156.206:/var/www/autoservice
-
-      # Passo 7: Conectar via SSH e reiniciar a aplicação no servidor
-      - name: SSH into server and restart app
-        run: |
-          ssh ubuntu@107.22.156.206 'cd /var/www/autoservice && pm2 restart Autoservice'
-
