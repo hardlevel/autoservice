@@ -72,7 +72,7 @@ export class AutoserviceService {
 
   async checkAndStart() {
     const state = this.state.getState();
-
+    console.log('State atual:', state);
     if (state === 'free') {
       console.log('SQS e BullMQ livres. Iniciando processYear...');
       await this.processYear(2025, 3, 11);
