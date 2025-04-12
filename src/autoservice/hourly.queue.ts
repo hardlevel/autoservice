@@ -21,6 +21,7 @@ export class HourlyConsumer extends WorkerHost {
     }
     async process(job: Job<any, any, string>): Promise<any> {
         let progress = 0;
+        console.log("teste hourly");
         const { year, month, day, hour, minute } = job.data;
         const { startDate, endDate } = this.dates.getDatesFormatMinutes(year, month, day, hour, minute);
         // await this.queue.autoserviceIsActive();
@@ -44,27 +45,25 @@ export class HourlyConsumer extends WorkerHost {
         //     }
         //     await new Promise(r => setTimeout(r, 5000));
         // }
-        const result = await this.autoservice.makeRequest(startDate, endDate);
-        // await this.emitter.emit('waiting.complete');
-        await this.emitter.emit('waiting.messages');
+        try {
+            const result = await this.autoservice.makeRequest(startDate, endDate);
+            // await this.emitter.emit('waiting.complete');
+            await this.emitter.emit('waiting.messages');
 
-        for (let i = 0; i < 100; i++) {
-            // console.log(job.data);
-            // console.log('teste', i);
-            progress += 1;
-            await job.updateProgress(progress);
+
+
+            // let attempts = 10;
+            // while (attempts--) {
+            //     const status = await this.queue.getAutoserviceStatus();
+            //     console.log('Status', status);
+            //     await new Promise(resolve => setTimeout(resolve, 3000));
+            // }
+
+            // await new Promise(resolve => setTimeout(resolve, 5000));
+        } catch (error) {
+            console.error(`Error processing job ${job.id}:`, error);
+            throw error; // Re-throw to trigger the onFailed handler
         }
-
-
-        // let attempts = 10;
-        // while (attempts--) {
-        //     const status = await this.queue.getAutoserviceStatus();
-        //     console.log('Status', status);
-        //     await new Promise(resolve => setTimeout(resolve, 3000));
-        // }
-
-        // await new Promise(resolve => setTimeout(resolve, 5000));
-
         return { status: 'done' };
     }
 

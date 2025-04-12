@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { Interval } from '@nestjs/schedule';
 
 export enum QueueState {
     FREE = 'free',
@@ -36,6 +37,7 @@ export class StateService implements OnModuleInit {
         this.eventEmitter.emit('app.free');
     }
 
+    @Interval(3000)
     checkState() {
         if (this.bullState === QueueState.FREE && this.sqsState === QueueState.FREE) {
             this.eventEmitter.emit('app.free');
@@ -98,5 +100,15 @@ export class StateService implements OnModuleInit {
         } else {
             console.log('⚠️ Estado alterado: bull ou sqs ficaram ocupados nesse tempo.');
         }
+    }
+
+    @OnEvent('sqs.free')
+    handleSqsFree() {
+        this.sqsState === QueueState.FREE && this.checkAndEmitAppFree();
+    }
+
+    @OnEvent('bull.free')
+    handleBullFree() {
+        this.bullState === QueueState.FREE && this.checkAndEmitAppFree();
     }
 }
