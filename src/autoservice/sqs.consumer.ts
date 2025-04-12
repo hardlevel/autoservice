@@ -170,4 +170,12 @@ export class SqsConsumer implements OnModuleInit {
             this.emitter.emit("sqs.free");
         }
     }
+
+    @OnEvent('sqs.check')
+    async handleSqsCheck() {
+    const isFree = await this.isSqsActiveAndEmpty();
+        if (isFree) {
+            this.emitter.emit('sqs.free');
+        }
+    }
 }
