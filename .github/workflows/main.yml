@@ -1,5 +1,4 @@
 name: Deploy to Server
-
 on:
   push:
     branches:
@@ -23,7 +22,7 @@ jobs:
       # Passo 3: Instalar as dependências usando pnpm
       - name: Install dependencies
         run: |
-          npm install -g pnpm  # Instalar o pnpm
+          npm install -g pnpm@latest  # Instalar o pnpm
           pnpm install  # Instalar as dependências do projeto
 
       # Passo 4: Realizar o build do projeto
@@ -77,4 +76,4 @@ jobs:
       # Passo 8: Executar os comandos no servidor remoto
       - name: SSH and run commands
         run: |
-          ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && pnpm install && pm2 restart all"
+          ssh -i private_key.pem ubuntu@107.22.156.206 "cd /var/www/autoservice && pnpm env use --global 23.11.0 && pnpm install && pm2 restart all"
