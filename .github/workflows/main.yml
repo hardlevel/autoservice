@@ -34,12 +34,14 @@ jobs:
       # Passo 5: Configurar SSH com a chave privada
       - name: Set up SSH key
         env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Chave privada armazenada nos secrets
-        run: |
-          # Criar o arquivo com a chave privada
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} 
+        run: |          
           echo "$PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem  # Permissões corretas para o arquivo da chave privada
-
+      - name: Add SSH host key to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 107.22.156.206 >> ~/.ssh/known_hosts
       # Passo 6: Adicionar o servidor remoto ao known_hosts
       - name: Add SSH host key to known_hosts
         run: |
