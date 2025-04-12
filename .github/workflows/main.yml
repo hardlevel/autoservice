@@ -1,0 +1,47 @@
+name: Autoservice Deploy
+
+on:
+  push:
+    branches:
+      - master  # Aciona o deploy quando houver um merge na branch master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Fazer o checkout do código
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Passo 2: Configurar SSH
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Passo 3: Instalar as dependências
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+
+      # Passo 4: Instalar dependências do projeto
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+
+      # Passo 5: Realizar build
+      - name: Build the project
+        run: |
+          pnpm run build
+
+      # Passo 6: Transferir os arquivos para o servidor via SCP (Secure Copy)
+      - name: Deploy to server via SCP
+        run: |
+          rsync -avz --delete ./dist/ ubuntu@107.22.156.206:/var/www/autoservice
+
+      # Passo 7: Conectar via SSH e reiniciar a aplicação no servidor
+      - name: SSH into server and restart app
+        run: |
+          ssh ubuntu@107.22.156.206 'cd /var/www/autoservice && pm2 restart Autoservice'
+
