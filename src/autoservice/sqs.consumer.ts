@@ -13,6 +13,8 @@ import { StateService, QueueState } from "./state.service";
 
 @Injectable()
 export class SqsConsumer implements OnModuleInit {
+    private checkingSqs = false;
+
     constructor(
         private lazyModuleLoader: LazyModuleLoader,
         private readonly config: ConfigService,
@@ -160,14 +162,26 @@ export class SqsConsumer implements OnModuleInit {
 
     @OnEvent('sqs.empty')
     public async onSqsEmpty() {
+        if (this.checkingSqs) return;
+
+        this.checkingSqs = true;
         console.log('Aguardando novas mensagens, margem de segurança');
+
         try {
-            await this.emitter.waitFor('sqs.newMessage', 20000);
+            await this.emitter.waitFor('sqs.newMessage', {
+                timeout: 20000,
+                handleError: false,
+                filter: () => true,
+                Promise: Promise,
+                overload: false,
+            });
             console.log('Nova mensagem recebida, verificando estabilidade da fila');
             this.emitter.emit('sqs.busy');
         } catch (e) {
             console.log('Nenhuma nova mensagem recebida, fila está livre');
-            this.emitter.emit("sqs.free");
+            this.emitter.emit('sqs.free');
+        } finally {
+            this.checkingSqs = false;
         }
     }
 
