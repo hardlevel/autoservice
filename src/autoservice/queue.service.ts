@@ -231,7 +231,7 @@ export class QueueService implements OnApplicationBootstrap {
       const elapsedTime = Date.now() - startTime;
       const timeLeft = Math.max(0, timeout - elapsedTime);
       const secondsLeft = Math.ceil(timeLeft / 1000); // Converte o tempo restante em segundos
-      console.log(`Tempo restante: ${secondsLeft} segundos`);
+      // console.log(`Tempo restante: ${secondsLeft} segundos`);
     }, 1000); // Atualiza a cada 1 segundo
 
     // Criando uma promessa para o evento `sqs.message`
