@@ -62,7 +62,7 @@ jobs:
           --exclude='scripts/' \
           --exclude='.history/' \
           --exclude='.vscode/' \
-          --exclude='.laravel/' \
+          --exclude='laravel/' \
           --exclude='.env' \
           --exclude='*.log' \
           --exclude='_appspec.yml_' \
