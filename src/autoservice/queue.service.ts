@@ -2,7 +2,7 @@ import { InjectFlowProducer, InjectQueue } from "@nestjs/bullmq";
 import { forwardRef, Inject, Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
-import { emitter2, OnEvent } from "@nestjs/event-emitter";
+import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
 import { Interval, SchedulerRegistry, Timeout } from "@nestjs/schedule";
 import { FlowProducer, Job, JobsOptions, Queue } from "bullmq";
 import { UtilService } from "../util/util.service";
@@ -24,7 +24,7 @@ export class QueueService implements OnApplicationBootstrap {
         @InjectFlowProducer('autoserviceFlow') private readonly flow: FlowProducer,
         private readonly config: ConfigService,
         private readonly util: UtilService,
-        private readonly emitter: emitter2,
+        private readonly emitter: EventEmitter2,
         private readonly dates: DateService,
         private readonly scheduler: SchedulerRegistry,
         // @Inject(forwardRef(() => AutoserviceService)) private readonly autoserviceService: AutoserviceService,
