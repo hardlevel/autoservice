@@ -87,5 +87,5 @@ jobs:
             else
               echo 'No dependency changes detected, skipping pnpm install.';
             fi && 
-            pm2 restart all
+            /home/ubuntu/.local/share/pnpm/pm2 restart all
           "
