@@ -39,7 +39,7 @@ export class Ck6Service {
         ];
 
         const data = await this.util.extractData(ck6011, fields);
-
+        console.log('CK6: data da nota ', data.data_e_hora_da_abertura_da_os)
         try {
             const ck = await this.prisma.ck6011.upsert({
                 where: {

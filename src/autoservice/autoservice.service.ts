@@ -51,7 +51,7 @@ export class AutoserviceService {
     private readonly log: LogService,
     private readonly queue: QueueService,
     private readonly sqs: SqsConsumer,
-  ) {}
+  ) { }
 
   @OnEvent("app.start")
   private async appStart() {
@@ -61,7 +61,7 @@ export class AutoserviceService {
       // await this.eventEmitter.emitAsync('sqs.start');
       // await this.eventEmitter.waitFor('app.free');
       // await this.checkAndStart();
-      await this.init(2025, 3, 10);
+      await this.init(2025);
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
