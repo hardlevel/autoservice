@@ -83,7 +83,7 @@ jobs:
             if git diff --name-only HEAD | grep -E 'package.json|pnpm-lock.yaml'; then
               echo 'Dependencies changed, running pnpm install...';
               #pnpm install;
-              home/ubuntu/.local/share/pnpm/pnpm install;
+              /home/ubuntu/.local/share/pnpm/pnpm install;
             else
               echo 'No dependency changes detected, skipping pnpm install.';
             fi && 
