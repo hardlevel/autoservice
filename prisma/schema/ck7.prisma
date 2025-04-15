@@ -1,73 +1,73 @@
 model Ck7001 {
-    id                                                BigInt    @id @default(autoincrement()) @db.BigInt
-    nome_do_cliente                                   String
-    endereco                                          String
-    numero_do_dn                                      String
-    numero_da_nota_fiscal                             String //@unique
-    numero_da_os                                      String
-    serie_da_nota_fiscal                              String?
-    fonte_pagadora                                    Int
-    valor_total_liquido_das_pecas_na_nota_fiscal      Decimal?  @default(0) @db.Decimal(10, 2)
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal?  @default(0) @db.Decimal(10, 2)
-    data_e_hora_da_abertura_da_os                     DateTime
-    data_e_hora_da_emissao_da_nota_fiscal             DateTime
-    data_e_hora_do_fechamento_da_os                   DateTime?
-    ck7002                                            Ck7002[]
-    ck7003                                            Ck7003[]
-    ck7004                                            Ck7004[]
-    created_at                                        DateTime  @default(now())
-    modified_at                                       DateTime  @updatedAt
+  id                                                BigInt    @id @default(autoincrement())
+  nome_do_cliente                                   String
+  endereco                                          String
+  numero_do_dn                                      String
+  numero_da_nota_fiscal                             String
+  numero_da_os                                      String
+  serie_da_nota_fiscal                              String?
+  fonte_pagadora                                    Int
+  valor_total_liquido_das_pecas_na_nota_fiscal      Decimal?  @default(0) @db.Decimal(10, 2)
+  valor_total_liquido_da_mao_de_obra_na_nota_fiscal Decimal?  @default(0) @db.Decimal(10, 2)
+  data_e_hora_da_abertura_da_os                     DateTime
+  data_e_hora_da_emissao_da_nota_fiscal             DateTime
+  data_e_hora_do_fechamento_da_os                   DateTime?
+  created_at                                        DateTime  @default(now())
+  modified_at                                       DateTime  @updatedAt
+  ck7002                                            Ck7002[]
+  ck7003                                            Ck7003[]
+  ck7004                                            Ck7004[]
 
-    @@unique(name: "ck7001_cod", [numero_da_nota_fiscal, numero_do_dn])
-    @@index([numero_da_nota_fiscal], type: Hash)
+  @@unique([numero_da_nota_fiscal, numero_do_dn], name: "ck7001_cod")
+  @@index([numero_da_nota_fiscal], type: Hash)
 }
 
 model Ck7002 {
-    id          BigInt      @id @default(autoincrement()) @db.BigInt
-    ck7001_id   BigInt
-    ck7001      Ck7001      @relation(fields: [ck7001_id], references: [id])
-    indicador   String
-    cidade      String
-    uf          String
-    bairro      String?
-    numero      String?     @default("Não informado")
-    complemento String?
-    cpf_cnpj    String
-    cep         String
-    telefones   Telefones[]
-    emails      Emails[]
-    created_at  DateTime    @default(now())
-    modified_at DateTime    @updatedAt
+  id          BigInt      @id @default(autoincrement())
+  ck7001_id   BigInt
+  indicador   String
+  cidade      String
+  uf          String
+  bairro      String?
+  numero      String?     @default("Não informado")
+  complemento String?
+  cpf_cnpj    String
+  cep         String
+  created_at  DateTime    @default(now())
+  modified_at DateTime    @updatedAt
+  ck7001      Ck7001      @relation(fields: [ck7001_id], references: [id])
+  emails      Emails[]
+  telefones   Telefones[]
 
-    @@unique(name: "ck7002_cod", [cidade, uf, indicador, ck7001_id])
+  @@unique([cidade, uf, indicador, ck7001_id], name: "ck7002_cod")
 }
 
 model Ck7003 {
-    id                          BigInt   @id @default(autoincrement()) @db.BigInt
-    ck7001_id                   BigInt
-    ck7001                      Ck7001   @relation(fields: [ck7001_id], references: [id])
-    codigo_da_peca              String
-    descricao_da_peca           String?
-    quantidade_da_peca          Int
-    valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
-    codigo_promocional          String?
-    created_at                  DateTime @default(now())
-    modified_at                 DateTime @updatedAt
+  id                          BigInt   @id @default(autoincrement())
+  ck7001_id                   BigInt
+  codigo_da_peca              String
+  descricao_da_peca           String?
+  quantidade_da_peca          Int
+  valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
+  codigo_promocional          String?
+  created_at                  DateTime @default(now())
+  modified_at                 DateTime @updatedAt
+  ck7001                      Ck7001   @relation(fields: [ck7001_id], references: [id])
 
-    @@unique(name: "ck7003_cod", [ck7001_id, codigo_da_peca])
+  @@unique([ck7001_id, codigo_da_peca], name: "ck7003_cod")
 }
 
 model Ck7004 {
-    id                                 BigInt   @id @default(autoincrement()) @db.BigInt
-    ck7001_id                          BigInt
-    ck7001                             Ck7001   @relation(fields: [ck7001_id], references: [id])
-    cos                                String?
-    descricao_do_servico               String
-    hora_vendida                       Float?
-    valor_total_liquido_da_mao_de_obra Decimal? @default(0) @db.Decimal(10, 2)
-    tipo_de_servico                    Int?
-    created_at                         DateTime @default(now())
-    modified_at                        DateTime @updatedAt
+  id                                 BigInt   @id @default(autoincrement())
+  ck7001_id                          BigInt
+  cos                                String?
+  descricao_do_servico               String
+  hora_vendida                       Float?
+  valor_total_liquido_da_mao_de_obra Decimal? @default(0) @db.Decimal(10, 2)
+  tipo_de_servico                    Int?
+  created_at                         DateTime @default(now())
+  modified_at                        DateTime @updatedAt
+  ck7001                             Ck7001   @relation(fields: [ck7001_id], references: [id])
 
-    @@unique(name: "ck7004_cod", [ck7001_id, cos])
+  @@unique([ck7001_id, cos], name: "ck7004_cod")
 }

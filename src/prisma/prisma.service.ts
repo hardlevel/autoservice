@@ -209,23 +209,32 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     )
   }
 
-  async recordDaily(year: number, month: number, day: number, hour: number, minute: number, field: any, value: any) {
+  async recordDaily(year: number, month: number, day: number, hour: number, minute: number, status: string, field?: any, value?: any) {
     return this.dailyCk.upsert({
       where: {
         daily: {
-          day, month, year
+          day, month, year, hour, minute
         }
       },
       create: {
-        day, month, year,
+        day, month, year, hour, minute,
         [field]: value
       },
       update: {
-        [field]: {
-          increment: value
-        }
+        status,
+        ...(field && value ? { [field]: value } : {}),
       }
-    })
+    });
+  }
+
+  async loadDaily(year: number, month: number, day: number, hour: number, minute: number) {
+    return this.dailyCk.findUnique({
+      where: {
+        daily: {
+          day, month, year, hour, minute
+        }
+      },
+    });
   }
 
   async saveLastSearch(startDate, endDate) {
