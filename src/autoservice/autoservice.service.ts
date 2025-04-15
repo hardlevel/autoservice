@@ -35,6 +35,7 @@ import { LogService } from "./log.service";
 import { QueueService } from "./queue.service";
 import { SqsConsumer } from "./sqs.consumer";
 import { AxiosTokenInterceptor } from "./axios.interceptor";
+import { CatchErrors } from "../decorators/catch-errors.decorator";
 @Injectable()
 export class AutoserviceService {
   public startDate: string;
@@ -65,6 +66,11 @@ export class AutoserviceService {
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
+  }
+
+  @CatchErrors()
+  async testarErroSimples() {
+    throw new Error('Erro simulado para teste!');
   }
 
   async makeRequest(dataInicio: string, dataFim: string) {
