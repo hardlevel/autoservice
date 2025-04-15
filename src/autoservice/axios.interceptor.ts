@@ -13,7 +13,7 @@ export class AxiosTokenInterceptor implements OnModuleInit {
         private readonly httpService: HttpService,
         private readonly config: ConfigService,
     ) {
-        this.tokenHttp = axios.create(); // ✅ nova instância do axios, sem interceptores
+        this.tokenHttp = axios.create();
     }
 
     onModuleInit() {

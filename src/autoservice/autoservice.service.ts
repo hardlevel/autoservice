@@ -31,11 +31,12 @@ import { LazyModuleLoader } from "@nestjs/core";
 import { DateService } from "../util/date.service";
 import { AxiosError } from "axios";
 import { HttpService } from "@nestjs/axios";
-import { LogService } from "./log.service";
-import { QueueService } from "./queue.service";
+import { QueueService } from "./queues/queue.service";
 import { SqsConsumer } from "./sqs.consumer";
 import { AxiosTokenInterceptor } from "./axios.interceptor";
 import { CatchErrors } from "../decorators/catch-errors.decorator";
+import { PrismaService } from "../prisma/prisma.service";
+
 @Injectable()
 export class AutoserviceService {
   public startDate: string;
@@ -49,28 +50,29 @@ export class AutoserviceService {
     private readonly eventEmitter: EventEmitter2,
     private readonly dates: DateService,
     private readonly httpService: HttpService,
-    private readonly log: LogService,
     private readonly queue: QueueService,
     private readonly sqs: SqsConsumer,
+    private readonly prisma: PrismaService
   ) { }
 
   @OnEvent("app.start")
   private async appStart() {
     console.log("aplicação iniciada");
+    await this.testarErroSimples('rola');
     try {
       // await this.eventEmitter.emitAsync('queue.start');
       // await this.eventEmitter.emitAsync('sqs.start');
       // await this.eventEmitter.waitFor('app.free');
       // await this.checkAndStart();
-      await this.init(2025);
+      // await this.init(2025);
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
   }
 
   @CatchErrors()
-  async testarErroSimples() {
-    throw new Error('Erro simulado para teste!');
+  async testarErroSimples(pinto) {
+    throw new Error('Erro simulado para teste');
   }
 
   async makeRequest(dataInicio: string, dataFim: string) {
@@ -90,6 +92,7 @@ export class AutoserviceService {
     this.endDate = endDate;
   }
 
+  @CatchErrors()
   public async init(
     year: number = 2024,
     month: number = 1,
@@ -99,6 +102,8 @@ export class AutoserviceService {
   ) {
     const batchSize = 500;
     let batch: any[] = [];
+
+    await this.prisma.recordDaily(year, month, day, hour, minute, 'status', 'processing');
 
     const {
       year: currentYear,
@@ -186,6 +191,10 @@ export class AutoserviceService {
     await this.eventEmitter
       .emitAsync("queue.check", "hourly")
       .then((data) => console.log("teste status hourly", data));
+  }
+
+  setLog(level: string, message: string, error: string, startDate?: string | Date, endDate?: string | Date) {
+    return Logger[level](`message: ${message} \nErro: ${error} \nStartDate: ${startDate}, EndDate: ${endDate}`);
   }
 
   // public async processYear(

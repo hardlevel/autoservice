@@ -1,12 +1,9 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-// import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
-import { AutoserviceService } from './autoservice.service';
-import { AllExceptionsFilter } from '../common/errors/all.exceptions';
-import { UtilService } from '../util/util.service';
-import { LogService } from './log.service';
-//import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { PrismaService } from '../../prisma/prisma.service';
+import { AutoserviceService } from '../autoservice.service';
+import { AllExceptionsFilter } from '../../common/errors/all.exceptions';
+import { UtilService } from '../../util/util.service';
 
 @Injectable()
 export class Ck6Service {
@@ -19,8 +16,6 @@ export class Ck6Service {
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
         private readonly util: UtilService,
-        private readonly log: LogService
-        //@InjectPinoLogger(Ck6Service.name) private readonly logger: PinoLogger
     ) { }
 
     async ck6011(ck6011, startDate, endDate) {
@@ -67,7 +62,7 @@ export class Ck6Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.log.setLog('error', 'Falha ao registrar CK6001', error.message, this.startDate, this.endDate);
+            // this.log.setLog('error', 'Falha ao registrar CK6001', error.message, this.startDate, this.endDate);
             return;
         }
     }
@@ -107,7 +102,7 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.log.setLog('error', 'Falha ao registrar CK6021', error.message, this.startDate, this.endDate);
+                // this.log.setLog('error', 'Falha ao registrar CK6021', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -148,7 +143,7 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.log.setLog('error', 'Falha ao registrar CK6031', error.message, this.startDate, this.endDate);
+                // this.log.setLog('error', 'Falha ao registrar CK6031', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -195,7 +190,7 @@ export class Ck6Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.log.setLog('error', 'Falha ao registrar CK6041', error.message, this.startDate, this.endDate);
+            // this.log.setLog('error', 'Falha ao registrar CK6041', error.message, this.startDate, this.endDate);
             return;
         }
     }
@@ -236,7 +231,7 @@ export class Ck6Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.log.setLog('error', 'Falha ao registrar CK6041', error.message, this.startDate, this.endDate);
+            // this.log.setLog('error', 'Falha ao registrar CK6041', error.message, this.startDate, this.endDate);
             return;
         }
     }
@@ -271,7 +266,7 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.log.setLog('error', 'Falha ao registrar CK6042', error.message, this.startDate, this.endDate);
+                // this.log.setLog('error', 'Falha ao registrar CK6042', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -307,7 +302,7 @@ export class Ck6Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.log.setLog('error', 'Falha ao registrar CK6042', error.message, this.startDate, this.endDate);
+                // this.log.setLog('error', 'Falha ao registrar CK6042', error.message, this.startDate, this.endDate);
                 return;
             }
         }

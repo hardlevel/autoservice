@@ -1,11 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-// import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
-import { AutoserviceService } from './autoservice.service';
-import { UtilService } from '../util/util.service';
-import { LogService } from './log.service';
-//import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { PrismaService } from '../../prisma/prisma.service';
+import { AutoserviceService } from '../autoservice.service';
+import { UtilService } from '../../util/util.service';
 
 @Injectable()
 export class Ck3Service {
@@ -18,7 +15,6 @@ export class Ck3Service {
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
         private readonly util: UtilService,
-        private readonly log: LogService
         //@InjectPinoLogger(Ck3Service.name) private readonly logger: PinoLogger
     ) { }
 
@@ -69,7 +65,7 @@ export class Ck3Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.log.setLog('error', 'Falha ao registrar CK3001', error.message, this.startDate, this.endDate);
+            // this.log.setLog('error', 'Falha ao registrar CK3001', error.message, this.startDate, this.endDate);
             return;
         }
     }
@@ -112,7 +108,7 @@ export class Ck3Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.log.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
+            // this.log.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
             return;
         }
     }
@@ -149,7 +145,7 @@ export class Ck3Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.log.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
+                // this.log.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -187,7 +183,7 @@ export class Ck3Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.log.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
+                // this.log.setLog('error', 'Falha ao registrar CK3002', error.message, this.startDate, this.endDate);
                 return;
             }
         }
@@ -225,7 +221,7 @@ export class Ck3Service {
                     cause: error.cause,
                     originalData: this.originalData
                 });
-                this.log.setLog('error', 'Falha ao registrar CK3003', error.message, this.startDate, this.endDate);
+                // this.log.setLog('error', 'Falha ao registrar CK3003', error.message, this.startDate, this.endDate);
                 return;
             }
         }

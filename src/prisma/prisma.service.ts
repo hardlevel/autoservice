@@ -2,13 +2,15 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from "@prisma-clients/clients/psql";
 import { CustomError } from '../common/errors/custom-error';
 import { UtilService } from '../util/util.service';
+import { DateService } from '../util/date.service';
 // import { PrismaClient } from './postgres';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
-  constructor(private readonly util: UtilService) {
-    super();
-  }
+  constructor(
+    private readonly util: UtilService,
+    private readonly dates: DateService
+  ) { super(); }
 
   async onModuleInit() {
     await this.$connect();
@@ -207,7 +209,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     )
   }
 
-  async recordDaily(year: number, month: number, day: number, field: any, value: any) {
+  async recordDaily(year: number, month: number, day: number, hour: number, minute: number, field: any, value: any) {
     return this.dailyCk.upsert({
       where: {
         daily: {
@@ -224,5 +226,48 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         }
       }
     })
+  }
+
+  async saveLastSearch(startDate, endDate) {
+    return this.lastSearch.upsert({
+      where: { id: 1 },
+      create: {
+        id: 1, startDate, endDate
+      },
+      update: { startDate, endDate }
+    });
+  }
+
+  async getLastSearch() {
+    return this.lastSearch.findFirst({
+      where: { id: 1 }
+    });
+  }
+
+  async saveLastParams(data) {
+    return this.lastParams.upsert({
+      where: { year: parseInt(data.year) },
+      create: data,
+      update: data
+    });
+  }
+
+  async getLastParams(year) {
+    return this.lastParams.findFirst({
+      where: { year }
+    });
+  }
+
+  async clearLastParam(year) {
+    return this.lastParams.delete({
+      where: { year }
+    });
+  }
+
+  async changeStatusLastParam(year) {
+    return this.lastParams.update({
+      where: { year },
+      data: { status: true }
+    });
   }
 }
