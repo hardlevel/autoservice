@@ -1,12 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-// import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
-import { AutoserviceService } from './autoservice.service';
-import { UtilService } from '../util/util.service';
-import { CustomError } from '../common/errors/custom-error';
-import { LogService } from './log.service';
-//import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { PrismaService } from '../../prisma/prisma.service';
+import { AutoserviceService } from '../autoservice.service';
+import { UtilService } from '../../util/util.service';
+import { CustomError } from '../../common/errors/custom-error';
 
 @Injectable()
 export class Ck4Service {
@@ -19,8 +16,6 @@ export class Ck4Service {
         private readonly prisma: PrismaService,
         private readonly autoservice: AutoserviceService,
         private readonly util: UtilService,
-        private readonly log: LogService
-        //@InjectPinoLogger(Ck4Service.name) private readonly logger: PinoLogger
     ) { }
 
     async ck4001(ck4001, startDate, endDate) {
@@ -65,7 +60,7 @@ export class Ck4Service {
                 cause: error.cause,
                 originalData: this.originalData
             });
-            this.log.setLog('error', 'Falha ao registrar CK4001', error.message, this.startDate, this.endDate);
+            // this.log.setLog('error', 'Falha ao registrar CK4001', error.message, this.startDate, this.endDate);
             return;
         }
     }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HealthCheckError, HealthIndicator, HealthIndicatorResult } from '@nestjs/terminus';
-import { QueueService } from './queue.service';
+import { QueueService } from './queues/queue.service';
 import { SqsConsumer } from './sqs.consumer';
 
 @Injectable()

@@ -9,10 +9,9 @@ import { ConfigService } from "@nestjs/config";
 import { LazyModuleLoader } from "@nestjs/core";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
 import { SqsConsumerEventHandler, SqsMessageHandler, SqsService } from "@ssut/nestjs-sqs";
-import { QueueService } from "./queue.service";
+import { QueueService } from "./queues/queue.service";
 import { Message } from "@aws-sdk/client-sqs";
 import { AutoserviceService } from "./autoservice.service";
-import { LogService } from "./log.service";
 import { UtilService } from "../util/util.service";
 import { DateService } from "../util/date.service";
 
@@ -27,10 +26,9 @@ export class SqsConsumer implements OnModuleInit {
     private readonly emitter: EventEmitter2,
     private readonly queue: QueueService,
     @Inject(forwardRef(() => AutoserviceService)) private readonly autoservice: AutoserviceService,
-    private readonly log: LogService,
     private readonly util: UtilService,
     private readonly dates: DateService,
-  ) {}
+  ) { }
 
   async onModuleInit() {
     // const isEmpty = await this.isSqsActiveAndEmpty();
@@ -58,13 +56,13 @@ export class SqsConsumer implements OnModuleInit {
       const job = await this.queue.addJobToQueue("autoservice", msgBody);
     } catch (error) {
       console.error("consumer error", JSON.stringify(error));
-      this.log.setLog(
-        "error",
-        "Erro ao processar mensagem do SQS",
-        error.message,
-        this.autoservice.startDate,
-        this.autoservice.endDate,
-      );
+      // this.log.setLog(
+      //   "error",
+      //   "Erro ao processar mensagem do SQS",
+      //   error.message,
+      //   this.autoservice.startDate,
+      //   this.autoservice.endDate,
+      // );
     }
   }
 
@@ -90,13 +88,13 @@ export class SqsConsumer implements OnModuleInit {
         await this.sqsService.consumers.get("autoservice").instance.status;
       return isPolling && isRunning;
     } catch (error) {
-      this.log.setLog(
-        "error",
-        "Não foi possível verificar o status do SQS",
-        error.message,
-        this.autoservice.startDate,
-        this.autoservice.endDate,
-      );
+      // this.log.setLog(
+      //   "error",
+      //   "Não foi possível verificar o status do SQS",
+      //   error.message,
+      //   this.autoservice.startDate,
+      //   this.autoservice.endDate,
+      // );
       return false;
     }
   }
@@ -106,13 +104,13 @@ export class SqsConsumer implements OnModuleInit {
       const result = await this.sqsService.getQueueAttributes("autoservice");
       return result.ApproximateNumberOfMessages;
     } catch (error) {
-      this.log.setLog(
-        "error",
-        "Não foi possível verificar o status do SQS",
-        error.message,
-        this.autoservice.startDate,
-        this.autoservice.endDate,
-      );
+      // this.log.setLog(
+      //   "error",
+      //   "Não foi possível verificar o status do SQS",
+      //   error.message,
+      //   this.autoservice.startDate,
+      //   this.autoservice.endDate,
+      // );
       return [];
     }
   }
@@ -126,13 +124,13 @@ export class SqsConsumer implements OnModuleInit {
       }
       return false;
     } catch (error) {
-      this.log.setLog(
-        "error",
-        "Não foi possível verificar o status do SQS",
-        error.message,
-        this.autoservice.startDate,
-        this.autoservice.endDate,
-      );
+      // this.log.setLog(
+      //   "error",
+      //   "Não foi possível verificar o status do SQS",
+      //   error.message,
+      //   this.autoservice.startDate,
+      //   this.autoservice.endDate,
+      // );
       return false;
     }
   }
@@ -146,13 +144,13 @@ export class SqsConsumer implements OnModuleInit {
 
       return isEmpty && isActive;
     } catch (error) {
-      this.log.setLog(
-        "error",
-        "Não foi possível verificar o status do SQS",
-        error?.message || error.toString(),
-        this.autoservice.startDate,
-        this.autoservice.endDate,
-      );
+      // this.log.setLog(
+      //   "error",
+      //   "Não foi possível verificar o status do SQS",
+      //   error?.message || error.toString(),
+      //   this.autoservice.startDate,
+      //   this.autoservice.endDate,
+      // );
       return false;
     }
   }
@@ -179,13 +177,13 @@ export class SqsConsumer implements OnModuleInit {
 
   @SqsConsumerEventHandler("autoservice", "processing_error")
   public onProcessingError(error: Error, message: Message) {
-    this.log.setLog(
-      "error",
-      "Há algum problema no SQS externo",
-      error.message,
-      this.autoservice.startDate,
-      this.autoservice.endDate,
-    );
+    // this.log.setLog(
+    //   "error",
+    //   "Há algum problema no SQS externo",
+    //   error.message,
+    //   this.autoservice.startDate,
+    //   this.autoservice.endDate,
+    // );
   }
 
   @OnEvent("sqs.start")

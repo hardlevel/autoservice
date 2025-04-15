@@ -5,24 +5,22 @@ import { SqsModule } from "@ssut/nestjs-sqs";
 import { ConfigModule, ConfigService, ConfigType } from "@nestjs/config";
 import { BullModule } from "@nestjs/bullmq";
 import { SQSClient } from "@aws-sdk/client-sqs";
-import { AutoserviceProcessor } from "./autoservice.processor";
+import { AutoserviceProcessor } from "./queues/autoservice.processor";
 import { PrismaModule } from "../prisma/prisma.module";
-import { Ck3Service } from "./ck3.service";
-import { Ck4Service } from "./ck4.service";
-import { Ck5Service } from "./ck5.service";
-import { Ck6Service } from "./ck6.service";
-import { Ck7Service } from "./ck7.service";
+import { Ck3Service } from "./ck3/ck3.service";
+import { Ck4Service } from "./ck4/ck4.service";
+import { Ck5Service } from "./ck5/ck5.service";
+import { Ck6Service } from "./ck6/ck6.service";
+import { Ck7Service } from "./ck7/ck7.service";
 import { UtilModule } from "../util/util.module";
 import { AutoserviceHealthIndicator } from "./autoservice.health";
 import { HttpModule } from "@nestjs/axios";
 import { SqsConsumer } from "./sqs.consumer";
-import { QueueService } from "./queue.service";
+import { QueueService } from "./queues/queue.service";
 import { ApiService } from "./api.service";
-import { LogService } from "./log.service";
 import { AxiosTokenInterceptor } from "./axios.interceptor";
 import { TokenService } from "./token.service";
-import { HourlyConsumer } from "./hourly.queue";
-// import { LoggerModule } from 'nestjs-pino';
+import { HourlyConsumer } from "./queues/hourly.queue";
 
 @Module({
   controllers: [AutoserviceController],
@@ -30,7 +28,6 @@ import { HourlyConsumer } from "./hourly.queue";
     AutoserviceService,
     ConfigModule,
     AutoserviceProcessor,
-    // GlobalErrorHandler,
     Ck3Service,
     Ck4Service,
     Ck5Service,
@@ -39,7 +36,6 @@ import { HourlyConsumer } from "./hourly.queue";
     SqsConsumer,
     QueueService,
     ApiService,
-    LogService,
     AutoserviceHealthIndicator,
     TokenService,
     AxiosTokenInterceptor,
@@ -47,7 +43,6 @@ import { HourlyConsumer } from "./hourly.queue";
   ],
   exports: [AutoserviceHealthIndicator, AutoserviceService],
   imports: [
-    // LoggerModule,
     UtilModule,
     ConfigModule,
     PrismaModule,
@@ -88,18 +83,12 @@ import { HourlyConsumer } from "./hourly.queue";
         name: "autoservice",
       },
       {
-        name: "daily",
-      },
-      {
-        name: "monthly",
-      },
-      {
         name: "hourly",
       },
     ),
-    BullModule.registerFlowProducer({
-      name: "autoserviceFlow",
-    }),
+    // BullModule.registerFlowProducer({
+    //   name: "autoserviceFlow",
+    // }),
   ],
 })
-export class AutoserviceModule {}
+export class AutoserviceModule { }

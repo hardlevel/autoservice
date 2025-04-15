@@ -1,3 +1,4 @@
+import { CustomLoggerModule } from './custom-logger/custom-logger.module';
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -10,15 +11,15 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 import { ErrorInterceptor } from "./common/errors/error.interceptor";
 import autoserviceConfig from "./autoservice/config/autoservice.config";
 import { LoggerModule } from "nestjs-pino";
-import { UtilService } from "./util/util.service";
 import { UtilModule } from "./util/util.module";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { AssobravModule } from "./assobrav/assobrav.module";
 import pino from "pino";
 import { ScheduleModule } from "@nestjs/schedule";
-import { AxiosTokenInterceptor } from "./autoservice/axios.interceptor";
+
 @Module({
   imports: [
+    CustomLoggerModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [autoserviceConfig],
@@ -44,48 +45,17 @@ import { AxiosTokenInterceptor } from "./autoservice/axios.interceptor";
     UtilModule,
     AssobravModule,
     ScheduleModule.forRoot(),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        level: process.env.NODE_ENV === "prod" ? "info" : "debug",
-        customLevels: { autoserviceError: 35 },
-        useOnlyCustomLevels: false,
-        // autoLogging: process.env.NODE_ENV !== 'prod',
-        autoLogging: false,
-        transport: {
-          targets: [
-            {
-              target: "pino-pretty",
-              options: {
-                colorize: true,
-                translateTime: "SYS:standard",
-                ignore: "pid,hostname",
-              },
-            },
-            {
-              target: "pino/file",
-              options: {
-                destination: "logs/autoservice.log",
-                mkdir: true,
-              },
-            },
-          ],
-        },
-        timestamp: () => `,"time":"${new Date().toISOString()}"`,
-        base: { service: "autoservice-api", version: "1.0.0" },
-        messageKey: "message",
-      },
-    }),
   ],
   controllers: [AppController],
   providers: [
     AppService,
     // GlobalErrorHandler
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ErrorInterceptor,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: ErrorInterceptor,
+    // },
     // UtilService,
     // AutoserviceHealthIndicator
   ],
 })
-export class AppModule {}
+export class AppModule { }
