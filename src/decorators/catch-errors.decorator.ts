@@ -2,7 +2,7 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Prisma } from '../../prisma/clients/psql';
 import { LoggerHelper } from '../custom-logger/logger-helper';
 
-export function CatchErrors(): MethodDecorator {
+export function CatchErrors(data?: any): MethodDecorator {
   return (target, propertyKey, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 

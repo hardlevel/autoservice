@@ -123,41 +123,6 @@ export type LastParams = $Result.DefaultSelection<Prisma.$LastParamsPayload>
  * 
  */
 export type Telefones = $Result.DefaultSelection<Prisma.$TelefonesPayload>
-/**
- * Model servicos_view
- * 
- */
-export type servicos_view = $Result.DefaultSelection<Prisma.$servicos_viewPayload>
-/**
- * Model pecas_view
- * 
- */
-export type pecas_view = $Result.DefaultSelection<Prisma.$pecas_viewPayload>
-/**
- * Model clientes_view
- * 
- */
-export type clientes_view = $Result.DefaultSelection<Prisma.$clientes_viewPayload>
-/**
- * Model nf_view
- * 
- */
-export type nf_view = $Result.DefaultSelection<Prisma.$nf_viewPayload>
-/**
- * Model fontes_pagadoras_view
- * 
- */
-export type fontes_pagadoras_view = $Result.DefaultSelection<Prisma.$fontes_pagadoras_viewPayload>
-/**
- * Model pecas_balcao_view
- * 
- */
-export type pecas_balcao_view = $Result.DefaultSelection<Prisma.$pecas_balcao_viewPayload>
-/**
- * Model pecas_oficina_view
- * 
- */
-export type pecas_oficina_view = $Result.DefaultSelection<Prisma.$pecas_oficina_viewPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -503,76 +468,6 @@ export class PrismaClient<
     * ```
     */
   get telefones(): Prisma.TelefonesDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.servicos_view`: Exposes CRUD operations for the **servicos_view** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Servicos_views
-    * const servicos_views = await prisma.servicos_view.findMany()
-    * ```
-    */
-  get servicos_view(): Prisma.servicos_viewDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.pecas_view`: Exposes CRUD operations for the **pecas_view** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Pecas_views
-    * const pecas_views = await prisma.pecas_view.findMany()
-    * ```
-    */
-  get pecas_view(): Prisma.pecas_viewDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.clientes_view`: Exposes CRUD operations for the **clientes_view** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Clientes_views
-    * const clientes_views = await prisma.clientes_view.findMany()
-    * ```
-    */
-  get clientes_view(): Prisma.clientes_viewDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.nf_view`: Exposes CRUD operations for the **nf_view** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Nf_views
-    * const nf_views = await prisma.nf_view.findMany()
-    * ```
-    */
-  get nf_view(): Prisma.nf_viewDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.fontes_pagadoras_view`: Exposes CRUD operations for the **fontes_pagadoras_view** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Fontes_pagadoras_views
-    * const fontes_pagadoras_views = await prisma.fontes_pagadoras_view.findMany()
-    * ```
-    */
-  get fontes_pagadoras_view(): Prisma.fontes_pagadoras_viewDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.pecas_balcao_view`: Exposes CRUD operations for the **pecas_balcao_view** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Pecas_balcao_views
-    * const pecas_balcao_views = await prisma.pecas_balcao_view.findMany()
-    * ```
-    */
-  get pecas_balcao_view(): Prisma.pecas_balcao_viewDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.pecas_oficina_view`: Exposes CRUD operations for the **pecas_oficina_view** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Pecas_oficina_views
-    * const pecas_oficina_views = await prisma.pecas_oficina_view.findMany()
-    * ```
-    */
-  get pecas_oficina_view(): Prisma.pecas_oficina_viewDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -631,8 +526,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.6.0
-   * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+   * Prisma Client JS version: 6.5.0
+   * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
    */
   export type PrismaVersion = {
     client: string
@@ -1034,14 +929,7 @@ export namespace Prisma {
     DailyCk: 'DailyCk',
     LastSearch: 'LastSearch',
     LastParams: 'LastParams',
-    Telefones: 'Telefones',
-    servicos_view: 'servicos_view',
-    pecas_view: 'pecas_view',
-    clientes_view: 'clientes_view',
-    nf_view: 'nf_view',
-    fontes_pagadoras_view: 'fontes_pagadoras_view',
-    pecas_balcao_view: 'pecas_balcao_view',
-    pecas_oficina_view: 'pecas_oficina_view'
+    Telefones: 'Telefones'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1060,7 +948,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "ck3001" | "ck3002" | "ck3003" | "ck4001" | "ck5001" | "ck6011" | "ck6021" | "ck6031" | "ck6041" | "ck6042" | "ck7001" | "ck7002" | "ck7003" | "ck7004" | "emails" | "errorLogger" | "ckLogs" | "jobLogs" | "dailyCk" | "lastSearch" | "lastParams" | "telefones" | "servicos_view" | "pecas_view" | "clientes_view" | "nf_view" | "fontes_pagadoras_view" | "pecas_balcao_view" | "pecas_oficina_view"
+      modelProps: "ck3001" | "ck3002" | "ck3003" | "ck4001" | "ck5001" | "ck6011" | "ck6021" | "ck6031" | "ck6041" | "ck6042" | "ck7001" | "ck7002" | "ck7003" | "ck7004" | "emails" | "errorLogger" | "ckLogs" | "jobLogs" | "dailyCk" | "lastSearch" | "lastParams" | "telefones"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2692,524 +2580,6 @@ export namespace Prisma {
           }
         }
       }
-      servicos_view: {
-        payload: Prisma.$servicos_viewPayload<ExtArgs>
-        fields: Prisma.servicos_viewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.servicos_viewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.servicos_viewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>
-          }
-          findFirst: {
-            args: Prisma.servicos_viewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.servicos_viewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>
-          }
-          findMany: {
-            args: Prisma.servicos_viewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>[]
-          }
-          create: {
-            args: Prisma.servicos_viewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>
-          }
-          createMany: {
-            args: Prisma.servicos_viewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.servicos_viewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>[]
-          }
-          delete: {
-            args: Prisma.servicos_viewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>
-          }
-          update: {
-            args: Prisma.servicos_viewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>
-          }
-          deleteMany: {
-            args: Prisma.servicos_viewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.servicos_viewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.servicos_viewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>[]
-          }
-          upsert: {
-            args: Prisma.servicos_viewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicos_viewPayload>
-          }
-          aggregate: {
-            args: Prisma.Servicos_viewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateServicos_view>
-          }
-          groupBy: {
-            args: Prisma.servicos_viewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Servicos_viewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.servicos_viewCountArgs<ExtArgs>
-            result: $Utils.Optional<Servicos_viewCountAggregateOutputType> | number
-          }
-        }
-      }
-      pecas_view: {
-        payload: Prisma.$pecas_viewPayload<ExtArgs>
-        fields: Prisma.pecas_viewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.pecas_viewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.pecas_viewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>
-          }
-          findFirst: {
-            args: Prisma.pecas_viewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.pecas_viewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>
-          }
-          findMany: {
-            args: Prisma.pecas_viewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>[]
-          }
-          create: {
-            args: Prisma.pecas_viewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>
-          }
-          createMany: {
-            args: Prisma.pecas_viewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.pecas_viewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>[]
-          }
-          delete: {
-            args: Prisma.pecas_viewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>
-          }
-          update: {
-            args: Prisma.pecas_viewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>
-          }
-          deleteMany: {
-            args: Prisma.pecas_viewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.pecas_viewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.pecas_viewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>[]
-          }
-          upsert: {
-            args: Prisma.pecas_viewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_viewPayload>
-          }
-          aggregate: {
-            args: Prisma.Pecas_viewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePecas_view>
-          }
-          groupBy: {
-            args: Prisma.pecas_viewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Pecas_viewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.pecas_viewCountArgs<ExtArgs>
-            result: $Utils.Optional<Pecas_viewCountAggregateOutputType> | number
-          }
-        }
-      }
-      clientes_view: {
-        payload: Prisma.$clientes_viewPayload<ExtArgs>
-        fields: Prisma.clientes_viewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.clientes_viewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.clientes_viewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>
-          }
-          findFirst: {
-            args: Prisma.clientes_viewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.clientes_viewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>
-          }
-          findMany: {
-            args: Prisma.clientes_viewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>[]
-          }
-          create: {
-            args: Prisma.clientes_viewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>
-          }
-          createMany: {
-            args: Prisma.clientes_viewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.clientes_viewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>[]
-          }
-          delete: {
-            args: Prisma.clientes_viewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>
-          }
-          update: {
-            args: Prisma.clientes_viewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>
-          }
-          deleteMany: {
-            args: Prisma.clientes_viewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.clientes_viewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.clientes_viewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>[]
-          }
-          upsert: {
-            args: Prisma.clientes_viewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$clientes_viewPayload>
-          }
-          aggregate: {
-            args: Prisma.Clientes_viewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateClientes_view>
-          }
-          groupBy: {
-            args: Prisma.clientes_viewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Clientes_viewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.clientes_viewCountArgs<ExtArgs>
-            result: $Utils.Optional<Clientes_viewCountAggregateOutputType> | number
-          }
-        }
-      }
-      nf_view: {
-        payload: Prisma.$nf_viewPayload<ExtArgs>
-        fields: Prisma.nf_viewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.nf_viewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.nf_viewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>
-          }
-          findFirst: {
-            args: Prisma.nf_viewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.nf_viewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>
-          }
-          findMany: {
-            args: Prisma.nf_viewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>[]
-          }
-          create: {
-            args: Prisma.nf_viewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>
-          }
-          createMany: {
-            args: Prisma.nf_viewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.nf_viewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>[]
-          }
-          delete: {
-            args: Prisma.nf_viewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>
-          }
-          update: {
-            args: Prisma.nf_viewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>
-          }
-          deleteMany: {
-            args: Prisma.nf_viewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.nf_viewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.nf_viewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>[]
-          }
-          upsert: {
-            args: Prisma.nf_viewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$nf_viewPayload>
-          }
-          aggregate: {
-            args: Prisma.Nf_viewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateNf_view>
-          }
-          groupBy: {
-            args: Prisma.nf_viewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Nf_viewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.nf_viewCountArgs<ExtArgs>
-            result: $Utils.Optional<Nf_viewCountAggregateOutputType> | number
-          }
-        }
-      }
-      fontes_pagadoras_view: {
-        payload: Prisma.$fontes_pagadoras_viewPayload<ExtArgs>
-        fields: Prisma.fontes_pagadoras_viewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.fontes_pagadoras_viewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.fontes_pagadoras_viewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>
-          }
-          findFirst: {
-            args: Prisma.fontes_pagadoras_viewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.fontes_pagadoras_viewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>
-          }
-          findMany: {
-            args: Prisma.fontes_pagadoras_viewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>[]
-          }
-          create: {
-            args: Prisma.fontes_pagadoras_viewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>
-          }
-          createMany: {
-            args: Prisma.fontes_pagadoras_viewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.fontes_pagadoras_viewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>[]
-          }
-          delete: {
-            args: Prisma.fontes_pagadoras_viewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>
-          }
-          update: {
-            args: Prisma.fontes_pagadoras_viewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>
-          }
-          deleteMany: {
-            args: Prisma.fontes_pagadoras_viewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.fontes_pagadoras_viewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.fontes_pagadoras_viewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>[]
-          }
-          upsert: {
-            args: Prisma.fontes_pagadoras_viewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$fontes_pagadoras_viewPayload>
-          }
-          aggregate: {
-            args: Prisma.Fontes_pagadoras_viewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateFontes_pagadoras_view>
-          }
-          groupBy: {
-            args: Prisma.fontes_pagadoras_viewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Fontes_pagadoras_viewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.fontes_pagadoras_viewCountArgs<ExtArgs>
-            result: $Utils.Optional<Fontes_pagadoras_viewCountAggregateOutputType> | number
-          }
-        }
-      }
-      pecas_balcao_view: {
-        payload: Prisma.$pecas_balcao_viewPayload<ExtArgs>
-        fields: Prisma.pecas_balcao_viewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.pecas_balcao_viewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.pecas_balcao_viewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>
-          }
-          findFirst: {
-            args: Prisma.pecas_balcao_viewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.pecas_balcao_viewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>
-          }
-          findMany: {
-            args: Prisma.pecas_balcao_viewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>[]
-          }
-          create: {
-            args: Prisma.pecas_balcao_viewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>
-          }
-          createMany: {
-            args: Prisma.pecas_balcao_viewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.pecas_balcao_viewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>[]
-          }
-          delete: {
-            args: Prisma.pecas_balcao_viewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>
-          }
-          update: {
-            args: Prisma.pecas_balcao_viewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>
-          }
-          deleteMany: {
-            args: Prisma.pecas_balcao_viewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.pecas_balcao_viewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.pecas_balcao_viewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>[]
-          }
-          upsert: {
-            args: Prisma.pecas_balcao_viewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_balcao_viewPayload>
-          }
-          aggregate: {
-            args: Prisma.Pecas_balcao_viewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePecas_balcao_view>
-          }
-          groupBy: {
-            args: Prisma.pecas_balcao_viewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Pecas_balcao_viewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.pecas_balcao_viewCountArgs<ExtArgs>
-            result: $Utils.Optional<Pecas_balcao_viewCountAggregateOutputType> | number
-          }
-        }
-      }
-      pecas_oficina_view: {
-        payload: Prisma.$pecas_oficina_viewPayload<ExtArgs>
-        fields: Prisma.pecas_oficina_viewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.pecas_oficina_viewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.pecas_oficina_viewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>
-          }
-          findFirst: {
-            args: Prisma.pecas_oficina_viewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.pecas_oficina_viewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>
-          }
-          findMany: {
-            args: Prisma.pecas_oficina_viewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>[]
-          }
-          create: {
-            args: Prisma.pecas_oficina_viewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>
-          }
-          createMany: {
-            args: Prisma.pecas_oficina_viewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.pecas_oficina_viewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>[]
-          }
-          delete: {
-            args: Prisma.pecas_oficina_viewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>
-          }
-          update: {
-            args: Prisma.pecas_oficina_viewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>
-          }
-          deleteMany: {
-            args: Prisma.pecas_oficina_viewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.pecas_oficina_viewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.pecas_oficina_viewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>[]
-          }
-          upsert: {
-            args: Prisma.pecas_oficina_viewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$pecas_oficina_viewPayload>
-          }
-          aggregate: {
-            args: Prisma.Pecas_oficina_viewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePecas_oficina_view>
-          }
-          groupBy: {
-            args: Prisma.pecas_oficina_viewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Pecas_oficina_viewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.pecas_oficina_viewCountArgs<ExtArgs>
-            result: $Utils.Optional<Pecas_oficina_viewCountAggregateOutputType> | number
-          }
-        }
-      }
     }
   } & {
     other: {
@@ -3316,13 +2686,6 @@ export namespace Prisma {
     lastSearch?: LastSearchOmit
     lastParams?: LastParamsOmit
     telefones?: TelefonesOmit
-    servicos_view?: servicos_viewOmit
-    pecas_view?: pecas_viewOmit
-    clientes_view?: clientes_viewOmit
-    nf_view?: nf_viewOmit
-    fontes_pagadoras_view?: fontes_pagadoras_viewOmit
-    pecas_balcao_view?: pecas_balcao_viewOmit
-    pecas_oficina_view?: pecas_oficina_viewOmit
   }
 
   /* Types for Logging */
@@ -3577,13 +2940,13 @@ export namespace Prisma {
    */
 
   export type Ck6042CountOutputType = {
-    telefones: number
     emails: number
+    telefones: number
   }
 
   export type Ck6042CountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    telefones?: boolean | Ck6042CountOutputTypeCountTelefonesArgs
     emails?: boolean | Ck6042CountOutputTypeCountEmailsArgs
+    telefones?: boolean | Ck6042CountOutputTypeCountTelefonesArgs
   }
 
   // Custom InputTypes
@@ -3600,15 +2963,15 @@ export namespace Prisma {
   /**
    * Ck6042CountOutputType without action
    */
-  export type Ck6042CountOutputTypeCountTelefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TelefonesWhereInput
+  export type Ck6042CountOutputTypeCountEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmailsWhereInput
   }
 
   /**
    * Ck6042CountOutputType without action
    */
-  export type Ck6042CountOutputTypeCountEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EmailsWhereInput
+  export type Ck6042CountOutputTypeCountTelefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TelefonesWhereInput
   }
 
 
@@ -3666,13 +3029,13 @@ export namespace Prisma {
    */
 
   export type Ck7002CountOutputType = {
-    telefones: number
     emails: number
+    telefones: number
   }
 
   export type Ck7002CountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    telefones?: boolean | Ck7002CountOutputTypeCountTelefonesArgs
     emails?: boolean | Ck7002CountOutputTypeCountEmailsArgs
+    telefones?: boolean | Ck7002CountOutputTypeCountTelefonesArgs
   }
 
   // Custom InputTypes
@@ -3689,15 +3052,15 @@ export namespace Prisma {
   /**
    * Ck7002CountOutputType without action
    */
-  export type Ck7002CountOutputTypeCountTelefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TelefonesWhereInput
+  export type Ck7002CountOutputTypeCountEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EmailsWhereInput
   }
 
   /**
    * Ck7002CountOutputType without action
    */
-  export type Ck7002CountOutputTypeCountEmailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EmailsWhereInput
+  export type Ck7002CountOutputTypeCountTelefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TelefonesWhereInput
   }
 
 
@@ -4504,7 +3867,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck3001 model
-   */
+   */ 
   interface Ck3001FieldRefs {
     readonly id: FieldRef<"Ck3001", 'BigInt'>
     readonly numero_do_dn: FieldRef<"Ck3001", 'String'>
@@ -5705,7 +5068,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck3002 model
-   */
+   */ 
   interface Ck3002FieldRefs {
     readonly id: FieldRef<"Ck3002", 'BigInt'>
     readonly cidade: FieldRef<"Ck3002", 'String'>
@@ -6917,7 +6280,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck3003 model
-   */
+   */ 
   interface Ck3003FieldRefs {
     readonly id: FieldRef<"Ck3003", 'BigInt'>
     readonly codigo_da_peca: FieldRef<"Ck3003", 'String'>
@@ -8091,7 +7454,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck4001 model
-   */
+   */ 
   interface Ck4001FieldRefs {
     readonly id: FieldRef<"Ck4001", 'BigInt'>
     readonly tipo_do_cancelamento: FieldRef<"Ck4001", 'String'>
@@ -9632,7 +8995,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck5001 model
-   */
+   */ 
   interface Ck5001FieldRefs {
     readonly id: FieldRef<"Ck5001", 'BigInt'>
     readonly numero_do_dn: FieldRef<"Ck5001", 'String'>
@@ -10792,7 +10155,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck6011 model
-   */
+   */ 
   interface Ck6011FieldRefs {
     readonly id: FieldRef<"Ck6011", 'BigInt'>
     readonly numero_do_dn: FieldRef<"Ck6011", 'String'>
@@ -12022,7 +11385,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck6021 model
-   */
+   */ 
   interface Ck6021FieldRefs {
     readonly id: FieldRef<"Ck6021", 'BigInt'>
     readonly codigo_da_peca: FieldRef<"Ck6021", 'String'>
@@ -13191,7 +12554,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck6031 model
-   */
+   */ 
   interface Ck6031FieldRefs {
     readonly id: FieldRef<"Ck6031", 'BigInt'>
     readonly cos: FieldRef<"Ck6031", 'String'>
@@ -14418,7 +13781,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck6041 model
-   */
+   */ 
   interface Ck6041FieldRefs {
     readonly id: FieldRef<"Ck6041", 'BigInt'>
     readonly quilometragem_do_veiculo: FieldRef<"Ck6041", 'Int'>
@@ -15100,8 +14463,8 @@ export namespace Prisma {
     created_at?: boolean
     modified_at?: boolean
     ck6041?: boolean | Ck6041DefaultArgs<ExtArgs>
-    telefones?: boolean | Ck6042$telefonesArgs<ExtArgs>
     emails?: boolean | Ck6042$emailsArgs<ExtArgs>
+    telefones?: boolean | Ck6042$telefonesArgs<ExtArgs>
     _count?: boolean | Ck6042CountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ck6042"]>
 
@@ -15140,8 +14503,8 @@ export namespace Prisma {
   export type Ck6042Omit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cidade" | "uf" | "cep" | "ck6041_id" | "created_at" | "modified_at", ExtArgs["result"]["ck6042"]>
   export type Ck6042Include<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ck6041?: boolean | Ck6041DefaultArgs<ExtArgs>
-    telefones?: boolean | Ck6042$telefonesArgs<ExtArgs>
     emails?: boolean | Ck6042$emailsArgs<ExtArgs>
+    telefones?: boolean | Ck6042$telefonesArgs<ExtArgs>
     _count?: boolean | Ck6042CountOutputTypeDefaultArgs<ExtArgs>
   }
   export type Ck6042IncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15155,8 +14518,8 @@ export namespace Prisma {
     name: "Ck6042"
     objects: {
       ck6041: Prisma.$Ck6041Payload<ExtArgs>
-      telefones: Prisma.$TelefonesPayload<ExtArgs>[]
       emails: Prisma.$EmailsPayload<ExtArgs>[]
+      telefones: Prisma.$TelefonesPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -15561,8 +14924,8 @@ export namespace Prisma {
   export interface Prisma__Ck6042Client<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ck6041<T extends Ck6041DefaultArgs<ExtArgs> = {}>(args?: Subset<T, Ck6041DefaultArgs<ExtArgs>>): Prisma__Ck6041Client<$Result.GetResult<Prisma.$Ck6041Payload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    telefones<T extends Ck6042$telefonesArgs<ExtArgs> = {}>(args?: Subset<T, Ck6042$telefonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelefonesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     emails<T extends Ck6042$emailsArgs<ExtArgs> = {}>(args?: Subset<T, Ck6042$emailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    telefones<T extends Ck6042$telefonesArgs<ExtArgs> = {}>(args?: Subset<T, Ck6042$telefonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelefonesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15590,7 +14953,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck6042 model
-   */
+   */ 
   interface Ck6042FieldRefs {
     readonly id: FieldRef<"Ck6042", 'BigInt'>
     readonly cidade: FieldRef<"Ck6042", 'String'>
@@ -16004,30 +15367,6 @@ export namespace Prisma {
   }
 
   /**
-   * Ck6042.telefones
-   */
-  export type Ck6042$telefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Telefones
-     */
-    select?: TelefonesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Telefones
-     */
-    omit?: TelefonesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TelefonesInclude<ExtArgs> | null
-    where?: TelefonesWhereInput
-    orderBy?: TelefonesOrderByWithRelationInput | TelefonesOrderByWithRelationInput[]
-    cursor?: TelefonesWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TelefonesScalarFieldEnum | TelefonesScalarFieldEnum[]
-  }
-
-  /**
    * Ck6042.emails
    */
   export type Ck6042$emailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16049,6 +15388,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EmailsScalarFieldEnum | EmailsScalarFieldEnum[]
+  }
+
+  /**
+   * Ck6042.telefones
+   */
+  export type Ck6042$telefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Telefones
+     */
+    select?: TelefonesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Telefones
+     */
+    omit?: TelefonesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelefonesInclude<ExtArgs> | null
+    where?: TelefonesWhereInput
+    orderBy?: TelefonesOrderByWithRelationInput | TelefonesOrderByWithRelationInput[]
+    cursor?: TelefonesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TelefonesScalarFieldEnum | TelefonesScalarFieldEnum[]
   }
 
   /**
@@ -16877,7 +16240,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck7001 model
-   */
+   */ 
   interface Ck7001FieldRefs {
     readonly id: FieldRef<"Ck7001", 'BigInt'>
     readonly nome_do_cliente: FieldRef<"Ck7001", 'String'>
@@ -17640,8 +17003,8 @@ export namespace Prisma {
     created_at?: boolean
     modified_at?: boolean
     ck7001?: boolean | Ck7001DefaultArgs<ExtArgs>
-    telefones?: boolean | Ck7002$telefonesArgs<ExtArgs>
     emails?: boolean | Ck7002$emailsArgs<ExtArgs>
+    telefones?: boolean | Ck7002$telefonesArgs<ExtArgs>
     _count?: boolean | Ck7002CountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ck7002"]>
 
@@ -17695,8 +17058,8 @@ export namespace Prisma {
   export type Ck7002Omit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ck7001_id" | "indicador" | "cidade" | "uf" | "bairro" | "numero" | "complemento" | "cpf_cnpj" | "cep" | "created_at" | "modified_at", ExtArgs["result"]["ck7002"]>
   export type Ck7002Include<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ck7001?: boolean | Ck7001DefaultArgs<ExtArgs>
-    telefones?: boolean | Ck7002$telefonesArgs<ExtArgs>
     emails?: boolean | Ck7002$emailsArgs<ExtArgs>
+    telefones?: boolean | Ck7002$telefonesArgs<ExtArgs>
     _count?: boolean | Ck7002CountOutputTypeDefaultArgs<ExtArgs>
   }
   export type Ck7002IncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17710,8 +17073,8 @@ export namespace Prisma {
     name: "Ck7002"
     objects: {
       ck7001: Prisma.$Ck7001Payload<ExtArgs>
-      telefones: Prisma.$TelefonesPayload<ExtArgs>[]
       emails: Prisma.$EmailsPayload<ExtArgs>[]
+      telefones: Prisma.$TelefonesPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -18121,8 +17484,8 @@ export namespace Prisma {
   export interface Prisma__Ck7002Client<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ck7001<T extends Ck7001DefaultArgs<ExtArgs> = {}>(args?: Subset<T, Ck7001DefaultArgs<ExtArgs>>): Prisma__Ck7001Client<$Result.GetResult<Prisma.$Ck7001Payload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    telefones<T extends Ck7002$telefonesArgs<ExtArgs> = {}>(args?: Subset<T, Ck7002$telefonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelefonesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     emails<T extends Ck7002$emailsArgs<ExtArgs> = {}>(args?: Subset<T, Ck7002$emailsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    telefones<T extends Ck7002$telefonesArgs<ExtArgs> = {}>(args?: Subset<T, Ck7002$telefonesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelefonesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18150,7 +17513,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck7002 model
-   */
+   */ 
   interface Ck7002FieldRefs {
     readonly id: FieldRef<"Ck7002", 'BigInt'>
     readonly ck7001_id: FieldRef<"Ck7002", 'BigInt'>
@@ -18569,30 +17932,6 @@ export namespace Prisma {
   }
 
   /**
-   * Ck7002.telefones
-   */
-  export type Ck7002$telefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Telefones
-     */
-    select?: TelefonesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Telefones
-     */
-    omit?: TelefonesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TelefonesInclude<ExtArgs> | null
-    where?: TelefonesWhereInput
-    orderBy?: TelefonesOrderByWithRelationInput | TelefonesOrderByWithRelationInput[]
-    cursor?: TelefonesWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TelefonesScalarFieldEnum | TelefonesScalarFieldEnum[]
-  }
-
-  /**
    * Ck7002.emails
    */
   export type Ck7002$emailsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18614,6 +17953,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EmailsScalarFieldEnum | EmailsScalarFieldEnum[]
+  }
+
+  /**
+   * Ck7002.telefones
+   */
+  export type Ck7002$telefonesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Telefones
+     */
+    select?: TelefonesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Telefones
+     */
+    omit?: TelefonesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelefonesInclude<ExtArgs> | null
+    where?: TelefonesWhereInput
+    orderBy?: TelefonesOrderByWithRelationInput | TelefonesOrderByWithRelationInput[]
+    cursor?: TelefonesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TelefonesScalarFieldEnum | TelefonesScalarFieldEnum[]
   }
 
   /**
@@ -19366,7 +18729,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck7003 model
-   */
+   */ 
   interface Ck7003FieldRefs {
     readonly id: FieldRef<"Ck7003", 'BigInt'>
     readonly ck7001_id: FieldRef<"Ck7003", 'BigInt'>
@@ -20535,7 +19898,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ck7004 model
-   */
+   */ 
   interface Ck7004FieldRefs {
     readonly id: FieldRef<"Ck7004", 'BigInt'>
     readonly ck7001_id: FieldRef<"Ck7004", 'BigInt'>
@@ -21712,7 +21075,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Emails model
-   */
+   */ 
   interface EmailsFieldRefs {
     readonly email: FieldRef<"Emails", 'String'>
     readonly descricao: FieldRef<"Emails", 'String'>
@@ -22895,7 +22258,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ErrorLogger model
-   */
+   */ 
   interface ErrorLoggerFieldRefs {
     readonly id: FieldRef<"ErrorLogger", 'BigInt'>
     readonly created_at: FieldRef<"ErrorLogger", 'DateTime'>
@@ -24004,7 +23367,7 @@ export namespace Prisma {
 
   /**
    * Fields of the CkLogs model
-   */
+   */ 
   interface CkLogsFieldRefs {
     readonly id: FieldRef<"CkLogs", 'BigInt'>
     readonly created_at: FieldRef<"CkLogs", 'DateTime'>
@@ -25111,7 +24474,7 @@ export namespace Prisma {
 
   /**
    * Fields of the JobLogs model
-   */
+   */ 
   interface JobLogsFieldRefs {
     readonly id: FieldRef<"JobLogs", 'BigInt'>
     readonly jobId: FieldRef<"JobLogs", 'BigInt'>
@@ -25515,6 +24878,8 @@ export namespace Prisma {
     day: number | null
     month: number | null
     year: number | null
+    hour: number | null
+    minute: number | null
     ck3001: number | null
     ck3002: number | null
     ck3003: number | null
@@ -25536,6 +24901,8 @@ export namespace Prisma {
     day: number | null
     month: number | null
     year: number | null
+    hour: number | null
+    minute: number | null
     ck3001: number | null
     ck3002: number | null
     ck3003: number | null
@@ -25557,6 +24924,8 @@ export namespace Prisma {
     day: number | null
     month: number | null
     year: number | null
+    hour: number | null
+    minute: number | null
     ck3001: number | null
     ck3002: number | null
     ck3003: number | null
@@ -25579,6 +24948,8 @@ export namespace Prisma {
     day: number | null
     month: number | null
     year: number | null
+    hour: number | null
+    minute: number | null
     ck3001: number | null
     ck3002: number | null
     ck3003: number | null
@@ -25601,6 +24972,8 @@ export namespace Prisma {
     day: number
     month: number
     year: number
+    hour: number
+    minute: number
     ck3001: number
     ck3002: number
     ck3003: number
@@ -25625,6 +24998,8 @@ export namespace Prisma {
     day?: true
     month?: true
     year?: true
+    hour?: true
+    minute?: true
     ck3001?: true
     ck3002?: true
     ck3003?: true
@@ -25646,6 +25021,8 @@ export namespace Prisma {
     day?: true
     month?: true
     year?: true
+    hour?: true
+    minute?: true
     ck3001?: true
     ck3002?: true
     ck3003?: true
@@ -25667,6 +25044,8 @@ export namespace Prisma {
     day?: true
     month?: true
     year?: true
+    hour?: true
+    minute?: true
     ck3001?: true
     ck3002?: true
     ck3003?: true
@@ -25689,6 +25068,8 @@ export namespace Prisma {
     day?: true
     month?: true
     year?: true
+    hour?: true
+    minute?: true
     ck3001?: true
     ck3002?: true
     ck3003?: true
@@ -25711,6 +25092,8 @@ export namespace Prisma {
     day?: true
     month?: true
     year?: true
+    hour?: true
+    minute?: true
     ck3001?: true
     ck3002?: true
     ck3003?: true
@@ -25820,6 +25203,8 @@ export namespace Prisma {
     day: number
     month: number
     year: number
+    hour: number
+    minute: number
     ck3001: number | null
     ck3002: number | null
     ck3003: number | null
@@ -25861,6 +25246,8 @@ export namespace Prisma {
     day?: boolean
     month?: boolean
     year?: boolean
+    hour?: boolean
+    minute?: boolean
     ck3001?: boolean
     ck3002?: boolean
     ck3003?: boolean
@@ -25883,6 +25270,8 @@ export namespace Prisma {
     day?: boolean
     month?: boolean
     year?: boolean
+    hour?: boolean
+    minute?: boolean
     ck3001?: boolean
     ck3002?: boolean
     ck3003?: boolean
@@ -25905,6 +25294,8 @@ export namespace Prisma {
     day?: boolean
     month?: boolean
     year?: boolean
+    hour?: boolean
+    minute?: boolean
     ck3001?: boolean
     ck3002?: boolean
     ck3003?: boolean
@@ -25927,6 +25318,8 @@ export namespace Prisma {
     day?: boolean
     month?: boolean
     year?: boolean
+    hour?: boolean
+    minute?: boolean
     ck3001?: boolean
     ck3002?: boolean
     ck3003?: boolean
@@ -25944,7 +25337,7 @@ export namespace Prisma {
     status?: boolean
   }
 
-  export type DailyCkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "day" | "month" | "year" | "ck3001" | "ck3002" | "ck3003" | "ck4001" | "ck5001" | "ck6011" | "ck6021" | "ck6031" | "ck6041" | "ck6042" | "ck7001" | "ck7002" | "ck7003" | "ck7004" | "status", ExtArgs["result"]["dailyCk"]>
+  export type DailyCkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "day" | "month" | "year" | "hour" | "minute" | "ck3001" | "ck3002" | "ck3003" | "ck4001" | "ck5001" | "ck6011" | "ck6021" | "ck6031" | "ck6041" | "ck6042" | "ck7001" | "ck7002" | "ck7003" | "ck7004" | "status", ExtArgs["result"]["dailyCk"]>
 
   export type $DailyCkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "DailyCk"
@@ -25954,6 +25347,8 @@ export namespace Prisma {
       day: number
       month: number
       year: number
+      hour: number
+      minute: number
       ck3001: number | null
       ck3002: number | null
       ck3003: number | null
@@ -26390,12 +25785,14 @@ export namespace Prisma {
 
   /**
    * Fields of the DailyCk model
-   */
+   */ 
   interface DailyCkFieldRefs {
     readonly id: FieldRef<"DailyCk", 'BigInt'>
     readonly day: FieldRef<"DailyCk", 'Int'>
     readonly month: FieldRef<"DailyCk", 'Int'>
     readonly year: FieldRef<"DailyCk", 'Int'>
+    readonly hour: FieldRef<"DailyCk", 'Int'>
+    readonly minute: FieldRef<"DailyCk", 'Int'>
     readonly ck3001: FieldRef<"DailyCk", 'Int'>
     readonly ck3002: FieldRef<"DailyCk", 'Int'>
     readonly ck3003: FieldRef<"DailyCk", 'Int'>
@@ -27418,7 +26815,7 @@ export namespace Prisma {
 
   /**
    * Fields of the LastSearch model
-   */
+   */ 
   interface LastSearchFieldRefs {
     readonly id: FieldRef<"LastSearch", 'Int'>
     readonly startDate: FieldRef<"LastSearch", 'String'>
@@ -28466,7 +27863,7 @@ export namespace Prisma {
 
   /**
    * Fields of the LastParams model
-   */
+   */ 
   interface LastParamsFieldRefs {
     readonly day: FieldRef<"LastParams", 'Int'>
     readonly month: FieldRef<"LastParams", 'Int'>
@@ -29591,7 +28988,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Telefones model
-   */
+   */ 
   interface TelefonesFieldRefs {
     readonly ck3002_id: FieldRef<"Telefones", 'BigInt'>
     readonly ck6042_id: FieldRef<"Telefones", 'BigInt'>
@@ -30083,7794 +29480,6 @@ export namespace Prisma {
 
 
   /**
-   * Model servicos_view
-   */
-
-  export type AggregateServicos_view = {
-    _count: Servicos_viewCountAggregateOutputType | null
-    _avg: Servicos_viewAvgAggregateOutputType | null
-    _sum: Servicos_viewSumAggregateOutputType | null
-    _min: Servicos_viewMinAggregateOutputType | null
-    _max: Servicos_viewMaxAggregateOutputType | null
-  }
-
-  export type Servicos_viewAvgAggregateOutputType = {
-    id: number | null
-    hora_vendida: number | null
-    valor_total_liquido_da_mao_de_obra: Decimal | null
-    fonte_pagadora: number | null
-    parent_id: number | null
-  }
-
-  export type Servicos_viewSumAggregateOutputType = {
-    id: bigint | null
-    hora_vendida: number | null
-    valor_total_liquido_da_mao_de_obra: Decimal | null
-    fonte_pagadora: number | null
-    parent_id: bigint | null
-  }
-
-  export type Servicos_viewMinAggregateOutputType = {
-    id: bigint | null
-    cos: string | null
-    descricao_do_servico: string | null
-    hora_vendida: number | null
-    valor_total_liquido_da_mao_de_obra: Decimal | null
-    numero_da_os: string | null
-    numero_do_dn: string | null
-    fonte_pagadora: number | null
-    data_e_hora_da_abertura_da_os: Date | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | null
-    uf: string | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Servicos_viewMaxAggregateOutputType = {
-    id: bigint | null
-    cos: string | null
-    descricao_do_servico: string | null
-    hora_vendida: number | null
-    valor_total_liquido_da_mao_de_obra: Decimal | null
-    numero_da_os: string | null
-    numero_do_dn: string | null
-    fonte_pagadora: number | null
-    data_e_hora_da_abertura_da_os: Date | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | null
-    uf: string | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Servicos_viewCountAggregateOutputType = {
-    id: number
-    cos: number
-    descricao_do_servico: number
-    hora_vendida: number
-    valor_total_liquido_da_mao_de_obra: number
-    numero_da_os: number
-    numero_do_dn: number
-    fonte_pagadora: number
-    data_e_hora_da_abertura_da_os: number
-    data_e_hora_da_emissao_da_nota_fiscal: number
-    uf: number
-    parent: number
-    parent_id: number
-    _all: number
-  }
-
-
-  export type Servicos_viewAvgAggregateInputType = {
-    id?: true
-    hora_vendida?: true
-    valor_total_liquido_da_mao_de_obra?: true
-    fonte_pagadora?: true
-    parent_id?: true
-  }
-
-  export type Servicos_viewSumAggregateInputType = {
-    id?: true
-    hora_vendida?: true
-    valor_total_liquido_da_mao_de_obra?: true
-    fonte_pagadora?: true
-    parent_id?: true
-  }
-
-  export type Servicos_viewMinAggregateInputType = {
-    id?: true
-    cos?: true
-    descricao_do_servico?: true
-    hora_vendida?: true
-    valor_total_liquido_da_mao_de_obra?: true
-    numero_da_os?: true
-    numero_do_dn?: true
-    fonte_pagadora?: true
-    data_e_hora_da_abertura_da_os?: true
-    data_e_hora_da_emissao_da_nota_fiscal?: true
-    uf?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Servicos_viewMaxAggregateInputType = {
-    id?: true
-    cos?: true
-    descricao_do_servico?: true
-    hora_vendida?: true
-    valor_total_liquido_da_mao_de_obra?: true
-    numero_da_os?: true
-    numero_do_dn?: true
-    fonte_pagadora?: true
-    data_e_hora_da_abertura_da_os?: true
-    data_e_hora_da_emissao_da_nota_fiscal?: true
-    uf?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Servicos_viewCountAggregateInputType = {
-    id?: true
-    cos?: true
-    descricao_do_servico?: true
-    hora_vendida?: true
-    valor_total_liquido_da_mao_de_obra?: true
-    numero_da_os?: true
-    numero_do_dn?: true
-    fonte_pagadora?: true
-    data_e_hora_da_abertura_da_os?: true
-    data_e_hora_da_emissao_da_nota_fiscal?: true
-    uf?: true
-    parent?: true
-    parent_id?: true
-    _all?: true
-  }
-
-  export type Servicos_viewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which servicos_view to aggregate.
-     */
-    where?: servicos_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of servicos_views to fetch.
-     */
-    orderBy?: servicos_viewOrderByWithRelationInput | servicos_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: servicos_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` servicos_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` servicos_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned servicos_views
-    **/
-    _count?: true | Servicos_viewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Servicos_viewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Servicos_viewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Servicos_viewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Servicos_viewMaxAggregateInputType
-  }
-
-  export type GetServicos_viewAggregateType<T extends Servicos_viewAggregateArgs> = {
-        [P in keyof T & keyof AggregateServicos_view]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateServicos_view[P]>
-      : GetScalarType<T[P], AggregateServicos_view[P]>
-  }
-
-
-
-
-  export type servicos_viewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: servicos_viewWhereInput
-    orderBy?: servicos_viewOrderByWithAggregationInput | servicos_viewOrderByWithAggregationInput[]
-    by: Servicos_viewScalarFieldEnum[] | Servicos_viewScalarFieldEnum
-    having?: servicos_viewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Servicos_viewCountAggregateInputType | true
-    _avg?: Servicos_viewAvgAggregateInputType
-    _sum?: Servicos_viewSumAggregateInputType
-    _min?: Servicos_viewMinAggregateInputType
-    _max?: Servicos_viewMaxAggregateInputType
-  }
-
-  export type Servicos_viewGroupByOutputType = {
-    id: bigint
-    cos: string
-    descricao_do_servico: string
-    hora_vendida: number
-    valor_total_liquido_da_mao_de_obra: Decimal
-    numero_da_os: string | null
-    numero_do_dn: string | null
-    fonte_pagadora: number | null
-    data_e_hora_da_abertura_da_os: Date | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | null
-    uf: string
-    parent: string
-    parent_id: bigint
-    _count: Servicos_viewCountAggregateOutputType | null
-    _avg: Servicos_viewAvgAggregateOutputType | null
-    _sum: Servicos_viewSumAggregateOutputType | null
-    _min: Servicos_viewMinAggregateOutputType | null
-    _max: Servicos_viewMaxAggregateOutputType | null
-  }
-
-  type GetServicos_viewGroupByPayload<T extends servicos_viewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Servicos_viewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Servicos_viewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Servicos_viewGroupByOutputType[P]>
-            : GetScalarType<T[P], Servicos_viewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type servicos_viewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    cos?: boolean
-    descricao_do_servico?: boolean
-    hora_vendida?: boolean
-    valor_total_liquido_da_mao_de_obra?: boolean
-    numero_da_os?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    uf?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["servicos_view"]>
-
-  export type servicos_viewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    cos?: boolean
-    descricao_do_servico?: boolean
-    hora_vendida?: boolean
-    valor_total_liquido_da_mao_de_obra?: boolean
-    numero_da_os?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    uf?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["servicos_view"]>
-
-  export type servicos_viewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    cos?: boolean
-    descricao_do_servico?: boolean
-    hora_vendida?: boolean
-    valor_total_liquido_da_mao_de_obra?: boolean
-    numero_da_os?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    uf?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["servicos_view"]>
-
-  export type servicos_viewSelectScalar = {
-    id?: boolean
-    cos?: boolean
-    descricao_do_servico?: boolean
-    hora_vendida?: boolean
-    valor_total_liquido_da_mao_de_obra?: boolean
-    numero_da_os?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    uf?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }
-
-  export type servicos_viewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cos" | "descricao_do_servico" | "hora_vendida" | "valor_total_liquido_da_mao_de_obra" | "numero_da_os" | "numero_do_dn" | "fonte_pagadora" | "data_e_hora_da_abertura_da_os" | "data_e_hora_da_emissao_da_nota_fiscal" | "uf" | "parent" | "parent_id", ExtArgs["result"]["servicos_view"]>
-
-  export type $servicos_viewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "servicos_view"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: bigint
-      cos: string
-      descricao_do_servico: string
-      hora_vendida: number
-      valor_total_liquido_da_mao_de_obra: Prisma.Decimal
-      numero_da_os: string | null
-      numero_do_dn: string | null
-      fonte_pagadora: number | null
-      data_e_hora_da_abertura_da_os: Date | null
-      data_e_hora_da_emissao_da_nota_fiscal: Date | null
-      uf: string
-      parent: string
-      parent_id: bigint
-    }, ExtArgs["result"]["servicos_view"]>
-    composites: {}
-  }
-
-  type servicos_viewGetPayload<S extends boolean | null | undefined | servicos_viewDefaultArgs> = $Result.GetResult<Prisma.$servicos_viewPayload, S>
-
-  type servicos_viewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<servicos_viewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: Servicos_viewCountAggregateInputType | true
-    }
-
-  export interface servicos_viewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['servicos_view'], meta: { name: 'servicos_view' } }
-    /**
-     * Find zero or one Servicos_view that matches the filter.
-     * @param {servicos_viewFindUniqueArgs} args - Arguments to find a Servicos_view
-     * @example
-     * // Get one Servicos_view
-     * const servicos_view = await prisma.servicos_view.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends servicos_viewFindUniqueArgs>(args: SelectSubset<T, servicos_viewFindUniqueArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Servicos_view that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {servicos_viewFindUniqueOrThrowArgs} args - Arguments to find a Servicos_view
-     * @example
-     * // Get one Servicos_view
-     * const servicos_view = await prisma.servicos_view.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends servicos_viewFindUniqueOrThrowArgs>(args: SelectSubset<T, servicos_viewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Servicos_view that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {servicos_viewFindFirstArgs} args - Arguments to find a Servicos_view
-     * @example
-     * // Get one Servicos_view
-     * const servicos_view = await prisma.servicos_view.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends servicos_viewFindFirstArgs>(args?: SelectSubset<T, servicos_viewFindFirstArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Servicos_view that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {servicos_viewFindFirstOrThrowArgs} args - Arguments to find a Servicos_view
-     * @example
-     * // Get one Servicos_view
-     * const servicos_view = await prisma.servicos_view.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends servicos_viewFindFirstOrThrowArgs>(args?: SelectSubset<T, servicos_viewFindFirstOrThrowArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Servicos_views that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {servicos_viewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Servicos_views
-     * const servicos_views = await prisma.servicos_view.findMany()
-     * 
-     * // Get first 10 Servicos_views
-     * const servicos_views = await prisma.servicos_view.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const servicos_viewWithIdOnly = await prisma.servicos_view.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends servicos_viewFindManyArgs>(args?: SelectSubset<T, servicos_viewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Servicos_view.
-     * @param {servicos_viewCreateArgs} args - Arguments to create a Servicos_view.
-     * @example
-     * // Create one Servicos_view
-     * const Servicos_view = await prisma.servicos_view.create({
-     *   data: {
-     *     // ... data to create a Servicos_view
-     *   }
-     * })
-     * 
-     */
-    create<T extends servicos_viewCreateArgs>(args: SelectSubset<T, servicos_viewCreateArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Servicos_views.
-     * @param {servicos_viewCreateManyArgs} args - Arguments to create many Servicos_views.
-     * @example
-     * // Create many Servicos_views
-     * const servicos_view = await prisma.servicos_view.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends servicos_viewCreateManyArgs>(args?: SelectSubset<T, servicos_viewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Servicos_views and returns the data saved in the database.
-     * @param {servicos_viewCreateManyAndReturnArgs} args - Arguments to create many Servicos_views.
-     * @example
-     * // Create many Servicos_views
-     * const servicos_view = await prisma.servicos_view.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Servicos_views and only return the `id`
-     * const servicos_viewWithIdOnly = await prisma.servicos_view.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends servicos_viewCreateManyAndReturnArgs>(args?: SelectSubset<T, servicos_viewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Servicos_view.
-     * @param {servicos_viewDeleteArgs} args - Arguments to delete one Servicos_view.
-     * @example
-     * // Delete one Servicos_view
-     * const Servicos_view = await prisma.servicos_view.delete({
-     *   where: {
-     *     // ... filter to delete one Servicos_view
-     *   }
-     * })
-     * 
-     */
-    delete<T extends servicos_viewDeleteArgs>(args: SelectSubset<T, servicos_viewDeleteArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Servicos_view.
-     * @param {servicos_viewUpdateArgs} args - Arguments to update one Servicos_view.
-     * @example
-     * // Update one Servicos_view
-     * const servicos_view = await prisma.servicos_view.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends servicos_viewUpdateArgs>(args: SelectSubset<T, servicos_viewUpdateArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Servicos_views.
-     * @param {servicos_viewDeleteManyArgs} args - Arguments to filter Servicos_views to delete.
-     * @example
-     * // Delete a few Servicos_views
-     * const { count } = await prisma.servicos_view.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends servicos_viewDeleteManyArgs>(args?: SelectSubset<T, servicos_viewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Servicos_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {servicos_viewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Servicos_views
-     * const servicos_view = await prisma.servicos_view.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends servicos_viewUpdateManyArgs>(args: SelectSubset<T, servicos_viewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Servicos_views and returns the data updated in the database.
-     * @param {servicos_viewUpdateManyAndReturnArgs} args - Arguments to update many Servicos_views.
-     * @example
-     * // Update many Servicos_views
-     * const servicos_view = await prisma.servicos_view.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Servicos_views and only return the `id`
-     * const servicos_viewWithIdOnly = await prisma.servicos_view.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends servicos_viewUpdateManyAndReturnArgs>(args: SelectSubset<T, servicos_viewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Servicos_view.
-     * @param {servicos_viewUpsertArgs} args - Arguments to update or create a Servicos_view.
-     * @example
-     * // Update or create a Servicos_view
-     * const servicos_view = await prisma.servicos_view.upsert({
-     *   create: {
-     *     // ... data to create a Servicos_view
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Servicos_view we want to update
-     *   }
-     * })
-     */
-    upsert<T extends servicos_viewUpsertArgs>(args: SelectSubset<T, servicos_viewUpsertArgs<ExtArgs>>): Prisma__servicos_viewClient<$Result.GetResult<Prisma.$servicos_viewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Servicos_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {servicos_viewCountArgs} args - Arguments to filter Servicos_views to count.
-     * @example
-     * // Count the number of Servicos_views
-     * const count = await prisma.servicos_view.count({
-     *   where: {
-     *     // ... the filter for the Servicos_views we want to count
-     *   }
-     * })
-    **/
-    count<T extends servicos_viewCountArgs>(
-      args?: Subset<T, servicos_viewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Servicos_viewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Servicos_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Servicos_viewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Servicos_viewAggregateArgs>(args: Subset<T, Servicos_viewAggregateArgs>): Prisma.PrismaPromise<GetServicos_viewAggregateType<T>>
-
-    /**
-     * Group by Servicos_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {servicos_viewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends servicos_viewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: servicos_viewGroupByArgs['orderBy'] }
-        : { orderBy?: servicos_viewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, servicos_viewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetServicos_viewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the servicos_view model
-   */
-  readonly fields: servicos_viewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for servicos_view.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__servicos_viewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the servicos_view model
-   */
-  interface servicos_viewFieldRefs {
-    readonly id: FieldRef<"servicos_view", 'BigInt'>
-    readonly cos: FieldRef<"servicos_view", 'String'>
-    readonly descricao_do_servico: FieldRef<"servicos_view", 'String'>
-    readonly hora_vendida: FieldRef<"servicos_view", 'Float'>
-    readonly valor_total_liquido_da_mao_de_obra: FieldRef<"servicos_view", 'Decimal'>
-    readonly numero_da_os: FieldRef<"servicos_view", 'String'>
-    readonly numero_do_dn: FieldRef<"servicos_view", 'String'>
-    readonly fonte_pagadora: FieldRef<"servicos_view", 'Int'>
-    readonly data_e_hora_da_abertura_da_os: FieldRef<"servicos_view", 'DateTime'>
-    readonly data_e_hora_da_emissao_da_nota_fiscal: FieldRef<"servicos_view", 'DateTime'>
-    readonly uf: FieldRef<"servicos_view", 'String'>
-    readonly parent: FieldRef<"servicos_view", 'String'>
-    readonly parent_id: FieldRef<"servicos_view", 'BigInt'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * servicos_view findUnique
-   */
-  export type servicos_viewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which servicos_view to fetch.
-     */
-    where: servicos_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view findUniqueOrThrow
-   */
-  export type servicos_viewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which servicos_view to fetch.
-     */
-    where: servicos_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view findFirst
-   */
-  export type servicos_viewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which servicos_view to fetch.
-     */
-    where?: servicos_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of servicos_views to fetch.
-     */
-    orderBy?: servicos_viewOrderByWithRelationInput | servicos_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for servicos_views.
-     */
-    cursor?: servicos_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` servicos_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` servicos_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of servicos_views.
-     */
-    distinct?: Servicos_viewScalarFieldEnum | Servicos_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view findFirstOrThrow
-   */
-  export type servicos_viewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which servicos_view to fetch.
-     */
-    where?: servicos_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of servicos_views to fetch.
-     */
-    orderBy?: servicos_viewOrderByWithRelationInput | servicos_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for servicos_views.
-     */
-    cursor?: servicos_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` servicos_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` servicos_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of servicos_views.
-     */
-    distinct?: Servicos_viewScalarFieldEnum | Servicos_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view findMany
-   */
-  export type servicos_viewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which servicos_views to fetch.
-     */
-    where?: servicos_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of servicos_views to fetch.
-     */
-    orderBy?: servicos_viewOrderByWithRelationInput | servicos_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing servicos_views.
-     */
-    cursor?: servicos_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` servicos_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` servicos_views.
-     */
-    skip?: number
-    distinct?: Servicos_viewScalarFieldEnum | Servicos_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view create
-   */
-  export type servicos_viewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to create a servicos_view.
-     */
-    data: XOR<servicos_viewCreateInput, servicos_viewUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view createMany
-   */
-  export type servicos_viewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many servicos_views.
-     */
-    data: servicos_viewCreateManyInput | servicos_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * servicos_view createManyAndReturn
-   */
-  export type servicos_viewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * The data used to create many servicos_views.
-     */
-    data: servicos_viewCreateManyInput | servicos_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * servicos_view update
-   */
-  export type servicos_viewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to update a servicos_view.
-     */
-    data: XOR<servicos_viewUpdateInput, servicos_viewUncheckedUpdateInput>
-    /**
-     * Choose, which servicos_view to update.
-     */
-    where: servicos_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view updateMany
-   */
-  export type servicos_viewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update servicos_views.
-     */
-    data: XOR<servicos_viewUpdateManyMutationInput, servicos_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which servicos_views to update
-     */
-    where?: servicos_viewWhereInput
-    /**
-     * Limit how many servicos_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * servicos_view updateManyAndReturn
-   */
-  export type servicos_viewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * The data used to update servicos_views.
-     */
-    data: XOR<servicos_viewUpdateManyMutationInput, servicos_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which servicos_views to update
-     */
-    where?: servicos_viewWhereInput
-    /**
-     * Limit how many servicos_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * servicos_view upsert
-   */
-  export type servicos_viewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * The filter to search for the servicos_view to update in case it exists.
-     */
-    where: servicos_viewWhereUniqueInput
-    /**
-     * In case the servicos_view found by the `where` argument doesn't exist, create a new servicos_view with this data.
-     */
-    create: XOR<servicos_viewCreateInput, servicos_viewUncheckedCreateInput>
-    /**
-     * In case the servicos_view was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<servicos_viewUpdateInput, servicos_viewUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view delete
-   */
-  export type servicos_viewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-    /**
-     * Filter which servicos_view to delete.
-     */
-    where: servicos_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * servicos_view deleteMany
-   */
-  export type servicos_viewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which servicos_views to delete
-     */
-    where?: servicos_viewWhereInput
-    /**
-     * Limit how many servicos_views to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * servicos_view without action
-   */
-  export type servicos_viewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the servicos_view
-     */
-    select?: servicos_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the servicos_view
-     */
-    omit?: servicos_viewOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model pecas_view
-   */
-
-  export type AggregatePecas_view = {
-    _count: Pecas_viewCountAggregateOutputType | null
-    _avg: Pecas_viewAvgAggregateOutputType | null
-    _sum: Pecas_viewSumAggregateOutputType | null
-    _min: Pecas_viewMinAggregateOutputType | null
-    _max: Pecas_viewMaxAggregateOutputType | null
-  }
-
-  export type Pecas_viewAvgAggregateOutputType = {
-    id: number | null
-    quantidade_da_peca: number | null
-    valor_total_liquido_da_peca: Decimal | null
-    parent_id: number | null
-  }
-
-  export type Pecas_viewSumAggregateOutputType = {
-    id: bigint | null
-    quantidade_da_peca: number | null
-    valor_total_liquido_da_peca: Decimal | null
-    parent_id: bigint | null
-  }
-
-  export type Pecas_viewMinAggregateOutputType = {
-    id: bigint | null
-    codigo_da_peca: string | null
-    descricao_da_peca: string | null
-    quantidade_da_peca: number | null
-    valor_total_liquido_da_peca: Decimal | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Pecas_viewMaxAggregateOutputType = {
-    id: bigint | null
-    codigo_da_peca: string | null
-    descricao_da_peca: string | null
-    quantidade_da_peca: number | null
-    valor_total_liquido_da_peca: Decimal | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Pecas_viewCountAggregateOutputType = {
-    id: number
-    codigo_da_peca: number
-    descricao_da_peca: number
-    quantidade_da_peca: number
-    valor_total_liquido_da_peca: number
-    parent: number
-    parent_id: number
-    _all: number
-  }
-
-
-  export type Pecas_viewAvgAggregateInputType = {
-    id?: true
-    quantidade_da_peca?: true
-    valor_total_liquido_da_peca?: true
-    parent_id?: true
-  }
-
-  export type Pecas_viewSumAggregateInputType = {
-    id?: true
-    quantidade_da_peca?: true
-    valor_total_liquido_da_peca?: true
-    parent_id?: true
-  }
-
-  export type Pecas_viewMinAggregateInputType = {
-    id?: true
-    codigo_da_peca?: true
-    descricao_da_peca?: true
-    quantidade_da_peca?: true
-    valor_total_liquido_da_peca?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Pecas_viewMaxAggregateInputType = {
-    id?: true
-    codigo_da_peca?: true
-    descricao_da_peca?: true
-    quantidade_da_peca?: true
-    valor_total_liquido_da_peca?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Pecas_viewCountAggregateInputType = {
-    id?: true
-    codigo_da_peca?: true
-    descricao_da_peca?: true
-    quantidade_da_peca?: true
-    valor_total_liquido_da_peca?: true
-    parent?: true
-    parent_id?: true
-    _all?: true
-  }
-
-  export type Pecas_viewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which pecas_view to aggregate.
-     */
-    where?: pecas_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_views to fetch.
-     */
-    orderBy?: pecas_viewOrderByWithRelationInput | pecas_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: pecas_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned pecas_views
-    **/
-    _count?: true | Pecas_viewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Pecas_viewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Pecas_viewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Pecas_viewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Pecas_viewMaxAggregateInputType
-  }
-
-  export type GetPecas_viewAggregateType<T extends Pecas_viewAggregateArgs> = {
-        [P in keyof T & keyof AggregatePecas_view]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePecas_view[P]>
-      : GetScalarType<T[P], AggregatePecas_view[P]>
-  }
-
-
-
-
-  export type pecas_viewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: pecas_viewWhereInput
-    orderBy?: pecas_viewOrderByWithAggregationInput | pecas_viewOrderByWithAggregationInput[]
-    by: Pecas_viewScalarFieldEnum[] | Pecas_viewScalarFieldEnum
-    having?: pecas_viewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Pecas_viewCountAggregateInputType | true
-    _avg?: Pecas_viewAvgAggregateInputType
-    _sum?: Pecas_viewSumAggregateInputType
-    _min?: Pecas_viewMinAggregateInputType
-    _max?: Pecas_viewMaxAggregateInputType
-  }
-
-  export type Pecas_viewGroupByOutputType = {
-    id: bigint
-    codigo_da_peca: string
-    descricao_da_peca: string
-    quantidade_da_peca: number
-    valor_total_liquido_da_peca: Decimal
-    parent: string
-    parent_id: bigint
-    _count: Pecas_viewCountAggregateOutputType | null
-    _avg: Pecas_viewAvgAggregateOutputType | null
-    _sum: Pecas_viewSumAggregateOutputType | null
-    _min: Pecas_viewMinAggregateOutputType | null
-    _max: Pecas_viewMaxAggregateOutputType | null
-  }
-
-  type GetPecas_viewGroupByPayload<T extends pecas_viewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Pecas_viewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Pecas_viewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Pecas_viewGroupByOutputType[P]>
-            : GetScalarType<T[P], Pecas_viewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type pecas_viewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    codigo_da_peca?: boolean
-    descricao_da_peca?: boolean
-    quantidade_da_peca?: boolean
-    valor_total_liquido_da_peca?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["pecas_view"]>
-
-  export type pecas_viewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    codigo_da_peca?: boolean
-    descricao_da_peca?: boolean
-    quantidade_da_peca?: boolean
-    valor_total_liquido_da_peca?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["pecas_view"]>
-
-  export type pecas_viewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    codigo_da_peca?: boolean
-    descricao_da_peca?: boolean
-    quantidade_da_peca?: boolean
-    valor_total_liquido_da_peca?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["pecas_view"]>
-
-  export type pecas_viewSelectScalar = {
-    id?: boolean
-    codigo_da_peca?: boolean
-    descricao_da_peca?: boolean
-    quantidade_da_peca?: boolean
-    valor_total_liquido_da_peca?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }
-
-  export type pecas_viewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "codigo_da_peca" | "descricao_da_peca" | "quantidade_da_peca" | "valor_total_liquido_da_peca" | "parent" | "parent_id", ExtArgs["result"]["pecas_view"]>
-
-  export type $pecas_viewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "pecas_view"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: bigint
-      codigo_da_peca: string
-      descricao_da_peca: string
-      quantidade_da_peca: number
-      valor_total_liquido_da_peca: Prisma.Decimal
-      parent: string
-      parent_id: bigint
-    }, ExtArgs["result"]["pecas_view"]>
-    composites: {}
-  }
-
-  type pecas_viewGetPayload<S extends boolean | null | undefined | pecas_viewDefaultArgs> = $Result.GetResult<Prisma.$pecas_viewPayload, S>
-
-  type pecas_viewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<pecas_viewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: Pecas_viewCountAggregateInputType | true
-    }
-
-  export interface pecas_viewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['pecas_view'], meta: { name: 'pecas_view' } }
-    /**
-     * Find zero or one Pecas_view that matches the filter.
-     * @param {pecas_viewFindUniqueArgs} args - Arguments to find a Pecas_view
-     * @example
-     * // Get one Pecas_view
-     * const pecas_view = await prisma.pecas_view.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends pecas_viewFindUniqueArgs>(args: SelectSubset<T, pecas_viewFindUniqueArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Pecas_view that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {pecas_viewFindUniqueOrThrowArgs} args - Arguments to find a Pecas_view
-     * @example
-     * // Get one Pecas_view
-     * const pecas_view = await prisma.pecas_view.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends pecas_viewFindUniqueOrThrowArgs>(args: SelectSubset<T, pecas_viewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Pecas_view that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_viewFindFirstArgs} args - Arguments to find a Pecas_view
-     * @example
-     * // Get one Pecas_view
-     * const pecas_view = await prisma.pecas_view.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends pecas_viewFindFirstArgs>(args?: SelectSubset<T, pecas_viewFindFirstArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Pecas_view that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_viewFindFirstOrThrowArgs} args - Arguments to find a Pecas_view
-     * @example
-     * // Get one Pecas_view
-     * const pecas_view = await prisma.pecas_view.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends pecas_viewFindFirstOrThrowArgs>(args?: SelectSubset<T, pecas_viewFindFirstOrThrowArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Pecas_views that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_viewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Pecas_views
-     * const pecas_views = await prisma.pecas_view.findMany()
-     * 
-     * // Get first 10 Pecas_views
-     * const pecas_views = await prisma.pecas_view.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const pecas_viewWithIdOnly = await prisma.pecas_view.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends pecas_viewFindManyArgs>(args?: SelectSubset<T, pecas_viewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Pecas_view.
-     * @param {pecas_viewCreateArgs} args - Arguments to create a Pecas_view.
-     * @example
-     * // Create one Pecas_view
-     * const Pecas_view = await prisma.pecas_view.create({
-     *   data: {
-     *     // ... data to create a Pecas_view
-     *   }
-     * })
-     * 
-     */
-    create<T extends pecas_viewCreateArgs>(args: SelectSubset<T, pecas_viewCreateArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Pecas_views.
-     * @param {pecas_viewCreateManyArgs} args - Arguments to create many Pecas_views.
-     * @example
-     * // Create many Pecas_views
-     * const pecas_view = await prisma.pecas_view.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends pecas_viewCreateManyArgs>(args?: SelectSubset<T, pecas_viewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Pecas_views and returns the data saved in the database.
-     * @param {pecas_viewCreateManyAndReturnArgs} args - Arguments to create many Pecas_views.
-     * @example
-     * // Create many Pecas_views
-     * const pecas_view = await prisma.pecas_view.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Pecas_views and only return the `id`
-     * const pecas_viewWithIdOnly = await prisma.pecas_view.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends pecas_viewCreateManyAndReturnArgs>(args?: SelectSubset<T, pecas_viewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Pecas_view.
-     * @param {pecas_viewDeleteArgs} args - Arguments to delete one Pecas_view.
-     * @example
-     * // Delete one Pecas_view
-     * const Pecas_view = await prisma.pecas_view.delete({
-     *   where: {
-     *     // ... filter to delete one Pecas_view
-     *   }
-     * })
-     * 
-     */
-    delete<T extends pecas_viewDeleteArgs>(args: SelectSubset<T, pecas_viewDeleteArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Pecas_view.
-     * @param {pecas_viewUpdateArgs} args - Arguments to update one Pecas_view.
-     * @example
-     * // Update one Pecas_view
-     * const pecas_view = await prisma.pecas_view.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends pecas_viewUpdateArgs>(args: SelectSubset<T, pecas_viewUpdateArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Pecas_views.
-     * @param {pecas_viewDeleteManyArgs} args - Arguments to filter Pecas_views to delete.
-     * @example
-     * // Delete a few Pecas_views
-     * const { count } = await prisma.pecas_view.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends pecas_viewDeleteManyArgs>(args?: SelectSubset<T, pecas_viewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Pecas_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_viewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Pecas_views
-     * const pecas_view = await prisma.pecas_view.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends pecas_viewUpdateManyArgs>(args: SelectSubset<T, pecas_viewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Pecas_views and returns the data updated in the database.
-     * @param {pecas_viewUpdateManyAndReturnArgs} args - Arguments to update many Pecas_views.
-     * @example
-     * // Update many Pecas_views
-     * const pecas_view = await prisma.pecas_view.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Pecas_views and only return the `id`
-     * const pecas_viewWithIdOnly = await prisma.pecas_view.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends pecas_viewUpdateManyAndReturnArgs>(args: SelectSubset<T, pecas_viewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Pecas_view.
-     * @param {pecas_viewUpsertArgs} args - Arguments to update or create a Pecas_view.
-     * @example
-     * // Update or create a Pecas_view
-     * const pecas_view = await prisma.pecas_view.upsert({
-     *   create: {
-     *     // ... data to create a Pecas_view
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Pecas_view we want to update
-     *   }
-     * })
-     */
-    upsert<T extends pecas_viewUpsertArgs>(args: SelectSubset<T, pecas_viewUpsertArgs<ExtArgs>>): Prisma__pecas_viewClient<$Result.GetResult<Prisma.$pecas_viewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Pecas_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_viewCountArgs} args - Arguments to filter Pecas_views to count.
-     * @example
-     * // Count the number of Pecas_views
-     * const count = await prisma.pecas_view.count({
-     *   where: {
-     *     // ... the filter for the Pecas_views we want to count
-     *   }
-     * })
-    **/
-    count<T extends pecas_viewCountArgs>(
-      args?: Subset<T, pecas_viewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Pecas_viewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Pecas_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Pecas_viewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Pecas_viewAggregateArgs>(args: Subset<T, Pecas_viewAggregateArgs>): Prisma.PrismaPromise<GetPecas_viewAggregateType<T>>
-
-    /**
-     * Group by Pecas_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_viewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends pecas_viewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: pecas_viewGroupByArgs['orderBy'] }
-        : { orderBy?: pecas_viewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, pecas_viewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPecas_viewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the pecas_view model
-   */
-  readonly fields: pecas_viewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for pecas_view.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__pecas_viewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the pecas_view model
-   */
-  interface pecas_viewFieldRefs {
-    readonly id: FieldRef<"pecas_view", 'BigInt'>
-    readonly codigo_da_peca: FieldRef<"pecas_view", 'String'>
-    readonly descricao_da_peca: FieldRef<"pecas_view", 'String'>
-    readonly quantidade_da_peca: FieldRef<"pecas_view", 'Int'>
-    readonly valor_total_liquido_da_peca: FieldRef<"pecas_view", 'Decimal'>
-    readonly parent: FieldRef<"pecas_view", 'String'>
-    readonly parent_id: FieldRef<"pecas_view", 'BigInt'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * pecas_view findUnique
-   */
-  export type pecas_viewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_view to fetch.
-     */
-    where: pecas_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view findUniqueOrThrow
-   */
-  export type pecas_viewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_view to fetch.
-     */
-    where: pecas_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view findFirst
-   */
-  export type pecas_viewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_view to fetch.
-     */
-    where?: pecas_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_views to fetch.
-     */
-    orderBy?: pecas_viewOrderByWithRelationInput | pecas_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for pecas_views.
-     */
-    cursor?: pecas_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of pecas_views.
-     */
-    distinct?: Pecas_viewScalarFieldEnum | Pecas_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view findFirstOrThrow
-   */
-  export type pecas_viewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_view to fetch.
-     */
-    where?: pecas_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_views to fetch.
-     */
-    orderBy?: pecas_viewOrderByWithRelationInput | pecas_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for pecas_views.
-     */
-    cursor?: pecas_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of pecas_views.
-     */
-    distinct?: Pecas_viewScalarFieldEnum | Pecas_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view findMany
-   */
-  export type pecas_viewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_views to fetch.
-     */
-    where?: pecas_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_views to fetch.
-     */
-    orderBy?: pecas_viewOrderByWithRelationInput | pecas_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing pecas_views.
-     */
-    cursor?: pecas_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_views.
-     */
-    skip?: number
-    distinct?: Pecas_viewScalarFieldEnum | Pecas_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view create
-   */
-  export type pecas_viewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to create a pecas_view.
-     */
-    data: XOR<pecas_viewCreateInput, pecas_viewUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view createMany
-   */
-  export type pecas_viewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many pecas_views.
-     */
-    data: pecas_viewCreateManyInput | pecas_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * pecas_view createManyAndReturn
-   */
-  export type pecas_viewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * The data used to create many pecas_views.
-     */
-    data: pecas_viewCreateManyInput | pecas_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * pecas_view update
-   */
-  export type pecas_viewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to update a pecas_view.
-     */
-    data: XOR<pecas_viewUpdateInput, pecas_viewUncheckedUpdateInput>
-    /**
-     * Choose, which pecas_view to update.
-     */
-    where: pecas_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view updateMany
-   */
-  export type pecas_viewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update pecas_views.
-     */
-    data: XOR<pecas_viewUpdateManyMutationInput, pecas_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which pecas_views to update
-     */
-    where?: pecas_viewWhereInput
-    /**
-     * Limit how many pecas_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_view updateManyAndReturn
-   */
-  export type pecas_viewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * The data used to update pecas_views.
-     */
-    data: XOR<pecas_viewUpdateManyMutationInput, pecas_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which pecas_views to update
-     */
-    where?: pecas_viewWhereInput
-    /**
-     * Limit how many pecas_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_view upsert
-   */
-  export type pecas_viewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * The filter to search for the pecas_view to update in case it exists.
-     */
-    where: pecas_viewWhereUniqueInput
-    /**
-     * In case the pecas_view found by the `where` argument doesn't exist, create a new pecas_view with this data.
-     */
-    create: XOR<pecas_viewCreateInput, pecas_viewUncheckedCreateInput>
-    /**
-     * In case the pecas_view was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<pecas_viewUpdateInput, pecas_viewUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view delete
-   */
-  export type pecas_viewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-    /**
-     * Filter which pecas_view to delete.
-     */
-    where: pecas_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_view deleteMany
-   */
-  export type pecas_viewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which pecas_views to delete
-     */
-    where?: pecas_viewWhereInput
-    /**
-     * Limit how many pecas_views to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_view without action
-   */
-  export type pecas_viewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_view
-     */
-    select?: pecas_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_view
-     */
-    omit?: pecas_viewOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model clientes_view
-   */
-
-  export type AggregateClientes_view = {
-    _count: Clientes_viewCountAggregateOutputType | null
-    _avg: Clientes_viewAvgAggregateOutputType | null
-    _sum: Clientes_viewSumAggregateOutputType | null
-    _min: Clientes_viewMinAggregateOutputType | null
-    _max: Clientes_viewMaxAggregateOutputType | null
-  }
-
-  export type Clientes_viewAvgAggregateOutputType = {
-    id: number | null
-    parent_id: number | null
-  }
-
-  export type Clientes_viewSumAggregateOutputType = {
-    id: bigint | null
-    parent_id: bigint | null
-  }
-
-  export type Clientes_viewMinAggregateOutputType = {
-    id: bigint | null
-    nome_do_cliente: string | null
-    cpf_cnpj: string | null
-    endereco: string | null
-    numero: string | null
-    complemento: string | null
-    bairro: string | null
-    cidade: string | null
-    uf: string | null
-    cep: string | null
-    tel_res: string | null
-    tel_cel: string | null
-    tel_com: string | null
-    email_res: string | null
-    email_com: string | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Clientes_viewMaxAggregateOutputType = {
-    id: bigint | null
-    nome_do_cliente: string | null
-    cpf_cnpj: string | null
-    endereco: string | null
-    numero: string | null
-    complemento: string | null
-    bairro: string | null
-    cidade: string | null
-    uf: string | null
-    cep: string | null
-    tel_res: string | null
-    tel_cel: string | null
-    tel_com: string | null
-    email_res: string | null
-    email_com: string | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Clientes_viewCountAggregateOutputType = {
-    id: number
-    nome_do_cliente: number
-    cpf_cnpj: number
-    endereco: number
-    numero: number
-    complemento: number
-    bairro: number
-    cidade: number
-    uf: number
-    cep: number
-    tel_res: number
-    tel_cel: number
-    tel_com: number
-    email_res: number
-    email_com: number
-    parent: number
-    parent_id: number
-    _all: number
-  }
-
-
-  export type Clientes_viewAvgAggregateInputType = {
-    id?: true
-    parent_id?: true
-  }
-
-  export type Clientes_viewSumAggregateInputType = {
-    id?: true
-    parent_id?: true
-  }
-
-  export type Clientes_viewMinAggregateInputType = {
-    id?: true
-    nome_do_cliente?: true
-    cpf_cnpj?: true
-    endereco?: true
-    numero?: true
-    complemento?: true
-    bairro?: true
-    cidade?: true
-    uf?: true
-    cep?: true
-    tel_res?: true
-    tel_cel?: true
-    tel_com?: true
-    email_res?: true
-    email_com?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Clientes_viewMaxAggregateInputType = {
-    id?: true
-    nome_do_cliente?: true
-    cpf_cnpj?: true
-    endereco?: true
-    numero?: true
-    complemento?: true
-    bairro?: true
-    cidade?: true
-    uf?: true
-    cep?: true
-    tel_res?: true
-    tel_cel?: true
-    tel_com?: true
-    email_res?: true
-    email_com?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Clientes_viewCountAggregateInputType = {
-    id?: true
-    nome_do_cliente?: true
-    cpf_cnpj?: true
-    endereco?: true
-    numero?: true
-    complemento?: true
-    bairro?: true
-    cidade?: true
-    uf?: true
-    cep?: true
-    tel_res?: true
-    tel_cel?: true
-    tel_com?: true
-    email_res?: true
-    email_com?: true
-    parent?: true
-    parent_id?: true
-    _all?: true
-  }
-
-  export type Clientes_viewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which clientes_view to aggregate.
-     */
-    where?: clientes_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of clientes_views to fetch.
-     */
-    orderBy?: clientes_viewOrderByWithRelationInput | clientes_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: clientes_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` clientes_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` clientes_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned clientes_views
-    **/
-    _count?: true | Clientes_viewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Clientes_viewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Clientes_viewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Clientes_viewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Clientes_viewMaxAggregateInputType
-  }
-
-  export type GetClientes_viewAggregateType<T extends Clientes_viewAggregateArgs> = {
-        [P in keyof T & keyof AggregateClientes_view]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateClientes_view[P]>
-      : GetScalarType<T[P], AggregateClientes_view[P]>
-  }
-
-
-
-
-  export type clientes_viewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: clientes_viewWhereInput
-    orderBy?: clientes_viewOrderByWithAggregationInput | clientes_viewOrderByWithAggregationInput[]
-    by: Clientes_viewScalarFieldEnum[] | Clientes_viewScalarFieldEnum
-    having?: clientes_viewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Clientes_viewCountAggregateInputType | true
-    _avg?: Clientes_viewAvgAggregateInputType
-    _sum?: Clientes_viewSumAggregateInputType
-    _min?: Clientes_viewMinAggregateInputType
-    _max?: Clientes_viewMaxAggregateInputType
-  }
-
-  export type Clientes_viewGroupByOutputType = {
-    id: bigint
-    nome_do_cliente: string
-    cpf_cnpj: string
-    endereco: string
-    numero: string
-    complemento: string | null
-    bairro: string
-    cidade: string
-    uf: string
-    cep: string
-    tel_res: string | null
-    tel_cel: string | null
-    tel_com: string | null
-    email_res: string | null
-    email_com: string | null
-    parent: string
-    parent_id: bigint
-    _count: Clientes_viewCountAggregateOutputType | null
-    _avg: Clientes_viewAvgAggregateOutputType | null
-    _sum: Clientes_viewSumAggregateOutputType | null
-    _min: Clientes_viewMinAggregateOutputType | null
-    _max: Clientes_viewMaxAggregateOutputType | null
-  }
-
-  type GetClientes_viewGroupByPayload<T extends clientes_viewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Clientes_viewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Clientes_viewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Clientes_viewGroupByOutputType[P]>
-            : GetScalarType<T[P], Clientes_viewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type clientes_viewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    nome_do_cliente?: boolean
-    cpf_cnpj?: boolean
-    endereco?: boolean
-    numero?: boolean
-    complemento?: boolean
-    bairro?: boolean
-    cidade?: boolean
-    uf?: boolean
-    cep?: boolean
-    tel_res?: boolean
-    tel_cel?: boolean
-    tel_com?: boolean
-    email_res?: boolean
-    email_com?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["clientes_view"]>
-
-  export type clientes_viewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    nome_do_cliente?: boolean
-    cpf_cnpj?: boolean
-    endereco?: boolean
-    numero?: boolean
-    complemento?: boolean
-    bairro?: boolean
-    cidade?: boolean
-    uf?: boolean
-    cep?: boolean
-    tel_res?: boolean
-    tel_cel?: boolean
-    tel_com?: boolean
-    email_res?: boolean
-    email_com?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["clientes_view"]>
-
-  export type clientes_viewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    nome_do_cliente?: boolean
-    cpf_cnpj?: boolean
-    endereco?: boolean
-    numero?: boolean
-    complemento?: boolean
-    bairro?: boolean
-    cidade?: boolean
-    uf?: boolean
-    cep?: boolean
-    tel_res?: boolean
-    tel_cel?: boolean
-    tel_com?: boolean
-    email_res?: boolean
-    email_com?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["clientes_view"]>
-
-  export type clientes_viewSelectScalar = {
-    id?: boolean
-    nome_do_cliente?: boolean
-    cpf_cnpj?: boolean
-    endereco?: boolean
-    numero?: boolean
-    complemento?: boolean
-    bairro?: boolean
-    cidade?: boolean
-    uf?: boolean
-    cep?: boolean
-    tel_res?: boolean
-    tel_cel?: boolean
-    tel_com?: boolean
-    email_res?: boolean
-    email_com?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }
-
-  export type clientes_viewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome_do_cliente" | "cpf_cnpj" | "endereco" | "numero" | "complemento" | "bairro" | "cidade" | "uf" | "cep" | "tel_res" | "tel_cel" | "tel_com" | "email_res" | "email_com" | "parent" | "parent_id", ExtArgs["result"]["clientes_view"]>
-
-  export type $clientes_viewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "clientes_view"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: bigint
-      nome_do_cliente: string
-      cpf_cnpj: string
-      endereco: string
-      numero: string
-      complemento: string | null
-      bairro: string
-      cidade: string
-      uf: string
-      cep: string
-      tel_res: string | null
-      tel_cel: string | null
-      tel_com: string | null
-      email_res: string | null
-      email_com: string | null
-      parent: string
-      parent_id: bigint
-    }, ExtArgs["result"]["clientes_view"]>
-    composites: {}
-  }
-
-  type clientes_viewGetPayload<S extends boolean | null | undefined | clientes_viewDefaultArgs> = $Result.GetResult<Prisma.$clientes_viewPayload, S>
-
-  type clientes_viewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<clientes_viewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: Clientes_viewCountAggregateInputType | true
-    }
-
-  export interface clientes_viewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['clientes_view'], meta: { name: 'clientes_view' } }
-    /**
-     * Find zero or one Clientes_view that matches the filter.
-     * @param {clientes_viewFindUniqueArgs} args - Arguments to find a Clientes_view
-     * @example
-     * // Get one Clientes_view
-     * const clientes_view = await prisma.clientes_view.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends clientes_viewFindUniqueArgs>(args: SelectSubset<T, clientes_viewFindUniqueArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Clientes_view that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {clientes_viewFindUniqueOrThrowArgs} args - Arguments to find a Clientes_view
-     * @example
-     * // Get one Clientes_view
-     * const clientes_view = await prisma.clientes_view.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends clientes_viewFindUniqueOrThrowArgs>(args: SelectSubset<T, clientes_viewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Clientes_view that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {clientes_viewFindFirstArgs} args - Arguments to find a Clientes_view
-     * @example
-     * // Get one Clientes_view
-     * const clientes_view = await prisma.clientes_view.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends clientes_viewFindFirstArgs>(args?: SelectSubset<T, clientes_viewFindFirstArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Clientes_view that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {clientes_viewFindFirstOrThrowArgs} args - Arguments to find a Clientes_view
-     * @example
-     * // Get one Clientes_view
-     * const clientes_view = await prisma.clientes_view.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends clientes_viewFindFirstOrThrowArgs>(args?: SelectSubset<T, clientes_viewFindFirstOrThrowArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Clientes_views that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {clientes_viewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Clientes_views
-     * const clientes_views = await prisma.clientes_view.findMany()
-     * 
-     * // Get first 10 Clientes_views
-     * const clientes_views = await prisma.clientes_view.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const clientes_viewWithIdOnly = await prisma.clientes_view.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends clientes_viewFindManyArgs>(args?: SelectSubset<T, clientes_viewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Clientes_view.
-     * @param {clientes_viewCreateArgs} args - Arguments to create a Clientes_view.
-     * @example
-     * // Create one Clientes_view
-     * const Clientes_view = await prisma.clientes_view.create({
-     *   data: {
-     *     // ... data to create a Clientes_view
-     *   }
-     * })
-     * 
-     */
-    create<T extends clientes_viewCreateArgs>(args: SelectSubset<T, clientes_viewCreateArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Clientes_views.
-     * @param {clientes_viewCreateManyArgs} args - Arguments to create many Clientes_views.
-     * @example
-     * // Create many Clientes_views
-     * const clientes_view = await prisma.clientes_view.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends clientes_viewCreateManyArgs>(args?: SelectSubset<T, clientes_viewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Clientes_views and returns the data saved in the database.
-     * @param {clientes_viewCreateManyAndReturnArgs} args - Arguments to create many Clientes_views.
-     * @example
-     * // Create many Clientes_views
-     * const clientes_view = await prisma.clientes_view.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Clientes_views and only return the `id`
-     * const clientes_viewWithIdOnly = await prisma.clientes_view.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends clientes_viewCreateManyAndReturnArgs>(args?: SelectSubset<T, clientes_viewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Clientes_view.
-     * @param {clientes_viewDeleteArgs} args - Arguments to delete one Clientes_view.
-     * @example
-     * // Delete one Clientes_view
-     * const Clientes_view = await prisma.clientes_view.delete({
-     *   where: {
-     *     // ... filter to delete one Clientes_view
-     *   }
-     * })
-     * 
-     */
-    delete<T extends clientes_viewDeleteArgs>(args: SelectSubset<T, clientes_viewDeleteArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Clientes_view.
-     * @param {clientes_viewUpdateArgs} args - Arguments to update one Clientes_view.
-     * @example
-     * // Update one Clientes_view
-     * const clientes_view = await prisma.clientes_view.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends clientes_viewUpdateArgs>(args: SelectSubset<T, clientes_viewUpdateArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Clientes_views.
-     * @param {clientes_viewDeleteManyArgs} args - Arguments to filter Clientes_views to delete.
-     * @example
-     * // Delete a few Clientes_views
-     * const { count } = await prisma.clientes_view.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends clientes_viewDeleteManyArgs>(args?: SelectSubset<T, clientes_viewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Clientes_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {clientes_viewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Clientes_views
-     * const clientes_view = await prisma.clientes_view.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends clientes_viewUpdateManyArgs>(args: SelectSubset<T, clientes_viewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Clientes_views and returns the data updated in the database.
-     * @param {clientes_viewUpdateManyAndReturnArgs} args - Arguments to update many Clientes_views.
-     * @example
-     * // Update many Clientes_views
-     * const clientes_view = await prisma.clientes_view.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Clientes_views and only return the `id`
-     * const clientes_viewWithIdOnly = await prisma.clientes_view.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends clientes_viewUpdateManyAndReturnArgs>(args: SelectSubset<T, clientes_viewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Clientes_view.
-     * @param {clientes_viewUpsertArgs} args - Arguments to update or create a Clientes_view.
-     * @example
-     * // Update or create a Clientes_view
-     * const clientes_view = await prisma.clientes_view.upsert({
-     *   create: {
-     *     // ... data to create a Clientes_view
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Clientes_view we want to update
-     *   }
-     * })
-     */
-    upsert<T extends clientes_viewUpsertArgs>(args: SelectSubset<T, clientes_viewUpsertArgs<ExtArgs>>): Prisma__clientes_viewClient<$Result.GetResult<Prisma.$clientes_viewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Clientes_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {clientes_viewCountArgs} args - Arguments to filter Clientes_views to count.
-     * @example
-     * // Count the number of Clientes_views
-     * const count = await prisma.clientes_view.count({
-     *   where: {
-     *     // ... the filter for the Clientes_views we want to count
-     *   }
-     * })
-    **/
-    count<T extends clientes_viewCountArgs>(
-      args?: Subset<T, clientes_viewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Clientes_viewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Clientes_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Clientes_viewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Clientes_viewAggregateArgs>(args: Subset<T, Clientes_viewAggregateArgs>): Prisma.PrismaPromise<GetClientes_viewAggregateType<T>>
-
-    /**
-     * Group by Clientes_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {clientes_viewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends clientes_viewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: clientes_viewGroupByArgs['orderBy'] }
-        : { orderBy?: clientes_viewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, clientes_viewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClientes_viewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the clientes_view model
-   */
-  readonly fields: clientes_viewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for clientes_view.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__clientes_viewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the clientes_view model
-   */
-  interface clientes_viewFieldRefs {
-    readonly id: FieldRef<"clientes_view", 'BigInt'>
-    readonly nome_do_cliente: FieldRef<"clientes_view", 'String'>
-    readonly cpf_cnpj: FieldRef<"clientes_view", 'String'>
-    readonly endereco: FieldRef<"clientes_view", 'String'>
-    readonly numero: FieldRef<"clientes_view", 'String'>
-    readonly complemento: FieldRef<"clientes_view", 'String'>
-    readonly bairro: FieldRef<"clientes_view", 'String'>
-    readonly cidade: FieldRef<"clientes_view", 'String'>
-    readonly uf: FieldRef<"clientes_view", 'String'>
-    readonly cep: FieldRef<"clientes_view", 'String'>
-    readonly tel_res: FieldRef<"clientes_view", 'String'>
-    readonly tel_cel: FieldRef<"clientes_view", 'String'>
-    readonly tel_com: FieldRef<"clientes_view", 'String'>
-    readonly email_res: FieldRef<"clientes_view", 'String'>
-    readonly email_com: FieldRef<"clientes_view", 'String'>
-    readonly parent: FieldRef<"clientes_view", 'String'>
-    readonly parent_id: FieldRef<"clientes_view", 'BigInt'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * clientes_view findUnique
-   */
-  export type clientes_viewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which clientes_view to fetch.
-     */
-    where: clientes_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view findUniqueOrThrow
-   */
-  export type clientes_viewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which clientes_view to fetch.
-     */
-    where: clientes_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view findFirst
-   */
-  export type clientes_viewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which clientes_view to fetch.
-     */
-    where?: clientes_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of clientes_views to fetch.
-     */
-    orderBy?: clientes_viewOrderByWithRelationInput | clientes_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for clientes_views.
-     */
-    cursor?: clientes_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` clientes_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` clientes_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of clientes_views.
-     */
-    distinct?: Clientes_viewScalarFieldEnum | Clientes_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view findFirstOrThrow
-   */
-  export type clientes_viewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which clientes_view to fetch.
-     */
-    where?: clientes_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of clientes_views to fetch.
-     */
-    orderBy?: clientes_viewOrderByWithRelationInput | clientes_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for clientes_views.
-     */
-    cursor?: clientes_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` clientes_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` clientes_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of clientes_views.
-     */
-    distinct?: Clientes_viewScalarFieldEnum | Clientes_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view findMany
-   */
-  export type clientes_viewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which clientes_views to fetch.
-     */
-    where?: clientes_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of clientes_views to fetch.
-     */
-    orderBy?: clientes_viewOrderByWithRelationInput | clientes_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing clientes_views.
-     */
-    cursor?: clientes_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` clientes_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` clientes_views.
-     */
-    skip?: number
-    distinct?: Clientes_viewScalarFieldEnum | Clientes_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view create
-   */
-  export type clientes_viewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to create a clientes_view.
-     */
-    data: XOR<clientes_viewCreateInput, clientes_viewUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view createMany
-   */
-  export type clientes_viewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many clientes_views.
-     */
-    data: clientes_viewCreateManyInput | clientes_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * clientes_view createManyAndReturn
-   */
-  export type clientes_viewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * The data used to create many clientes_views.
-     */
-    data: clientes_viewCreateManyInput | clientes_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * clientes_view update
-   */
-  export type clientes_viewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to update a clientes_view.
-     */
-    data: XOR<clientes_viewUpdateInput, clientes_viewUncheckedUpdateInput>
-    /**
-     * Choose, which clientes_view to update.
-     */
-    where: clientes_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view updateMany
-   */
-  export type clientes_viewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update clientes_views.
-     */
-    data: XOR<clientes_viewUpdateManyMutationInput, clientes_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which clientes_views to update
-     */
-    where?: clientes_viewWhereInput
-    /**
-     * Limit how many clientes_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * clientes_view updateManyAndReturn
-   */
-  export type clientes_viewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * The data used to update clientes_views.
-     */
-    data: XOR<clientes_viewUpdateManyMutationInput, clientes_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which clientes_views to update
-     */
-    where?: clientes_viewWhereInput
-    /**
-     * Limit how many clientes_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * clientes_view upsert
-   */
-  export type clientes_viewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * The filter to search for the clientes_view to update in case it exists.
-     */
-    where: clientes_viewWhereUniqueInput
-    /**
-     * In case the clientes_view found by the `where` argument doesn't exist, create a new clientes_view with this data.
-     */
-    create: XOR<clientes_viewCreateInput, clientes_viewUncheckedCreateInput>
-    /**
-     * In case the clientes_view was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<clientes_viewUpdateInput, clientes_viewUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view delete
-   */
-  export type clientes_viewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-    /**
-     * Filter which clientes_view to delete.
-     */
-    where: clientes_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * clientes_view deleteMany
-   */
-  export type clientes_viewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which clientes_views to delete
-     */
-    where?: clientes_viewWhereInput
-    /**
-     * Limit how many clientes_views to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * clientes_view without action
-   */
-  export type clientes_viewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the clientes_view
-     */
-    select?: clientes_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the clientes_view
-     */
-    omit?: clientes_viewOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model nf_view
-   */
-
-  export type AggregateNf_view = {
-    _count: Nf_viewCountAggregateOutputType | null
-    _avg: Nf_viewAvgAggregateOutputType | null
-    _sum: Nf_viewSumAggregateOutputType | null
-    _min: Nf_viewMinAggregateOutputType | null
-    _max: Nf_viewMaxAggregateOutputType | null
-  }
-
-  export type Nf_viewAvgAggregateOutputType = {
-    id: number | null
-    fonte_pagadora: number | null
-    valor_total_liquido_das_pecas_na_nota_fiscal: Decimal | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal: Decimal | null
-  }
-
-  export type Nf_viewSumAggregateOutputType = {
-    id: bigint | null
-    fonte_pagadora: number | null
-    valor_total_liquido_das_pecas_na_nota_fiscal: Decimal | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal: Decimal | null
-  }
-
-  export type Nf_viewMinAggregateOutputType = {
-    id: bigint | null
-    numero_da_nota_fiscal: string | null
-    serie_da_nota_fiscal: string | null
-    fonte_pagadora: number | null
-    valor_total_liquido_das_pecas_na_nota_fiscal: Decimal | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal: Decimal | null
-    data_e_hora_da_abertura_da_os: Date | null
-    data_e_hora_do_fechamento_da_os: Date | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | null
-    categoria: string | null
-  }
-
-  export type Nf_viewMaxAggregateOutputType = {
-    id: bigint | null
-    numero_da_nota_fiscal: string | null
-    serie_da_nota_fiscal: string | null
-    fonte_pagadora: number | null
-    valor_total_liquido_das_pecas_na_nota_fiscal: Decimal | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal: Decimal | null
-    data_e_hora_da_abertura_da_os: Date | null
-    data_e_hora_do_fechamento_da_os: Date | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | null
-    categoria: string | null
-  }
-
-  export type Nf_viewCountAggregateOutputType = {
-    id: number
-    numero_da_nota_fiscal: number
-    serie_da_nota_fiscal: number
-    fonte_pagadora: number
-    valor_total_liquido_das_pecas_na_nota_fiscal: number
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal: number
-    data_e_hora_da_abertura_da_os: number
-    data_e_hora_do_fechamento_da_os: number
-    data_e_hora_da_emissao_da_nota_fiscal: number
-    categoria: number
-    _all: number
-  }
-
-
-  export type Nf_viewAvgAggregateInputType = {
-    id?: true
-    fonte_pagadora?: true
-    valor_total_liquido_das_pecas_na_nota_fiscal?: true
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: true
-  }
-
-  export type Nf_viewSumAggregateInputType = {
-    id?: true
-    fonte_pagadora?: true
-    valor_total_liquido_das_pecas_na_nota_fiscal?: true
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: true
-  }
-
-  export type Nf_viewMinAggregateInputType = {
-    id?: true
-    numero_da_nota_fiscal?: true
-    serie_da_nota_fiscal?: true
-    fonte_pagadora?: true
-    valor_total_liquido_das_pecas_na_nota_fiscal?: true
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: true
-    data_e_hora_da_abertura_da_os?: true
-    data_e_hora_do_fechamento_da_os?: true
-    data_e_hora_da_emissao_da_nota_fiscal?: true
-    categoria?: true
-  }
-
-  export type Nf_viewMaxAggregateInputType = {
-    id?: true
-    numero_da_nota_fiscal?: true
-    serie_da_nota_fiscal?: true
-    fonte_pagadora?: true
-    valor_total_liquido_das_pecas_na_nota_fiscal?: true
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: true
-    data_e_hora_da_abertura_da_os?: true
-    data_e_hora_do_fechamento_da_os?: true
-    data_e_hora_da_emissao_da_nota_fiscal?: true
-    categoria?: true
-  }
-
-  export type Nf_viewCountAggregateInputType = {
-    id?: true
-    numero_da_nota_fiscal?: true
-    serie_da_nota_fiscal?: true
-    fonte_pagadora?: true
-    valor_total_liquido_das_pecas_na_nota_fiscal?: true
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: true
-    data_e_hora_da_abertura_da_os?: true
-    data_e_hora_do_fechamento_da_os?: true
-    data_e_hora_da_emissao_da_nota_fiscal?: true
-    categoria?: true
-    _all?: true
-  }
-
-  export type Nf_viewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which nf_view to aggregate.
-     */
-    where?: nf_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of nf_views to fetch.
-     */
-    orderBy?: nf_viewOrderByWithRelationInput | nf_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: nf_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` nf_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` nf_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned nf_views
-    **/
-    _count?: true | Nf_viewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Nf_viewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Nf_viewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Nf_viewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Nf_viewMaxAggregateInputType
-  }
-
-  export type GetNf_viewAggregateType<T extends Nf_viewAggregateArgs> = {
-        [P in keyof T & keyof AggregateNf_view]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateNf_view[P]>
-      : GetScalarType<T[P], AggregateNf_view[P]>
-  }
-
-
-
-
-  export type nf_viewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: nf_viewWhereInput
-    orderBy?: nf_viewOrderByWithAggregationInput | nf_viewOrderByWithAggregationInput[]
-    by: Nf_viewScalarFieldEnum[] | Nf_viewScalarFieldEnum
-    having?: nf_viewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Nf_viewCountAggregateInputType | true
-    _avg?: Nf_viewAvgAggregateInputType
-    _sum?: Nf_viewSumAggregateInputType
-    _min?: Nf_viewMinAggregateInputType
-    _max?: Nf_viewMaxAggregateInputType
-  }
-
-  export type Nf_viewGroupByOutputType = {
-    id: bigint
-    numero_da_nota_fiscal: string
-    serie_da_nota_fiscal: string
-    fonte_pagadora: number
-    valor_total_liquido_das_pecas_na_nota_fiscal: Decimal | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal: Decimal | null
-    data_e_hora_da_abertura_da_os: Date | null
-    data_e_hora_do_fechamento_da_os: Date | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date
-    categoria: string
-    _count: Nf_viewCountAggregateOutputType | null
-    _avg: Nf_viewAvgAggregateOutputType | null
-    _sum: Nf_viewSumAggregateOutputType | null
-    _min: Nf_viewMinAggregateOutputType | null
-    _max: Nf_viewMaxAggregateOutputType | null
-  }
-
-  type GetNf_viewGroupByPayload<T extends nf_viewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Nf_viewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Nf_viewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Nf_viewGroupByOutputType[P]>
-            : GetScalarType<T[P], Nf_viewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type nf_viewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    fonte_pagadora?: boolean
-    valor_total_liquido_das_pecas_na_nota_fiscal?: boolean
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_do_fechamento_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    categoria?: boolean
-  }, ExtArgs["result"]["nf_view"]>
-
-  export type nf_viewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    fonte_pagadora?: boolean
-    valor_total_liquido_das_pecas_na_nota_fiscal?: boolean
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_do_fechamento_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    categoria?: boolean
-  }, ExtArgs["result"]["nf_view"]>
-
-  export type nf_viewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    fonte_pagadora?: boolean
-    valor_total_liquido_das_pecas_na_nota_fiscal?: boolean
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_do_fechamento_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    categoria?: boolean
-  }, ExtArgs["result"]["nf_view"]>
-
-  export type nf_viewSelectScalar = {
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    fonte_pagadora?: boolean
-    valor_total_liquido_das_pecas_na_nota_fiscal?: boolean
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: boolean
-    data_e_hora_da_abertura_da_os?: boolean
-    data_e_hora_do_fechamento_da_os?: boolean
-    data_e_hora_da_emissao_da_nota_fiscal?: boolean
-    categoria?: boolean
-  }
-
-  export type nf_viewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numero_da_nota_fiscal" | "serie_da_nota_fiscal" | "fonte_pagadora" | "valor_total_liquido_das_pecas_na_nota_fiscal" | "valor_total_liquido_da_mao_de_obra_na_nota_fiscal" | "data_e_hora_da_abertura_da_os" | "data_e_hora_do_fechamento_da_os" | "data_e_hora_da_emissao_da_nota_fiscal" | "categoria", ExtArgs["result"]["nf_view"]>
-
-  export type $nf_viewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "nf_view"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: bigint
-      numero_da_nota_fiscal: string
-      serie_da_nota_fiscal: string
-      fonte_pagadora: number
-      valor_total_liquido_das_pecas_na_nota_fiscal: Prisma.Decimal | null
-      valor_total_liquido_da_mao_de_obra_na_nota_fiscal: Prisma.Decimal | null
-      data_e_hora_da_abertura_da_os: Date | null
-      data_e_hora_do_fechamento_da_os: Date | null
-      data_e_hora_da_emissao_da_nota_fiscal: Date
-      categoria: string
-    }, ExtArgs["result"]["nf_view"]>
-    composites: {}
-  }
-
-  type nf_viewGetPayload<S extends boolean | null | undefined | nf_viewDefaultArgs> = $Result.GetResult<Prisma.$nf_viewPayload, S>
-
-  type nf_viewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<nf_viewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: Nf_viewCountAggregateInputType | true
-    }
-
-  export interface nf_viewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['nf_view'], meta: { name: 'nf_view' } }
-    /**
-     * Find zero or one Nf_view that matches the filter.
-     * @param {nf_viewFindUniqueArgs} args - Arguments to find a Nf_view
-     * @example
-     * // Get one Nf_view
-     * const nf_view = await prisma.nf_view.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends nf_viewFindUniqueArgs>(args: SelectSubset<T, nf_viewFindUniqueArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Nf_view that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {nf_viewFindUniqueOrThrowArgs} args - Arguments to find a Nf_view
-     * @example
-     * // Get one Nf_view
-     * const nf_view = await prisma.nf_view.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends nf_viewFindUniqueOrThrowArgs>(args: SelectSubset<T, nf_viewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Nf_view that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {nf_viewFindFirstArgs} args - Arguments to find a Nf_view
-     * @example
-     * // Get one Nf_view
-     * const nf_view = await prisma.nf_view.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends nf_viewFindFirstArgs>(args?: SelectSubset<T, nf_viewFindFirstArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Nf_view that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {nf_viewFindFirstOrThrowArgs} args - Arguments to find a Nf_view
-     * @example
-     * // Get one Nf_view
-     * const nf_view = await prisma.nf_view.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends nf_viewFindFirstOrThrowArgs>(args?: SelectSubset<T, nf_viewFindFirstOrThrowArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Nf_views that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {nf_viewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Nf_views
-     * const nf_views = await prisma.nf_view.findMany()
-     * 
-     * // Get first 10 Nf_views
-     * const nf_views = await prisma.nf_view.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const nf_viewWithIdOnly = await prisma.nf_view.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends nf_viewFindManyArgs>(args?: SelectSubset<T, nf_viewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Nf_view.
-     * @param {nf_viewCreateArgs} args - Arguments to create a Nf_view.
-     * @example
-     * // Create one Nf_view
-     * const Nf_view = await prisma.nf_view.create({
-     *   data: {
-     *     // ... data to create a Nf_view
-     *   }
-     * })
-     * 
-     */
-    create<T extends nf_viewCreateArgs>(args: SelectSubset<T, nf_viewCreateArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Nf_views.
-     * @param {nf_viewCreateManyArgs} args - Arguments to create many Nf_views.
-     * @example
-     * // Create many Nf_views
-     * const nf_view = await prisma.nf_view.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends nf_viewCreateManyArgs>(args?: SelectSubset<T, nf_viewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Nf_views and returns the data saved in the database.
-     * @param {nf_viewCreateManyAndReturnArgs} args - Arguments to create many Nf_views.
-     * @example
-     * // Create many Nf_views
-     * const nf_view = await prisma.nf_view.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Nf_views and only return the `id`
-     * const nf_viewWithIdOnly = await prisma.nf_view.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends nf_viewCreateManyAndReturnArgs>(args?: SelectSubset<T, nf_viewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Nf_view.
-     * @param {nf_viewDeleteArgs} args - Arguments to delete one Nf_view.
-     * @example
-     * // Delete one Nf_view
-     * const Nf_view = await prisma.nf_view.delete({
-     *   where: {
-     *     // ... filter to delete one Nf_view
-     *   }
-     * })
-     * 
-     */
-    delete<T extends nf_viewDeleteArgs>(args: SelectSubset<T, nf_viewDeleteArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Nf_view.
-     * @param {nf_viewUpdateArgs} args - Arguments to update one Nf_view.
-     * @example
-     * // Update one Nf_view
-     * const nf_view = await prisma.nf_view.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends nf_viewUpdateArgs>(args: SelectSubset<T, nf_viewUpdateArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Nf_views.
-     * @param {nf_viewDeleteManyArgs} args - Arguments to filter Nf_views to delete.
-     * @example
-     * // Delete a few Nf_views
-     * const { count } = await prisma.nf_view.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends nf_viewDeleteManyArgs>(args?: SelectSubset<T, nf_viewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Nf_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {nf_viewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Nf_views
-     * const nf_view = await prisma.nf_view.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends nf_viewUpdateManyArgs>(args: SelectSubset<T, nf_viewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Nf_views and returns the data updated in the database.
-     * @param {nf_viewUpdateManyAndReturnArgs} args - Arguments to update many Nf_views.
-     * @example
-     * // Update many Nf_views
-     * const nf_view = await prisma.nf_view.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Nf_views and only return the `id`
-     * const nf_viewWithIdOnly = await prisma.nf_view.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends nf_viewUpdateManyAndReturnArgs>(args: SelectSubset<T, nf_viewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Nf_view.
-     * @param {nf_viewUpsertArgs} args - Arguments to update or create a Nf_view.
-     * @example
-     * // Update or create a Nf_view
-     * const nf_view = await prisma.nf_view.upsert({
-     *   create: {
-     *     // ... data to create a Nf_view
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Nf_view we want to update
-     *   }
-     * })
-     */
-    upsert<T extends nf_viewUpsertArgs>(args: SelectSubset<T, nf_viewUpsertArgs<ExtArgs>>): Prisma__nf_viewClient<$Result.GetResult<Prisma.$nf_viewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Nf_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {nf_viewCountArgs} args - Arguments to filter Nf_views to count.
-     * @example
-     * // Count the number of Nf_views
-     * const count = await prisma.nf_view.count({
-     *   where: {
-     *     // ... the filter for the Nf_views we want to count
-     *   }
-     * })
-    **/
-    count<T extends nf_viewCountArgs>(
-      args?: Subset<T, nf_viewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Nf_viewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Nf_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Nf_viewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Nf_viewAggregateArgs>(args: Subset<T, Nf_viewAggregateArgs>): Prisma.PrismaPromise<GetNf_viewAggregateType<T>>
-
-    /**
-     * Group by Nf_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {nf_viewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends nf_viewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: nf_viewGroupByArgs['orderBy'] }
-        : { orderBy?: nf_viewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, nf_viewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNf_viewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the nf_view model
-   */
-  readonly fields: nf_viewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for nf_view.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__nf_viewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the nf_view model
-   */
-  interface nf_viewFieldRefs {
-    readonly id: FieldRef<"nf_view", 'BigInt'>
-    readonly numero_da_nota_fiscal: FieldRef<"nf_view", 'String'>
-    readonly serie_da_nota_fiscal: FieldRef<"nf_view", 'String'>
-    readonly fonte_pagadora: FieldRef<"nf_view", 'Int'>
-    readonly valor_total_liquido_das_pecas_na_nota_fiscal: FieldRef<"nf_view", 'Decimal'>
-    readonly valor_total_liquido_da_mao_de_obra_na_nota_fiscal: FieldRef<"nf_view", 'Decimal'>
-    readonly data_e_hora_da_abertura_da_os: FieldRef<"nf_view", 'DateTime'>
-    readonly data_e_hora_do_fechamento_da_os: FieldRef<"nf_view", 'DateTime'>
-    readonly data_e_hora_da_emissao_da_nota_fiscal: FieldRef<"nf_view", 'DateTime'>
-    readonly categoria: FieldRef<"nf_view", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * nf_view findUnique
-   */
-  export type nf_viewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which nf_view to fetch.
-     */
-    where: nf_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view findUniqueOrThrow
-   */
-  export type nf_viewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which nf_view to fetch.
-     */
-    where: nf_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view findFirst
-   */
-  export type nf_viewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which nf_view to fetch.
-     */
-    where?: nf_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of nf_views to fetch.
-     */
-    orderBy?: nf_viewOrderByWithRelationInput | nf_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for nf_views.
-     */
-    cursor?: nf_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` nf_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` nf_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of nf_views.
-     */
-    distinct?: Nf_viewScalarFieldEnum | Nf_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view findFirstOrThrow
-   */
-  export type nf_viewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which nf_view to fetch.
-     */
-    where?: nf_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of nf_views to fetch.
-     */
-    orderBy?: nf_viewOrderByWithRelationInput | nf_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for nf_views.
-     */
-    cursor?: nf_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` nf_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` nf_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of nf_views.
-     */
-    distinct?: Nf_viewScalarFieldEnum | Nf_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view findMany
-   */
-  export type nf_viewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which nf_views to fetch.
-     */
-    where?: nf_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of nf_views to fetch.
-     */
-    orderBy?: nf_viewOrderByWithRelationInput | nf_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing nf_views.
-     */
-    cursor?: nf_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` nf_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` nf_views.
-     */
-    skip?: number
-    distinct?: Nf_viewScalarFieldEnum | Nf_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view create
-   */
-  export type nf_viewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to create a nf_view.
-     */
-    data: XOR<nf_viewCreateInput, nf_viewUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view createMany
-   */
-  export type nf_viewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many nf_views.
-     */
-    data: nf_viewCreateManyInput | nf_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * nf_view createManyAndReturn
-   */
-  export type nf_viewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * The data used to create many nf_views.
-     */
-    data: nf_viewCreateManyInput | nf_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * nf_view update
-   */
-  export type nf_viewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to update a nf_view.
-     */
-    data: XOR<nf_viewUpdateInput, nf_viewUncheckedUpdateInput>
-    /**
-     * Choose, which nf_view to update.
-     */
-    where: nf_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view updateMany
-   */
-  export type nf_viewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update nf_views.
-     */
-    data: XOR<nf_viewUpdateManyMutationInput, nf_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which nf_views to update
-     */
-    where?: nf_viewWhereInput
-    /**
-     * Limit how many nf_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * nf_view updateManyAndReturn
-   */
-  export type nf_viewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * The data used to update nf_views.
-     */
-    data: XOR<nf_viewUpdateManyMutationInput, nf_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which nf_views to update
-     */
-    where?: nf_viewWhereInput
-    /**
-     * Limit how many nf_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * nf_view upsert
-   */
-  export type nf_viewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * The filter to search for the nf_view to update in case it exists.
-     */
-    where: nf_viewWhereUniqueInput
-    /**
-     * In case the nf_view found by the `where` argument doesn't exist, create a new nf_view with this data.
-     */
-    create: XOR<nf_viewCreateInput, nf_viewUncheckedCreateInput>
-    /**
-     * In case the nf_view was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<nf_viewUpdateInput, nf_viewUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view delete
-   */
-  export type nf_viewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-    /**
-     * Filter which nf_view to delete.
-     */
-    where: nf_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * nf_view deleteMany
-   */
-  export type nf_viewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which nf_views to delete
-     */
-    where?: nf_viewWhereInput
-    /**
-     * Limit how many nf_views to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * nf_view without action
-   */
-  export type nf_viewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the nf_view
-     */
-    select?: nf_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the nf_view
-     */
-    omit?: nf_viewOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model fontes_pagadoras_view
-   */
-
-  export type AggregateFontes_pagadoras_view = {
-    _count: Fontes_pagadoras_viewCountAggregateOutputType | null
-    _avg: Fontes_pagadoras_viewAvgAggregateOutputType | null
-    _sum: Fontes_pagadoras_viewSumAggregateOutputType | null
-    _min: Fontes_pagadoras_viewMinAggregateOutputType | null
-    _max: Fontes_pagadoras_viewMaxAggregateOutputType | null
-  }
-
-  export type Fontes_pagadoras_viewAvgAggregateOutputType = {
-    id: number | null
-    nota_fiscal_id: number | null
-    os_id: number | null
-    fonte_pagadora: number | null
-    fonte_pagadora_id: number | null
-    parent_id: number | null
-  }
-
-  export type Fontes_pagadoras_viewSumAggregateOutputType = {
-    id: bigint | null
-    nota_fiscal_id: bigint | null
-    os_id: bigint | null
-    fonte_pagadora: number | null
-    fonte_pagadora_id: bigint | null
-    parent_id: bigint | null
-  }
-
-  export type Fontes_pagadoras_viewMinAggregateOutputType = {
-    id: bigint | null
-    numero_da_nota_fiscal: string | null
-    serie_da_nota_fiscal: string | null
-    nota_fiscal_id: bigint | null
-    numero_da_os: string | null
-    os_id: bigint | null
-    numero_do_dn: string | null
-    fonte_pagadora: number | null
-    fonte_pagadora_id: bigint | null
-    indicador: string | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Fontes_pagadoras_viewMaxAggregateOutputType = {
-    id: bigint | null
-    numero_da_nota_fiscal: string | null
-    serie_da_nota_fiscal: string | null
-    nota_fiscal_id: bigint | null
-    numero_da_os: string | null
-    os_id: bigint | null
-    numero_do_dn: string | null
-    fonte_pagadora: number | null
-    fonte_pagadora_id: bigint | null
-    indicador: string | null
-    parent: string | null
-    parent_id: bigint | null
-  }
-
-  export type Fontes_pagadoras_viewCountAggregateOutputType = {
-    id: number
-    numero_da_nota_fiscal: number
-    serie_da_nota_fiscal: number
-    nota_fiscal_id: number
-    numero_da_os: number
-    os_id: number
-    numero_do_dn: number
-    fonte_pagadora: number
-    fonte_pagadora_id: number
-    indicador: number
-    parent: number
-    parent_id: number
-    _all: number
-  }
-
-
-  export type Fontes_pagadoras_viewAvgAggregateInputType = {
-    id?: true
-    nota_fiscal_id?: true
-    os_id?: true
-    fonte_pagadora?: true
-    fonte_pagadora_id?: true
-    parent_id?: true
-  }
-
-  export type Fontes_pagadoras_viewSumAggregateInputType = {
-    id?: true
-    nota_fiscal_id?: true
-    os_id?: true
-    fonte_pagadora?: true
-    fonte_pagadora_id?: true
-    parent_id?: true
-  }
-
-  export type Fontes_pagadoras_viewMinAggregateInputType = {
-    id?: true
-    numero_da_nota_fiscal?: true
-    serie_da_nota_fiscal?: true
-    nota_fiscal_id?: true
-    numero_da_os?: true
-    os_id?: true
-    numero_do_dn?: true
-    fonte_pagadora?: true
-    fonte_pagadora_id?: true
-    indicador?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Fontes_pagadoras_viewMaxAggregateInputType = {
-    id?: true
-    numero_da_nota_fiscal?: true
-    serie_da_nota_fiscal?: true
-    nota_fiscal_id?: true
-    numero_da_os?: true
-    os_id?: true
-    numero_do_dn?: true
-    fonte_pagadora?: true
-    fonte_pagadora_id?: true
-    indicador?: true
-    parent?: true
-    parent_id?: true
-  }
-
-  export type Fontes_pagadoras_viewCountAggregateInputType = {
-    id?: true
-    numero_da_nota_fiscal?: true
-    serie_da_nota_fiscal?: true
-    nota_fiscal_id?: true
-    numero_da_os?: true
-    os_id?: true
-    numero_do_dn?: true
-    fonte_pagadora?: true
-    fonte_pagadora_id?: true
-    indicador?: true
-    parent?: true
-    parent_id?: true
-    _all?: true
-  }
-
-  export type Fontes_pagadoras_viewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which fontes_pagadoras_view to aggregate.
-     */
-    where?: fontes_pagadoras_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of fontes_pagadoras_views to fetch.
-     */
-    orderBy?: fontes_pagadoras_viewOrderByWithRelationInput | fontes_pagadoras_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: fontes_pagadoras_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` fontes_pagadoras_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` fontes_pagadoras_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned fontes_pagadoras_views
-    **/
-    _count?: true | Fontes_pagadoras_viewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Fontes_pagadoras_viewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Fontes_pagadoras_viewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Fontes_pagadoras_viewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Fontes_pagadoras_viewMaxAggregateInputType
-  }
-
-  export type GetFontes_pagadoras_viewAggregateType<T extends Fontes_pagadoras_viewAggregateArgs> = {
-        [P in keyof T & keyof AggregateFontes_pagadoras_view]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateFontes_pagadoras_view[P]>
-      : GetScalarType<T[P], AggregateFontes_pagadoras_view[P]>
-  }
-
-
-
-
-  export type fontes_pagadoras_viewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: fontes_pagadoras_viewWhereInput
-    orderBy?: fontes_pagadoras_viewOrderByWithAggregationInput | fontes_pagadoras_viewOrderByWithAggregationInput[]
-    by: Fontes_pagadoras_viewScalarFieldEnum[] | Fontes_pagadoras_viewScalarFieldEnum
-    having?: fontes_pagadoras_viewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Fontes_pagadoras_viewCountAggregateInputType | true
-    _avg?: Fontes_pagadoras_viewAvgAggregateInputType
-    _sum?: Fontes_pagadoras_viewSumAggregateInputType
-    _min?: Fontes_pagadoras_viewMinAggregateInputType
-    _max?: Fontes_pagadoras_viewMaxAggregateInputType
-  }
-
-  export type Fontes_pagadoras_viewGroupByOutputType = {
-    id: bigint
-    numero_da_nota_fiscal: string | null
-    serie_da_nota_fiscal: string | null
-    nota_fiscal_id: bigint | null
-    numero_da_os: string | null
-    os_id: bigint | null
-    numero_do_dn: string
-    fonte_pagadora: number
-    fonte_pagadora_id: bigint
-    indicador: string | null
-    parent: string
-    parent_id: bigint
-    _count: Fontes_pagadoras_viewCountAggregateOutputType | null
-    _avg: Fontes_pagadoras_viewAvgAggregateOutputType | null
-    _sum: Fontes_pagadoras_viewSumAggregateOutputType | null
-    _min: Fontes_pagadoras_viewMinAggregateOutputType | null
-    _max: Fontes_pagadoras_viewMaxAggregateOutputType | null
-  }
-
-  type GetFontes_pagadoras_viewGroupByPayload<T extends fontes_pagadoras_viewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Fontes_pagadoras_viewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Fontes_pagadoras_viewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Fontes_pagadoras_viewGroupByOutputType[P]>
-            : GetScalarType<T[P], Fontes_pagadoras_viewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type fontes_pagadoras_viewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    nota_fiscal_id?: boolean
-    numero_da_os?: boolean
-    os_id?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    fonte_pagadora_id?: boolean
-    indicador?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["fontes_pagadoras_view"]>
-
-  export type fontes_pagadoras_viewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    nota_fiscal_id?: boolean
-    numero_da_os?: boolean
-    os_id?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    fonte_pagadora_id?: boolean
-    indicador?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["fontes_pagadoras_view"]>
-
-  export type fontes_pagadoras_viewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    nota_fiscal_id?: boolean
-    numero_da_os?: boolean
-    os_id?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    fonte_pagadora_id?: boolean
-    indicador?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }, ExtArgs["result"]["fontes_pagadoras_view"]>
-
-  export type fontes_pagadoras_viewSelectScalar = {
-    id?: boolean
-    numero_da_nota_fiscal?: boolean
-    serie_da_nota_fiscal?: boolean
-    nota_fiscal_id?: boolean
-    numero_da_os?: boolean
-    os_id?: boolean
-    numero_do_dn?: boolean
-    fonte_pagadora?: boolean
-    fonte_pagadora_id?: boolean
-    indicador?: boolean
-    parent?: boolean
-    parent_id?: boolean
-  }
-
-  export type fontes_pagadoras_viewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numero_da_nota_fiscal" | "serie_da_nota_fiscal" | "nota_fiscal_id" | "numero_da_os" | "os_id" | "numero_do_dn" | "fonte_pagadora" | "fonte_pagadora_id" | "indicador" | "parent" | "parent_id", ExtArgs["result"]["fontes_pagadoras_view"]>
-
-  export type $fontes_pagadoras_viewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "fontes_pagadoras_view"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: bigint
-      numero_da_nota_fiscal: string | null
-      serie_da_nota_fiscal: string | null
-      nota_fiscal_id: bigint | null
-      numero_da_os: string | null
-      os_id: bigint | null
-      numero_do_dn: string
-      fonte_pagadora: number
-      fonte_pagadora_id: bigint
-      indicador: string | null
-      parent: string
-      parent_id: bigint
-    }, ExtArgs["result"]["fontes_pagadoras_view"]>
-    composites: {}
-  }
-
-  type fontes_pagadoras_viewGetPayload<S extends boolean | null | undefined | fontes_pagadoras_viewDefaultArgs> = $Result.GetResult<Prisma.$fontes_pagadoras_viewPayload, S>
-
-  type fontes_pagadoras_viewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<fontes_pagadoras_viewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: Fontes_pagadoras_viewCountAggregateInputType | true
-    }
-
-  export interface fontes_pagadoras_viewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['fontes_pagadoras_view'], meta: { name: 'fontes_pagadoras_view' } }
-    /**
-     * Find zero or one Fontes_pagadoras_view that matches the filter.
-     * @param {fontes_pagadoras_viewFindUniqueArgs} args - Arguments to find a Fontes_pagadoras_view
-     * @example
-     * // Get one Fontes_pagadoras_view
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends fontes_pagadoras_viewFindUniqueArgs>(args: SelectSubset<T, fontes_pagadoras_viewFindUniqueArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Fontes_pagadoras_view that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {fontes_pagadoras_viewFindUniqueOrThrowArgs} args - Arguments to find a Fontes_pagadoras_view
-     * @example
-     * // Get one Fontes_pagadoras_view
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends fontes_pagadoras_viewFindUniqueOrThrowArgs>(args: SelectSubset<T, fontes_pagadoras_viewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Fontes_pagadoras_view that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fontes_pagadoras_viewFindFirstArgs} args - Arguments to find a Fontes_pagadoras_view
-     * @example
-     * // Get one Fontes_pagadoras_view
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends fontes_pagadoras_viewFindFirstArgs>(args?: SelectSubset<T, fontes_pagadoras_viewFindFirstArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Fontes_pagadoras_view that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fontes_pagadoras_viewFindFirstOrThrowArgs} args - Arguments to find a Fontes_pagadoras_view
-     * @example
-     * // Get one Fontes_pagadoras_view
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends fontes_pagadoras_viewFindFirstOrThrowArgs>(args?: SelectSubset<T, fontes_pagadoras_viewFindFirstOrThrowArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Fontes_pagadoras_views that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fontes_pagadoras_viewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Fontes_pagadoras_views
-     * const fontes_pagadoras_views = await prisma.fontes_pagadoras_view.findMany()
-     * 
-     * // Get first 10 Fontes_pagadoras_views
-     * const fontes_pagadoras_views = await prisma.fontes_pagadoras_view.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const fontes_pagadoras_viewWithIdOnly = await prisma.fontes_pagadoras_view.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends fontes_pagadoras_viewFindManyArgs>(args?: SelectSubset<T, fontes_pagadoras_viewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Fontes_pagadoras_view.
-     * @param {fontes_pagadoras_viewCreateArgs} args - Arguments to create a Fontes_pagadoras_view.
-     * @example
-     * // Create one Fontes_pagadoras_view
-     * const Fontes_pagadoras_view = await prisma.fontes_pagadoras_view.create({
-     *   data: {
-     *     // ... data to create a Fontes_pagadoras_view
-     *   }
-     * })
-     * 
-     */
-    create<T extends fontes_pagadoras_viewCreateArgs>(args: SelectSubset<T, fontes_pagadoras_viewCreateArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Fontes_pagadoras_views.
-     * @param {fontes_pagadoras_viewCreateManyArgs} args - Arguments to create many Fontes_pagadoras_views.
-     * @example
-     * // Create many Fontes_pagadoras_views
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends fontes_pagadoras_viewCreateManyArgs>(args?: SelectSubset<T, fontes_pagadoras_viewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Fontes_pagadoras_views and returns the data saved in the database.
-     * @param {fontes_pagadoras_viewCreateManyAndReturnArgs} args - Arguments to create many Fontes_pagadoras_views.
-     * @example
-     * // Create many Fontes_pagadoras_views
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Fontes_pagadoras_views and only return the `id`
-     * const fontes_pagadoras_viewWithIdOnly = await prisma.fontes_pagadoras_view.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends fontes_pagadoras_viewCreateManyAndReturnArgs>(args?: SelectSubset<T, fontes_pagadoras_viewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Fontes_pagadoras_view.
-     * @param {fontes_pagadoras_viewDeleteArgs} args - Arguments to delete one Fontes_pagadoras_view.
-     * @example
-     * // Delete one Fontes_pagadoras_view
-     * const Fontes_pagadoras_view = await prisma.fontes_pagadoras_view.delete({
-     *   where: {
-     *     // ... filter to delete one Fontes_pagadoras_view
-     *   }
-     * })
-     * 
-     */
-    delete<T extends fontes_pagadoras_viewDeleteArgs>(args: SelectSubset<T, fontes_pagadoras_viewDeleteArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Fontes_pagadoras_view.
-     * @param {fontes_pagadoras_viewUpdateArgs} args - Arguments to update one Fontes_pagadoras_view.
-     * @example
-     * // Update one Fontes_pagadoras_view
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends fontes_pagadoras_viewUpdateArgs>(args: SelectSubset<T, fontes_pagadoras_viewUpdateArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Fontes_pagadoras_views.
-     * @param {fontes_pagadoras_viewDeleteManyArgs} args - Arguments to filter Fontes_pagadoras_views to delete.
-     * @example
-     * // Delete a few Fontes_pagadoras_views
-     * const { count } = await prisma.fontes_pagadoras_view.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends fontes_pagadoras_viewDeleteManyArgs>(args?: SelectSubset<T, fontes_pagadoras_viewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Fontes_pagadoras_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fontes_pagadoras_viewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Fontes_pagadoras_views
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends fontes_pagadoras_viewUpdateManyArgs>(args: SelectSubset<T, fontes_pagadoras_viewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Fontes_pagadoras_views and returns the data updated in the database.
-     * @param {fontes_pagadoras_viewUpdateManyAndReturnArgs} args - Arguments to update many Fontes_pagadoras_views.
-     * @example
-     * // Update many Fontes_pagadoras_views
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Fontes_pagadoras_views and only return the `id`
-     * const fontes_pagadoras_viewWithIdOnly = await prisma.fontes_pagadoras_view.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends fontes_pagadoras_viewUpdateManyAndReturnArgs>(args: SelectSubset<T, fontes_pagadoras_viewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Fontes_pagadoras_view.
-     * @param {fontes_pagadoras_viewUpsertArgs} args - Arguments to update or create a Fontes_pagadoras_view.
-     * @example
-     * // Update or create a Fontes_pagadoras_view
-     * const fontes_pagadoras_view = await prisma.fontes_pagadoras_view.upsert({
-     *   create: {
-     *     // ... data to create a Fontes_pagadoras_view
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Fontes_pagadoras_view we want to update
-     *   }
-     * })
-     */
-    upsert<T extends fontes_pagadoras_viewUpsertArgs>(args: SelectSubset<T, fontes_pagadoras_viewUpsertArgs<ExtArgs>>): Prisma__fontes_pagadoras_viewClient<$Result.GetResult<Prisma.$fontes_pagadoras_viewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Fontes_pagadoras_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fontes_pagadoras_viewCountArgs} args - Arguments to filter Fontes_pagadoras_views to count.
-     * @example
-     * // Count the number of Fontes_pagadoras_views
-     * const count = await prisma.fontes_pagadoras_view.count({
-     *   where: {
-     *     // ... the filter for the Fontes_pagadoras_views we want to count
-     *   }
-     * })
-    **/
-    count<T extends fontes_pagadoras_viewCountArgs>(
-      args?: Subset<T, fontes_pagadoras_viewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Fontes_pagadoras_viewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Fontes_pagadoras_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Fontes_pagadoras_viewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Fontes_pagadoras_viewAggregateArgs>(args: Subset<T, Fontes_pagadoras_viewAggregateArgs>): Prisma.PrismaPromise<GetFontes_pagadoras_viewAggregateType<T>>
-
-    /**
-     * Group by Fontes_pagadoras_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {fontes_pagadoras_viewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends fontes_pagadoras_viewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: fontes_pagadoras_viewGroupByArgs['orderBy'] }
-        : { orderBy?: fontes_pagadoras_viewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, fontes_pagadoras_viewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFontes_pagadoras_viewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the fontes_pagadoras_view model
-   */
-  readonly fields: fontes_pagadoras_viewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for fontes_pagadoras_view.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__fontes_pagadoras_viewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the fontes_pagadoras_view model
-   */
-  interface fontes_pagadoras_viewFieldRefs {
-    readonly id: FieldRef<"fontes_pagadoras_view", 'BigInt'>
-    readonly numero_da_nota_fiscal: FieldRef<"fontes_pagadoras_view", 'String'>
-    readonly serie_da_nota_fiscal: FieldRef<"fontes_pagadoras_view", 'String'>
-    readonly nota_fiscal_id: FieldRef<"fontes_pagadoras_view", 'BigInt'>
-    readonly numero_da_os: FieldRef<"fontes_pagadoras_view", 'String'>
-    readonly os_id: FieldRef<"fontes_pagadoras_view", 'BigInt'>
-    readonly numero_do_dn: FieldRef<"fontes_pagadoras_view", 'String'>
-    readonly fonte_pagadora: FieldRef<"fontes_pagadoras_view", 'Int'>
-    readonly fonte_pagadora_id: FieldRef<"fontes_pagadoras_view", 'BigInt'>
-    readonly indicador: FieldRef<"fontes_pagadoras_view", 'String'>
-    readonly parent: FieldRef<"fontes_pagadoras_view", 'String'>
-    readonly parent_id: FieldRef<"fontes_pagadoras_view", 'BigInt'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * fontes_pagadoras_view findUnique
-   */
-  export type fontes_pagadoras_viewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which fontes_pagadoras_view to fetch.
-     */
-    where: fontes_pagadoras_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view findUniqueOrThrow
-   */
-  export type fontes_pagadoras_viewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which fontes_pagadoras_view to fetch.
-     */
-    where: fontes_pagadoras_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view findFirst
-   */
-  export type fontes_pagadoras_viewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which fontes_pagadoras_view to fetch.
-     */
-    where?: fontes_pagadoras_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of fontes_pagadoras_views to fetch.
-     */
-    orderBy?: fontes_pagadoras_viewOrderByWithRelationInput | fontes_pagadoras_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for fontes_pagadoras_views.
-     */
-    cursor?: fontes_pagadoras_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` fontes_pagadoras_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` fontes_pagadoras_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of fontes_pagadoras_views.
-     */
-    distinct?: Fontes_pagadoras_viewScalarFieldEnum | Fontes_pagadoras_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view findFirstOrThrow
-   */
-  export type fontes_pagadoras_viewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which fontes_pagadoras_view to fetch.
-     */
-    where?: fontes_pagadoras_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of fontes_pagadoras_views to fetch.
-     */
-    orderBy?: fontes_pagadoras_viewOrderByWithRelationInput | fontes_pagadoras_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for fontes_pagadoras_views.
-     */
-    cursor?: fontes_pagadoras_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` fontes_pagadoras_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` fontes_pagadoras_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of fontes_pagadoras_views.
-     */
-    distinct?: Fontes_pagadoras_viewScalarFieldEnum | Fontes_pagadoras_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view findMany
-   */
-  export type fontes_pagadoras_viewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which fontes_pagadoras_views to fetch.
-     */
-    where?: fontes_pagadoras_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of fontes_pagadoras_views to fetch.
-     */
-    orderBy?: fontes_pagadoras_viewOrderByWithRelationInput | fontes_pagadoras_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing fontes_pagadoras_views.
-     */
-    cursor?: fontes_pagadoras_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` fontes_pagadoras_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` fontes_pagadoras_views.
-     */
-    skip?: number
-    distinct?: Fontes_pagadoras_viewScalarFieldEnum | Fontes_pagadoras_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view create
-   */
-  export type fontes_pagadoras_viewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to create a fontes_pagadoras_view.
-     */
-    data: XOR<fontes_pagadoras_viewCreateInput, fontes_pagadoras_viewUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view createMany
-   */
-  export type fontes_pagadoras_viewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many fontes_pagadoras_views.
-     */
-    data: fontes_pagadoras_viewCreateManyInput | fontes_pagadoras_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * fontes_pagadoras_view createManyAndReturn
-   */
-  export type fontes_pagadoras_viewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * The data used to create many fontes_pagadoras_views.
-     */
-    data: fontes_pagadoras_viewCreateManyInput | fontes_pagadoras_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * fontes_pagadoras_view update
-   */
-  export type fontes_pagadoras_viewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to update a fontes_pagadoras_view.
-     */
-    data: XOR<fontes_pagadoras_viewUpdateInput, fontes_pagadoras_viewUncheckedUpdateInput>
-    /**
-     * Choose, which fontes_pagadoras_view to update.
-     */
-    where: fontes_pagadoras_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view updateMany
-   */
-  export type fontes_pagadoras_viewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update fontes_pagadoras_views.
-     */
-    data: XOR<fontes_pagadoras_viewUpdateManyMutationInput, fontes_pagadoras_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which fontes_pagadoras_views to update
-     */
-    where?: fontes_pagadoras_viewWhereInput
-    /**
-     * Limit how many fontes_pagadoras_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * fontes_pagadoras_view updateManyAndReturn
-   */
-  export type fontes_pagadoras_viewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * The data used to update fontes_pagadoras_views.
-     */
-    data: XOR<fontes_pagadoras_viewUpdateManyMutationInput, fontes_pagadoras_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which fontes_pagadoras_views to update
-     */
-    where?: fontes_pagadoras_viewWhereInput
-    /**
-     * Limit how many fontes_pagadoras_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * fontes_pagadoras_view upsert
-   */
-  export type fontes_pagadoras_viewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * The filter to search for the fontes_pagadoras_view to update in case it exists.
-     */
-    where: fontes_pagadoras_viewWhereUniqueInput
-    /**
-     * In case the fontes_pagadoras_view found by the `where` argument doesn't exist, create a new fontes_pagadoras_view with this data.
-     */
-    create: XOR<fontes_pagadoras_viewCreateInput, fontes_pagadoras_viewUncheckedCreateInput>
-    /**
-     * In case the fontes_pagadoras_view was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<fontes_pagadoras_viewUpdateInput, fontes_pagadoras_viewUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view delete
-   */
-  export type fontes_pagadoras_viewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-    /**
-     * Filter which fontes_pagadoras_view to delete.
-     */
-    where: fontes_pagadoras_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * fontes_pagadoras_view deleteMany
-   */
-  export type fontes_pagadoras_viewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which fontes_pagadoras_views to delete
-     */
-    where?: fontes_pagadoras_viewWhereInput
-    /**
-     * Limit how many fontes_pagadoras_views to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * fontes_pagadoras_view without action
-   */
-  export type fontes_pagadoras_viewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the fontes_pagadoras_view
-     */
-    select?: fontes_pagadoras_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the fontes_pagadoras_view
-     */
-    omit?: fontes_pagadoras_viewOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model pecas_balcao_view
-   */
-
-  export type AggregatePecas_balcao_view = {
-    _count: Pecas_balcao_viewCountAggregateOutputType | null
-    _avg: Pecas_balcao_viewAvgAggregateOutputType | null
-    _sum: Pecas_balcao_viewSumAggregateOutputType | null
-    _min: Pecas_balcao_viewMinAggregateOutputType | null
-    _max: Pecas_balcao_viewMaxAggregateOutputType | null
-  }
-
-  export type Pecas_balcao_viewAvgAggregateOutputType = {
-    qtd_pecas_balcao: number | null
-    vl_liq_peca_balcao: Decimal | null
-  }
-
-  export type Pecas_balcao_viewSumAggregateOutputType = {
-    qtd_pecas_balcao: bigint | null
-    vl_liq_peca_balcao: Decimal | null
-  }
-
-  export type Pecas_balcao_viewMinAggregateOutputType = {
-    numero_do_dn: string | null
-    mes_ano: string | null
-    qtd_pecas_balcao: bigint | null
-    vl_liq_peca_balcao: Decimal | null
-  }
-
-  export type Pecas_balcao_viewMaxAggregateOutputType = {
-    numero_do_dn: string | null
-    mes_ano: string | null
-    qtd_pecas_balcao: bigint | null
-    vl_liq_peca_balcao: Decimal | null
-  }
-
-  export type Pecas_balcao_viewCountAggregateOutputType = {
-    numero_do_dn: number
-    mes_ano: number
-    qtd_pecas_balcao: number
-    vl_liq_peca_balcao: number
-    _all: number
-  }
-
-
-  export type Pecas_balcao_viewAvgAggregateInputType = {
-    qtd_pecas_balcao?: true
-    vl_liq_peca_balcao?: true
-  }
-
-  export type Pecas_balcao_viewSumAggregateInputType = {
-    qtd_pecas_balcao?: true
-    vl_liq_peca_balcao?: true
-  }
-
-  export type Pecas_balcao_viewMinAggregateInputType = {
-    numero_do_dn?: true
-    mes_ano?: true
-    qtd_pecas_balcao?: true
-    vl_liq_peca_balcao?: true
-  }
-
-  export type Pecas_balcao_viewMaxAggregateInputType = {
-    numero_do_dn?: true
-    mes_ano?: true
-    qtd_pecas_balcao?: true
-    vl_liq_peca_balcao?: true
-  }
-
-  export type Pecas_balcao_viewCountAggregateInputType = {
-    numero_do_dn?: true
-    mes_ano?: true
-    qtd_pecas_balcao?: true
-    vl_liq_peca_balcao?: true
-    _all?: true
-  }
-
-  export type Pecas_balcao_viewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which pecas_balcao_view to aggregate.
-     */
-    where?: pecas_balcao_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_balcao_views to fetch.
-     */
-    orderBy?: pecas_balcao_viewOrderByWithRelationInput | pecas_balcao_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: pecas_balcao_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_balcao_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_balcao_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned pecas_balcao_views
-    **/
-    _count?: true | Pecas_balcao_viewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Pecas_balcao_viewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Pecas_balcao_viewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Pecas_balcao_viewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Pecas_balcao_viewMaxAggregateInputType
-  }
-
-  export type GetPecas_balcao_viewAggregateType<T extends Pecas_balcao_viewAggregateArgs> = {
-        [P in keyof T & keyof AggregatePecas_balcao_view]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePecas_balcao_view[P]>
-      : GetScalarType<T[P], AggregatePecas_balcao_view[P]>
-  }
-
-
-
-
-  export type pecas_balcao_viewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: pecas_balcao_viewWhereInput
-    orderBy?: pecas_balcao_viewOrderByWithAggregationInput | pecas_balcao_viewOrderByWithAggregationInput[]
-    by: Pecas_balcao_viewScalarFieldEnum[] | Pecas_balcao_viewScalarFieldEnum
-    having?: pecas_balcao_viewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Pecas_balcao_viewCountAggregateInputType | true
-    _avg?: Pecas_balcao_viewAvgAggregateInputType
-    _sum?: Pecas_balcao_viewSumAggregateInputType
-    _min?: Pecas_balcao_viewMinAggregateInputType
-    _max?: Pecas_balcao_viewMaxAggregateInputType
-  }
-
-  export type Pecas_balcao_viewGroupByOutputType = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_balcao: bigint
-    vl_liq_peca_balcao: Decimal
-    _count: Pecas_balcao_viewCountAggregateOutputType | null
-    _avg: Pecas_balcao_viewAvgAggregateOutputType | null
-    _sum: Pecas_balcao_viewSumAggregateOutputType | null
-    _min: Pecas_balcao_viewMinAggregateOutputType | null
-    _max: Pecas_balcao_viewMaxAggregateOutputType | null
-  }
-
-  type GetPecas_balcao_viewGroupByPayload<T extends pecas_balcao_viewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Pecas_balcao_viewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Pecas_balcao_viewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Pecas_balcao_viewGroupByOutputType[P]>
-            : GetScalarType<T[P], Pecas_balcao_viewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type pecas_balcao_viewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_balcao?: boolean
-    vl_liq_peca_balcao?: boolean
-  }, ExtArgs["result"]["pecas_balcao_view"]>
-
-  export type pecas_balcao_viewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_balcao?: boolean
-    vl_liq_peca_balcao?: boolean
-  }, ExtArgs["result"]["pecas_balcao_view"]>
-
-  export type pecas_balcao_viewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_balcao?: boolean
-    vl_liq_peca_balcao?: boolean
-  }, ExtArgs["result"]["pecas_balcao_view"]>
-
-  export type pecas_balcao_viewSelectScalar = {
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_balcao?: boolean
-    vl_liq_peca_balcao?: boolean
-  }
-
-  export type pecas_balcao_viewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"numero_do_dn" | "mes_ano" | "qtd_pecas_balcao" | "vl_liq_peca_balcao", ExtArgs["result"]["pecas_balcao_view"]>
-
-  export type $pecas_balcao_viewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "pecas_balcao_view"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      numero_do_dn: string
-      mes_ano: string
-      qtd_pecas_balcao: bigint
-      vl_liq_peca_balcao: Prisma.Decimal
-    }, ExtArgs["result"]["pecas_balcao_view"]>
-    composites: {}
-  }
-
-  type pecas_balcao_viewGetPayload<S extends boolean | null | undefined | pecas_balcao_viewDefaultArgs> = $Result.GetResult<Prisma.$pecas_balcao_viewPayload, S>
-
-  type pecas_balcao_viewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<pecas_balcao_viewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: Pecas_balcao_viewCountAggregateInputType | true
-    }
-
-  export interface pecas_balcao_viewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['pecas_balcao_view'], meta: { name: 'pecas_balcao_view' } }
-    /**
-     * Find zero or one Pecas_balcao_view that matches the filter.
-     * @param {pecas_balcao_viewFindUniqueArgs} args - Arguments to find a Pecas_balcao_view
-     * @example
-     * // Get one Pecas_balcao_view
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends pecas_balcao_viewFindUniqueArgs>(args: SelectSubset<T, pecas_balcao_viewFindUniqueArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Pecas_balcao_view that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {pecas_balcao_viewFindUniqueOrThrowArgs} args - Arguments to find a Pecas_balcao_view
-     * @example
-     * // Get one Pecas_balcao_view
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends pecas_balcao_viewFindUniqueOrThrowArgs>(args: SelectSubset<T, pecas_balcao_viewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Pecas_balcao_view that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_balcao_viewFindFirstArgs} args - Arguments to find a Pecas_balcao_view
-     * @example
-     * // Get one Pecas_balcao_view
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends pecas_balcao_viewFindFirstArgs>(args?: SelectSubset<T, pecas_balcao_viewFindFirstArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Pecas_balcao_view that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_balcao_viewFindFirstOrThrowArgs} args - Arguments to find a Pecas_balcao_view
-     * @example
-     * // Get one Pecas_balcao_view
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends pecas_balcao_viewFindFirstOrThrowArgs>(args?: SelectSubset<T, pecas_balcao_viewFindFirstOrThrowArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Pecas_balcao_views that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_balcao_viewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Pecas_balcao_views
-     * const pecas_balcao_views = await prisma.pecas_balcao_view.findMany()
-     * 
-     * // Get first 10 Pecas_balcao_views
-     * const pecas_balcao_views = await prisma.pecas_balcao_view.findMany({ take: 10 })
-     * 
-     * // Only select the `numero_do_dn`
-     * const pecas_balcao_viewWithNumero_do_dnOnly = await prisma.pecas_balcao_view.findMany({ select: { numero_do_dn: true } })
-     * 
-     */
-    findMany<T extends pecas_balcao_viewFindManyArgs>(args?: SelectSubset<T, pecas_balcao_viewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Pecas_balcao_view.
-     * @param {pecas_balcao_viewCreateArgs} args - Arguments to create a Pecas_balcao_view.
-     * @example
-     * // Create one Pecas_balcao_view
-     * const Pecas_balcao_view = await prisma.pecas_balcao_view.create({
-     *   data: {
-     *     // ... data to create a Pecas_balcao_view
-     *   }
-     * })
-     * 
-     */
-    create<T extends pecas_balcao_viewCreateArgs>(args: SelectSubset<T, pecas_balcao_viewCreateArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Pecas_balcao_views.
-     * @param {pecas_balcao_viewCreateManyArgs} args - Arguments to create many Pecas_balcao_views.
-     * @example
-     * // Create many Pecas_balcao_views
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends pecas_balcao_viewCreateManyArgs>(args?: SelectSubset<T, pecas_balcao_viewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Pecas_balcao_views and returns the data saved in the database.
-     * @param {pecas_balcao_viewCreateManyAndReturnArgs} args - Arguments to create many Pecas_balcao_views.
-     * @example
-     * // Create many Pecas_balcao_views
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Pecas_balcao_views and only return the `numero_do_dn`
-     * const pecas_balcao_viewWithNumero_do_dnOnly = await prisma.pecas_balcao_view.createManyAndReturn({
-     *   select: { numero_do_dn: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends pecas_balcao_viewCreateManyAndReturnArgs>(args?: SelectSubset<T, pecas_balcao_viewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Pecas_balcao_view.
-     * @param {pecas_balcao_viewDeleteArgs} args - Arguments to delete one Pecas_balcao_view.
-     * @example
-     * // Delete one Pecas_balcao_view
-     * const Pecas_balcao_view = await prisma.pecas_balcao_view.delete({
-     *   where: {
-     *     // ... filter to delete one Pecas_balcao_view
-     *   }
-     * })
-     * 
-     */
-    delete<T extends pecas_balcao_viewDeleteArgs>(args: SelectSubset<T, pecas_balcao_viewDeleteArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Pecas_balcao_view.
-     * @param {pecas_balcao_viewUpdateArgs} args - Arguments to update one Pecas_balcao_view.
-     * @example
-     * // Update one Pecas_balcao_view
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends pecas_balcao_viewUpdateArgs>(args: SelectSubset<T, pecas_balcao_viewUpdateArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Pecas_balcao_views.
-     * @param {pecas_balcao_viewDeleteManyArgs} args - Arguments to filter Pecas_balcao_views to delete.
-     * @example
-     * // Delete a few Pecas_balcao_views
-     * const { count } = await prisma.pecas_balcao_view.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends pecas_balcao_viewDeleteManyArgs>(args?: SelectSubset<T, pecas_balcao_viewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Pecas_balcao_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_balcao_viewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Pecas_balcao_views
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends pecas_balcao_viewUpdateManyArgs>(args: SelectSubset<T, pecas_balcao_viewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Pecas_balcao_views and returns the data updated in the database.
-     * @param {pecas_balcao_viewUpdateManyAndReturnArgs} args - Arguments to update many Pecas_balcao_views.
-     * @example
-     * // Update many Pecas_balcao_views
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Pecas_balcao_views and only return the `numero_do_dn`
-     * const pecas_balcao_viewWithNumero_do_dnOnly = await prisma.pecas_balcao_view.updateManyAndReturn({
-     *   select: { numero_do_dn: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends pecas_balcao_viewUpdateManyAndReturnArgs>(args: SelectSubset<T, pecas_balcao_viewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Pecas_balcao_view.
-     * @param {pecas_balcao_viewUpsertArgs} args - Arguments to update or create a Pecas_balcao_view.
-     * @example
-     * // Update or create a Pecas_balcao_view
-     * const pecas_balcao_view = await prisma.pecas_balcao_view.upsert({
-     *   create: {
-     *     // ... data to create a Pecas_balcao_view
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Pecas_balcao_view we want to update
-     *   }
-     * })
-     */
-    upsert<T extends pecas_balcao_viewUpsertArgs>(args: SelectSubset<T, pecas_balcao_viewUpsertArgs<ExtArgs>>): Prisma__pecas_balcao_viewClient<$Result.GetResult<Prisma.$pecas_balcao_viewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Pecas_balcao_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_balcao_viewCountArgs} args - Arguments to filter Pecas_balcao_views to count.
-     * @example
-     * // Count the number of Pecas_balcao_views
-     * const count = await prisma.pecas_balcao_view.count({
-     *   where: {
-     *     // ... the filter for the Pecas_balcao_views we want to count
-     *   }
-     * })
-    **/
-    count<T extends pecas_balcao_viewCountArgs>(
-      args?: Subset<T, pecas_balcao_viewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Pecas_balcao_viewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Pecas_balcao_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Pecas_balcao_viewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Pecas_balcao_viewAggregateArgs>(args: Subset<T, Pecas_balcao_viewAggregateArgs>): Prisma.PrismaPromise<GetPecas_balcao_viewAggregateType<T>>
-
-    /**
-     * Group by Pecas_balcao_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_balcao_viewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends pecas_balcao_viewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: pecas_balcao_viewGroupByArgs['orderBy'] }
-        : { orderBy?: pecas_balcao_viewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, pecas_balcao_viewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPecas_balcao_viewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the pecas_balcao_view model
-   */
-  readonly fields: pecas_balcao_viewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for pecas_balcao_view.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__pecas_balcao_viewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the pecas_balcao_view model
-   */
-  interface pecas_balcao_viewFieldRefs {
-    readonly numero_do_dn: FieldRef<"pecas_balcao_view", 'String'>
-    readonly mes_ano: FieldRef<"pecas_balcao_view", 'String'>
-    readonly qtd_pecas_balcao: FieldRef<"pecas_balcao_view", 'BigInt'>
-    readonly vl_liq_peca_balcao: FieldRef<"pecas_balcao_view", 'Decimal'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * pecas_balcao_view findUnique
-   */
-  export type pecas_balcao_viewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_balcao_view to fetch.
-     */
-    where: pecas_balcao_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view findUniqueOrThrow
-   */
-  export type pecas_balcao_viewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_balcao_view to fetch.
-     */
-    where: pecas_balcao_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view findFirst
-   */
-  export type pecas_balcao_viewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_balcao_view to fetch.
-     */
-    where?: pecas_balcao_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_balcao_views to fetch.
-     */
-    orderBy?: pecas_balcao_viewOrderByWithRelationInput | pecas_balcao_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for pecas_balcao_views.
-     */
-    cursor?: pecas_balcao_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_balcao_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_balcao_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of pecas_balcao_views.
-     */
-    distinct?: Pecas_balcao_viewScalarFieldEnum | Pecas_balcao_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view findFirstOrThrow
-   */
-  export type pecas_balcao_viewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_balcao_view to fetch.
-     */
-    where?: pecas_balcao_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_balcao_views to fetch.
-     */
-    orderBy?: pecas_balcao_viewOrderByWithRelationInput | pecas_balcao_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for pecas_balcao_views.
-     */
-    cursor?: pecas_balcao_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_balcao_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_balcao_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of pecas_balcao_views.
-     */
-    distinct?: Pecas_balcao_viewScalarFieldEnum | Pecas_balcao_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view findMany
-   */
-  export type pecas_balcao_viewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_balcao_views to fetch.
-     */
-    where?: pecas_balcao_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_balcao_views to fetch.
-     */
-    orderBy?: pecas_balcao_viewOrderByWithRelationInput | pecas_balcao_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing pecas_balcao_views.
-     */
-    cursor?: pecas_balcao_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_balcao_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_balcao_views.
-     */
-    skip?: number
-    distinct?: Pecas_balcao_viewScalarFieldEnum | Pecas_balcao_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view create
-   */
-  export type pecas_balcao_viewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to create a pecas_balcao_view.
-     */
-    data: XOR<pecas_balcao_viewCreateInput, pecas_balcao_viewUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view createMany
-   */
-  export type pecas_balcao_viewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many pecas_balcao_views.
-     */
-    data: pecas_balcao_viewCreateManyInput | pecas_balcao_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * pecas_balcao_view createManyAndReturn
-   */
-  export type pecas_balcao_viewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * The data used to create many pecas_balcao_views.
-     */
-    data: pecas_balcao_viewCreateManyInput | pecas_balcao_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * pecas_balcao_view update
-   */
-  export type pecas_balcao_viewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to update a pecas_balcao_view.
-     */
-    data: XOR<pecas_balcao_viewUpdateInput, pecas_balcao_viewUncheckedUpdateInput>
-    /**
-     * Choose, which pecas_balcao_view to update.
-     */
-    where: pecas_balcao_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view updateMany
-   */
-  export type pecas_balcao_viewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update pecas_balcao_views.
-     */
-    data: XOR<pecas_balcao_viewUpdateManyMutationInput, pecas_balcao_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which pecas_balcao_views to update
-     */
-    where?: pecas_balcao_viewWhereInput
-    /**
-     * Limit how many pecas_balcao_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_balcao_view updateManyAndReturn
-   */
-  export type pecas_balcao_viewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * The data used to update pecas_balcao_views.
-     */
-    data: XOR<pecas_balcao_viewUpdateManyMutationInput, pecas_balcao_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which pecas_balcao_views to update
-     */
-    where?: pecas_balcao_viewWhereInput
-    /**
-     * Limit how many pecas_balcao_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_balcao_view upsert
-   */
-  export type pecas_balcao_viewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * The filter to search for the pecas_balcao_view to update in case it exists.
-     */
-    where: pecas_balcao_viewWhereUniqueInput
-    /**
-     * In case the pecas_balcao_view found by the `where` argument doesn't exist, create a new pecas_balcao_view with this data.
-     */
-    create: XOR<pecas_balcao_viewCreateInput, pecas_balcao_viewUncheckedCreateInput>
-    /**
-     * In case the pecas_balcao_view was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<pecas_balcao_viewUpdateInput, pecas_balcao_viewUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view delete
-   */
-  export type pecas_balcao_viewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-    /**
-     * Filter which pecas_balcao_view to delete.
-     */
-    where: pecas_balcao_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_balcao_view deleteMany
-   */
-  export type pecas_balcao_viewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which pecas_balcao_views to delete
-     */
-    where?: pecas_balcao_viewWhereInput
-    /**
-     * Limit how many pecas_balcao_views to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_balcao_view without action
-   */
-  export type pecas_balcao_viewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_balcao_view
-     */
-    select?: pecas_balcao_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_balcao_view
-     */
-    omit?: pecas_balcao_viewOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model pecas_oficina_view
-   */
-
-  export type AggregatePecas_oficina_view = {
-    _count: Pecas_oficina_viewCountAggregateOutputType | null
-    _avg: Pecas_oficina_viewAvgAggregateOutputType | null
-    _sum: Pecas_oficina_viewSumAggregateOutputType | null
-    _min: Pecas_oficina_viewMinAggregateOutputType | null
-    _max: Pecas_oficina_viewMaxAggregateOutputType | null
-  }
-
-  export type Pecas_oficina_viewAvgAggregateOutputType = {
-    qtd_pecas_oficina: number | null
-    vl_liq_peca_oficina: Decimal | null
-    qtd_hora_vendida: number | null
-    vl_liq_mao_obra: Decimal | null
-  }
-
-  export type Pecas_oficina_viewSumAggregateOutputType = {
-    qtd_pecas_oficina: bigint | null
-    vl_liq_peca_oficina: Decimal | null
-    qtd_hora_vendida: number | null
-    vl_liq_mao_obra: Decimal | null
-  }
-
-  export type Pecas_oficina_viewMinAggregateOutputType = {
-    numero_do_dn: string | null
-    mes_ano: string | null
-    qtd_pecas_oficina: bigint | null
-    vl_liq_peca_oficina: Decimal | null
-    qtd_hora_vendida: number | null
-    vl_liq_mao_obra: Decimal | null
-  }
-
-  export type Pecas_oficina_viewMaxAggregateOutputType = {
-    numero_do_dn: string | null
-    mes_ano: string | null
-    qtd_pecas_oficina: bigint | null
-    vl_liq_peca_oficina: Decimal | null
-    qtd_hora_vendida: number | null
-    vl_liq_mao_obra: Decimal | null
-  }
-
-  export type Pecas_oficina_viewCountAggregateOutputType = {
-    numero_do_dn: number
-    mes_ano: number
-    qtd_pecas_oficina: number
-    vl_liq_peca_oficina: number
-    qtd_hora_vendida: number
-    vl_liq_mao_obra: number
-    _all: number
-  }
-
-
-  export type Pecas_oficina_viewAvgAggregateInputType = {
-    qtd_pecas_oficina?: true
-    vl_liq_peca_oficina?: true
-    qtd_hora_vendida?: true
-    vl_liq_mao_obra?: true
-  }
-
-  export type Pecas_oficina_viewSumAggregateInputType = {
-    qtd_pecas_oficina?: true
-    vl_liq_peca_oficina?: true
-    qtd_hora_vendida?: true
-    vl_liq_mao_obra?: true
-  }
-
-  export type Pecas_oficina_viewMinAggregateInputType = {
-    numero_do_dn?: true
-    mes_ano?: true
-    qtd_pecas_oficina?: true
-    vl_liq_peca_oficina?: true
-    qtd_hora_vendida?: true
-    vl_liq_mao_obra?: true
-  }
-
-  export type Pecas_oficina_viewMaxAggregateInputType = {
-    numero_do_dn?: true
-    mes_ano?: true
-    qtd_pecas_oficina?: true
-    vl_liq_peca_oficina?: true
-    qtd_hora_vendida?: true
-    vl_liq_mao_obra?: true
-  }
-
-  export type Pecas_oficina_viewCountAggregateInputType = {
-    numero_do_dn?: true
-    mes_ano?: true
-    qtd_pecas_oficina?: true
-    vl_liq_peca_oficina?: true
-    qtd_hora_vendida?: true
-    vl_liq_mao_obra?: true
-    _all?: true
-  }
-
-  export type Pecas_oficina_viewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which pecas_oficina_view to aggregate.
-     */
-    where?: pecas_oficina_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_oficina_views to fetch.
-     */
-    orderBy?: pecas_oficina_viewOrderByWithRelationInput | pecas_oficina_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: pecas_oficina_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_oficina_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_oficina_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned pecas_oficina_views
-    **/
-    _count?: true | Pecas_oficina_viewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Pecas_oficina_viewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Pecas_oficina_viewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Pecas_oficina_viewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Pecas_oficina_viewMaxAggregateInputType
-  }
-
-  export type GetPecas_oficina_viewAggregateType<T extends Pecas_oficina_viewAggregateArgs> = {
-        [P in keyof T & keyof AggregatePecas_oficina_view]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePecas_oficina_view[P]>
-      : GetScalarType<T[P], AggregatePecas_oficina_view[P]>
-  }
-
-
-
-
-  export type pecas_oficina_viewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: pecas_oficina_viewWhereInput
-    orderBy?: pecas_oficina_viewOrderByWithAggregationInput | pecas_oficina_viewOrderByWithAggregationInput[]
-    by: Pecas_oficina_viewScalarFieldEnum[] | Pecas_oficina_viewScalarFieldEnum
-    having?: pecas_oficina_viewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Pecas_oficina_viewCountAggregateInputType | true
-    _avg?: Pecas_oficina_viewAvgAggregateInputType
-    _sum?: Pecas_oficina_viewSumAggregateInputType
-    _min?: Pecas_oficina_viewMinAggregateInputType
-    _max?: Pecas_oficina_viewMaxAggregateInputType
-  }
-
-  export type Pecas_oficina_viewGroupByOutputType = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_oficina: bigint
-    vl_liq_peca_oficina: Decimal
-    qtd_hora_vendida: number
-    vl_liq_mao_obra: Decimal
-    _count: Pecas_oficina_viewCountAggregateOutputType | null
-    _avg: Pecas_oficina_viewAvgAggregateOutputType | null
-    _sum: Pecas_oficina_viewSumAggregateOutputType | null
-    _min: Pecas_oficina_viewMinAggregateOutputType | null
-    _max: Pecas_oficina_viewMaxAggregateOutputType | null
-  }
-
-  type GetPecas_oficina_viewGroupByPayload<T extends pecas_oficina_viewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Pecas_oficina_viewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Pecas_oficina_viewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Pecas_oficina_viewGroupByOutputType[P]>
-            : GetScalarType<T[P], Pecas_oficina_viewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type pecas_oficina_viewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_oficina?: boolean
-    vl_liq_peca_oficina?: boolean
-    qtd_hora_vendida?: boolean
-    vl_liq_mao_obra?: boolean
-  }, ExtArgs["result"]["pecas_oficina_view"]>
-
-  export type pecas_oficina_viewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_oficina?: boolean
-    vl_liq_peca_oficina?: boolean
-    qtd_hora_vendida?: boolean
-    vl_liq_mao_obra?: boolean
-  }, ExtArgs["result"]["pecas_oficina_view"]>
-
-  export type pecas_oficina_viewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_oficina?: boolean
-    vl_liq_peca_oficina?: boolean
-    qtd_hora_vendida?: boolean
-    vl_liq_mao_obra?: boolean
-  }, ExtArgs["result"]["pecas_oficina_view"]>
-
-  export type pecas_oficina_viewSelectScalar = {
-    numero_do_dn?: boolean
-    mes_ano?: boolean
-    qtd_pecas_oficina?: boolean
-    vl_liq_peca_oficina?: boolean
-    qtd_hora_vendida?: boolean
-    vl_liq_mao_obra?: boolean
-  }
-
-  export type pecas_oficina_viewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"numero_do_dn" | "mes_ano" | "qtd_pecas_oficina" | "vl_liq_peca_oficina" | "qtd_hora_vendida" | "vl_liq_mao_obra", ExtArgs["result"]["pecas_oficina_view"]>
-
-  export type $pecas_oficina_viewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "pecas_oficina_view"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      numero_do_dn: string
-      mes_ano: string
-      qtd_pecas_oficina: bigint
-      vl_liq_peca_oficina: Prisma.Decimal
-      qtd_hora_vendida: number
-      vl_liq_mao_obra: Prisma.Decimal
-    }, ExtArgs["result"]["pecas_oficina_view"]>
-    composites: {}
-  }
-
-  type pecas_oficina_viewGetPayload<S extends boolean | null | undefined | pecas_oficina_viewDefaultArgs> = $Result.GetResult<Prisma.$pecas_oficina_viewPayload, S>
-
-  type pecas_oficina_viewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<pecas_oficina_viewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: Pecas_oficina_viewCountAggregateInputType | true
-    }
-
-  export interface pecas_oficina_viewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['pecas_oficina_view'], meta: { name: 'pecas_oficina_view' } }
-    /**
-     * Find zero or one Pecas_oficina_view that matches the filter.
-     * @param {pecas_oficina_viewFindUniqueArgs} args - Arguments to find a Pecas_oficina_view
-     * @example
-     * // Get one Pecas_oficina_view
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends pecas_oficina_viewFindUniqueArgs>(args: SelectSubset<T, pecas_oficina_viewFindUniqueArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Pecas_oficina_view that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {pecas_oficina_viewFindUniqueOrThrowArgs} args - Arguments to find a Pecas_oficina_view
-     * @example
-     * // Get one Pecas_oficina_view
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends pecas_oficina_viewFindUniqueOrThrowArgs>(args: SelectSubset<T, pecas_oficina_viewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Pecas_oficina_view that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_oficina_viewFindFirstArgs} args - Arguments to find a Pecas_oficina_view
-     * @example
-     * // Get one Pecas_oficina_view
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends pecas_oficina_viewFindFirstArgs>(args?: SelectSubset<T, pecas_oficina_viewFindFirstArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Pecas_oficina_view that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_oficina_viewFindFirstOrThrowArgs} args - Arguments to find a Pecas_oficina_view
-     * @example
-     * // Get one Pecas_oficina_view
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends pecas_oficina_viewFindFirstOrThrowArgs>(args?: SelectSubset<T, pecas_oficina_viewFindFirstOrThrowArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Pecas_oficina_views that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_oficina_viewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Pecas_oficina_views
-     * const pecas_oficina_views = await prisma.pecas_oficina_view.findMany()
-     * 
-     * // Get first 10 Pecas_oficina_views
-     * const pecas_oficina_views = await prisma.pecas_oficina_view.findMany({ take: 10 })
-     * 
-     * // Only select the `numero_do_dn`
-     * const pecas_oficina_viewWithNumero_do_dnOnly = await prisma.pecas_oficina_view.findMany({ select: { numero_do_dn: true } })
-     * 
-     */
-    findMany<T extends pecas_oficina_viewFindManyArgs>(args?: SelectSubset<T, pecas_oficina_viewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Pecas_oficina_view.
-     * @param {pecas_oficina_viewCreateArgs} args - Arguments to create a Pecas_oficina_view.
-     * @example
-     * // Create one Pecas_oficina_view
-     * const Pecas_oficina_view = await prisma.pecas_oficina_view.create({
-     *   data: {
-     *     // ... data to create a Pecas_oficina_view
-     *   }
-     * })
-     * 
-     */
-    create<T extends pecas_oficina_viewCreateArgs>(args: SelectSubset<T, pecas_oficina_viewCreateArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Pecas_oficina_views.
-     * @param {pecas_oficina_viewCreateManyArgs} args - Arguments to create many Pecas_oficina_views.
-     * @example
-     * // Create many Pecas_oficina_views
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends pecas_oficina_viewCreateManyArgs>(args?: SelectSubset<T, pecas_oficina_viewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Pecas_oficina_views and returns the data saved in the database.
-     * @param {pecas_oficina_viewCreateManyAndReturnArgs} args - Arguments to create many Pecas_oficina_views.
-     * @example
-     * // Create many Pecas_oficina_views
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Pecas_oficina_views and only return the `numero_do_dn`
-     * const pecas_oficina_viewWithNumero_do_dnOnly = await prisma.pecas_oficina_view.createManyAndReturn({
-     *   select: { numero_do_dn: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends pecas_oficina_viewCreateManyAndReturnArgs>(args?: SelectSubset<T, pecas_oficina_viewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Pecas_oficina_view.
-     * @param {pecas_oficina_viewDeleteArgs} args - Arguments to delete one Pecas_oficina_view.
-     * @example
-     * // Delete one Pecas_oficina_view
-     * const Pecas_oficina_view = await prisma.pecas_oficina_view.delete({
-     *   where: {
-     *     // ... filter to delete one Pecas_oficina_view
-     *   }
-     * })
-     * 
-     */
-    delete<T extends pecas_oficina_viewDeleteArgs>(args: SelectSubset<T, pecas_oficina_viewDeleteArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Pecas_oficina_view.
-     * @param {pecas_oficina_viewUpdateArgs} args - Arguments to update one Pecas_oficina_view.
-     * @example
-     * // Update one Pecas_oficina_view
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends pecas_oficina_viewUpdateArgs>(args: SelectSubset<T, pecas_oficina_viewUpdateArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Pecas_oficina_views.
-     * @param {pecas_oficina_viewDeleteManyArgs} args - Arguments to filter Pecas_oficina_views to delete.
-     * @example
-     * // Delete a few Pecas_oficina_views
-     * const { count } = await prisma.pecas_oficina_view.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends pecas_oficina_viewDeleteManyArgs>(args?: SelectSubset<T, pecas_oficina_viewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Pecas_oficina_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_oficina_viewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Pecas_oficina_views
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends pecas_oficina_viewUpdateManyArgs>(args: SelectSubset<T, pecas_oficina_viewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Pecas_oficina_views and returns the data updated in the database.
-     * @param {pecas_oficina_viewUpdateManyAndReturnArgs} args - Arguments to update many Pecas_oficina_views.
-     * @example
-     * // Update many Pecas_oficina_views
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Pecas_oficina_views and only return the `numero_do_dn`
-     * const pecas_oficina_viewWithNumero_do_dnOnly = await prisma.pecas_oficina_view.updateManyAndReturn({
-     *   select: { numero_do_dn: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends pecas_oficina_viewUpdateManyAndReturnArgs>(args: SelectSubset<T, pecas_oficina_viewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Pecas_oficina_view.
-     * @param {pecas_oficina_viewUpsertArgs} args - Arguments to update or create a Pecas_oficina_view.
-     * @example
-     * // Update or create a Pecas_oficina_view
-     * const pecas_oficina_view = await prisma.pecas_oficina_view.upsert({
-     *   create: {
-     *     // ... data to create a Pecas_oficina_view
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Pecas_oficina_view we want to update
-     *   }
-     * })
-     */
-    upsert<T extends pecas_oficina_viewUpsertArgs>(args: SelectSubset<T, pecas_oficina_viewUpsertArgs<ExtArgs>>): Prisma__pecas_oficina_viewClient<$Result.GetResult<Prisma.$pecas_oficina_viewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Pecas_oficina_views.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_oficina_viewCountArgs} args - Arguments to filter Pecas_oficina_views to count.
-     * @example
-     * // Count the number of Pecas_oficina_views
-     * const count = await prisma.pecas_oficina_view.count({
-     *   where: {
-     *     // ... the filter for the Pecas_oficina_views we want to count
-     *   }
-     * })
-    **/
-    count<T extends pecas_oficina_viewCountArgs>(
-      args?: Subset<T, pecas_oficina_viewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Pecas_oficina_viewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Pecas_oficina_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Pecas_oficina_viewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Pecas_oficina_viewAggregateArgs>(args: Subset<T, Pecas_oficina_viewAggregateArgs>): Prisma.PrismaPromise<GetPecas_oficina_viewAggregateType<T>>
-
-    /**
-     * Group by Pecas_oficina_view.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {pecas_oficina_viewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends pecas_oficina_viewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: pecas_oficina_viewGroupByArgs['orderBy'] }
-        : { orderBy?: pecas_oficina_viewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, pecas_oficina_viewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPecas_oficina_viewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the pecas_oficina_view model
-   */
-  readonly fields: pecas_oficina_viewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for pecas_oficina_view.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__pecas_oficina_viewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the pecas_oficina_view model
-   */
-  interface pecas_oficina_viewFieldRefs {
-    readonly numero_do_dn: FieldRef<"pecas_oficina_view", 'String'>
-    readonly mes_ano: FieldRef<"pecas_oficina_view", 'String'>
-    readonly qtd_pecas_oficina: FieldRef<"pecas_oficina_view", 'BigInt'>
-    readonly vl_liq_peca_oficina: FieldRef<"pecas_oficina_view", 'Decimal'>
-    readonly qtd_hora_vendida: FieldRef<"pecas_oficina_view", 'Float'>
-    readonly vl_liq_mao_obra: FieldRef<"pecas_oficina_view", 'Decimal'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * pecas_oficina_view findUnique
-   */
-  export type pecas_oficina_viewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_oficina_view to fetch.
-     */
-    where: pecas_oficina_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view findUniqueOrThrow
-   */
-  export type pecas_oficina_viewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_oficina_view to fetch.
-     */
-    where: pecas_oficina_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view findFirst
-   */
-  export type pecas_oficina_viewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_oficina_view to fetch.
-     */
-    where?: pecas_oficina_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_oficina_views to fetch.
-     */
-    orderBy?: pecas_oficina_viewOrderByWithRelationInput | pecas_oficina_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for pecas_oficina_views.
-     */
-    cursor?: pecas_oficina_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_oficina_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_oficina_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of pecas_oficina_views.
-     */
-    distinct?: Pecas_oficina_viewScalarFieldEnum | Pecas_oficina_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view findFirstOrThrow
-   */
-  export type pecas_oficina_viewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_oficina_view to fetch.
-     */
-    where?: pecas_oficina_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_oficina_views to fetch.
-     */
-    orderBy?: pecas_oficina_viewOrderByWithRelationInput | pecas_oficina_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for pecas_oficina_views.
-     */
-    cursor?: pecas_oficina_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_oficina_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_oficina_views.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of pecas_oficina_views.
-     */
-    distinct?: Pecas_oficina_viewScalarFieldEnum | Pecas_oficina_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view findMany
-   */
-  export type pecas_oficina_viewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * Filter, which pecas_oficina_views to fetch.
-     */
-    where?: pecas_oficina_viewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of pecas_oficina_views to fetch.
-     */
-    orderBy?: pecas_oficina_viewOrderByWithRelationInput | pecas_oficina_viewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing pecas_oficina_views.
-     */
-    cursor?: pecas_oficina_viewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` pecas_oficina_views from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` pecas_oficina_views.
-     */
-    skip?: number
-    distinct?: Pecas_oficina_viewScalarFieldEnum | Pecas_oficina_viewScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view create
-   */
-  export type pecas_oficina_viewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to create a pecas_oficina_view.
-     */
-    data: XOR<pecas_oficina_viewCreateInput, pecas_oficina_viewUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view createMany
-   */
-  export type pecas_oficina_viewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many pecas_oficina_views.
-     */
-    data: pecas_oficina_viewCreateManyInput | pecas_oficina_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * pecas_oficina_view createManyAndReturn
-   */
-  export type pecas_oficina_viewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * The data used to create many pecas_oficina_views.
-     */
-    data: pecas_oficina_viewCreateManyInput | pecas_oficina_viewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * pecas_oficina_view update
-   */
-  export type pecas_oficina_viewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * The data needed to update a pecas_oficina_view.
-     */
-    data: XOR<pecas_oficina_viewUpdateInput, pecas_oficina_viewUncheckedUpdateInput>
-    /**
-     * Choose, which pecas_oficina_view to update.
-     */
-    where: pecas_oficina_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view updateMany
-   */
-  export type pecas_oficina_viewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update pecas_oficina_views.
-     */
-    data: XOR<pecas_oficina_viewUpdateManyMutationInput, pecas_oficina_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which pecas_oficina_views to update
-     */
-    where?: pecas_oficina_viewWhereInput
-    /**
-     * Limit how many pecas_oficina_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_oficina_view updateManyAndReturn
-   */
-  export type pecas_oficina_viewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * The data used to update pecas_oficina_views.
-     */
-    data: XOR<pecas_oficina_viewUpdateManyMutationInput, pecas_oficina_viewUncheckedUpdateManyInput>
-    /**
-     * Filter which pecas_oficina_views to update
-     */
-    where?: pecas_oficina_viewWhereInput
-    /**
-     * Limit how many pecas_oficina_views to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_oficina_view upsert
-   */
-  export type pecas_oficina_viewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * The filter to search for the pecas_oficina_view to update in case it exists.
-     */
-    where: pecas_oficina_viewWhereUniqueInput
-    /**
-     * In case the pecas_oficina_view found by the `where` argument doesn't exist, create a new pecas_oficina_view with this data.
-     */
-    create: XOR<pecas_oficina_viewCreateInput, pecas_oficina_viewUncheckedCreateInput>
-    /**
-     * In case the pecas_oficina_view was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<pecas_oficina_viewUpdateInput, pecas_oficina_viewUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view delete
-   */
-  export type pecas_oficina_viewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-    /**
-     * Filter which pecas_oficina_view to delete.
-     */
-    where: pecas_oficina_viewWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * pecas_oficina_view deleteMany
-   */
-  export type pecas_oficina_viewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which pecas_oficina_views to delete
-     */
-    where?: pecas_oficina_viewWhereInput
-    /**
-     * Limit how many pecas_oficina_views to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * pecas_oficina_view without action
-   */
-  export type pecas_oficina_viewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the pecas_oficina_view
-     */
-    select?: pecas_oficina_viewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the pecas_oficina_view
-     */
-    omit?: pecas_oficina_viewOmit<ExtArgs> | null
-  }
-
-
-  /**
    * Enums
    */
 
@@ -38216,6 +29825,8 @@ export namespace Prisma {
     day: 'day',
     month: 'month',
     year: 'year',
+    hour: 'hour',
+    minute: 'minute',
     ck3001: 'ck3001',
     ck3002: 'ck3002',
     ck3003: 'ck3003',
@@ -38271,117 +29882,6 @@ export namespace Prisma {
   export type TelefonesScalarFieldEnum = (typeof TelefonesScalarFieldEnum)[keyof typeof TelefonesScalarFieldEnum]
 
 
-  export const Servicos_viewScalarFieldEnum: {
-    id: 'id',
-    cos: 'cos',
-    descricao_do_servico: 'descricao_do_servico',
-    hora_vendida: 'hora_vendida',
-    valor_total_liquido_da_mao_de_obra: 'valor_total_liquido_da_mao_de_obra',
-    numero_da_os: 'numero_da_os',
-    numero_do_dn: 'numero_do_dn',
-    fonte_pagadora: 'fonte_pagadora',
-    data_e_hora_da_abertura_da_os: 'data_e_hora_da_abertura_da_os',
-    data_e_hora_da_emissao_da_nota_fiscal: 'data_e_hora_da_emissao_da_nota_fiscal',
-    uf: 'uf',
-    parent: 'parent',
-    parent_id: 'parent_id'
-  };
-
-  export type Servicos_viewScalarFieldEnum = (typeof Servicos_viewScalarFieldEnum)[keyof typeof Servicos_viewScalarFieldEnum]
-
-
-  export const Pecas_viewScalarFieldEnum: {
-    id: 'id',
-    codigo_da_peca: 'codigo_da_peca',
-    descricao_da_peca: 'descricao_da_peca',
-    quantidade_da_peca: 'quantidade_da_peca',
-    valor_total_liquido_da_peca: 'valor_total_liquido_da_peca',
-    parent: 'parent',
-    parent_id: 'parent_id'
-  };
-
-  export type Pecas_viewScalarFieldEnum = (typeof Pecas_viewScalarFieldEnum)[keyof typeof Pecas_viewScalarFieldEnum]
-
-
-  export const Clientes_viewScalarFieldEnum: {
-    id: 'id',
-    nome_do_cliente: 'nome_do_cliente',
-    cpf_cnpj: 'cpf_cnpj',
-    endereco: 'endereco',
-    numero: 'numero',
-    complemento: 'complemento',
-    bairro: 'bairro',
-    cidade: 'cidade',
-    uf: 'uf',
-    cep: 'cep',
-    tel_res: 'tel_res',
-    tel_cel: 'tel_cel',
-    tel_com: 'tel_com',
-    email_res: 'email_res',
-    email_com: 'email_com',
-    parent: 'parent',
-    parent_id: 'parent_id'
-  };
-
-  export type Clientes_viewScalarFieldEnum = (typeof Clientes_viewScalarFieldEnum)[keyof typeof Clientes_viewScalarFieldEnum]
-
-
-  export const Nf_viewScalarFieldEnum: {
-    id: 'id',
-    numero_da_nota_fiscal: 'numero_da_nota_fiscal',
-    serie_da_nota_fiscal: 'serie_da_nota_fiscal',
-    fonte_pagadora: 'fonte_pagadora',
-    valor_total_liquido_das_pecas_na_nota_fiscal: 'valor_total_liquido_das_pecas_na_nota_fiscal',
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal: 'valor_total_liquido_da_mao_de_obra_na_nota_fiscal',
-    data_e_hora_da_abertura_da_os: 'data_e_hora_da_abertura_da_os',
-    data_e_hora_do_fechamento_da_os: 'data_e_hora_do_fechamento_da_os',
-    data_e_hora_da_emissao_da_nota_fiscal: 'data_e_hora_da_emissao_da_nota_fiscal',
-    categoria: 'categoria'
-  };
-
-  export type Nf_viewScalarFieldEnum = (typeof Nf_viewScalarFieldEnum)[keyof typeof Nf_viewScalarFieldEnum]
-
-
-  export const Fontes_pagadoras_viewScalarFieldEnum: {
-    id: 'id',
-    numero_da_nota_fiscal: 'numero_da_nota_fiscal',
-    serie_da_nota_fiscal: 'serie_da_nota_fiscal',
-    nota_fiscal_id: 'nota_fiscal_id',
-    numero_da_os: 'numero_da_os',
-    os_id: 'os_id',
-    numero_do_dn: 'numero_do_dn',
-    fonte_pagadora: 'fonte_pagadora',
-    fonte_pagadora_id: 'fonte_pagadora_id',
-    indicador: 'indicador',
-    parent: 'parent',
-    parent_id: 'parent_id'
-  };
-
-  export type Fontes_pagadoras_viewScalarFieldEnum = (typeof Fontes_pagadoras_viewScalarFieldEnum)[keyof typeof Fontes_pagadoras_viewScalarFieldEnum]
-
-
-  export const Pecas_balcao_viewScalarFieldEnum: {
-    numero_do_dn: 'numero_do_dn',
-    mes_ano: 'mes_ano',
-    qtd_pecas_balcao: 'qtd_pecas_balcao',
-    vl_liq_peca_balcao: 'vl_liq_peca_balcao'
-  };
-
-  export type Pecas_balcao_viewScalarFieldEnum = (typeof Pecas_balcao_viewScalarFieldEnum)[keyof typeof Pecas_balcao_viewScalarFieldEnum]
-
-
-  export const Pecas_oficina_viewScalarFieldEnum: {
-    numero_do_dn: 'numero_do_dn',
-    mes_ano: 'mes_ano',
-    qtd_pecas_oficina: 'qtd_pecas_oficina',
-    vl_liq_peca_oficina: 'vl_liq_peca_oficina',
-    qtd_hora_vendida: 'qtd_hora_vendida',
-    vl_liq_mao_obra: 'vl_liq_mao_obra'
-  };
-
-  export type Pecas_oficina_viewScalarFieldEnum = (typeof Pecas_oficina_viewScalarFieldEnum)[keyof typeof Pecas_oficina_viewScalarFieldEnum]
-
-
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -38407,7 +29907,7 @@ export namespace Prisma {
 
 
   /**
-   * Field references
+   * Field references 
    */
 
 
@@ -39436,8 +30936,8 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Ck6042"> | Date | string
     modified_at?: DateTimeFilter<"Ck6042"> | Date | string
     ck6041?: XOR<Ck6041ScalarRelationFilter, Ck6041WhereInput>
-    telefones?: TelefonesListRelationFilter
     emails?: EmailsListRelationFilter
+    telefones?: TelefonesListRelationFilter
   }
 
   export type Ck6042OrderByWithRelationInput = {
@@ -39449,8 +30949,8 @@ export namespace Prisma {
     created_at?: SortOrder
     modified_at?: SortOrder
     ck6041?: Ck6041OrderByWithRelationInput
-    telefones?: TelefonesOrderByRelationAggregateInput
     emails?: EmailsOrderByRelationAggregateInput
+    telefones?: TelefonesOrderByRelationAggregateInput
   }
 
   export type Ck6042WhereUniqueInput = Prisma.AtLeast<{
@@ -39466,8 +30966,8 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Ck6042"> | Date | string
     modified_at?: DateTimeFilter<"Ck6042"> | Date | string
     ck6041?: XOR<Ck6041ScalarRelationFilter, Ck6041WhereInput>
-    telefones?: TelefonesListRelationFilter
     emails?: EmailsListRelationFilter
+    telefones?: TelefonesListRelationFilter
   }, "id" | "ck6042_cod">
 
   export type Ck6042OrderByWithAggregationInput = {
@@ -39629,8 +31129,8 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Ck7002"> | Date | string
     modified_at?: DateTimeFilter<"Ck7002"> | Date | string
     ck7001?: XOR<Ck7001ScalarRelationFilter, Ck7001WhereInput>
-    telefones?: TelefonesListRelationFilter
     emails?: EmailsListRelationFilter
+    telefones?: TelefonesListRelationFilter
   }
 
   export type Ck7002OrderByWithRelationInput = {
@@ -39647,8 +31147,8 @@ export namespace Prisma {
     created_at?: SortOrder
     modified_at?: SortOrder
     ck7001?: Ck7001OrderByWithRelationInput
-    telefones?: TelefonesOrderByRelationAggregateInput
     emails?: EmailsOrderByRelationAggregateInput
+    telefones?: TelefonesOrderByRelationAggregateInput
   }
 
   export type Ck7002WhereUniqueInput = Prisma.AtLeast<{
@@ -39669,8 +31169,8 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Ck7002"> | Date | string
     modified_at?: DateTimeFilter<"Ck7002"> | Date | string
     ck7001?: XOR<Ck7001ScalarRelationFilter, Ck7001WhereInput>
-    telefones?: TelefonesListRelationFilter
     emails?: EmailsListRelationFilter
+    telefones?: TelefonesListRelationFilter
   }, "id" | "ck7002_cod">
 
   export type Ck7002OrderByWithAggregationInput = {
@@ -40185,6 +31685,8 @@ export namespace Prisma {
     day?: IntFilter<"DailyCk"> | number
     month?: IntFilter<"DailyCk"> | number
     year?: IntFilter<"DailyCk"> | number
+    hour?: IntFilter<"DailyCk"> | number
+    minute?: IntFilter<"DailyCk"> | number
     ck3001?: IntNullableFilter<"DailyCk"> | number | null
     ck3002?: IntNullableFilter<"DailyCk"> | number | null
     ck3003?: IntNullableFilter<"DailyCk"> | number | null
@@ -40207,6 +31709,8 @@ export namespace Prisma {
     day?: SortOrder
     month?: SortOrder
     year?: SortOrder
+    hour?: SortOrder
+    minute?: SortOrder
     ck3001?: SortOrderInput | SortOrder
     ck3002?: SortOrderInput | SortOrder
     ck3003?: SortOrderInput | SortOrder
@@ -40233,6 +31737,8 @@ export namespace Prisma {
     day?: IntFilter<"DailyCk"> | number
     month?: IntFilter<"DailyCk"> | number
     year?: IntFilter<"DailyCk"> | number
+    hour?: IntFilter<"DailyCk"> | number
+    minute?: IntFilter<"DailyCk"> | number
     ck3001?: IntNullableFilter<"DailyCk"> | number | null
     ck3002?: IntNullableFilter<"DailyCk"> | number | null
     ck3003?: IntNullableFilter<"DailyCk"> | number | null
@@ -40255,6 +31761,8 @@ export namespace Prisma {
     day?: SortOrder
     month?: SortOrder
     year?: SortOrder
+    hour?: SortOrder
+    minute?: SortOrder
     ck3001?: SortOrderInput | SortOrder
     ck3002?: SortOrderInput | SortOrder
     ck3003?: SortOrderInput | SortOrder
@@ -40285,6 +31793,8 @@ export namespace Prisma {
     day?: IntWithAggregatesFilter<"DailyCk"> | number
     month?: IntWithAggregatesFilter<"DailyCk"> | number
     year?: IntWithAggregatesFilter<"DailyCk"> | number
+    hour?: IntWithAggregatesFilter<"DailyCk"> | number
+    minute?: IntWithAggregatesFilter<"DailyCk"> | number
     ck3001?: IntNullableWithAggregatesFilter<"DailyCk"> | number | null
     ck3002?: IntNullableWithAggregatesFilter<"DailyCk"> | number | null
     ck3003?: IntNullableWithAggregatesFilter<"DailyCk"> | number | null
@@ -40481,555 +31991,6 @@ export namespace Prisma {
     autoriza_pesquisa?: BoolWithAggregatesFilter<"Telefones"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Telefones"> | Date | string
     modified_at?: DateTimeWithAggregatesFilter<"Telefones"> | Date | string
-  }
-
-  export type servicos_viewWhereInput = {
-    AND?: servicos_viewWhereInput | servicos_viewWhereInput[]
-    OR?: servicos_viewWhereInput[]
-    NOT?: servicos_viewWhereInput | servicos_viewWhereInput[]
-    id?: BigIntFilter<"servicos_view"> | bigint | number
-    cos?: StringFilter<"servicos_view"> | string
-    descricao_do_servico?: StringFilter<"servicos_view"> | string
-    hora_vendida?: FloatFilter<"servicos_view"> | number
-    valor_total_liquido_da_mao_de_obra?: DecimalFilter<"servicos_view"> | Decimal | DecimalJsLike | number | string
-    numero_da_os?: StringNullableFilter<"servicos_view"> | string | null
-    numero_do_dn?: StringNullableFilter<"servicos_view"> | string | null
-    fonte_pagadora?: IntNullableFilter<"servicos_view"> | number | null
-    data_e_hora_da_abertura_da_os?: DateTimeNullableFilter<"servicos_view"> | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeNullableFilter<"servicos_view"> | Date | string | null
-    uf?: StringFilter<"servicos_view"> | string
-    parent?: StringFilter<"servicos_view"> | string
-    parent_id?: BigIntFilter<"servicos_view"> | bigint | number
-  }
-
-  export type servicos_viewOrderByWithRelationInput = {
-    id?: SortOrder
-    cos?: SortOrder
-    descricao_do_servico?: SortOrder
-    hora_vendida?: SortOrder
-    valor_total_liquido_da_mao_de_obra?: SortOrder
-    numero_da_os?: SortOrderInput | SortOrder
-    numero_do_dn?: SortOrderInput | SortOrder
-    fonte_pagadora?: SortOrderInput | SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrderInput | SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrderInput | SortOrder
-    uf?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type servicos_viewWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
-    AND?: servicos_viewWhereInput | servicos_viewWhereInput[]
-    OR?: servicos_viewWhereInput[]
-    NOT?: servicos_viewWhereInput | servicos_viewWhereInput[]
-    cos?: StringFilter<"servicos_view"> | string
-    descricao_do_servico?: StringFilter<"servicos_view"> | string
-    hora_vendida?: FloatFilter<"servicos_view"> | number
-    valor_total_liquido_da_mao_de_obra?: DecimalFilter<"servicos_view"> | Decimal | DecimalJsLike | number | string
-    numero_da_os?: StringNullableFilter<"servicos_view"> | string | null
-    numero_do_dn?: StringNullableFilter<"servicos_view"> | string | null
-    fonte_pagadora?: IntNullableFilter<"servicos_view"> | number | null
-    data_e_hora_da_abertura_da_os?: DateTimeNullableFilter<"servicos_view"> | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeNullableFilter<"servicos_view"> | Date | string | null
-    uf?: StringFilter<"servicos_view"> | string
-    parent?: StringFilter<"servicos_view"> | string
-    parent_id?: BigIntFilter<"servicos_view"> | bigint | number
-  }, "id">
-
-  export type servicos_viewOrderByWithAggregationInput = {
-    id?: SortOrder
-    cos?: SortOrder
-    descricao_do_servico?: SortOrder
-    hora_vendida?: SortOrder
-    valor_total_liquido_da_mao_de_obra?: SortOrder
-    numero_da_os?: SortOrderInput | SortOrder
-    numero_do_dn?: SortOrderInput | SortOrder
-    fonte_pagadora?: SortOrderInput | SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrderInput | SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrderInput | SortOrder
-    uf?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-    _count?: servicos_viewCountOrderByAggregateInput
-    _avg?: servicos_viewAvgOrderByAggregateInput
-    _max?: servicos_viewMaxOrderByAggregateInput
-    _min?: servicos_viewMinOrderByAggregateInput
-    _sum?: servicos_viewSumOrderByAggregateInput
-  }
-
-  export type servicos_viewScalarWhereWithAggregatesInput = {
-    AND?: servicos_viewScalarWhereWithAggregatesInput | servicos_viewScalarWhereWithAggregatesInput[]
-    OR?: servicos_viewScalarWhereWithAggregatesInput[]
-    NOT?: servicos_viewScalarWhereWithAggregatesInput | servicos_viewScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"servicos_view"> | bigint | number
-    cos?: StringWithAggregatesFilter<"servicos_view"> | string
-    descricao_do_servico?: StringWithAggregatesFilter<"servicos_view"> | string
-    hora_vendida?: FloatWithAggregatesFilter<"servicos_view"> | number
-    valor_total_liquido_da_mao_de_obra?: DecimalWithAggregatesFilter<"servicos_view"> | Decimal | DecimalJsLike | number | string
-    numero_da_os?: StringNullableWithAggregatesFilter<"servicos_view"> | string | null
-    numero_do_dn?: StringNullableWithAggregatesFilter<"servicos_view"> | string | null
-    fonte_pagadora?: IntNullableWithAggregatesFilter<"servicos_view"> | number | null
-    data_e_hora_da_abertura_da_os?: DateTimeNullableWithAggregatesFilter<"servicos_view"> | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeNullableWithAggregatesFilter<"servicos_view"> | Date | string | null
-    uf?: StringWithAggregatesFilter<"servicos_view"> | string
-    parent?: StringWithAggregatesFilter<"servicos_view"> | string
-    parent_id?: BigIntWithAggregatesFilter<"servicos_view"> | bigint | number
-  }
-
-  export type pecas_viewWhereInput = {
-    AND?: pecas_viewWhereInput | pecas_viewWhereInput[]
-    OR?: pecas_viewWhereInput[]
-    NOT?: pecas_viewWhereInput | pecas_viewWhereInput[]
-    id?: BigIntFilter<"pecas_view"> | bigint | number
-    codigo_da_peca?: StringFilter<"pecas_view"> | string
-    descricao_da_peca?: StringFilter<"pecas_view"> | string
-    quantidade_da_peca?: IntFilter<"pecas_view"> | number
-    valor_total_liquido_da_peca?: DecimalFilter<"pecas_view"> | Decimal | DecimalJsLike | number | string
-    parent?: StringFilter<"pecas_view"> | string
-    parent_id?: BigIntFilter<"pecas_view"> | bigint | number
-  }
-
-  export type pecas_viewOrderByWithRelationInput = {
-    id?: SortOrder
-    codigo_da_peca?: SortOrder
-    descricao_da_peca?: SortOrder
-    quantidade_da_peca?: SortOrder
-    valor_total_liquido_da_peca?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type pecas_viewWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
-    AND?: pecas_viewWhereInput | pecas_viewWhereInput[]
-    OR?: pecas_viewWhereInput[]
-    NOT?: pecas_viewWhereInput | pecas_viewWhereInput[]
-    codigo_da_peca?: StringFilter<"pecas_view"> | string
-    descricao_da_peca?: StringFilter<"pecas_view"> | string
-    quantidade_da_peca?: IntFilter<"pecas_view"> | number
-    valor_total_liquido_da_peca?: DecimalFilter<"pecas_view"> | Decimal | DecimalJsLike | number | string
-    parent?: StringFilter<"pecas_view"> | string
-    parent_id?: BigIntFilter<"pecas_view"> | bigint | number
-  }, "id">
-
-  export type pecas_viewOrderByWithAggregationInput = {
-    id?: SortOrder
-    codigo_da_peca?: SortOrder
-    descricao_da_peca?: SortOrder
-    quantidade_da_peca?: SortOrder
-    valor_total_liquido_da_peca?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-    _count?: pecas_viewCountOrderByAggregateInput
-    _avg?: pecas_viewAvgOrderByAggregateInput
-    _max?: pecas_viewMaxOrderByAggregateInput
-    _min?: pecas_viewMinOrderByAggregateInput
-    _sum?: pecas_viewSumOrderByAggregateInput
-  }
-
-  export type pecas_viewScalarWhereWithAggregatesInput = {
-    AND?: pecas_viewScalarWhereWithAggregatesInput | pecas_viewScalarWhereWithAggregatesInput[]
-    OR?: pecas_viewScalarWhereWithAggregatesInput[]
-    NOT?: pecas_viewScalarWhereWithAggregatesInput | pecas_viewScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"pecas_view"> | bigint | number
-    codigo_da_peca?: StringWithAggregatesFilter<"pecas_view"> | string
-    descricao_da_peca?: StringWithAggregatesFilter<"pecas_view"> | string
-    quantidade_da_peca?: IntWithAggregatesFilter<"pecas_view"> | number
-    valor_total_liquido_da_peca?: DecimalWithAggregatesFilter<"pecas_view"> | Decimal | DecimalJsLike | number | string
-    parent?: StringWithAggregatesFilter<"pecas_view"> | string
-    parent_id?: BigIntWithAggregatesFilter<"pecas_view"> | bigint | number
-  }
-
-  export type clientes_viewWhereInput = {
-    AND?: clientes_viewWhereInput | clientes_viewWhereInput[]
-    OR?: clientes_viewWhereInput[]
-    NOT?: clientes_viewWhereInput | clientes_viewWhereInput[]
-    id?: BigIntFilter<"clientes_view"> | bigint | number
-    nome_do_cliente?: StringFilter<"clientes_view"> | string
-    cpf_cnpj?: StringFilter<"clientes_view"> | string
-    endereco?: StringFilter<"clientes_view"> | string
-    numero?: StringFilter<"clientes_view"> | string
-    complemento?: StringNullableFilter<"clientes_view"> | string | null
-    bairro?: StringFilter<"clientes_view"> | string
-    cidade?: StringFilter<"clientes_view"> | string
-    uf?: StringFilter<"clientes_view"> | string
-    cep?: StringFilter<"clientes_view"> | string
-    tel_res?: StringNullableFilter<"clientes_view"> | string | null
-    tel_cel?: StringNullableFilter<"clientes_view"> | string | null
-    tel_com?: StringNullableFilter<"clientes_view"> | string | null
-    email_res?: StringNullableFilter<"clientes_view"> | string | null
-    email_com?: StringNullableFilter<"clientes_view"> | string | null
-    parent?: StringFilter<"clientes_view"> | string
-    parent_id?: BigIntFilter<"clientes_view"> | bigint | number
-  }
-
-  export type clientes_viewOrderByWithRelationInput = {
-    id?: SortOrder
-    nome_do_cliente?: SortOrder
-    cpf_cnpj?: SortOrder
-    endereco?: SortOrder
-    numero?: SortOrder
-    complemento?: SortOrderInput | SortOrder
-    bairro?: SortOrder
-    cidade?: SortOrder
-    uf?: SortOrder
-    cep?: SortOrder
-    tel_res?: SortOrderInput | SortOrder
-    tel_cel?: SortOrderInput | SortOrder
-    tel_com?: SortOrderInput | SortOrder
-    email_res?: SortOrderInput | SortOrder
-    email_com?: SortOrderInput | SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type clientes_viewWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
-    AND?: clientes_viewWhereInput | clientes_viewWhereInput[]
-    OR?: clientes_viewWhereInput[]
-    NOT?: clientes_viewWhereInput | clientes_viewWhereInput[]
-    nome_do_cliente?: StringFilter<"clientes_view"> | string
-    cpf_cnpj?: StringFilter<"clientes_view"> | string
-    endereco?: StringFilter<"clientes_view"> | string
-    numero?: StringFilter<"clientes_view"> | string
-    complemento?: StringNullableFilter<"clientes_view"> | string | null
-    bairro?: StringFilter<"clientes_view"> | string
-    cidade?: StringFilter<"clientes_view"> | string
-    uf?: StringFilter<"clientes_view"> | string
-    cep?: StringFilter<"clientes_view"> | string
-    tel_res?: StringNullableFilter<"clientes_view"> | string | null
-    tel_cel?: StringNullableFilter<"clientes_view"> | string | null
-    tel_com?: StringNullableFilter<"clientes_view"> | string | null
-    email_res?: StringNullableFilter<"clientes_view"> | string | null
-    email_com?: StringNullableFilter<"clientes_view"> | string | null
-    parent?: StringFilter<"clientes_view"> | string
-    parent_id?: BigIntFilter<"clientes_view"> | bigint | number
-  }, "id">
-
-  export type clientes_viewOrderByWithAggregationInput = {
-    id?: SortOrder
-    nome_do_cliente?: SortOrder
-    cpf_cnpj?: SortOrder
-    endereco?: SortOrder
-    numero?: SortOrder
-    complemento?: SortOrderInput | SortOrder
-    bairro?: SortOrder
-    cidade?: SortOrder
-    uf?: SortOrder
-    cep?: SortOrder
-    tel_res?: SortOrderInput | SortOrder
-    tel_cel?: SortOrderInput | SortOrder
-    tel_com?: SortOrderInput | SortOrder
-    email_res?: SortOrderInput | SortOrder
-    email_com?: SortOrderInput | SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-    _count?: clientes_viewCountOrderByAggregateInput
-    _avg?: clientes_viewAvgOrderByAggregateInput
-    _max?: clientes_viewMaxOrderByAggregateInput
-    _min?: clientes_viewMinOrderByAggregateInput
-    _sum?: clientes_viewSumOrderByAggregateInput
-  }
-
-  export type clientes_viewScalarWhereWithAggregatesInput = {
-    AND?: clientes_viewScalarWhereWithAggregatesInput | clientes_viewScalarWhereWithAggregatesInput[]
-    OR?: clientes_viewScalarWhereWithAggregatesInput[]
-    NOT?: clientes_viewScalarWhereWithAggregatesInput | clientes_viewScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"clientes_view"> | bigint | number
-    nome_do_cliente?: StringWithAggregatesFilter<"clientes_view"> | string
-    cpf_cnpj?: StringWithAggregatesFilter<"clientes_view"> | string
-    endereco?: StringWithAggregatesFilter<"clientes_view"> | string
-    numero?: StringWithAggregatesFilter<"clientes_view"> | string
-    complemento?: StringNullableWithAggregatesFilter<"clientes_view"> | string | null
-    bairro?: StringWithAggregatesFilter<"clientes_view"> | string
-    cidade?: StringWithAggregatesFilter<"clientes_view"> | string
-    uf?: StringWithAggregatesFilter<"clientes_view"> | string
-    cep?: StringWithAggregatesFilter<"clientes_view"> | string
-    tel_res?: StringNullableWithAggregatesFilter<"clientes_view"> | string | null
-    tel_cel?: StringNullableWithAggregatesFilter<"clientes_view"> | string | null
-    tel_com?: StringNullableWithAggregatesFilter<"clientes_view"> | string | null
-    email_res?: StringNullableWithAggregatesFilter<"clientes_view"> | string | null
-    email_com?: StringNullableWithAggregatesFilter<"clientes_view"> | string | null
-    parent?: StringWithAggregatesFilter<"clientes_view"> | string
-    parent_id?: BigIntWithAggregatesFilter<"clientes_view"> | bigint | number
-  }
-
-  export type nf_viewWhereInput = {
-    AND?: nf_viewWhereInput | nf_viewWhereInput[]
-    OR?: nf_viewWhereInput[]
-    NOT?: nf_viewWhereInput | nf_viewWhereInput[]
-    id?: BigIntFilter<"nf_view"> | bigint | number
-    numero_da_nota_fiscal?: StringFilter<"nf_view"> | string
-    serie_da_nota_fiscal?: StringFilter<"nf_view"> | string
-    fonte_pagadora?: IntFilter<"nf_view"> | number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: DecimalNullableFilter<"nf_view"> | Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: DecimalNullableFilter<"nf_view"> | Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: DateTimeNullableFilter<"nf_view"> | Date | string | null
-    data_e_hora_do_fechamento_da_os?: DateTimeNullableFilter<"nf_view"> | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeFilter<"nf_view"> | Date | string
-    categoria?: StringFilter<"nf_view"> | string
-  }
-
-  export type nf_viewOrderByWithRelationInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    fonte_pagadora?: SortOrder
-    valor_total_liquido_das_pecas_na_nota_fiscal?: SortOrderInput | SortOrder
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: SortOrderInput | SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrderInput | SortOrder
-    data_e_hora_do_fechamento_da_os?: SortOrderInput | SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    categoria?: SortOrder
-  }
-
-  export type nf_viewWhereUniqueInput = Prisma.AtLeast<{
-    id?: bigint | number
-    AND?: nf_viewWhereInput | nf_viewWhereInput[]
-    OR?: nf_viewWhereInput[]
-    NOT?: nf_viewWhereInput | nf_viewWhereInput[]
-    numero_da_nota_fiscal?: StringFilter<"nf_view"> | string
-    serie_da_nota_fiscal?: StringFilter<"nf_view"> | string
-    fonte_pagadora?: IntFilter<"nf_view"> | number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: DecimalNullableFilter<"nf_view"> | Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: DecimalNullableFilter<"nf_view"> | Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: DateTimeNullableFilter<"nf_view"> | Date | string | null
-    data_e_hora_do_fechamento_da_os?: DateTimeNullableFilter<"nf_view"> | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeFilter<"nf_view"> | Date | string
-    categoria?: StringFilter<"nf_view"> | string
-  }, "id">
-
-  export type nf_viewOrderByWithAggregationInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    fonte_pagadora?: SortOrder
-    valor_total_liquido_das_pecas_na_nota_fiscal?: SortOrderInput | SortOrder
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: SortOrderInput | SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrderInput | SortOrder
-    data_e_hora_do_fechamento_da_os?: SortOrderInput | SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    categoria?: SortOrder
-    _count?: nf_viewCountOrderByAggregateInput
-    _avg?: nf_viewAvgOrderByAggregateInput
-    _max?: nf_viewMaxOrderByAggregateInput
-    _min?: nf_viewMinOrderByAggregateInput
-    _sum?: nf_viewSumOrderByAggregateInput
-  }
-
-  export type nf_viewScalarWhereWithAggregatesInput = {
-    AND?: nf_viewScalarWhereWithAggregatesInput | nf_viewScalarWhereWithAggregatesInput[]
-    OR?: nf_viewScalarWhereWithAggregatesInput[]
-    NOT?: nf_viewScalarWhereWithAggregatesInput | nf_viewScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"nf_view"> | bigint | number
-    numero_da_nota_fiscal?: StringWithAggregatesFilter<"nf_view"> | string
-    serie_da_nota_fiscal?: StringWithAggregatesFilter<"nf_view"> | string
-    fonte_pagadora?: IntWithAggregatesFilter<"nf_view"> | number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: DecimalNullableWithAggregatesFilter<"nf_view"> | Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: DecimalNullableWithAggregatesFilter<"nf_view"> | Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: DateTimeNullableWithAggregatesFilter<"nf_view"> | Date | string | null
-    data_e_hora_do_fechamento_da_os?: DateTimeNullableWithAggregatesFilter<"nf_view"> | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeWithAggregatesFilter<"nf_view"> | Date | string
-    categoria?: StringWithAggregatesFilter<"nf_view"> | string
-  }
-
-  export type fontes_pagadoras_viewWhereInput = {
-    AND?: fontes_pagadoras_viewWhereInput | fontes_pagadoras_viewWhereInput[]
-    OR?: fontes_pagadoras_viewWhereInput[]
-    NOT?: fontes_pagadoras_viewWhereInput | fontes_pagadoras_viewWhereInput[]
-    id?: BigIntFilter<"fontes_pagadoras_view"> | bigint | number
-    numero_da_nota_fiscal?: StringNullableFilter<"fontes_pagadoras_view"> | string | null
-    serie_da_nota_fiscal?: StringNullableFilter<"fontes_pagadoras_view"> | string | null
-    nota_fiscal_id?: BigIntNullableFilter<"fontes_pagadoras_view"> | bigint | number | null
-    numero_da_os?: StringNullableFilter<"fontes_pagadoras_view"> | string | null
-    os_id?: BigIntNullableFilter<"fontes_pagadoras_view"> | bigint | number | null
-    numero_do_dn?: StringFilter<"fontes_pagadoras_view"> | string
-    fonte_pagadora?: IntFilter<"fontes_pagadoras_view"> | number
-    fonte_pagadora_id?: BigIntFilter<"fontes_pagadoras_view"> | bigint | number
-    indicador?: StringNullableFilter<"fontes_pagadoras_view"> | string | null
-    parent?: StringFilter<"fontes_pagadoras_view"> | string
-    parent_id?: BigIntFilter<"fontes_pagadoras_view"> | bigint | number
-  }
-
-  export type fontes_pagadoras_viewOrderByWithRelationInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrderInput | SortOrder
-    serie_da_nota_fiscal?: SortOrderInput | SortOrder
-    nota_fiscal_id?: SortOrderInput | SortOrder
-    numero_da_os?: SortOrderInput | SortOrder
-    os_id?: SortOrderInput | SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    fonte_pagadora_id?: SortOrder
-    indicador?: SortOrderInput | SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type fontes_pagadoras_viewWhereUniqueInput = Prisma.AtLeast<{
-    numero_da_nota_fiscal?: string
-    numero_da_os?: string
-    fp_view?: fontes_pagadoras_viewFp_viewCompoundUniqueInput
-    AND?: fontes_pagadoras_viewWhereInput | fontes_pagadoras_viewWhereInput[]
-    OR?: fontes_pagadoras_viewWhereInput[]
-    NOT?: fontes_pagadoras_viewWhereInput | fontes_pagadoras_viewWhereInput[]
-    id?: BigIntFilter<"fontes_pagadoras_view"> | bigint | number
-    serie_da_nota_fiscal?: StringNullableFilter<"fontes_pagadoras_view"> | string | null
-    nota_fiscal_id?: BigIntNullableFilter<"fontes_pagadoras_view"> | bigint | number | null
-    os_id?: BigIntNullableFilter<"fontes_pagadoras_view"> | bigint | number | null
-    numero_do_dn?: StringFilter<"fontes_pagadoras_view"> | string
-    fonte_pagadora?: IntFilter<"fontes_pagadoras_view"> | number
-    fonte_pagadora_id?: BigIntFilter<"fontes_pagadoras_view"> | bigint | number
-    indicador?: StringNullableFilter<"fontes_pagadoras_view"> | string | null
-    parent?: StringFilter<"fontes_pagadoras_view"> | string
-    parent_id?: BigIntFilter<"fontes_pagadoras_view"> | bigint | number
-  }, "numero_da_nota_fiscal" | "numero_da_os" | "fp_view">
-
-  export type fontes_pagadoras_viewOrderByWithAggregationInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrderInput | SortOrder
-    serie_da_nota_fiscal?: SortOrderInput | SortOrder
-    nota_fiscal_id?: SortOrderInput | SortOrder
-    numero_da_os?: SortOrderInput | SortOrder
-    os_id?: SortOrderInput | SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    fonte_pagadora_id?: SortOrder
-    indicador?: SortOrderInput | SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-    _count?: fontes_pagadoras_viewCountOrderByAggregateInput
-    _avg?: fontes_pagadoras_viewAvgOrderByAggregateInput
-    _max?: fontes_pagadoras_viewMaxOrderByAggregateInput
-    _min?: fontes_pagadoras_viewMinOrderByAggregateInput
-    _sum?: fontes_pagadoras_viewSumOrderByAggregateInput
-  }
-
-  export type fontes_pagadoras_viewScalarWhereWithAggregatesInput = {
-    AND?: fontes_pagadoras_viewScalarWhereWithAggregatesInput | fontes_pagadoras_viewScalarWhereWithAggregatesInput[]
-    OR?: fontes_pagadoras_viewScalarWhereWithAggregatesInput[]
-    NOT?: fontes_pagadoras_viewScalarWhereWithAggregatesInput | fontes_pagadoras_viewScalarWhereWithAggregatesInput[]
-    id?: BigIntWithAggregatesFilter<"fontes_pagadoras_view"> | bigint | number
-    numero_da_nota_fiscal?: StringNullableWithAggregatesFilter<"fontes_pagadoras_view"> | string | null
-    serie_da_nota_fiscal?: StringNullableWithAggregatesFilter<"fontes_pagadoras_view"> | string | null
-    nota_fiscal_id?: BigIntNullableWithAggregatesFilter<"fontes_pagadoras_view"> | bigint | number | null
-    numero_da_os?: StringNullableWithAggregatesFilter<"fontes_pagadoras_view"> | string | null
-    os_id?: BigIntNullableWithAggregatesFilter<"fontes_pagadoras_view"> | bigint | number | null
-    numero_do_dn?: StringWithAggregatesFilter<"fontes_pagadoras_view"> | string
-    fonte_pagadora?: IntWithAggregatesFilter<"fontes_pagadoras_view"> | number
-    fonte_pagadora_id?: BigIntWithAggregatesFilter<"fontes_pagadoras_view"> | bigint | number
-    indicador?: StringNullableWithAggregatesFilter<"fontes_pagadoras_view"> | string | null
-    parent?: StringWithAggregatesFilter<"fontes_pagadoras_view"> | string
-    parent_id?: BigIntWithAggregatesFilter<"fontes_pagadoras_view"> | bigint | number
-  }
-
-  export type pecas_balcao_viewWhereInput = {
-    AND?: pecas_balcao_viewWhereInput | pecas_balcao_viewWhereInput[]
-    OR?: pecas_balcao_viewWhereInput[]
-    NOT?: pecas_balcao_viewWhereInput | pecas_balcao_viewWhereInput[]
-    numero_do_dn?: StringFilter<"pecas_balcao_view"> | string
-    mes_ano?: StringFilter<"pecas_balcao_view"> | string
-    qtd_pecas_balcao?: BigIntFilter<"pecas_balcao_view"> | bigint | number
-    vl_liq_peca_balcao?: DecimalFilter<"pecas_balcao_view"> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_balcao_viewOrderByWithRelationInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_balcao?: SortOrder
-    vl_liq_peca_balcao?: SortOrder
-  }
-
-  export type pecas_balcao_viewWhereUniqueInput = Prisma.AtLeast<{
-    numero_do_dn?: string
-    AND?: pecas_balcao_viewWhereInput | pecas_balcao_viewWhereInput[]
-    OR?: pecas_balcao_viewWhereInput[]
-    NOT?: pecas_balcao_viewWhereInput | pecas_balcao_viewWhereInput[]
-    mes_ano?: StringFilter<"pecas_balcao_view"> | string
-    qtd_pecas_balcao?: BigIntFilter<"pecas_balcao_view"> | bigint | number
-    vl_liq_peca_balcao?: DecimalFilter<"pecas_balcao_view"> | Decimal | DecimalJsLike | number | string
-  }, "numero_do_dn">
-
-  export type pecas_balcao_viewOrderByWithAggregationInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_balcao?: SortOrder
-    vl_liq_peca_balcao?: SortOrder
-    _count?: pecas_balcao_viewCountOrderByAggregateInput
-    _avg?: pecas_balcao_viewAvgOrderByAggregateInput
-    _max?: pecas_balcao_viewMaxOrderByAggregateInput
-    _min?: pecas_balcao_viewMinOrderByAggregateInput
-    _sum?: pecas_balcao_viewSumOrderByAggregateInput
-  }
-
-  export type pecas_balcao_viewScalarWhereWithAggregatesInput = {
-    AND?: pecas_balcao_viewScalarWhereWithAggregatesInput | pecas_balcao_viewScalarWhereWithAggregatesInput[]
-    OR?: pecas_balcao_viewScalarWhereWithAggregatesInput[]
-    NOT?: pecas_balcao_viewScalarWhereWithAggregatesInput | pecas_balcao_viewScalarWhereWithAggregatesInput[]
-    numero_do_dn?: StringWithAggregatesFilter<"pecas_balcao_view"> | string
-    mes_ano?: StringWithAggregatesFilter<"pecas_balcao_view"> | string
-    qtd_pecas_balcao?: BigIntWithAggregatesFilter<"pecas_balcao_view"> | bigint | number
-    vl_liq_peca_balcao?: DecimalWithAggregatesFilter<"pecas_balcao_view"> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewWhereInput = {
-    AND?: pecas_oficina_viewWhereInput | pecas_oficina_viewWhereInput[]
-    OR?: pecas_oficina_viewWhereInput[]
-    NOT?: pecas_oficina_viewWhereInput | pecas_oficina_viewWhereInput[]
-    numero_do_dn?: StringFilter<"pecas_oficina_view"> | string
-    mes_ano?: StringFilter<"pecas_oficina_view"> | string
-    qtd_pecas_oficina?: BigIntFilter<"pecas_oficina_view"> | bigint | number
-    vl_liq_peca_oficina?: DecimalFilter<"pecas_oficina_view"> | Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida?: FloatFilter<"pecas_oficina_view"> | number
-    vl_liq_mao_obra?: DecimalFilter<"pecas_oficina_view"> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewOrderByWithRelationInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_oficina?: SortOrder
-    vl_liq_peca_oficina?: SortOrder
-    qtd_hora_vendida?: SortOrder
-    vl_liq_mao_obra?: SortOrder
-  }
-
-  export type pecas_oficina_viewWhereUniqueInput = Prisma.AtLeast<{
-    numero_do_dn?: string
-    AND?: pecas_oficina_viewWhereInput | pecas_oficina_viewWhereInput[]
-    OR?: pecas_oficina_viewWhereInput[]
-    NOT?: pecas_oficina_viewWhereInput | pecas_oficina_viewWhereInput[]
-    mes_ano?: StringFilter<"pecas_oficina_view"> | string
-    qtd_pecas_oficina?: BigIntFilter<"pecas_oficina_view"> | bigint | number
-    vl_liq_peca_oficina?: DecimalFilter<"pecas_oficina_view"> | Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida?: FloatFilter<"pecas_oficina_view"> | number
-    vl_liq_mao_obra?: DecimalFilter<"pecas_oficina_view"> | Decimal | DecimalJsLike | number | string
-  }, "numero_do_dn">
-
-  export type pecas_oficina_viewOrderByWithAggregationInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_oficina?: SortOrder
-    vl_liq_peca_oficina?: SortOrder
-    qtd_hora_vendida?: SortOrder
-    vl_liq_mao_obra?: SortOrder
-    _count?: pecas_oficina_viewCountOrderByAggregateInput
-    _avg?: pecas_oficina_viewAvgOrderByAggregateInput
-    _max?: pecas_oficina_viewMaxOrderByAggregateInput
-    _min?: pecas_oficina_viewMinOrderByAggregateInput
-    _sum?: pecas_oficina_viewSumOrderByAggregateInput
-  }
-
-  export type pecas_oficina_viewScalarWhereWithAggregatesInput = {
-    AND?: pecas_oficina_viewScalarWhereWithAggregatesInput | pecas_oficina_viewScalarWhereWithAggregatesInput[]
-    OR?: pecas_oficina_viewScalarWhereWithAggregatesInput[]
-    NOT?: pecas_oficina_viewScalarWhereWithAggregatesInput | pecas_oficina_viewScalarWhereWithAggregatesInput[]
-    numero_do_dn?: StringWithAggregatesFilter<"pecas_oficina_view"> | string
-    mes_ano?: StringWithAggregatesFilter<"pecas_oficina_view"> | string
-    qtd_pecas_oficina?: BigIntWithAggregatesFilter<"pecas_oficina_view"> | bigint | number
-    vl_liq_peca_oficina?: DecimalWithAggregatesFilter<"pecas_oficina_view"> | Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida?: FloatWithAggregatesFilter<"pecas_oficina_view"> | number
-    vl_liq_mao_obra?: DecimalWithAggregatesFilter<"pecas_oficina_view"> | Decimal | DecimalJsLike | number | string
   }
 
   export type Ck3001CreateInput = {
@@ -42110,8 +33071,8 @@ export namespace Prisma {
     created_at?: Date | string
     modified_at?: Date | string
     ck6041: Ck6041CreateNestedOneWithoutCk6042Input
-    telefones?: TelefonesCreateNestedManyWithoutCk6042Input
     emails?: EmailsCreateNestedManyWithoutCk6042Input
+    telefones?: TelefonesCreateNestedManyWithoutCk6042Input
   }
 
   export type Ck6042UncheckedCreateInput = {
@@ -42122,8 +33083,8 @@ export namespace Prisma {
     ck6041_id: bigint | number
     created_at?: Date | string
     modified_at?: Date | string
-    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk6042Input
     emails?: EmailsUncheckedCreateNestedManyWithoutCk6042Input
+    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk6042Input
   }
 
   export type Ck6042UpdateInput = {
@@ -42134,8 +33095,8 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
     ck6041?: Ck6041UpdateOneRequiredWithoutCk6042NestedInput
-    telefones?: TelefonesUpdateManyWithoutCk6042NestedInput
     emails?: EmailsUpdateManyWithoutCk6042NestedInput
+    telefones?: TelefonesUpdateManyWithoutCk6042NestedInput
   }
 
   export type Ck6042UncheckedUpdateInput = {
@@ -42146,8 +33107,8 @@ export namespace Prisma {
     ck6041_id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    telefones?: TelefonesUncheckedUpdateManyWithoutCk6042NestedInput
     emails?: EmailsUncheckedUpdateManyWithoutCk6042NestedInput
+    telefones?: TelefonesUncheckedUpdateManyWithoutCk6042NestedInput
   }
 
   export type Ck6042CreateManyInput = {
@@ -42330,8 +33291,8 @@ export namespace Prisma {
     created_at?: Date | string
     modified_at?: Date | string
     ck7001: Ck7001CreateNestedOneWithoutCk7002Input
-    telefones?: TelefonesCreateNestedManyWithoutCk7002Input
     emails?: EmailsCreateNestedManyWithoutCk7002Input
+    telefones?: TelefonesCreateNestedManyWithoutCk7002Input
   }
 
   export type Ck7002UncheckedCreateInput = {
@@ -42347,8 +33308,8 @@ export namespace Prisma {
     cep: string
     created_at?: Date | string
     modified_at?: Date | string
-    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk7002Input
     emails?: EmailsUncheckedCreateNestedManyWithoutCk7002Input
+    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk7002Input
   }
 
   export type Ck7002UpdateInput = {
@@ -42364,8 +33325,8 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
     ck7001?: Ck7001UpdateOneRequiredWithoutCk7002NestedInput
-    telefones?: TelefonesUpdateManyWithoutCk7002NestedInput
     emails?: EmailsUpdateManyWithoutCk7002NestedInput
+    telefones?: TelefonesUpdateManyWithoutCk7002NestedInput
   }
 
   export type Ck7002UncheckedUpdateInput = {
@@ -42381,8 +33342,8 @@ export namespace Prisma {
     cep?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    telefones?: TelefonesUncheckedUpdateManyWithoutCk7002NestedInput
     emails?: EmailsUncheckedUpdateManyWithoutCk7002NestedInput
+    telefones?: TelefonesUncheckedUpdateManyWithoutCk7002NestedInput
   }
 
   export type Ck7002CreateManyInput = {
@@ -42940,6 +33901,8 @@ export namespace Prisma {
     day: number
     month: number
     year: number
+    hour?: number
+    minute?: number
     ck3001?: number | null
     ck3002?: number | null
     ck3003?: number | null
@@ -42962,6 +33925,8 @@ export namespace Prisma {
     day: number
     month: number
     year: number
+    hour?: number
+    minute?: number
     ck3001?: number | null
     ck3002?: number | null
     ck3003?: number | null
@@ -42984,6 +33949,8 @@ export namespace Prisma {
     day?: IntFieldUpdateOperationsInput | number
     month?: IntFieldUpdateOperationsInput | number
     year?: IntFieldUpdateOperationsInput | number
+    hour?: IntFieldUpdateOperationsInput | number
+    minute?: IntFieldUpdateOperationsInput | number
     ck3001?: NullableIntFieldUpdateOperationsInput | number | null
     ck3002?: NullableIntFieldUpdateOperationsInput | number | null
     ck3003?: NullableIntFieldUpdateOperationsInput | number | null
@@ -43006,6 +33973,8 @@ export namespace Prisma {
     day?: IntFieldUpdateOperationsInput | number
     month?: IntFieldUpdateOperationsInput | number
     year?: IntFieldUpdateOperationsInput | number
+    hour?: IntFieldUpdateOperationsInput | number
+    minute?: IntFieldUpdateOperationsInput | number
     ck3001?: NullableIntFieldUpdateOperationsInput | number | null
     ck3002?: NullableIntFieldUpdateOperationsInput | number | null
     ck3003?: NullableIntFieldUpdateOperationsInput | number | null
@@ -43028,6 +33997,8 @@ export namespace Prisma {
     day: number
     month: number
     year: number
+    hour?: number
+    minute?: number
     ck3001?: number | null
     ck3002?: number | null
     ck3003?: number | null
@@ -43050,6 +34021,8 @@ export namespace Prisma {
     day?: IntFieldUpdateOperationsInput | number
     month?: IntFieldUpdateOperationsInput | number
     year?: IntFieldUpdateOperationsInput | number
+    hour?: IntFieldUpdateOperationsInput | number
+    minute?: IntFieldUpdateOperationsInput | number
     ck3001?: NullableIntFieldUpdateOperationsInput | number | null
     ck3002?: NullableIntFieldUpdateOperationsInput | number | null
     ck3003?: NullableIntFieldUpdateOperationsInput | number | null
@@ -43072,6 +34045,8 @@ export namespace Prisma {
     day?: IntFieldUpdateOperationsInput | number
     month?: IntFieldUpdateOperationsInput | number
     year?: IntFieldUpdateOperationsInput | number
+    hour?: IntFieldUpdateOperationsInput | number
+    minute?: IntFieldUpdateOperationsInput | number
     ck3001?: NullableIntFieldUpdateOperationsInput | number | null
     ck3002?: NullableIntFieldUpdateOperationsInput | number | null
     ck3003?: NullableIntFieldUpdateOperationsInput | number | null
@@ -43266,636 +34241,6 @@ export namespace Prisma {
     autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type servicos_viewCreateInput = {
-    id: bigint | number
-    cos: string
-    descricao_do_servico: string
-    hora_vendida: number
-    valor_total_liquido_da_mao_de_obra: Decimal | DecimalJsLike | number | string
-    numero_da_os?: string | null
-    numero_do_dn?: string | null
-    fonte_pagadora?: number | null
-    data_e_hora_da_abertura_da_os?: Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: Date | string | null
-    uf: string
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type servicos_viewUncheckedCreateInput = {
-    id: bigint | number
-    cos: string
-    descricao_do_servico: string
-    hora_vendida: number
-    valor_total_liquido_da_mao_de_obra: Decimal | DecimalJsLike | number | string
-    numero_da_os?: string | null
-    numero_do_dn?: string | null
-    fonte_pagadora?: number | null
-    data_e_hora_da_abertura_da_os?: Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: Date | string | null
-    uf: string
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type servicos_viewUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    cos?: StringFieldUpdateOperationsInput | string
-    descricao_do_servico?: StringFieldUpdateOperationsInput | string
-    hora_vendida?: FloatFieldUpdateOperationsInput | number
-    valor_total_liquido_da_mao_de_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    numero_do_dn?: NullableStringFieldUpdateOperationsInput | string | null
-    fonte_pagadora?: NullableIntFieldUpdateOperationsInput | number | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uf?: StringFieldUpdateOperationsInput | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type servicos_viewUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    cos?: StringFieldUpdateOperationsInput | string
-    descricao_do_servico?: StringFieldUpdateOperationsInput | string
-    hora_vendida?: FloatFieldUpdateOperationsInput | number
-    valor_total_liquido_da_mao_de_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    numero_do_dn?: NullableStringFieldUpdateOperationsInput | string | null
-    fonte_pagadora?: NullableIntFieldUpdateOperationsInput | number | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uf?: StringFieldUpdateOperationsInput | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type servicos_viewCreateManyInput = {
-    id: bigint | number
-    cos: string
-    descricao_do_servico: string
-    hora_vendida: number
-    valor_total_liquido_da_mao_de_obra: Decimal | DecimalJsLike | number | string
-    numero_da_os?: string | null
-    numero_do_dn?: string | null
-    fonte_pagadora?: number | null
-    data_e_hora_da_abertura_da_os?: Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: Date | string | null
-    uf: string
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type servicos_viewUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    cos?: StringFieldUpdateOperationsInput | string
-    descricao_do_servico?: StringFieldUpdateOperationsInput | string
-    hora_vendida?: FloatFieldUpdateOperationsInput | number
-    valor_total_liquido_da_mao_de_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    numero_do_dn?: NullableStringFieldUpdateOperationsInput | string | null
-    fonte_pagadora?: NullableIntFieldUpdateOperationsInput | number | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uf?: StringFieldUpdateOperationsInput | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type servicos_viewUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    cos?: StringFieldUpdateOperationsInput | string
-    descricao_do_servico?: StringFieldUpdateOperationsInput | string
-    hora_vendida?: FloatFieldUpdateOperationsInput | number
-    valor_total_liquido_da_mao_de_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    numero_do_dn?: NullableStringFieldUpdateOperationsInput | string | null
-    fonte_pagadora?: NullableIntFieldUpdateOperationsInput | number | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uf?: StringFieldUpdateOperationsInput | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type pecas_viewCreateInput = {
-    id: bigint | number
-    codigo_da_peca: string
-    descricao_da_peca: string
-    quantidade_da_peca: number
-    valor_total_liquido_da_peca: Decimal | DecimalJsLike | number | string
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type pecas_viewUncheckedCreateInput = {
-    id: bigint | number
-    codigo_da_peca: string
-    descricao_da_peca: string
-    quantidade_da_peca: number
-    valor_total_liquido_da_peca: Decimal | DecimalJsLike | number | string
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type pecas_viewUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    codigo_da_peca?: StringFieldUpdateOperationsInput | string
-    descricao_da_peca?: StringFieldUpdateOperationsInput | string
-    quantidade_da_peca?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_da_peca?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type pecas_viewUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    codigo_da_peca?: StringFieldUpdateOperationsInput | string
-    descricao_da_peca?: StringFieldUpdateOperationsInput | string
-    quantidade_da_peca?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_da_peca?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type pecas_viewCreateManyInput = {
-    id: bigint | number
-    codigo_da_peca: string
-    descricao_da_peca: string
-    quantidade_da_peca: number
-    valor_total_liquido_da_peca: Decimal | DecimalJsLike | number | string
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type pecas_viewUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    codigo_da_peca?: StringFieldUpdateOperationsInput | string
-    descricao_da_peca?: StringFieldUpdateOperationsInput | string
-    quantidade_da_peca?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_da_peca?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type pecas_viewUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    codigo_da_peca?: StringFieldUpdateOperationsInput | string
-    descricao_da_peca?: StringFieldUpdateOperationsInput | string
-    quantidade_da_peca?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_da_peca?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type clientes_viewCreateInput = {
-    id: bigint | number
-    nome_do_cliente: string
-    cpf_cnpj: string
-    endereco: string
-    numero: string
-    complemento?: string | null
-    bairro: string
-    cidade: string
-    uf: string
-    cep: string
-    tel_res?: string | null
-    tel_cel?: string | null
-    tel_com?: string | null
-    email_res?: string | null
-    email_com?: string | null
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type clientes_viewUncheckedCreateInput = {
-    id: bigint | number
-    nome_do_cliente: string
-    cpf_cnpj: string
-    endereco: string
-    numero: string
-    complemento?: string | null
-    bairro: string
-    cidade: string
-    uf: string
-    cep: string
-    tel_res?: string | null
-    tel_cel?: string | null
-    tel_com?: string | null
-    email_res?: string | null
-    email_com?: string | null
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type clientes_viewUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    nome_do_cliente?: StringFieldUpdateOperationsInput | string
-    cpf_cnpj?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    numero?: StringFieldUpdateOperationsInput | string
-    complemento?: NullableStringFieldUpdateOperationsInput | string | null
-    bairro?: StringFieldUpdateOperationsInput | string
-    cidade?: StringFieldUpdateOperationsInput | string
-    uf?: StringFieldUpdateOperationsInput | string
-    cep?: StringFieldUpdateOperationsInput | string
-    tel_res?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_cel?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_com?: NullableStringFieldUpdateOperationsInput | string | null
-    email_res?: NullableStringFieldUpdateOperationsInput | string | null
-    email_com?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type clientes_viewUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    nome_do_cliente?: StringFieldUpdateOperationsInput | string
-    cpf_cnpj?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    numero?: StringFieldUpdateOperationsInput | string
-    complemento?: NullableStringFieldUpdateOperationsInput | string | null
-    bairro?: StringFieldUpdateOperationsInput | string
-    cidade?: StringFieldUpdateOperationsInput | string
-    uf?: StringFieldUpdateOperationsInput | string
-    cep?: StringFieldUpdateOperationsInput | string
-    tel_res?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_cel?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_com?: NullableStringFieldUpdateOperationsInput | string | null
-    email_res?: NullableStringFieldUpdateOperationsInput | string | null
-    email_com?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type clientes_viewCreateManyInput = {
-    id: bigint | number
-    nome_do_cliente: string
-    cpf_cnpj: string
-    endereco: string
-    numero: string
-    complemento?: string | null
-    bairro: string
-    cidade: string
-    uf: string
-    cep: string
-    tel_res?: string | null
-    tel_cel?: string | null
-    tel_com?: string | null
-    email_res?: string | null
-    email_com?: string | null
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type clientes_viewUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    nome_do_cliente?: StringFieldUpdateOperationsInput | string
-    cpf_cnpj?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    numero?: StringFieldUpdateOperationsInput | string
-    complemento?: NullableStringFieldUpdateOperationsInput | string | null
-    bairro?: StringFieldUpdateOperationsInput | string
-    cidade?: StringFieldUpdateOperationsInput | string
-    uf?: StringFieldUpdateOperationsInput | string
-    cep?: StringFieldUpdateOperationsInput | string
-    tel_res?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_cel?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_com?: NullableStringFieldUpdateOperationsInput | string | null
-    email_res?: NullableStringFieldUpdateOperationsInput | string | null
-    email_com?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type clientes_viewUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    nome_do_cliente?: StringFieldUpdateOperationsInput | string
-    cpf_cnpj?: StringFieldUpdateOperationsInput | string
-    endereco?: StringFieldUpdateOperationsInput | string
-    numero?: StringFieldUpdateOperationsInput | string
-    complemento?: NullableStringFieldUpdateOperationsInput | string | null
-    bairro?: StringFieldUpdateOperationsInput | string
-    cidade?: StringFieldUpdateOperationsInput | string
-    uf?: StringFieldUpdateOperationsInput | string
-    cep?: StringFieldUpdateOperationsInput | string
-    tel_res?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_cel?: NullableStringFieldUpdateOperationsInput | string | null
-    tel_com?: NullableStringFieldUpdateOperationsInput | string | null
-    email_res?: NullableStringFieldUpdateOperationsInput | string | null
-    email_com?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type nf_viewCreateInput = {
-    id: bigint | number
-    numero_da_nota_fiscal: string
-    serie_da_nota_fiscal: string
-    fonte_pagadora: number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: Date | string | null
-    data_e_hora_do_fechamento_da_os?: Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | string
-    categoria: string
-  }
-
-  export type nf_viewUncheckedCreateInput = {
-    id: bigint | number
-    numero_da_nota_fiscal: string
-    serie_da_nota_fiscal: string
-    fonte_pagadora: number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: Date | string | null
-    data_e_hora_do_fechamento_da_os?: Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | string
-    categoria: string
-  }
-
-  export type nf_viewUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    serie_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_do_fechamento_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeFieldUpdateOperationsInput | Date | string
-    categoria?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type nf_viewUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    serie_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_do_fechamento_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeFieldUpdateOperationsInput | Date | string
-    categoria?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type nf_viewCreateManyInput = {
-    id: bigint | number
-    numero_da_nota_fiscal: string
-    serie_da_nota_fiscal: string
-    fonte_pagadora: number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: Date | string | null
-    data_e_hora_do_fechamento_da_os?: Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal: Date | string
-    categoria: string
-  }
-
-  export type nf_viewUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    serie_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_do_fechamento_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeFieldUpdateOperationsInput | Date | string
-    categoria?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type nf_viewUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    serie_da_nota_fiscal?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    valor_total_liquido_das_pecas_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    data_e_hora_da_abertura_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_do_fechamento_da_os?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    data_e_hora_da_emissao_da_nota_fiscal?: DateTimeFieldUpdateOperationsInput | Date | string
-    categoria?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type fontes_pagadoras_viewCreateInput = {
-    id: bigint | number
-    numero_da_nota_fiscal?: string | null
-    serie_da_nota_fiscal?: string | null
-    nota_fiscal_id?: bigint | number | null
-    numero_da_os?: string | null
-    os_id?: bigint | number | null
-    numero_do_dn: string
-    fonte_pagadora: number
-    fonte_pagadora_id: bigint | number
-    indicador?: string | null
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type fontes_pagadoras_viewUncheckedCreateInput = {
-    id: bigint | number
-    numero_da_nota_fiscal?: string | null
-    serie_da_nota_fiscal?: string | null
-    nota_fiscal_id?: bigint | number | null
-    numero_da_os?: string | null
-    os_id?: bigint | number | null
-    numero_do_dn: string
-    fonte_pagadora: number
-    fonte_pagadora_id: bigint | number
-    indicador?: string | null
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type fontes_pagadoras_viewUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    serie_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    nota_fiscal_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    os_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    fonte_pagadora_id?: BigIntFieldUpdateOperationsInput | bigint | number
-    indicador?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type fontes_pagadoras_viewUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    serie_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    nota_fiscal_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    os_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    fonte_pagadora_id?: BigIntFieldUpdateOperationsInput | bigint | number
-    indicador?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type fontes_pagadoras_viewCreateManyInput = {
-    id: bigint | number
-    numero_da_nota_fiscal?: string | null
-    serie_da_nota_fiscal?: string | null
-    nota_fiscal_id?: bigint | number | null
-    numero_da_os?: string | null
-    os_id?: bigint | number | null
-    numero_do_dn: string
-    fonte_pagadora: number
-    fonte_pagadora_id: bigint | number
-    indicador?: string | null
-    parent: string
-    parent_id: bigint | number
-  }
-
-  export type fontes_pagadoras_viewUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    serie_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    nota_fiscal_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    os_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    fonte_pagadora_id?: BigIntFieldUpdateOperationsInput | bigint | number
-    indicador?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type fontes_pagadoras_viewUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    numero_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    serie_da_nota_fiscal?: NullableStringFieldUpdateOperationsInput | string | null
-    nota_fiscal_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_da_os?: NullableStringFieldUpdateOperationsInput | string | null
-    os_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    fonte_pagadora?: IntFieldUpdateOperationsInput | number
-    fonte_pagadora_id?: BigIntFieldUpdateOperationsInput | bigint | number
-    indicador?: NullableStringFieldUpdateOperationsInput | string | null
-    parent?: StringFieldUpdateOperationsInput | string
-    parent_id?: BigIntFieldUpdateOperationsInput | bigint | number
-  }
-
-  export type pecas_balcao_viewCreateInput = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_balcao: bigint | number
-    vl_liq_peca_balcao: Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_balcao_viewUncheckedCreateInput = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_balcao: bigint | number
-    vl_liq_peca_balcao: Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_balcao_viewUpdateInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_balcao?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_balcao?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_balcao_viewUncheckedUpdateInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_balcao?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_balcao?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_balcao_viewCreateManyInput = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_balcao: bigint | number
-    vl_liq_peca_balcao: Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_balcao_viewUpdateManyMutationInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_balcao?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_balcao?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_balcao_viewUncheckedUpdateManyInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_balcao?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_balcao?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewCreateInput = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_oficina: bigint | number
-    vl_liq_peca_oficina: Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida: number
-    vl_liq_mao_obra: Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewUncheckedCreateInput = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_oficina: bigint | number
-    vl_liq_peca_oficina: Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida: number
-    vl_liq_mao_obra: Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewUpdateInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_oficina?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_oficina?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida?: FloatFieldUpdateOperationsInput | number
-    vl_liq_mao_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewUncheckedUpdateInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_oficina?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_oficina?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida?: FloatFieldUpdateOperationsInput | number
-    vl_liq_mao_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewCreateManyInput = {
-    numero_do_dn: string
-    mes_ano: string
-    qtd_pecas_oficina: bigint | number
-    vl_liq_peca_oficina: Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida: number
-    vl_liq_mao_obra: Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewUpdateManyMutationInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_oficina?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_oficina?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida?: FloatFieldUpdateOperationsInput | number
-    vl_liq_mao_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-  }
-
-  export type pecas_oficina_viewUncheckedUpdateManyInput = {
-    numero_do_dn?: StringFieldUpdateOperationsInput | string
-    mes_ano?: StringFieldUpdateOperationsInput | string
-    qtd_pecas_oficina?: BigIntFieldUpdateOperationsInput | bigint | number
-    vl_liq_peca_oficina?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    qtd_hora_vendida?: FloatFieldUpdateOperationsInput | number
-    vl_liq_mao_obra?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type BigIntFilter<$PrismaModel = never> = {
@@ -45520,6 +35865,8 @@ export namespace Prisma {
     day: number
     month: number
     year: number
+    hour: number
+    minute: number
   }
 
   export type DailyCkCountOrderByAggregateInput = {
@@ -45527,6 +35874,8 @@ export namespace Prisma {
     day?: SortOrder
     month?: SortOrder
     year?: SortOrder
+    hour?: SortOrder
+    minute?: SortOrder
     ck3001?: SortOrder
     ck3002?: SortOrder
     ck3003?: SortOrder
@@ -45549,6 +35898,8 @@ export namespace Prisma {
     day?: SortOrder
     month?: SortOrder
     year?: SortOrder
+    hour?: SortOrder
+    minute?: SortOrder
     ck3001?: SortOrder
     ck3002?: SortOrder
     ck3003?: SortOrder
@@ -45570,6 +35921,8 @@ export namespace Prisma {
     day?: SortOrder
     month?: SortOrder
     year?: SortOrder
+    hour?: SortOrder
+    minute?: SortOrder
     ck3001?: SortOrder
     ck3002?: SortOrder
     ck3003?: SortOrder
@@ -45592,6 +35945,8 @@ export namespace Prisma {
     day?: SortOrder
     month?: SortOrder
     year?: SortOrder
+    hour?: SortOrder
+    minute?: SortOrder
     ck3001?: SortOrder
     ck3002?: SortOrder
     ck3003?: SortOrder
@@ -45614,6 +35969,8 @@ export namespace Prisma {
     day?: SortOrder
     month?: SortOrder
     year?: SortOrder
+    hour?: SortOrder
+    minute?: SortOrder
     ck3001?: SortOrder
     ck3002?: SortOrder
     ck3003?: SortOrder
@@ -45740,405 +36097,6 @@ export namespace Prisma {
     ck3002_id?: SortOrder
     ck6042_id?: SortOrder
     ck7002_id?: SortOrder
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type servicos_viewCountOrderByAggregateInput = {
-    id?: SortOrder
-    cos?: SortOrder
-    descricao_do_servico?: SortOrder
-    hora_vendida?: SortOrder
-    valor_total_liquido_da_mao_de_obra?: SortOrder
-    numero_da_os?: SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    uf?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type servicos_viewAvgOrderByAggregateInput = {
-    id?: SortOrder
-    hora_vendida?: SortOrder
-    valor_total_liquido_da_mao_de_obra?: SortOrder
-    fonte_pagadora?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type servicos_viewMaxOrderByAggregateInput = {
-    id?: SortOrder
-    cos?: SortOrder
-    descricao_do_servico?: SortOrder
-    hora_vendida?: SortOrder
-    valor_total_liquido_da_mao_de_obra?: SortOrder
-    numero_da_os?: SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    uf?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type servicos_viewMinOrderByAggregateInput = {
-    id?: SortOrder
-    cos?: SortOrder
-    descricao_do_servico?: SortOrder
-    hora_vendida?: SortOrder
-    valor_total_liquido_da_mao_de_obra?: SortOrder
-    numero_da_os?: SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    uf?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type servicos_viewSumOrderByAggregateInput = {
-    id?: SortOrder
-    hora_vendida?: SortOrder
-    valor_total_liquido_da_mao_de_obra?: SortOrder
-    fonte_pagadora?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type pecas_viewCountOrderByAggregateInput = {
-    id?: SortOrder
-    codigo_da_peca?: SortOrder
-    descricao_da_peca?: SortOrder
-    quantidade_da_peca?: SortOrder
-    valor_total_liquido_da_peca?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type pecas_viewAvgOrderByAggregateInput = {
-    id?: SortOrder
-    quantidade_da_peca?: SortOrder
-    valor_total_liquido_da_peca?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type pecas_viewMaxOrderByAggregateInput = {
-    id?: SortOrder
-    codigo_da_peca?: SortOrder
-    descricao_da_peca?: SortOrder
-    quantidade_da_peca?: SortOrder
-    valor_total_liquido_da_peca?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type pecas_viewMinOrderByAggregateInput = {
-    id?: SortOrder
-    codigo_da_peca?: SortOrder
-    descricao_da_peca?: SortOrder
-    quantidade_da_peca?: SortOrder
-    valor_total_liquido_da_peca?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type pecas_viewSumOrderByAggregateInput = {
-    id?: SortOrder
-    quantidade_da_peca?: SortOrder
-    valor_total_liquido_da_peca?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type clientes_viewCountOrderByAggregateInput = {
-    id?: SortOrder
-    nome_do_cliente?: SortOrder
-    cpf_cnpj?: SortOrder
-    endereco?: SortOrder
-    numero?: SortOrder
-    complemento?: SortOrder
-    bairro?: SortOrder
-    cidade?: SortOrder
-    uf?: SortOrder
-    cep?: SortOrder
-    tel_res?: SortOrder
-    tel_cel?: SortOrder
-    tel_com?: SortOrder
-    email_res?: SortOrder
-    email_com?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type clientes_viewAvgOrderByAggregateInput = {
-    id?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type clientes_viewMaxOrderByAggregateInput = {
-    id?: SortOrder
-    nome_do_cliente?: SortOrder
-    cpf_cnpj?: SortOrder
-    endereco?: SortOrder
-    numero?: SortOrder
-    complemento?: SortOrder
-    bairro?: SortOrder
-    cidade?: SortOrder
-    uf?: SortOrder
-    cep?: SortOrder
-    tel_res?: SortOrder
-    tel_cel?: SortOrder
-    tel_com?: SortOrder
-    email_res?: SortOrder
-    email_com?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type clientes_viewMinOrderByAggregateInput = {
-    id?: SortOrder
-    nome_do_cliente?: SortOrder
-    cpf_cnpj?: SortOrder
-    endereco?: SortOrder
-    numero?: SortOrder
-    complemento?: SortOrder
-    bairro?: SortOrder
-    cidade?: SortOrder
-    uf?: SortOrder
-    cep?: SortOrder
-    tel_res?: SortOrder
-    tel_cel?: SortOrder
-    tel_com?: SortOrder
-    email_res?: SortOrder
-    email_com?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type clientes_viewSumOrderByAggregateInput = {
-    id?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type nf_viewCountOrderByAggregateInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    fonte_pagadora?: SortOrder
-    valor_total_liquido_das_pecas_na_nota_fiscal?: SortOrder
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrder
-    data_e_hora_do_fechamento_da_os?: SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    categoria?: SortOrder
-  }
-
-  export type nf_viewAvgOrderByAggregateInput = {
-    id?: SortOrder
-    fonte_pagadora?: SortOrder
-    valor_total_liquido_das_pecas_na_nota_fiscal?: SortOrder
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: SortOrder
-  }
-
-  export type nf_viewMaxOrderByAggregateInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    fonte_pagadora?: SortOrder
-    valor_total_liquido_das_pecas_na_nota_fiscal?: SortOrder
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrder
-    data_e_hora_do_fechamento_da_os?: SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    categoria?: SortOrder
-  }
-
-  export type nf_viewMinOrderByAggregateInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    fonte_pagadora?: SortOrder
-    valor_total_liquido_das_pecas_na_nota_fiscal?: SortOrder
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: SortOrder
-    data_e_hora_da_abertura_da_os?: SortOrder
-    data_e_hora_do_fechamento_da_os?: SortOrder
-    data_e_hora_da_emissao_da_nota_fiscal?: SortOrder
-    categoria?: SortOrder
-  }
-
-  export type nf_viewSumOrderByAggregateInput = {
-    id?: SortOrder
-    fonte_pagadora?: SortOrder
-    valor_total_liquido_das_pecas_na_nota_fiscal?: SortOrder
-    valor_total_liquido_da_mao_de_obra_na_nota_fiscal?: SortOrder
-  }
-
-  export type fontes_pagadoras_viewFp_viewCompoundUniqueInput = {
-    parent: string
-    parent_id: bigint | number
-    numero_do_dn: string
-  }
-
-  export type fontes_pagadoras_viewCountOrderByAggregateInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    nota_fiscal_id?: SortOrder
-    numero_da_os?: SortOrder
-    os_id?: SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    fonte_pagadora_id?: SortOrder
-    indicador?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type fontes_pagadoras_viewAvgOrderByAggregateInput = {
-    id?: SortOrder
-    nota_fiscal_id?: SortOrder
-    os_id?: SortOrder
-    fonte_pagadora?: SortOrder
-    fonte_pagadora_id?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type fontes_pagadoras_viewMaxOrderByAggregateInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    nota_fiscal_id?: SortOrder
-    numero_da_os?: SortOrder
-    os_id?: SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    fonte_pagadora_id?: SortOrder
-    indicador?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type fontes_pagadoras_viewMinOrderByAggregateInput = {
-    id?: SortOrder
-    numero_da_nota_fiscal?: SortOrder
-    serie_da_nota_fiscal?: SortOrder
-    nota_fiscal_id?: SortOrder
-    numero_da_os?: SortOrder
-    os_id?: SortOrder
-    numero_do_dn?: SortOrder
-    fonte_pagadora?: SortOrder
-    fonte_pagadora_id?: SortOrder
-    indicador?: SortOrder
-    parent?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type fontes_pagadoras_viewSumOrderByAggregateInput = {
-    id?: SortOrder
-    nota_fiscal_id?: SortOrder
-    os_id?: SortOrder
-    fonte_pagadora?: SortOrder
-    fonte_pagadora_id?: SortOrder
-    parent_id?: SortOrder
-  }
-
-  export type pecas_balcao_viewCountOrderByAggregateInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_balcao?: SortOrder
-    vl_liq_peca_balcao?: SortOrder
-  }
-
-  export type pecas_balcao_viewAvgOrderByAggregateInput = {
-    qtd_pecas_balcao?: SortOrder
-    vl_liq_peca_balcao?: SortOrder
-  }
-
-  export type pecas_balcao_viewMaxOrderByAggregateInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_balcao?: SortOrder
-    vl_liq_peca_balcao?: SortOrder
-  }
-
-  export type pecas_balcao_viewMinOrderByAggregateInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_balcao?: SortOrder
-    vl_liq_peca_balcao?: SortOrder
-  }
-
-  export type pecas_balcao_viewSumOrderByAggregateInput = {
-    qtd_pecas_balcao?: SortOrder
-    vl_liq_peca_balcao?: SortOrder
-  }
-
-  export type pecas_oficina_viewCountOrderByAggregateInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_oficina?: SortOrder
-    vl_liq_peca_oficina?: SortOrder
-    qtd_hora_vendida?: SortOrder
-    vl_liq_mao_obra?: SortOrder
-  }
-
-  export type pecas_oficina_viewAvgOrderByAggregateInput = {
-    qtd_pecas_oficina?: SortOrder
-    vl_liq_peca_oficina?: SortOrder
-    qtd_hora_vendida?: SortOrder
-    vl_liq_mao_obra?: SortOrder
-  }
-
-  export type pecas_oficina_viewMaxOrderByAggregateInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_oficina?: SortOrder
-    vl_liq_peca_oficina?: SortOrder
-    qtd_hora_vendida?: SortOrder
-    vl_liq_mao_obra?: SortOrder
-  }
-
-  export type pecas_oficina_viewMinOrderByAggregateInput = {
-    numero_do_dn?: SortOrder
-    mes_ano?: SortOrder
-    qtd_pecas_oficina?: SortOrder
-    vl_liq_peca_oficina?: SortOrder
-    qtd_hora_vendida?: SortOrder
-    vl_liq_mao_obra?: SortOrder
-  }
-
-  export type pecas_oficina_viewSumOrderByAggregateInput = {
-    qtd_pecas_oficina?: SortOrder
-    vl_liq_peca_oficina?: SortOrder
-    qtd_hora_vendida?: SortOrder
-    vl_liq_mao_obra?: SortOrder
   }
 
   export type Ck3002CreateNestedManyWithoutCk3001Input = {
@@ -46617,13 +36575,6 @@ export namespace Prisma {
     connect?: Ck6041WhereUniqueInput
   }
 
-  export type TelefonesCreateNestedManyWithoutCk6042Input = {
-    create?: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input> | TelefonesCreateWithoutCk6042Input[] | TelefonesUncheckedCreateWithoutCk6042Input[]
-    connectOrCreate?: TelefonesCreateOrConnectWithoutCk6042Input | TelefonesCreateOrConnectWithoutCk6042Input[]
-    createMany?: TelefonesCreateManyCk6042InputEnvelope
-    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-  }
-
   export type EmailsCreateNestedManyWithoutCk6042Input = {
     create?: XOR<EmailsCreateWithoutCk6042Input, EmailsUncheckedCreateWithoutCk6042Input> | EmailsCreateWithoutCk6042Input[] | EmailsUncheckedCreateWithoutCk6042Input[]
     connectOrCreate?: EmailsCreateOrConnectWithoutCk6042Input | EmailsCreateOrConnectWithoutCk6042Input[]
@@ -46631,7 +36582,7 @@ export namespace Prisma {
     connect?: EmailsWhereUniqueInput | EmailsWhereUniqueInput[]
   }
 
-  export type TelefonesUncheckedCreateNestedManyWithoutCk6042Input = {
+  export type TelefonesCreateNestedManyWithoutCk6042Input = {
     create?: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input> | TelefonesCreateWithoutCk6042Input[] | TelefonesUncheckedCreateWithoutCk6042Input[]
     connectOrCreate?: TelefonesCreateOrConnectWithoutCk6042Input | TelefonesCreateOrConnectWithoutCk6042Input[]
     createMany?: TelefonesCreateManyCk6042InputEnvelope
@@ -46645,26 +36596,19 @@ export namespace Prisma {
     connect?: EmailsWhereUniqueInput | EmailsWhereUniqueInput[]
   }
 
+  export type TelefonesUncheckedCreateNestedManyWithoutCk6042Input = {
+    create?: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input> | TelefonesCreateWithoutCk6042Input[] | TelefonesUncheckedCreateWithoutCk6042Input[]
+    connectOrCreate?: TelefonesCreateOrConnectWithoutCk6042Input | TelefonesCreateOrConnectWithoutCk6042Input[]
+    createMany?: TelefonesCreateManyCk6042InputEnvelope
+    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+  }
+
   export type Ck6041UpdateOneRequiredWithoutCk6042NestedInput = {
     create?: XOR<Ck6041CreateWithoutCk6042Input, Ck6041UncheckedCreateWithoutCk6042Input>
     connectOrCreate?: Ck6041CreateOrConnectWithoutCk6042Input
     upsert?: Ck6041UpsertWithoutCk6042Input
     connect?: Ck6041WhereUniqueInput
     update?: XOR<XOR<Ck6041UpdateToOneWithWhereWithoutCk6042Input, Ck6041UpdateWithoutCk6042Input>, Ck6041UncheckedUpdateWithoutCk6042Input>
-  }
-
-  export type TelefonesUpdateManyWithoutCk6042NestedInput = {
-    create?: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input> | TelefonesCreateWithoutCk6042Input[] | TelefonesUncheckedCreateWithoutCk6042Input[]
-    connectOrCreate?: TelefonesCreateOrConnectWithoutCk6042Input | TelefonesCreateOrConnectWithoutCk6042Input[]
-    upsert?: TelefonesUpsertWithWhereUniqueWithoutCk6042Input | TelefonesUpsertWithWhereUniqueWithoutCk6042Input[]
-    createMany?: TelefonesCreateManyCk6042InputEnvelope
-    set?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    disconnect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    delete?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    update?: TelefonesUpdateWithWhereUniqueWithoutCk6042Input | TelefonesUpdateWithWhereUniqueWithoutCk6042Input[]
-    updateMany?: TelefonesUpdateManyWithWhereWithoutCk6042Input | TelefonesUpdateManyWithWhereWithoutCk6042Input[]
-    deleteMany?: TelefonesScalarWhereInput | TelefonesScalarWhereInput[]
   }
 
   export type EmailsUpdateManyWithoutCk6042NestedInput = {
@@ -46681,7 +36625,7 @@ export namespace Prisma {
     deleteMany?: EmailsScalarWhereInput | EmailsScalarWhereInput[]
   }
 
-  export type TelefonesUncheckedUpdateManyWithoutCk6042NestedInput = {
+  export type TelefonesUpdateManyWithoutCk6042NestedInput = {
     create?: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input> | TelefonesCreateWithoutCk6042Input[] | TelefonesUncheckedCreateWithoutCk6042Input[]
     connectOrCreate?: TelefonesCreateOrConnectWithoutCk6042Input | TelefonesCreateOrConnectWithoutCk6042Input[]
     upsert?: TelefonesUpsertWithWhereUniqueWithoutCk6042Input | TelefonesUpsertWithWhereUniqueWithoutCk6042Input[]
@@ -46707,6 +36651,20 @@ export namespace Prisma {
     update?: EmailsUpdateWithWhereUniqueWithoutCk6042Input | EmailsUpdateWithWhereUniqueWithoutCk6042Input[]
     updateMany?: EmailsUpdateManyWithWhereWithoutCk6042Input | EmailsUpdateManyWithWhereWithoutCk6042Input[]
     deleteMany?: EmailsScalarWhereInput | EmailsScalarWhereInput[]
+  }
+
+  export type TelefonesUncheckedUpdateManyWithoutCk6042NestedInput = {
+    create?: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input> | TelefonesCreateWithoutCk6042Input[] | TelefonesUncheckedCreateWithoutCk6042Input[]
+    connectOrCreate?: TelefonesCreateOrConnectWithoutCk6042Input | TelefonesCreateOrConnectWithoutCk6042Input[]
+    upsert?: TelefonesUpsertWithWhereUniqueWithoutCk6042Input | TelefonesUpsertWithWhereUniqueWithoutCk6042Input[]
+    createMany?: TelefonesCreateManyCk6042InputEnvelope
+    set?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    disconnect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    delete?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    update?: TelefonesUpdateWithWhereUniqueWithoutCk6042Input | TelefonesUpdateWithWhereUniqueWithoutCk6042Input[]
+    updateMany?: TelefonesUpdateManyWithWhereWithoutCk6042Input | TelefonesUpdateManyWithWhereWithoutCk6042Input[]
+    deleteMany?: TelefonesScalarWhereInput | TelefonesScalarWhereInput[]
   }
 
   export type Ck7002CreateNestedManyWithoutCk7001Input = {
@@ -46841,13 +36799,6 @@ export namespace Prisma {
     connect?: Ck7001WhereUniqueInput
   }
 
-  export type TelefonesCreateNestedManyWithoutCk7002Input = {
-    create?: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input> | TelefonesCreateWithoutCk7002Input[] | TelefonesUncheckedCreateWithoutCk7002Input[]
-    connectOrCreate?: TelefonesCreateOrConnectWithoutCk7002Input | TelefonesCreateOrConnectWithoutCk7002Input[]
-    createMany?: TelefonesCreateManyCk7002InputEnvelope
-    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-  }
-
   export type EmailsCreateNestedManyWithoutCk7002Input = {
     create?: XOR<EmailsCreateWithoutCk7002Input, EmailsUncheckedCreateWithoutCk7002Input> | EmailsCreateWithoutCk7002Input[] | EmailsUncheckedCreateWithoutCk7002Input[]
     connectOrCreate?: EmailsCreateOrConnectWithoutCk7002Input | EmailsCreateOrConnectWithoutCk7002Input[]
@@ -46855,7 +36806,7 @@ export namespace Prisma {
     connect?: EmailsWhereUniqueInput | EmailsWhereUniqueInput[]
   }
 
-  export type TelefonesUncheckedCreateNestedManyWithoutCk7002Input = {
+  export type TelefonesCreateNestedManyWithoutCk7002Input = {
     create?: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input> | TelefonesCreateWithoutCk7002Input[] | TelefonesUncheckedCreateWithoutCk7002Input[]
     connectOrCreate?: TelefonesCreateOrConnectWithoutCk7002Input | TelefonesCreateOrConnectWithoutCk7002Input[]
     createMany?: TelefonesCreateManyCk7002InputEnvelope
@@ -46869,26 +36820,19 @@ export namespace Prisma {
     connect?: EmailsWhereUniqueInput | EmailsWhereUniqueInput[]
   }
 
+  export type TelefonesUncheckedCreateNestedManyWithoutCk7002Input = {
+    create?: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input> | TelefonesCreateWithoutCk7002Input[] | TelefonesUncheckedCreateWithoutCk7002Input[]
+    connectOrCreate?: TelefonesCreateOrConnectWithoutCk7002Input | TelefonesCreateOrConnectWithoutCk7002Input[]
+    createMany?: TelefonesCreateManyCk7002InputEnvelope
+    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+  }
+
   export type Ck7001UpdateOneRequiredWithoutCk7002NestedInput = {
     create?: XOR<Ck7001CreateWithoutCk7002Input, Ck7001UncheckedCreateWithoutCk7002Input>
     connectOrCreate?: Ck7001CreateOrConnectWithoutCk7002Input
     upsert?: Ck7001UpsertWithoutCk7002Input
     connect?: Ck7001WhereUniqueInput
     update?: XOR<XOR<Ck7001UpdateToOneWithWhereWithoutCk7002Input, Ck7001UpdateWithoutCk7002Input>, Ck7001UncheckedUpdateWithoutCk7002Input>
-  }
-
-  export type TelefonesUpdateManyWithoutCk7002NestedInput = {
-    create?: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input> | TelefonesCreateWithoutCk7002Input[] | TelefonesUncheckedCreateWithoutCk7002Input[]
-    connectOrCreate?: TelefonesCreateOrConnectWithoutCk7002Input | TelefonesCreateOrConnectWithoutCk7002Input[]
-    upsert?: TelefonesUpsertWithWhereUniqueWithoutCk7002Input | TelefonesUpsertWithWhereUniqueWithoutCk7002Input[]
-    createMany?: TelefonesCreateManyCk7002InputEnvelope
-    set?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    disconnect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    delete?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
-    update?: TelefonesUpdateWithWhereUniqueWithoutCk7002Input | TelefonesUpdateWithWhereUniqueWithoutCk7002Input[]
-    updateMany?: TelefonesUpdateManyWithWhereWithoutCk7002Input | TelefonesUpdateManyWithWhereWithoutCk7002Input[]
-    deleteMany?: TelefonesScalarWhereInput | TelefonesScalarWhereInput[]
   }
 
   export type EmailsUpdateManyWithoutCk7002NestedInput = {
@@ -46905,7 +36849,7 @@ export namespace Prisma {
     deleteMany?: EmailsScalarWhereInput | EmailsScalarWhereInput[]
   }
 
-  export type TelefonesUncheckedUpdateManyWithoutCk7002NestedInput = {
+  export type TelefonesUpdateManyWithoutCk7002NestedInput = {
     create?: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input> | TelefonesCreateWithoutCk7002Input[] | TelefonesUncheckedCreateWithoutCk7002Input[]
     connectOrCreate?: TelefonesCreateOrConnectWithoutCk7002Input | TelefonesCreateOrConnectWithoutCk7002Input[]
     upsert?: TelefonesUpsertWithWhereUniqueWithoutCk7002Input | TelefonesUpsertWithWhereUniqueWithoutCk7002Input[]
@@ -46931,6 +36875,20 @@ export namespace Prisma {
     update?: EmailsUpdateWithWhereUniqueWithoutCk7002Input | EmailsUpdateWithWhereUniqueWithoutCk7002Input[]
     updateMany?: EmailsUpdateManyWithWhereWithoutCk7002Input | EmailsUpdateManyWithWhereWithoutCk7002Input[]
     deleteMany?: EmailsScalarWhereInput | EmailsScalarWhereInput[]
+  }
+
+  export type TelefonesUncheckedUpdateManyWithoutCk7002NestedInput = {
+    create?: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input> | TelefonesCreateWithoutCk7002Input[] | TelefonesUncheckedCreateWithoutCk7002Input[]
+    connectOrCreate?: TelefonesCreateOrConnectWithoutCk7002Input | TelefonesCreateOrConnectWithoutCk7002Input[]
+    upsert?: TelefonesUpsertWithWhereUniqueWithoutCk7002Input | TelefonesUpsertWithWhereUniqueWithoutCk7002Input[]
+    createMany?: TelefonesCreateManyCk7002InputEnvelope
+    set?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    disconnect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    delete?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    connect?: TelefonesWhereUniqueInput | TelefonesWhereUniqueInput[]
+    update?: TelefonesUpdateWithWhereUniqueWithoutCk7002Input | TelefonesUpdateWithWhereUniqueWithoutCk7002Input[]
+    updateMany?: TelefonesUpdateManyWithWhereWithoutCk7002Input | TelefonesUpdateManyWithWhereWithoutCk7002Input[]
+    deleteMany?: TelefonesScalarWhereInput | TelefonesScalarWhereInput[]
   }
 
   export type Ck7001CreateNestedOneWithoutCk7003Input = {
@@ -47067,14 +37025,6 @@ export namespace Prisma {
     delete?: Ck7002WhereInput | boolean
     connect?: Ck7002WhereUniqueInput
     update?: XOR<XOR<Ck7002UpdateToOneWithWhereWithoutTelefonesInput, Ck7002UpdateWithoutTelefonesInput>, Ck7002UncheckedUpdateWithoutTelefonesInput>
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type NestedBigIntFilter<$PrismaModel = never> = {
@@ -47400,22 +37350,6 @@ export namespace Prisma {
     _sum?: NestedBigIntNullableFilter<$PrismaModel>
     _min?: NestedBigIntNullableFilter<$PrismaModel>
     _max?: NestedBigIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type Ck3002CreateWithoutCk3001Input = {
@@ -48255,8 +38189,8 @@ export namespace Prisma {
     cep: string
     created_at?: Date | string
     modified_at?: Date | string
-    telefones?: TelefonesCreateNestedManyWithoutCk6042Input
     emails?: EmailsCreateNestedManyWithoutCk6042Input
+    telefones?: TelefonesCreateNestedManyWithoutCk6042Input
   }
 
   export type Ck6042UncheckedCreateWithoutCk6041Input = {
@@ -48266,8 +38200,8 @@ export namespace Prisma {
     cep: string
     created_at?: Date | string
     modified_at?: Date | string
-    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk6042Input
     emails?: EmailsUncheckedCreateNestedManyWithoutCk6042Input
+    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk6042Input
   }
 
   export type Ck6042CreateOrConnectWithoutCk6041Input = {
@@ -48389,38 +38323,6 @@ export namespace Prisma {
     create: XOR<Ck6041CreateWithoutCk6042Input, Ck6041UncheckedCreateWithoutCk6042Input>
   }
 
-  export type TelefonesCreateWithoutCk6042Input = {
-    numero: string
-    descricao?: string
-    autoriza_contato: boolean
-    autoriza_pesquisa: boolean
-    created_at?: Date | string
-    modified_at?: Date | string
-    ck3002?: Ck3002CreateNestedOneWithoutTelefonesInput
-    ck7002?: Ck7002CreateNestedOneWithoutTelefonesInput
-  }
-
-  export type TelefonesUncheckedCreateWithoutCk6042Input = {
-    ck3002_id?: bigint | number | null
-    ck7002_id?: bigint | number | null
-    numero: string
-    descricao?: string
-    autoriza_contato: boolean
-    autoriza_pesquisa: boolean
-    created_at?: Date | string
-    modified_at?: Date | string
-  }
-
-  export type TelefonesCreateOrConnectWithoutCk6042Input = {
-    where: TelefonesWhereUniqueInput
-    create: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input>
-  }
-
-  export type TelefonesCreateManyCk6042InputEnvelope = {
-    data: TelefonesCreateManyCk6042Input | TelefonesCreateManyCk6042Input[]
-    skipDuplicates?: boolean
-  }
-
   export type EmailsCreateWithoutCk6042Input = {
     email: string
     descricao?: string
@@ -48450,6 +38352,38 @@ export namespace Prisma {
 
   export type EmailsCreateManyCk6042InputEnvelope = {
     data: EmailsCreateManyCk6042Input | EmailsCreateManyCk6042Input[]
+    skipDuplicates?: boolean
+  }
+
+  export type TelefonesCreateWithoutCk6042Input = {
+    numero: string
+    descricao?: string
+    autoriza_contato: boolean
+    autoriza_pesquisa: boolean
+    created_at?: Date | string
+    modified_at?: Date | string
+    ck3002?: Ck3002CreateNestedOneWithoutTelefonesInput
+    ck7002?: Ck7002CreateNestedOneWithoutTelefonesInput
+  }
+
+  export type TelefonesUncheckedCreateWithoutCk6042Input = {
+    ck3002_id?: bigint | number | null
+    ck7002_id?: bigint | number | null
+    numero: string
+    descricao?: string
+    autoriza_contato: boolean
+    autoriza_pesquisa: boolean
+    created_at?: Date | string
+    modified_at?: Date | string
+  }
+
+  export type TelefonesCreateOrConnectWithoutCk6042Input = {
+    where: TelefonesWhereUniqueInput
+    create: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input>
+  }
+
+  export type TelefonesCreateManyCk6042InputEnvelope = {
+    data: TelefonesCreateManyCk6042Input | TelefonesCreateManyCk6042Input[]
     skipDuplicates?: boolean
   }
 
@@ -48498,22 +38432,6 @@ export namespace Prisma {
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TelefonesUpsertWithWhereUniqueWithoutCk6042Input = {
-    where: TelefonesWhereUniqueInput
-    update: XOR<TelefonesUpdateWithoutCk6042Input, TelefonesUncheckedUpdateWithoutCk6042Input>
-    create: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input>
-  }
-
-  export type TelefonesUpdateWithWhereUniqueWithoutCk6042Input = {
-    where: TelefonesWhereUniqueInput
-    data: XOR<TelefonesUpdateWithoutCk6042Input, TelefonesUncheckedUpdateWithoutCk6042Input>
-  }
-
-  export type TelefonesUpdateManyWithWhereWithoutCk6042Input = {
-    where: TelefonesScalarWhereInput
-    data: XOR<TelefonesUpdateManyMutationInput, TelefonesUncheckedUpdateManyWithoutCk6042Input>
-  }
-
   export type EmailsUpsertWithWhereUniqueWithoutCk6042Input = {
     where: EmailsWhereUniqueInput
     update: XOR<EmailsUpdateWithoutCk6042Input, EmailsUncheckedUpdateWithoutCk6042Input>
@@ -48530,6 +38448,22 @@ export namespace Prisma {
     data: XOR<EmailsUpdateManyMutationInput, EmailsUncheckedUpdateManyWithoutCk6042Input>
   }
 
+  export type TelefonesUpsertWithWhereUniqueWithoutCk6042Input = {
+    where: TelefonesWhereUniqueInput
+    update: XOR<TelefonesUpdateWithoutCk6042Input, TelefonesUncheckedUpdateWithoutCk6042Input>
+    create: XOR<TelefonesCreateWithoutCk6042Input, TelefonesUncheckedCreateWithoutCk6042Input>
+  }
+
+  export type TelefonesUpdateWithWhereUniqueWithoutCk6042Input = {
+    where: TelefonesWhereUniqueInput
+    data: XOR<TelefonesUpdateWithoutCk6042Input, TelefonesUncheckedUpdateWithoutCk6042Input>
+  }
+
+  export type TelefonesUpdateManyWithWhereWithoutCk6042Input = {
+    where: TelefonesScalarWhereInput
+    data: XOR<TelefonesUpdateManyMutationInput, TelefonesUncheckedUpdateManyWithoutCk6042Input>
+  }
+
   export type Ck7002CreateWithoutCk7001Input = {
     id?: bigint | number
     indicador: string
@@ -48542,8 +38476,8 @@ export namespace Prisma {
     cep: string
     created_at?: Date | string
     modified_at?: Date | string
-    telefones?: TelefonesCreateNestedManyWithoutCk7002Input
     emails?: EmailsCreateNestedManyWithoutCk7002Input
+    telefones?: TelefonesCreateNestedManyWithoutCk7002Input
   }
 
   export type Ck7002UncheckedCreateWithoutCk7001Input = {
@@ -48558,8 +38492,8 @@ export namespace Prisma {
     cep: string
     created_at?: Date | string
     modified_at?: Date | string
-    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk7002Input
     emails?: EmailsUncheckedCreateNestedManyWithoutCk7002Input
+    telefones?: TelefonesUncheckedCreateNestedManyWithoutCk7002Input
   }
 
   export type Ck7002CreateOrConnectWithoutCk7001Input = {
@@ -48777,38 +38711,6 @@ export namespace Prisma {
     create: XOR<Ck7001CreateWithoutCk7002Input, Ck7001UncheckedCreateWithoutCk7002Input>
   }
 
-  export type TelefonesCreateWithoutCk7002Input = {
-    numero: string
-    descricao?: string
-    autoriza_contato: boolean
-    autoriza_pesquisa: boolean
-    created_at?: Date | string
-    modified_at?: Date | string
-    ck3002?: Ck3002CreateNestedOneWithoutTelefonesInput
-    ck6042?: Ck6042CreateNestedOneWithoutTelefonesInput
-  }
-
-  export type TelefonesUncheckedCreateWithoutCk7002Input = {
-    ck3002_id?: bigint | number | null
-    ck6042_id?: bigint | number | null
-    numero: string
-    descricao?: string
-    autoriza_contato: boolean
-    autoriza_pesquisa: boolean
-    created_at?: Date | string
-    modified_at?: Date | string
-  }
-
-  export type TelefonesCreateOrConnectWithoutCk7002Input = {
-    where: TelefonesWhereUniqueInput
-    create: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input>
-  }
-
-  export type TelefonesCreateManyCk7002InputEnvelope = {
-    data: TelefonesCreateManyCk7002Input | TelefonesCreateManyCk7002Input[]
-    skipDuplicates?: boolean
-  }
-
   export type EmailsCreateWithoutCk7002Input = {
     email: string
     descricao?: string
@@ -48838,6 +38740,38 @@ export namespace Prisma {
 
   export type EmailsCreateManyCk7002InputEnvelope = {
     data: EmailsCreateManyCk7002Input | EmailsCreateManyCk7002Input[]
+    skipDuplicates?: boolean
+  }
+
+  export type TelefonesCreateWithoutCk7002Input = {
+    numero: string
+    descricao?: string
+    autoriza_contato: boolean
+    autoriza_pesquisa: boolean
+    created_at?: Date | string
+    modified_at?: Date | string
+    ck3002?: Ck3002CreateNestedOneWithoutTelefonesInput
+    ck6042?: Ck6042CreateNestedOneWithoutTelefonesInput
+  }
+
+  export type TelefonesUncheckedCreateWithoutCk7002Input = {
+    ck3002_id?: bigint | number | null
+    ck6042_id?: bigint | number | null
+    numero: string
+    descricao?: string
+    autoriza_contato: boolean
+    autoriza_pesquisa: boolean
+    created_at?: Date | string
+    modified_at?: Date | string
+  }
+
+  export type TelefonesCreateOrConnectWithoutCk7002Input = {
+    where: TelefonesWhereUniqueInput
+    create: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input>
+  }
+
+  export type TelefonesCreateManyCk7002InputEnvelope = {
+    data: TelefonesCreateManyCk7002Input | TelefonesCreateManyCk7002Input[]
     skipDuplicates?: boolean
   }
 
@@ -48892,22 +38826,6 @@ export namespace Prisma {
     ck7004?: Ck7004UncheckedUpdateManyWithoutCk7001NestedInput
   }
 
-  export type TelefonesUpsertWithWhereUniqueWithoutCk7002Input = {
-    where: TelefonesWhereUniqueInput
-    update: XOR<TelefonesUpdateWithoutCk7002Input, TelefonesUncheckedUpdateWithoutCk7002Input>
-    create: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input>
-  }
-
-  export type TelefonesUpdateWithWhereUniqueWithoutCk7002Input = {
-    where: TelefonesWhereUniqueInput
-    data: XOR<TelefonesUpdateWithoutCk7002Input, TelefonesUncheckedUpdateWithoutCk7002Input>
-  }
-
-  export type TelefonesUpdateManyWithWhereWithoutCk7002Input = {
-    where: TelefonesScalarWhereInput
-    data: XOR<TelefonesUpdateManyMutationInput, TelefonesUncheckedUpdateManyWithoutCk7002Input>
-  }
-
   export type EmailsUpsertWithWhereUniqueWithoutCk7002Input = {
     where: EmailsWhereUniqueInput
     update: XOR<EmailsUpdateWithoutCk7002Input, EmailsUncheckedUpdateWithoutCk7002Input>
@@ -48922,6 +38840,22 @@ export namespace Prisma {
   export type EmailsUpdateManyWithWhereWithoutCk7002Input = {
     where: EmailsScalarWhereInput
     data: XOR<EmailsUpdateManyMutationInput, EmailsUncheckedUpdateManyWithoutCk7002Input>
+  }
+
+  export type TelefonesUpsertWithWhereUniqueWithoutCk7002Input = {
+    where: TelefonesWhereUniqueInput
+    update: XOR<TelefonesUpdateWithoutCk7002Input, TelefonesUncheckedUpdateWithoutCk7002Input>
+    create: XOR<TelefonesCreateWithoutCk7002Input, TelefonesUncheckedCreateWithoutCk7002Input>
+  }
+
+  export type TelefonesUpdateWithWhereUniqueWithoutCk7002Input = {
+    where: TelefonesWhereUniqueInput
+    data: XOR<TelefonesUpdateWithoutCk7002Input, TelefonesUncheckedUpdateWithoutCk7002Input>
+  }
+
+  export type TelefonesUpdateManyWithWhereWithoutCk7002Input = {
+    where: TelefonesScalarWhereInput
+    data: XOR<TelefonesUpdateManyMutationInput, TelefonesUncheckedUpdateManyWithoutCk7002Input>
   }
 
   export type Ck7001CreateWithoutCk7003Input = {
@@ -49870,8 +39804,8 @@ export namespace Prisma {
     cep?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    telefones?: TelefonesUpdateManyWithoutCk6042NestedInput
     emails?: EmailsUpdateManyWithoutCk6042NestedInput
+    telefones?: TelefonesUpdateManyWithoutCk6042NestedInput
   }
 
   export type Ck6042UncheckedUpdateWithoutCk6041Input = {
@@ -49881,8 +39815,8 @@ export namespace Prisma {
     cep?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    telefones?: TelefonesUncheckedUpdateManyWithoutCk6042NestedInput
     emails?: EmailsUncheckedUpdateManyWithoutCk6042NestedInput
+    telefones?: TelefonesUncheckedUpdateManyWithoutCk6042NestedInput
   }
 
   export type Ck6042UncheckedUpdateManyWithoutCk6041Input = {
@@ -49892,17 +39826,6 @@ export namespace Prisma {
     cep?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TelefonesCreateManyCk6042Input = {
-    ck3002_id?: bigint | number | null
-    ck7002_id?: bigint | number | null
-    numero: string
-    descricao?: string
-    autoriza_contato: boolean
-    autoriza_pesquisa: boolean
-    created_at?: Date | string
-    modified_at?: Date | string
   }
 
   export type EmailsCreateManyCk6042Input = {
@@ -49916,37 +39839,15 @@ export namespace Prisma {
     ck7002_id?: bigint | number | null
   }
 
-  export type TelefonesUpdateWithoutCk6042Input = {
-    numero?: StringFieldUpdateOperationsInput | string
-    descricao?: StringFieldUpdateOperationsInput | string
-    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
-    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    ck3002?: Ck3002UpdateOneWithoutTelefonesNestedInput
-    ck7002?: Ck7002UpdateOneWithoutTelefonesNestedInput
-  }
-
-  export type TelefonesUncheckedUpdateWithoutCk6042Input = {
-    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    ck7002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero?: StringFieldUpdateOperationsInput | string
-    descricao?: StringFieldUpdateOperationsInput | string
-    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
-    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TelefonesUncheckedUpdateManyWithoutCk6042Input = {
-    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    ck7002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero?: StringFieldUpdateOperationsInput | string
-    descricao?: StringFieldUpdateOperationsInput | string
-    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
-    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TelefonesCreateManyCk6042Input = {
+    ck3002_id?: bigint | number | null
+    ck7002_id?: bigint | number | null
+    numero: string
+    descricao?: string
+    autoriza_contato: boolean
+    autoriza_pesquisa: boolean
+    created_at?: Date | string
+    modified_at?: Date | string
   }
 
   export type EmailsUpdateWithoutCk6042Input = {
@@ -49980,6 +39881,39 @@ export namespace Prisma {
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
     ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     ck7002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type TelefonesUpdateWithoutCk6042Input = {
+    numero?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
+    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ck3002?: Ck3002UpdateOneWithoutTelefonesNestedInput
+    ck7002?: Ck7002UpdateOneWithoutTelefonesNestedInput
+  }
+
+  export type TelefonesUncheckedUpdateWithoutCk6042Input = {
+    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ck7002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    numero?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
+    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TelefonesUncheckedUpdateManyWithoutCk6042Input = {
+    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ck7002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    numero?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
+    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type Ck7002CreateManyCk7001Input = {
@@ -50030,8 +39964,8 @@ export namespace Prisma {
     cep?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    telefones?: TelefonesUpdateManyWithoutCk7002NestedInput
     emails?: EmailsUpdateManyWithoutCk7002NestedInput
+    telefones?: TelefonesUpdateManyWithoutCk7002NestedInput
   }
 
   export type Ck7002UncheckedUpdateWithoutCk7001Input = {
@@ -50046,8 +39980,8 @@ export namespace Prisma {
     cep?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    telefones?: TelefonesUncheckedUpdateManyWithoutCk7002NestedInput
     emails?: EmailsUncheckedUpdateManyWithoutCk7002NestedInput
+    telefones?: TelefonesUncheckedUpdateManyWithoutCk7002NestedInput
   }
 
   export type Ck7002UncheckedUpdateManyWithoutCk7001Input = {
@@ -50130,17 +40064,6 @@ export namespace Prisma {
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TelefonesCreateManyCk7002Input = {
-    ck3002_id?: bigint | number | null
-    ck6042_id?: bigint | number | null
-    numero: string
-    descricao?: string
-    autoriza_contato: boolean
-    autoriza_pesquisa: boolean
-    created_at?: Date | string
-    modified_at?: Date | string
-  }
-
   export type EmailsCreateManyCk7002Input = {
     email: string
     descricao?: string
@@ -50152,37 +40075,15 @@ export namespace Prisma {
     ck6042_id?: bigint | number | null
   }
 
-  export type TelefonesUpdateWithoutCk7002Input = {
-    numero?: StringFieldUpdateOperationsInput | string
-    descricao?: StringFieldUpdateOperationsInput | string
-    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
-    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    ck3002?: Ck3002UpdateOneWithoutTelefonesNestedInput
-    ck6042?: Ck6042UpdateOneWithoutTelefonesNestedInput
-  }
-
-  export type TelefonesUncheckedUpdateWithoutCk7002Input = {
-    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    ck6042_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero?: StringFieldUpdateOperationsInput | string
-    descricao?: StringFieldUpdateOperationsInput | string
-    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
-    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TelefonesUncheckedUpdateManyWithoutCk7002Input = {
-    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    ck6042_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    numero?: StringFieldUpdateOperationsInput | string
-    descricao?: StringFieldUpdateOperationsInput | string
-    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
-    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TelefonesCreateManyCk7002Input = {
+    ck3002_id?: bigint | number | null
+    ck6042_id?: bigint | number | null
+    numero: string
+    descricao?: string
+    autoriza_contato: boolean
+    autoriza_pesquisa: boolean
+    created_at?: Date | string
+    modified_at?: Date | string
   }
 
   export type EmailsUpdateWithoutCk7002Input = {
@@ -50216,6 +40117,39 @@ export namespace Prisma {
     modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
     ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     ck6042_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type TelefonesUpdateWithoutCk7002Input = {
+    numero?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
+    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ck3002?: Ck3002UpdateOneWithoutTelefonesNestedInput
+    ck6042?: Ck6042UpdateOneWithoutTelefonesNestedInput
+  }
+
+  export type TelefonesUncheckedUpdateWithoutCk7002Input = {
+    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ck6042_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    numero?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
+    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TelefonesUncheckedUpdateManyWithoutCk7002Input = {
+    ck3002_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ck6042_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    numero?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    autoriza_contato?: BoolFieldUpdateOperationsInput | boolean
+    autoriza_pesquisa?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

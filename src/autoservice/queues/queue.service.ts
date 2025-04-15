@@ -51,7 +51,7 @@ export class QueueService implements OnApplicationBootstrap {
     }
   }
 
-  @Interval(1000)
+  @Interval(60000)
   async retryFailedJobsHourly() {
     const { failed, paused } = await this.getQueueStatus("hourly");
     if (await this.hourly.isPaused()) await this.hourly.resume();
@@ -180,16 +180,16 @@ export class QueueService implements OnApplicationBootstrap {
   }
 
   //EVENTS
-  @OnEvent("queue.start")
-  async onAppStart() {
-    console.log("recebeu evento queue.start");
+  // @OnEvent("queue.start")
+  // async onAppStart() {
+  //   console.log("recebeu evento queue.start");
     // const status = await this.isQueueActive('autoservice');
     // console.log(status)
     // // const state = status ? 'busy' : 'free';
     // // this.emitter.emit('bull.state', { type: 'queue', name: 'autoservice', state });
     // status ? this.emitter.emit('bull.busy') : this.emitter.emit('bull.free');
     // console.log(`📦 Fila autoservice está ${status ? 'ativa (busy)' : 'inativa (free)'}`);
-  }
+  // }
 
   //INTERVALS
   @Interval(10000)
@@ -198,7 +198,6 @@ export class QueueService implements OnApplicationBootstrap {
     const hourlyStatus = await this.isQueueActive("hourly");
     const statusB = await this.getQueueStatus("hourly");
     const statusA = await this.getQueueStatus("autoservice");
-    console.log(statusA, statusB);
     if (autoServiceStatus === false) {
       await this.emitter.emit("autoservice.queue.confirm");
     }
@@ -220,21 +219,19 @@ export class QueueService implements OnApplicationBootstrap {
 
   @OnEvent("autoservice.queue.confirm")
   async handleAutoserviceConfirm() {
-    let messageReceived = false; // Flag para verificar se a mensagem foi recebida
-    const timeout = 20000; // Tempo limite de 20 segundos
-    const startTime = Date.now(); // Início da espera
+    let messageReceived = false;
+    const timeout = 20000;
+    const startTime = Date.now();
 
     console.log("Aguardando mensagem na fila SQS...");
 
-    // Contagem regressiva no console
     const countdownInterval = setInterval(() => {
       const elapsedTime = Date.now() - startTime;
       const timeLeft = Math.max(0, timeout - elapsedTime);
-      const secondsLeft = Math.ceil(timeLeft / 1000); // Converte o tempo restante em segundos
+      const secondsLeft = Math.ceil(timeLeft / 1000);
       // console.log(`Tempo restante: ${secondsLeft} segundos`);
-    }, 1000); // Atualiza a cada 1 segundo
+    }, 1000);
 
-    // Criando uma promessa para o evento `sqs.message`
     const sqsMessagePromise = new Promise<void>((resolve, reject) => {
       this.emitter
         .waitFor("sqs.message", {
@@ -242,47 +239,42 @@ export class QueueService implements OnApplicationBootstrap {
           overload: false,
           Promise: Promise,
           handleError: true,
-          filter: () => true, // Aqui você pode adicionar lógica adicional para filtrar os eventos
+          filter: () => true,
         })
         .then(() => {
           console.log("Mensagem recebida na fila SQS.");
           messageReceived = true;
-          clearInterval(countdownInterval); // Limpa a contagem regressiva
-          resolve(); // Mensagem recebida, resolve a promise
+          clearInterval(countdownInterval);
+          resolve();
         })
         .catch((error) => {
           // console.log("Erro ao aguardar a mensagem no SQS:", error);
-          clearInterval(countdownInterval); // Limpa a contagem regressiva
-          reject(error); // Caso o timeout ou outro erro aconteça
+          clearInterval(countdownInterval);
+          reject(error);
         });
     });
 
-    // Criando a promessa do timeout de 20 segundos
     const timeoutPromise = new Promise<void>((_, reject) =>
       setTimeout(() => {
         if (!messageReceived) {
-          console.log("Tempo de espera esgotado, sem nova mensagem.");
-          clearInterval(countdownInterval); // Limpa a contagem regressiva
+          clearInterval(countdownInterval);
           reject(new Error("Tempo de espera de 20 segundos esgotado"));
         }
       }, timeout),
     );
 
     try {
-      // Esperando a primeira promessa que for resolvida (mensagem ou timeout)
       await Promise.race([sqsMessagePromise, timeoutPromise]);
 
       if (messageReceived) {
-        console.log("Fila autoservice ainda operante, não emitindo 'autoservice.finished'.");
+        console.log("Fila autoservice ainda operante.");
       } else {
-        // Se não recebemos uma mensagem e o tempo passou, emitimos o evento de finalização
         console.log("Finalizando processamento da fila...");
         this.emitter.emit("autoservice.finished");
       }
     } catch (error) {
       // console.log("Erro ou timeout:", error.message);
       if (!messageReceived) {
-        // Caso o evento `sqs.message` não tenha sido recebido e o tempo tenha expirado
         console.log("Finalizando processamento da fila...");
         this.emitter.emit("autoservice.finished");
       }
@@ -300,6 +292,7 @@ export class QueueService implements OnApplicationBootstrap {
     console.log("evento autoservice.finished recebido! retomando fila hourly");
     await this.resumeQueue("hourly");
     this.emitter.emit("autoservice.empty");
+
     // this.emitter.emit("hourly.continue");
   }
 
@@ -323,12 +316,6 @@ export class QueueService implements OnApplicationBootstrap {
 
     console.log("fila hourly está vazia! encerrando fila");
     this.emitter.emit("hourly.empty");
-  }
-
-  @OnEvent("teste")
-  async handleTeste() {
-    setTimeout(() => console.log("aguardando"), 10000);
-    return `blabla`;
   }
 
   @OnEvent("hourly.jobs.added")

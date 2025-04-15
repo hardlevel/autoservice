@@ -1,54 +1,54 @@
 model Ck3001 {
-    id                                           BigInt   @id @default(autoincrement()) @db.BigInt
-    numero_do_dn                                 String
-    numero_da_nota_fiscal                        String //@unique
-    serie_da_nota_fiscal                         String?
-    fonte_pagadora                               Int
-    valor_total_liquido_das_pecas_na_nota_fiscal Decimal  @default(0) @db.Decimal(10, 2)
-    indicador                                    String
-    data_e_hora_da_emissao_da_nota_fiscal        DateTime
-    numero                                       String?
-    endereco                                     String
-    complemento                                  String?
-    nome_do_cliente                              String
-    cpf_cnpj                                     String
-    ck3002                                       Ck3002[]
-    ck3003                                       Ck3003[]
-    created_at                                   DateTime @default(now())
-    modified_at                                  DateTime @updatedAt
+  id                                           BigInt   @id @default(autoincrement())
+  numero_do_dn                                 String
+  numero_da_nota_fiscal                        String
+  serie_da_nota_fiscal                         String?
+  fonte_pagadora                               Int
+  valor_total_liquido_das_pecas_na_nota_fiscal Decimal  @default(0) @db.Decimal(10, 2)
+  indicador                                    String
+  data_e_hora_da_emissao_da_nota_fiscal        DateTime
+  numero                                       String?
+  endereco                                     String
+  complemento                                  String?
+  nome_do_cliente                              String
+  cpf_cnpj                                     String
+  created_at                                   DateTime @default(now())
+  modified_at                                  DateTime @updatedAt
+  ck3002                                       Ck3002[]
+  ck3003                                       Ck3003[]
 
-    @@unique(name: "ck3001_cod", [cpf_cnpj, numero_da_nota_fiscal])
-    @@index([numero_da_nota_fiscal], type: Hash)
+  @@unique([cpf_cnpj, numero_da_nota_fiscal], name: "ck3001_cod")
+  @@index([numero_da_nota_fiscal], type: Hash)
 }
 
 model Ck3002 {
-    id          BigInt      @id @default(autoincrement()) @db.BigInt
-    cidade      String
-    bairro      String?
-    uf          String
-    cep         String
-    ck3001      Ck3001      @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
-    ck3001_id   BigInt
-    emails      Emails[]
-    telefones   Telefones[]
-    created_at  DateTime    @default(now())
-    modified_at DateTime    @updatedAt
+  id          BigInt      @id @default(autoincrement())
+  cidade      String
+  bairro      String?
+  uf          String
+  cep         String
+  ck3001_id   BigInt
+  created_at  DateTime    @default(now())
+  modified_at DateTime    @updatedAt
+  ck3001      Ck3001      @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
+  emails      Emails[]
+  telefones   Telefones[]
 
-    @@unique(name: "ck3002_cod", [cidade, bairro, uf, cep, ck3001_id])
+  @@unique([cidade, bairro, uf, cep, ck3001_id], name: "ck3002_cod")
 }
 
 model Ck3003 {
-    id                          BigInt   @id @default(autoincrement()) @db.BigInt
-    codigo_da_peca              String
-    descricao_da_peca           String?
-    quantidade_da_peca          Int
-    valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
-    codigo_promocional          String?
-    ck3001                      Ck3001   @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
-    ck3001_id                   BigInt
-    created_at                  DateTime @default(now())
-    modified_at                 DateTime @updatedAt
+  id                          BigInt   @id @default(autoincrement())
+  codigo_da_peca              String
+  descricao_da_peca           String?
+  quantidade_da_peca          Int
+  valor_total_liquido_da_peca Decimal? @default(0) @db.Decimal(10, 2)
+  codigo_promocional          String?
+  ck3001_id                   BigInt
+  created_at                  DateTime @default(now())
+  modified_at                 DateTime @updatedAt
+  ck3001                      Ck3001   @relation(fields: [ck3001_id], references: [id], onDelete: Cascade)
 
-    @@unique(name: "ck3003_cod", [codigo_da_peca, ck3001_id])
-    @@index([codigo_da_peca], type: Hash)
+  @@unique([codigo_da_peca, ck3001_id], name: "ck3003_cod")
+  @@index([codigo_da_peca], type: Hash)
 }

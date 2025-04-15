@@ -58,23 +58,18 @@ export class AutoserviceService {
   @OnEvent("app.start")
   private async appStart() {
     console.log("aplicação iniciada");
-    await this.testarErroSimples('rola');
     try {
       // await this.eventEmitter.emitAsync('queue.start');
       // await this.eventEmitter.emitAsync('sqs.start');
       // await this.eventEmitter.waitFor('app.free');
       // await this.checkAndStart();
-      // await this.init(2025);
+      await this.init(2025);
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
   }
 
   @CatchErrors()
-  async testarErroSimples(pinto) {
-    throw new Error('Erro simulado para teste');
-  }
-
   async makeRequest(dataInicio: string, dataFim: string) {
     console.log("Solicitando dados retroativos (request):", dataInicio);
     const { url, endpoint } = this.config.get("api");
@@ -100,10 +95,16 @@ export class AutoserviceService {
     hour: number = 0,
     minute: number = 0,
   ) {
-    const batchSize = 500;
-    let batch: any[] = [];
+    let currentDate: any;
 
-    await this.prisma.recordDaily(year, month, day, hour, minute, 'status', 'processing');
+    const lastParams = await this.prisma.loadDaily(year, month, day, hour, minute);
+
+    if (lastParams && lastParams.status === 'PENDING') {
+      const dateStr = this.dates.setDate(lastParams.year, lastParams.month, lastParams.day, lastParams.hour, lastParams.minute)
+      currentDate = this.dates.getDateObject(dateStr);
+    } else {
+      currentDate = this.dates.getDateObject();
+    }
 
     const {
       year: currentYear,
@@ -112,7 +113,7 @@ export class AutoserviceService {
       hour: currentHour,
       minutes: currentMinutes,
       seconds: currentSeconds,
-    } = this.dates.getDateObject();
+    } = currentDate;
 
     if (year > currentYear) {
       year = currentYear;
@@ -129,7 +130,13 @@ export class AutoserviceService {
     console.log("Iniciando o loop de adição dos jobs...");
     console.log(`Processando ano: ${year}`);
 
+    ({ month, day } = await this.processDates(month, year, day));
+  }
+
+  private async processDates(month: number, year: number, day: number) {
     let shouldStop = false;
+    const batchSize = 500;
+    let batch: any[] = [];
 
     outerMonthLoop: for (; month <= 12; month++) {
       const daysInMonth = this.dates.daysInMonth(year, month);
@@ -140,9 +147,10 @@ export class AutoserviceService {
         outerHourLoop: for (let hour = 0; hour < 24; hour++) {
           if (await this.dates.isToday(year, month, day, hour)) {
             shouldStop = true;
-            break outerHourLoop; // Interrompe o loop de horas
+            break outerHourLoop;
           }
           for (let minute = 0; minute < 60; minute += 10) {
+            await this.prisma.recordDaily(year, month, day, hour, minute, 'PROCESSING');
             const data = { year, month, day, hour, minute };
             batch.push({
               name: "hourly",
@@ -178,6 +186,7 @@ export class AutoserviceService {
     if (batch.length > 0) {
       await this.queue.bulkAddJobs("hourly", batch);
     }
+    return { month, day, shouldStop, batch };
   }
 
   async checkHourlyQueue() {

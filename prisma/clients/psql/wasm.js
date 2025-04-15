@@ -17,12 +17,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.6.0
- * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+ * Prisma Client JS version: 6.5.0
+ * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
  */
 Prisma.prismaVersion = {
-  client: "6.6.0",
-  engine: "f676762280b54cd07c770017ed3711ddde35f37a"
+  client: "6.5.0",
+  engine: "173f8d54f8d52e692c7e27e72a88314ec7aeff60"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -392,6 +392,8 @@ exports.Prisma.DailyCkScalarFieldEnum = {
   day: 'day',
   month: 'month',
   year: 'year',
+  hour: 'hour',
+  minute: 'minute',
   ck3001: 'ck3001',
   ck3002: 'ck3002',
   ck3003: 'ck3003',
@@ -435,96 +437,6 @@ exports.Prisma.TelefonesScalarFieldEnum = {
   modified_at: 'modified_at'
 };
 
-exports.Prisma.Servicos_viewScalarFieldEnum = {
-  id: 'id',
-  cos: 'cos',
-  descricao_do_servico: 'descricao_do_servico',
-  hora_vendida: 'hora_vendida',
-  valor_total_liquido_da_mao_de_obra: 'valor_total_liquido_da_mao_de_obra',
-  numero_da_os: 'numero_da_os',
-  numero_do_dn: 'numero_do_dn',
-  fonte_pagadora: 'fonte_pagadora',
-  data_e_hora_da_abertura_da_os: 'data_e_hora_da_abertura_da_os',
-  data_e_hora_da_emissao_da_nota_fiscal: 'data_e_hora_da_emissao_da_nota_fiscal',
-  uf: 'uf',
-  parent: 'parent',
-  parent_id: 'parent_id'
-};
-
-exports.Prisma.Pecas_viewScalarFieldEnum = {
-  id: 'id',
-  codigo_da_peca: 'codigo_da_peca',
-  descricao_da_peca: 'descricao_da_peca',
-  quantidade_da_peca: 'quantidade_da_peca',
-  valor_total_liquido_da_peca: 'valor_total_liquido_da_peca',
-  parent: 'parent',
-  parent_id: 'parent_id'
-};
-
-exports.Prisma.Clientes_viewScalarFieldEnum = {
-  id: 'id',
-  nome_do_cliente: 'nome_do_cliente',
-  cpf_cnpj: 'cpf_cnpj',
-  endereco: 'endereco',
-  numero: 'numero',
-  complemento: 'complemento',
-  bairro: 'bairro',
-  cidade: 'cidade',
-  uf: 'uf',
-  cep: 'cep',
-  tel_res: 'tel_res',
-  tel_cel: 'tel_cel',
-  tel_com: 'tel_com',
-  email_res: 'email_res',
-  email_com: 'email_com',
-  parent: 'parent',
-  parent_id: 'parent_id'
-};
-
-exports.Prisma.Nf_viewScalarFieldEnum = {
-  id: 'id',
-  numero_da_nota_fiscal: 'numero_da_nota_fiscal',
-  serie_da_nota_fiscal: 'serie_da_nota_fiscal',
-  fonte_pagadora: 'fonte_pagadora',
-  valor_total_liquido_das_pecas_na_nota_fiscal: 'valor_total_liquido_das_pecas_na_nota_fiscal',
-  valor_total_liquido_da_mao_de_obra_na_nota_fiscal: 'valor_total_liquido_da_mao_de_obra_na_nota_fiscal',
-  data_e_hora_da_abertura_da_os: 'data_e_hora_da_abertura_da_os',
-  data_e_hora_do_fechamento_da_os: 'data_e_hora_do_fechamento_da_os',
-  data_e_hora_da_emissao_da_nota_fiscal: 'data_e_hora_da_emissao_da_nota_fiscal',
-  categoria: 'categoria'
-};
-
-exports.Prisma.Fontes_pagadoras_viewScalarFieldEnum = {
-  id: 'id',
-  numero_da_nota_fiscal: 'numero_da_nota_fiscal',
-  serie_da_nota_fiscal: 'serie_da_nota_fiscal',
-  nota_fiscal_id: 'nota_fiscal_id',
-  numero_da_os: 'numero_da_os',
-  os_id: 'os_id',
-  numero_do_dn: 'numero_do_dn',
-  fonte_pagadora: 'fonte_pagadora',
-  fonte_pagadora_id: 'fonte_pagadora_id',
-  indicador: 'indicador',
-  parent: 'parent',
-  parent_id: 'parent_id'
-};
-
-exports.Prisma.Pecas_balcao_viewScalarFieldEnum = {
-  numero_do_dn: 'numero_do_dn',
-  mes_ano: 'mes_ano',
-  qtd_pecas_balcao: 'qtd_pecas_balcao',
-  vl_liq_peca_balcao: 'vl_liq_peca_balcao'
-};
-
-exports.Prisma.Pecas_oficina_viewScalarFieldEnum = {
-  numero_do_dn: 'numero_do_dn',
-  mes_ano: 'mes_ano',
-  qtd_pecas_oficina: 'qtd_pecas_oficina',
-  vl_liq_peca_oficina: 'vl_liq_peca_oficina',
-  qtd_hora_vendida: 'qtd_hora_vendida',
-  vl_liq_mao_obra: 'vl_liq_mao_obra'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -563,14 +475,7 @@ exports.Prisma.ModelName = {
   DailyCk: 'DailyCk',
   LastSearch: 'LastSearch',
   LastParams: 'LastParams',
-  Telefones: 'Telefones',
-  servicos_view: 'servicos_view',
-  pecas_view: 'pecas_view',
-  clientes_view: 'clientes_view',
-  nf_view: 'nf_view',
-  fontes_pagadoras_view: 'fontes_pagadoras_view',
-  pecas_balcao_view: 'pecas_balcao_view',
-  pecas_oficina_view: 'pecas_oficina_view'
+  Telefones: 'Telefones'
 };
 
 /**
@@ -590,7 +495,7 @@ class PrismaClient {
         } else {
           message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
         }
-
+        
         message += `
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
 
