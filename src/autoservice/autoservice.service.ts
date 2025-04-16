@@ -64,6 +64,7 @@ export class AutoserviceService {
       // await this.eventEmitter.waitFor('app.free');
       // await this.checkAndStart();
       // await this.init(2025);
+      await this.test();
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
@@ -85,6 +86,13 @@ export class AutoserviceService {
     const { startDate, endDate } = payload;
     this.startDate = startDate;
     this.endDate = endDate;
+  }
+
+  @CatchErrors()
+  async test() {
+    const startDate = "2025-02-01T00:00:00";
+    const endDate = "2025-02-28T23:59:59";
+    await this.makeRequest(startDate, endDate);
   }
 
   @CatchErrors()
