@@ -50,7 +50,7 @@ import { HourlyConsumer } from "./queues/hourly.queue";
     SqsModule.registerAsync({
       useFactory: async (configuration: ConfigService) => {
         const sqs = configuration.get("sqs");
-        const { accessKeyId, secretAccessKey, queueUrl, region } = sqs;
+        const { accessKeyId, secretAccessKey, queueUrl, region, endpoint } = sqs;
         return {
           consumers: [
             {
@@ -66,7 +66,7 @@ import { HourlyConsumer } from "./queues/hourly.queue";
               terminateGracefully: true,
               sqs: new SQSClient({
                 region,
-                endpoint: 'https://cck.local:5466',
+                endpoint,
                 credentials: {
                   accessKeyId,
                   secretAccessKey,
