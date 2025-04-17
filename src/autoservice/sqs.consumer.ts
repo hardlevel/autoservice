@@ -50,7 +50,7 @@ export class SqsConsumer implements OnModuleInit {
       msgBody.startDate = this.autoservice.startDate;
       msgBody.endDate = this.autoservice.endDate;
     }
-
+    console.log(msgBody);
     try {
       this.emitter.emit("sqs.message");
       const job = await this.queue.addJobToQueue("autoservice", msgBody);
