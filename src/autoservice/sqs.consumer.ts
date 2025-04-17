@@ -170,7 +170,7 @@ export class SqsConsumer implements OnModuleInit {
   public async onEmpty(data) {
     try {
       await this.emitter.waitFor('sqs.message', {
-        timeout: 20000,
+        timeout: 30000,
         handleError: true,
         overload: false,
         filter: () => true,
