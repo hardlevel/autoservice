@@ -66,6 +66,7 @@ import { HourlyConsumer } from "./queues/hourly.queue";
               terminateGracefully: true,
               sqs: new SQSClient({
                 region,
+                endpoint: 'https://cck.local:5466',
                 credentials: {
                   accessKeyId,
                   secretAccessKey,

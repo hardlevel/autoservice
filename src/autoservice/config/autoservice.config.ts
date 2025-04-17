@@ -12,6 +12,7 @@ export default () => ({
         accessKeyId: process.env.SQS_ID,
         secretAccessKey: process.env.SQS_SECRET,
         queueUrl: process.env.SQS_URL,
-        region: 'us-east-2'
+        region: 'us-east-2',
+        endpoint: process.env.SQS_ENDPOINT
     }
 });

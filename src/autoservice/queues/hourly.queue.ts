@@ -57,7 +57,7 @@ export class HourlyConsumer extends WorkerHost {
     //     await new Promise(r => setTimeout(r, 5000));
     // }
     try {
-      const result = await this.autoservice.makeRequest(startDate, endDate);
+      // const result = await this.autoservice.makeRequest(startDate, endDate);
       // await this.emitter.emit('waiting.complete');
       //   await this.emitter.emit("waiting.messages");
       // let attempts = 10;
@@ -77,13 +77,8 @@ export class HourlyConsumer extends WorkerHost {
   @OnWorkerEvent("completed")
   async onCompleted(job: Job) {
     console.log(`Job H ${job.id} completed.`);
-    // const last = await this.prisma.findOne(1, 'lastSearch');
-    // console.log('ultima pesquisa', last);
-    // await this.sqs.isSqsActiveAndEmpty();
-    // this.eventEmitter.emit('autoservice.complete', { id: job.id, status: true });
     this.emitter.emit("job.completed", { id: job.id, status: true });
     await this.prisma.recordDaily(this.year, this.month, this.day, this.hour, this.minute, 'COMPLETE');
-    // this.emitter.emit("bull.state", { state: "free" });
   }
 
   @OnWorkerEvent("ready")
