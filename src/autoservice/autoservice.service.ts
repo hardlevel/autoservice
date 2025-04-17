@@ -65,6 +65,7 @@ export class AutoserviceService {
       // await this.checkAndStart();
       // await this.init(2025);
       // await this.test();
+      // await this.initRecursive(2025);
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
@@ -213,6 +214,51 @@ export class AutoserviceService {
   setLog(level: string, message: string, error: string, startDate?: string | Date, endDate?: string | Date) {
     return Logger[level](`message: ${message} \nErro: ${error} \nStartDate: ${startDate}, EndDate: ${endDate}`);
   }
+
+  public async initRecursive(
+    year: number = 2024,
+    month: number = 1,
+    day: number = 1,
+    hour: number = 0,
+    minute: number = 0,
+  ) {
+    const now = new Date();
+    const current = new Date(year, month, day, hour, minute);
+
+    if (current >= now) {
+        console.log("Finalizado.");
+        return;
+    }
+
+    await this.eventEmitter.waitFor('sqs.empty').then(() => {
+        console.log("PROXIMO REQUEST: Evento recebido para:", current.toString());
+    });
+
+    const { startDate, endDate } = await this.dates.getDates(
+      current.getFullYear(),
+      current.getMonth(),
+      current.getDate(),
+      current.getHours(),
+      current.getMinutes()
+    );
+    await this.makeRequest(startDate, endDate);
+
+    const next = new Date(current.getTime() + 60 * 60 * 1000);
+    await this.initRecursive(
+      next.getFullYear(),
+      next.getMonth(),
+      next.getDate(),
+      next.getHours(),
+      next.getMinutes()
+    );
+};
+
+// const esperarTresSegundos = async () => {
+//     console.log("Esperando 3 segundos...");
+//     await new Promise(resolve => setTimeout(resolve, 3000));
+//     console.log("Emitindo evento!");
+//     events.emit('complete');
+// };
 
   // public async processYear(
   //   year: number = 2024,

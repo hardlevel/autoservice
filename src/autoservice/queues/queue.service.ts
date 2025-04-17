@@ -192,134 +192,134 @@ export class QueueService implements OnApplicationBootstrap {
   // }
 
   //INTERVALS
-  @Interval(10000)
-  async checkAutoserviceQueue() {
-    const autoServiceStatus = await this.isQueueActive("autoservice");
-    const hourlyStatus = await this.isQueueActive("hourly");
-    const statusB = await this.getQueueStatus("hourly");
-    const statusA = await this.getQueueStatus("autoservice");
-    if (autoServiceStatus === false) {
-      await this.emitter.emit("autoservice.queue.confirm");
-    }
-    if (hourlyStatus === false) {
-      await this.emitter.emit("hourly.queue.confirm");
-    }
-  }
+  // @Interval(10000)
+  // async checkAutoserviceQueue() {
+  //   const autoServiceStatus = await this.isQueueActive("autoservice");
+  //   const hourlyStatus = await this.isQueueActive("hourly");
+  //   const statusB = await this.getQueueStatus("hourly");
+  //   const statusA = await this.getQueueStatus("autoservice");
+  //   if (autoServiceStatus === false) {
+  //     await this.emitter.emit("autoservice.queue.confirm");
+  //   }
+  //   if (hourlyStatus === false) {
+  //     await this.emitter.emit("hourly.queue.confirm");
+  //   }
+  // }
 
   //CHECKS
-  @OnEvent("queue.check")
-  async handleQueueCheck(queue: string) {
-    console.log("evento recebido", queue);
-    const isActive = await this.isQueueActive(queue);
-    if (!isActive) {
-      this.emitter.emit(`${queue}.empty`);
-    }
-    return isActive;
-  }
+  // @OnEvent("queue.check")
+  // async handleQueueCheck(queue: string) {
+  //   console.log("evento recebido", queue);
+  //   const isActive = await this.isQueueActive(queue);
+  //   if (!isActive) {
+  //     this.emitter.emit(`${queue}.empty`);
+  //   }
+  //   return isActive;
+  // }
 
-  @OnEvent("autoservice.queue.confirm")
-  async handleAutoserviceConfirm() {
-    let messageReceived = false;
-    const timeout = 20000;
-    const startTime = Date.now();
+  // @OnEvent("autoservice.queue.confirm")
+  // async handleAutoserviceConfirm() {
+  //   let messageReceived = false;
+  //   const timeout = 20000;
+  //   const startTime = Date.now();
 
-    console.log("Aguardando mensagem na fila SQS...");
+  //   console.log("Aguardando mensagem na fila SQS...");
 
-    const countdownInterval = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      const timeLeft = Math.max(0, timeout - elapsedTime);
-      const secondsLeft = Math.ceil(timeLeft / 1000);
-      // console.log(`Tempo restante: ${secondsLeft} segundos`);
-    }, 1000);
+  //   const countdownInterval = setInterval(() => {
+  //     const elapsedTime = Date.now() - startTime;
+  //     const timeLeft = Math.max(0, timeout - elapsedTime);
+  //     const secondsLeft = Math.ceil(timeLeft / 1000);
+  //     // console.log(`Tempo restante: ${secondsLeft} segundos`);
+  //   }, 1000);
 
-    const sqsMessagePromise = new Promise<void>((resolve, reject) => {
-      this.emitter
-        .waitFor("sqs.message", {
-          timeout,
-          overload: false,
-          Promise: Promise,
-          handleError: true,
-          filter: () => true,
-        })
-        .then(() => {
-          console.log("Mensagem recebida na fila SQS.");
-          messageReceived = true;
-          clearInterval(countdownInterval);
-          resolve();
-        })
-        .catch((error) => {
-          // console.log("Erro ao aguardar a mensagem no SQS:", error);
-          clearInterval(countdownInterval);
-          reject(error);
-        });
-    });
+  //   const sqsMessagePromise = new Promise<void>((resolve, reject) => {
+  //     this.emitter
+  //       .waitFor("sqs.message", {
+  //         timeout,
+  //         overload: false,
+  //         Promise: Promise,
+  //         handleError: true,
+  //         filter: () => true,
+  //       })
+  //       .then(() => {
+  //         console.log("Mensagem recebida na fila SQS.");
+  //         messageReceived = true;
+  //         clearInterval(countdownInterval);
+  //         resolve();
+  //       })
+  //       .catch((error) => {
+  //         // console.log("Erro ao aguardar a mensagem no SQS:", error);
+  //         clearInterval(countdownInterval);
+  //         reject(error);
+  //       });
+  //   });
 
-    const timeoutPromise = new Promise<void>((_, reject) =>
-      setTimeout(() => {
-        if (!messageReceived) {
-          clearInterval(countdownInterval);
-          reject(new Error("Tempo de espera de 20 segundos esgotado"));
-        }
-      }, timeout),
-    );
+  //   const timeoutPromise = new Promise<void>((_, reject) =>
+  //     setTimeout(() => {
+  //       if (!messageReceived) {
+  //         clearInterval(countdownInterval);
+  //         reject(new Error("Tempo de espera de 20 segundos esgotado"));
+  //       }
+  //     }, timeout),
+  //   );
 
-    try {
-      await Promise.race([sqsMessagePromise, timeoutPromise]);
+  //   try {
+  //     await Promise.race([sqsMessagePromise, timeoutPromise]);
 
-      if (messageReceived) {
-        console.log("Fila autoservice ainda operante.");
-      } else {
-        console.log("Finalizando processamento da fila...");
-        this.emitter.emit("autoservice.finished");
-      }
-    } catch (error) {
-      // console.log("Erro ou timeout:", error.message);
-      if (!messageReceived) {
-        console.log("Finalizando processamento da fila...");
-        this.emitter.emit("autoservice.finished");
-      }
-    }
-  }
+  //     if (messageReceived) {
+  //       console.log("Fila autoservice ainda operante.");
+  //     } else {
+  //       console.log("Finalizando processamento da fila...");
+  //       this.emitter.emit("autoservice.finished");
+  //     }
+  //   } catch (error) {
+  //     // console.log("Erro ou timeout:", error.message);
+  //     if (!messageReceived) {
+  //       console.log("Finalizando processamento da fila...");
+  //       this.emitter.emit("autoservice.finished");
+  //     }
+  //   }
+  // }
 
-  @OnEvent("autoservice.running")
-  async handleAutoServiceRunning() {
-    console.log("evento autoservice.running recebido! pausando fila hourly");
-    await this.pauseQueue("hourly");
-  }
+  // @OnEvent("autoservice.running")
+  // async handleAutoServiceRunning() {
+  //   console.log("evento autoservice.running recebido! pausando fila hourly");
+  //   await this.pauseQueue("hourly");
+  // }
 
-  @OnEvent("autoservice.finished")
-  async handleAutoServiceFinished() {
-    console.log("evento autoservice.finished recebido! retomando fila hourly");
-    await this.resumeQueue("hourly");
-    this.emitter.emit("autoservice.empty");
+  // @OnEvent("autoservice.finished")
+  // async handleAutoServiceFinished() {
+  //   console.log("evento autoservice.finished recebido! retomando fila hourly");
+  //   await this.resumeQueue("hourly");
+  //   this.emitter.emit("autoservice.empty");
 
-    // this.emitter.emit("hourly.continue");
-  }
+  //   // this.emitter.emit("hourly.continue");
+  // }
 
-  @OnEvent("hourly.queue.confirm")
-  async handleHourlyConfirm() {
-    console.log("aguardando a fila hourly esvaziar...");
+  // @OnEvent("hourly.queue.confirm")
+  // async handleHourlyConfirm() {
+  //   console.log("aguardando a fila hourly esvaziar...");
 
-    while (await this.isQueueActive("hourly")) {
-      console.log("fila hourly ainda ativa... aguardando 10s");
-      const autoserviceStatus = await this.isQueueActive("autoservice");
-      const hourlyStatus = await this.hourly.isPaused();
-      if (!autoserviceStatus) {
-        if (hourlyStatus) {
-          await this.resumeQueue("hourly");
-        } else {
-          this.emitter.emit("autoservice.empty");
-        }
-      }
-      await new Promise((resolve) => setTimeout(resolve, 10000));
-    }
+  //   while (await this.isQueueActive("hourly")) {
+  //     console.log("fila hourly ainda ativa... aguardando 10s");
+  //     const autoserviceStatus = await this.isQueueActive("autoservice");
+  //     const hourlyStatus = await this.hourly.isPaused();
+  //     if (!autoserviceStatus) {
+  //       if (hourlyStatus) {
+  //         await this.resumeQueue("hourly");
+  //       } else {
+  //         this.emitter.emit("autoservice.empty");
+  //       }
+  //     }
+  //     await new Promise((resolve) => setTimeout(resolve, 10000));
+  //   }
 
-    console.log("fila hourly está vazia! encerrando fila");
-    this.emitter.emit("hourly.empty");
-  }
+  //   console.log("fila hourly está vazia! encerrando fila");
+  //   this.emitter.emit("hourly.empty");
+  // }
 
-  @OnEvent("hourly.jobs.added")
-  async handleHourlyJobs(qtd: number) {
-    console.log(`${qtd} jobs adicionados!`);
-  }
+  // @OnEvent("hourly.jobs.added")
+  // async handleHourlyJobs(qtd: number) {
+  //   console.log(`${qtd} jobs adicionados!`);
+  // }
 }

@@ -52,7 +52,7 @@ export class SqsConsumer implements OnModuleInit {
     }
     console.log(msgBody);
     try {
-      this.emitter.emit("sqs.message");
+      // this.emitter.emit("sqs.message");
       const job = await this.queue.addJobToQueue("autoservice", msgBody);
     } catch (error) {
       console.error("consumer error", JSON.stringify(error));
@@ -165,14 +165,32 @@ export class SqsConsumer implements OnModuleInit {
     this.emitter.emit("sqs.message");
   }
 
+  @OnEvent('sqs.confirm')
   @SqsConsumerEventHandler("autoservice", "empty")
-  public onEmpty(data) {
-    // console.log("🔄 Verificação de estabilidade da fila cancelada.");
-    // this.emitter.emit('sqsEmpty');
-    // this.emitter.emit('sqs.state', { state: 'free' });
-    // this.emitter.emit('bull.state', { state: 'free' });
-    this.emitter.emit("sqs.empty");
-    // console.log("estados (sqsconsumer)", this.state.getBullState(), this.state.getSqsState());
+  public async onEmpty(data) {
+    try {
+      await this.emitter.waitFor('sqs.message', {
+        timeout: 30000,
+        handleError: true,
+        overload: false,
+        filter: () => true,
+        Promise: Promise
+      });
+    } catch (err) {
+      if (err && err.message === 'timeout') {
+        this.emitter.emit("sqs.empty");
+      } else {
+        console.error("Erro ao esperar evento sqs.message:", err);
+      }
+    }
+  }
+
+  @SqsConsumerEventHandler("autoservice", "started")
+  public async onStarted() {
+    console.log('sqs iniciando, verificando status...');
+    const isEmpty = await this.isSqsEmpty();
+    if (isEmpty) this.emitter.emit('sqs.confirm');
+    return;
   }
 
   @SqsConsumerEventHandler("autoservice", "processing_error")
