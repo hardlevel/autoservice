@@ -241,8 +241,8 @@ export class AutoserviceService {
       current.getHours(),
       current.getMinutes()
     );
-    // await this.makeRequest(startDate, endDate);
-    console.log(startDate, endDate);
+    await this.makeRequest(startDate, endDate);
+
     const next = new Date(current.getTime() + 60 * 60 * 1000);
     await this.initRecursive(
       next.getFullYear(),
