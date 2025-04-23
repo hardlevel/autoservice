@@ -76,7 +76,16 @@ export class AutoserviceService {
     console.log("Solicitando dados retroativos (request):", dataInicio);
     const { url, endpoint } = this.config.get("api");
     const response = await firstValueFrom(
-      this.httpService.get(`${url}/${endpoint}`, { params: { dataInicio, dataFim } }),
+      this.httpService.get(`${url}/${endpoint}`, { params: { dataInicio, dataFim } }).pipe(
+        retry({
+          count: Infinity,
+          delay: () => timer(30000), // espera 30 segundos antes de cada nova tentativa
+        }),
+        catchError((error: AxiosError) => {
+          console.error('Erro ao realizar request', dataInicio, dataFim, error.response.data);
+          throw 'An error happened!';
+        }),
+      )
     );
     console.log(response.data);
     return response.data;
@@ -231,8 +240,8 @@ export class AutoserviceService {
 
   public async initRecursive(
     year: number = 2024,
-    month: number = 0,
-    day: number = 1,
+    month: number = 1,
+    day: number = 8,
     hour: number = 0,
     minute: number = 0,
   ) {
