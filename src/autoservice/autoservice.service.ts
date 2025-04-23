@@ -52,8 +52,8 @@ export class AutoserviceService {
     private readonly httpService: HttpService,
     private readonly queue: QueueService,
     private readonly sqs: SqsConsumer,
-    private readonly prisma: PrismaService
-  ) { }
+    private readonly prisma: PrismaService,
+  ) {}
 
   @OnEvent("app.start")
   private async appStart() {
@@ -65,7 +65,7 @@ export class AutoserviceService {
       // await this.checkAndStart();
       // await this.init(2025);
       // await this.test();
-      // await this.initRecursive(2025);
+      await this.initRecursive(2025);
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
@@ -117,8 +117,14 @@ export class AutoserviceService {
 
     const lastParams = await this.prisma.loadDaily(year, month, day, hour, minute);
 
-    if (lastParams && lastParams.status === 'PENDING') {
-      const dateStr = this.dates.setDate(lastParams.year, lastParams.month, lastParams.day, lastParams.hour, lastParams.minute)
+    if (lastParams && lastParams.status === "PENDING") {
+      const dateStr = this.dates.setDate(
+        lastParams.year,
+        lastParams.month,
+        lastParams.day,
+        lastParams.hour,
+        lastParams.minute,
+      );
       currentDate = this.dates.getDateObject(dateStr);
     } else {
       currentDate = this.dates.getDateObject();
@@ -168,7 +174,7 @@ export class AutoserviceService {
             break outerHourLoop;
           }
           for (let minute = 0; minute < 60; minute += 10) {
-            await this.prisma.recordDaily(year, month, day, hour, minute, 'PROCESSING');
+            await this.prisma.recordDaily(year, month, day, hour, minute, "PROCESSING");
             const data = { year, month, day, hour, minute };
             batch.push({
               name: "hourly",
@@ -220,8 +226,16 @@ export class AutoserviceService {
       .then((data) => console.log("teste status hourly", data));
   }
 
-  setLog(level: string, message: string, error: string, startDate?: string | Date, endDate?: string | Date) {
-    return Logger[level](`message: ${message} \nErro: ${error} \nStartDate: ${startDate}, EndDate: ${endDate}`);
+  setLog(
+    level: string,
+    message: string,
+    error: string,
+    startDate?: string | Date,
+    endDate?: string | Date,
+  ) {
+    return Logger[level](
+      `message: ${message} \nErro: ${error} \nStartDate: ${startDate}, EndDate: ${endDate}`,
+    );
   }
 
   public async initRecursive(
@@ -235,12 +249,12 @@ export class AutoserviceService {
     const current = new Date(year, month, day, hour, minute);
 
     if (current >= now) {
-        console.log("Finalizado.");
-        return;
+      console.log("Finalizado.");
+      return;
     }
 
-    await this.eventEmitter.waitFor('sqs.empty').then(() => {
-        console.log("PROXIMO REQUEST: Evento recebido para:", current.toString());
+    await this.eventEmitter.waitFor("sqs.empty").then(() => {
+      console.log("PROXIMO REQUEST: Evento recebido para:", current.toString());
     });
 
     const { startDate, endDate } = await this.dates.getDates(
@@ -248,7 +262,7 @@ export class AutoserviceService {
       current.getMonth(),
       current.getDate(),
       current.getHours(),
-      current.getMinutes()
+      current.getMinutes(),
     );
     await this.makeRequest(startDate, endDate);
 
@@ -258,16 +272,16 @@ export class AutoserviceService {
       next.getMonth(),
       next.getDate(),
       next.getHours(),
-      next.getMinutes()
+      next.getMinutes(),
     );
-};
+  }
 
-// const esperarTresSegundos = async () => {
-//     console.log("Esperando 3 segundos...");
-//     await new Promise(resolve => setTimeout(resolve, 3000));
-//     console.log("Emitindo evento!");
-//     events.emit('complete');
-// };
+  // const esperarTresSegundos = async () => {
+  //     console.log("Esperando 3 segundos...");
+  //     await new Promise(resolve => setTimeout(resolve, 3000));
+  //     console.log("Emitindo evento!");
+  //     events.emit('complete');
+  // };
 
   // public async processYear(
   //   year: number = 2024,

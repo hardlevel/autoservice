@@ -28,7 +28,7 @@ export class SqsConsumer implements OnModuleInit {
     @Inject(forwardRef(() => AutoserviceService)) private readonly autoservice: AutoserviceService,
     private readonly util: UtilService,
     private readonly dates: DateService,
-  ) { }
+  ) {}
 
   async onModuleInit() {
     // const isEmpty = await this.isSqsActiveAndEmpty();
@@ -50,7 +50,7 @@ export class SqsConsumer implements OnModuleInit {
       msgBody.startDate = this.autoservice.startDate;
       msgBody.endDate = this.autoservice.endDate;
     }
-    console.log(msgBody);
+    // console.log(msgBody);
     try {
       // this.emitter.emit("sqs.message");
       const job = await this.queue.addJobToQueue("autoservice", msgBody);
@@ -165,19 +165,19 @@ export class SqsConsumer implements OnModuleInit {
     this.emitter.emit("sqs.message");
   }
 
-  @OnEvent('sqs.confirm')
+  @OnEvent("sqs.confirm")
   @SqsConsumerEventHandler("autoservice", "empty")
   public async onEmpty(data) {
     try {
-      await this.emitter.waitFor('sqs.message', {
+      await this.emitter.waitFor("sqs.message", {
         timeout: 30000,
         handleError: true,
         overload: false,
         filter: () => true,
-        Promise: Promise
+        Promise: Promise,
       });
     } catch (err) {
-      if (err && err.message === 'timeout') {
+      if (err && err.message === "timeout") {
         this.emitter.emit("sqs.empty");
       } else {
         console.error("Erro ao esperar evento sqs.message:", err);
@@ -187,9 +187,9 @@ export class SqsConsumer implements OnModuleInit {
 
   @SqsConsumerEventHandler("autoservice", "started")
   public async onStarted() {
-    console.log('sqs iniciando, verificando status...');
+    console.log("sqs iniciando, verificando status...");
     const isEmpty = await this.isSqsEmpty();
-    if (isEmpty) this.emitter.emit('sqs.confirm');
+    if (isEmpty) this.emitter.emit("sqs.confirm");
     return;
   }
 
