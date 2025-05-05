@@ -161,7 +161,7 @@ export class SqsConsumer implements OnModuleInit {
 
   @SqsConsumerEventHandler("autoservice", "message_received")
   public onMsgReceived() {
-    console.log("📨 Mensagem recebida durante verificação.");
+    // console.log("📨 Mensagem recebida durante verificação.");
     this.emitter.emit("sqs.message");
   }
 

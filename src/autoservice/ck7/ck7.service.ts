@@ -41,7 +41,7 @@ export class Ck7Service {
         ]
 
         const data = { ...this.util.extractData(ck7001, fields) };
-        console.log('CK7: data da nota ', data.data_e_hora_da_emissao_da_nota_fiscal)
+        // console.log('CK7: data da nota ', data.data_e_hora_da_emissao_da_nota_fiscal)
         try {
             const ck = await this.prisma.ck7001.upsert({
                 where: {

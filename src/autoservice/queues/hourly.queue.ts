@@ -57,7 +57,7 @@ export class HourlyConsumer extends WorkerHost {
     //     await new Promise(r => setTimeout(r, 5000));
     // }
     try {
-      // const result = await this.autoservice.makeRequest(startDate, endDate);
+      const result = await this.autoservice.makeRequest(startDate, endDate);
       // await this.emitter.emit('waiting.complete');
       //   await this.emitter.emit("waiting.messages");
       // let attempts = 10;
@@ -76,20 +76,20 @@ export class HourlyConsumer extends WorkerHost {
 
   @OnWorkerEvent("completed")
   async onCompleted(job: Job) {
-    console.log(`Job H ${job.id} completed.`);
+    // console.log(`Job H ${job.id} completed.`);
     this.emitter.emit("job.completed", { id: job.id, status: true });
     await this.prisma.recordDaily(this.year, this.month, this.day, this.hour, this.minute, 'COMPLETE');
   }
 
   @OnWorkerEvent("ready")
   handleReady(job: Job) {
-    console.log(`Job H ${job} is ready.`);
+    // console.log(`Job H ${job} is ready.`);
     // this.emitter.emit("bull.state", { state: "busy" });
   }
 
   @OnWorkerEvent("active")
   handleActive(job: Job) {
-    console.log(`Job H ${job} is active.`);
+    // console.log(`Job H ${job} is active.`);
     // this.eventEmitter.emit('autoservice.active', { id: job.id, status: true });
     // this.emitter.emit("bull.state", { state: "busy" });
   }
