@@ -65,7 +65,7 @@ export class AutoserviceService {
       // await this.checkAndStart();
       // await this.init(2025);
       // await this.test();
-      // await this.initRecursive(2025);
+      await this.initRecursive(2025);
     } catch (error) {
       console.error("Erro durante evento app.start:", error);
     }
