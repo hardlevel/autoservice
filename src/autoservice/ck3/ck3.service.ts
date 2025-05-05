@@ -39,7 +39,7 @@ export class Ck3Service {
         ]
 
         const data = this.util.extractData(ck3001, fields);
-        console.log('CK3: data da nota ', data.data_e_hora_da_emissao_da_nota_fiscal)
+        // console.log('CK3: data da nota ', data.data_e_hora_da_emissao_da_nota_fiscal)
         try {
             const ck = await this.prisma.ck3001.upsert({
                 where: {

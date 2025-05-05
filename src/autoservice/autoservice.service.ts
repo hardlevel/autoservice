@@ -154,7 +154,7 @@ export class AutoserviceService {
     }
 
     console.log("Iniciando o loop de adição dos jobs...");
-    console.log(`Processando ano: ${year}`);
+    console.log(`Processando ano: ${year}/${month}-${day}`);
 
     ({ month, day } = await this.processDates(month, year, day));
   }
@@ -242,8 +242,8 @@ export class AutoserviceService {
 
   public async initRecursive(
     year: number = 2024,
-    month: number = 1,
-    day: number = 8,
+    month: number = 0,
+    day: number = 1,
     hour: number = 0,
     minute: number = 0,
   ) {
