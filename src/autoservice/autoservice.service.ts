@@ -127,7 +127,9 @@ export class AutoserviceService {
       );
       currentDate = this.dates.getDateObject(dateStr);
     } else {
-      currentDate = this.dates.getDateObject();
+      // currentDate = this.dates.getDateObject();
+      const dateStr = this.dates.setDate(year, month, day, hour, minute);
+      currentDate = this.dates.getDateObject(dateStr);
     }
 
     const {
