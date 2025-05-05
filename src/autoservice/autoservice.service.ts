@@ -108,7 +108,7 @@ export class AutoserviceService {
   @CatchErrors()
   public async init(
     year: number = 2024,
-    month: number = 1,
+    month: number = 0,
     day: number = 1,
     hour: number = 0,
     minute: number = 0,
